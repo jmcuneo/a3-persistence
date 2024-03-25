@@ -7,7 +7,9 @@
     "start": "node server.improved.js"
   },
   "dependencies": {
+    "express": "^4.19.2",
     "mime": "^2.6.0",
+    "mongodb": "^6.5.0",
     "uuid": "^9.0.1"
   }
 }

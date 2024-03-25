@@ -15,7 +15,6 @@ const addEntry = async function(event) {
 
   // Build the new item object
   const newItem = {
-      id: "unique-id-1",
       service: service,
       date: date,
       wages: wages,
@@ -31,39 +30,38 @@ const addEntry = async function(event) {
       hourlyPay: 0
   };
 
-  // Construct the array for submission
-  const itemsData = [newItem]; // Start with a single item
-
-  const body = JSON.stringify(itemsData);
-
   if (service !== "") { // Basic validation
-    const response = await fetch("/items", {
-        method: "POST",
-        body
-    });
+    fetch('http://localhost:3000/add', {
+    method: 'POST',
+    headers: {
+    'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newItem)
+  })
+  .then(response => response.json())
+  .then(data => console.log(data)) 
 
     // Clear input fields
     document.getElementById("addItemForm").reset(); 
 
     console.log("Entry added!");
-    fetchItem(); // Update the list
+    fetchAllDocs(); // Update the list
   }
 }
 
-async function fetchItem() {
+async function fetchAllDocs() {
   try {
-    const response = await fetch('/items');
-
+    const response = await fetch('http://localhost:3000/docs'); 
     if (!response.ok) {
-      throw new Error(`HTTP error: ${response.status}`);
+      throw new Error(`Request failed with status: ${response.status}`);
     }
 
-    const data = await response.json(); 
-    console.log('Fetched item:', data); 
-    displayItems(data);  //display the list of items on the page
-  } 
-  catch (error) {
-    console.error('Error fetching item:', error);
+    const docsArray = await response.json();
+    console.log("docsArray: " + docsArray);
+    displayItems(docsArray);
+  } catch (error) {
+    console.error("Error fetching documents:", error);
+    return []; // Return an empty array on error
   }
 }
 
@@ -78,7 +76,7 @@ async function handleDelete(index, items) {
     });
 
     if (response.ok) {
-        fetchItem();
+        fetchAllDocs();
     } 
     else {
         console.error('Delete failed:', response.status);
@@ -183,7 +181,7 @@ async function handleEdit(index, items) {
       });
 
       if (response.ok) {
-          fetchItem();
+          fetchAllDocs();
           hideEditForm(); 
       } 
       else {
@@ -199,7 +197,7 @@ async function handleEdit(index, items) {
 }
 
 window.onload = function() {
-  fetchItem();
+  fetchAllDocs();
   const addButton = document.getElementById("addButton");
   addButton.onclick = addEntry;
 

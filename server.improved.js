@@ -1,3 +1,48 @@
+const uri = "mongodb+srv://jackweinstein808:ieiVz7K19MdkPRQb@a3persistence.ilydjmx.mongodb.net/?retryWrites=true&w=majority&appName=a3Persistence";
+
+const express = require("express"),
+      { MongoClient, ObjectId } = require("mongodb"),
+      app = express()
+
+app.use(express.static("public") )
+app.use(express.json() )
+
+const client = new MongoClient( uri )
+
+let collection = null
+
+async function run() {
+  await client.connect()
+  collection = await client.db("foodLogData").collection("collection1")
+  // route to get all docs
+  app.get("/docs", async (req, res) => {
+    console.log("Collection: " + collection);
+    if (collection !== null) {
+      const docs = await collection.find({})
+      res.json( docs )
+      console.log("DOCS: " + docs);
+    }
+  })
+}
+
+app.use( (req,res,next) => {
+  if( collection !== null ) {
+    next()
+  }else{
+    res.status( 503 ).send()
+  }
+})
+
+app.post( '/add', async (req,res) => {
+  const result = await collection.insertOne( req.body )
+  res.json( result )
+})
+
+run()
+
+app.listen(3000)
+
+/*
 const http = require( "http" ),
       fs   = require( "fs" ),
       // IMPORTANT: you must run `npm install` in the directory for this assignment
@@ -189,3 +234,4 @@ const sendFile = function( response, filename ) {
 }
 
 server.listen( process.env.PORT || port )
+*/
