@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,
+            wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    <div class="grid-container">
+      <div class="item1">
+        <h1>Class Manager</h1>
+      </div>
+      <div class="item2">
+        <form>
+          <h2>Add New Student</h2>
+          <p>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" autocomplete="off">
+          </p>
+          <p>
+            <label for="dob">Date of Birth:</label>
+            <input type="month" id="dob" name="dob" value="2024-03">
+          </p>
+          <fieldset>
+            <legend>Class Year</legend>
+            <p>
+              <input type="radio" id="class_2024" name="class" value=2024 checked>
+              <label for="class_2024">2024</label>
+            </p>
+            <p> 
+              <input type="radio" id="class_2025" name="class" value=2025>
+              <label for="class_2025">2025</label>
+            </p>
+            <p>
+              <input type="radio" id="class_2026" name="class" value=2026>
+              <label for="class_2026">2026</label>
+            </p>
+            <p> 
+              <input type="radio" id="class_2027" name="class" value=2027>
+              <label for="class_2027">2027</label>
+            </p>
+          </fieldset>
+          <fieldset>
+            <legend>Major</legend>
+            <p>
+                <input type="radio" id="major_cs" name="major" value="CS" checked>
+                <label for="major_cs">Computer Science</label>
+              </p>
+              <p> 
+                <input type="radio" id="major_rbe" name="major" value="RBE">
+                <label for="major_rbe">Robotics Engineering</label>
+              </p>
+              <p> 
+                <input type="radio" id="major_ece" name="major" value="ECE">
+                <label for="major_ece">Electrical and Computer Engineering</label>
+              </p>
+              <p> 
+                <input type="radio" id="major_me" name="major" value="ME">
+                <label for="major_me">Mechanical Engineering</label>
+              </p>
+              <p> 
+                <input type="radio" id="major_other" name="major" value="Other">
+                <label for="major_other">Other</label>
+              </p>
+          </fieldset>
+          <button id="btn_submit" type="submit">Submit</button>
+        </form>
+      </div>
+      <div class="item3">
+        <h2>Class Roster</h2>
+        <table>
+          <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Class</th>
+                <th>Major</th>
+                <th>
+                  <button id="btn_delete" type="button">Delete</button>
+                </th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+      <div class="item4">
+        <footer>
+          created by Joel Hokkanen for CS 4241 at WPI
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
