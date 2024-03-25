@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Recipe List">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Recipe Cookbook</h1>
+        <form class="item">
+            <h2>Add Recipe</h2>
+            <input type="text" class="add name" placeholder="Recipe Name">
+            <input type="text" class="add prep" placeholder="Prep Time (min)">
+            <input type="text" class="add cook" placeholder="Cook Time (min)">
+            <button id="add">Add</button>
+        </form>
+        <form class="item">
+            <h2>Remove Recipe</h2>
+            <input type="text" class="remove" placeholder="Recipe Name">
+            <button id="remove">Remove</button>
+        </form>
+        <form class="item">
+            <h2>Modify Recipe</h2>
+            <input type="text" class="modify name" placeholder="Recipe Name">
+            <input type="text" class="modify prep" placeholder="Prep Time (min)">
+            <input type="text" class="modify cook" placeholder="Cook Time (min)">
+            <button id="modify">Modify</button>
+        </form>
+        <table></table>
+    </div>
+</body>
+
+</html>
