@@ -1,0 +1,48 @@
+body {
+  font-family: "Abel", sans-serif;
+  align-items: center;
+  background:black;
+  color:white;
+}
+h1{
+  font-family: "Abel", sans-serif;
+  font-size: 48px;
+  background-color: darkgrey;
+  width: 70%;
+  height: auto;
+  margin: auto;
+}
+.item{
+  font-family: "Abel", sans-serif;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+  align-items: center;
+  font-size: 22px;
+  background-color: darkgrey;
+  width: 70%;
+  height: auto;
+  margin: auto;
+  padding-top: 100px;
+}
+label{
+  font-family: "Abel", sans-serif;
+  grid-column: 1 ;
+  font-size: 20px;
+}
+input{
+  font-family: "Abel", sans-serif;
+  grid-column: 1 ;
+  font-size: 20px;
+}
+#game{
+  font-family: "Abel", sans-serif;
+  grid-column: 1 ;
+  font-size: 20px;
+}
+button{
+  font-family: "Abel", sans-serif;
+  grid-column: 1;
+  font-size: 20px;
+}

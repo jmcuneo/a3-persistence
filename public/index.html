@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+  <h1> Hoyoverse Player Stats Recorder</h1>
+    <form class="item">
+      <label for="game">Game Name:</label>
+      <select name="Game" id="game">
+        <option value="Genshin Impact">Genshin Impact</option>
+        <option value="Honkai: Star Rail">Honkai: Star Rail</option>
+        <option value="Honkai Impact 3rd">Honkai Impact 3rd</option>
+        <option value="Zenless Zone Zero">Zenless Zone Zero</option>
+        <option value="Tears of Themis">Tears of Themis</option>
+      </select>
+      <label for="name">Player Nickname:</label>
+      <input type="text" id="name" value="">
+      <label for="uid">Player UID:</label>
+      <input type="number" id="uid" value="">
+      <button>submit</button>
+    </form>
+    <div id="form" class="item"></div>
+  </body>
+</html>
