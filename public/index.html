@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/main.css">
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    <header>
+      <h1>Task List</h1>
+    </header>
+    <div class="Main">
+      <h2>Add Tasks</h2>
+      <form>
+        <div>
+          <div class="IntroWrapper">
+            <div>        
+              <p class="inter-font">Enter task: </p>
+              <input class="text-field" type="text" id="task">
+            </div>
+            <div>
+              <p class="inter-font">Enter class: </p>
+              <input class="text-field" type="text" id="class">
+            </div>
+          </div>
+          <div class="IntroWrapper">
+            <div>
+              <p class="inter-font">Enter due date (MM/DD/YYYY): </p>
+              <input class="text-field" type="text" id="duedate" pattern="(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\d{4}" required>
+            </div>
+            <div>
+              <p class="inter-font">Enter importance ('Yes' or 'No'): </p>
+              <input class="text-field" type="text" id="importance">
+            </div>
+          </div>
+          <button class="button" id="submit-button" style="margin-left: 0px">Submit</button>
+        </div>
+      </form>
+      <h2>View Tasks</h2>
+      <table class="inter-font" id="data-table">
+        <thead>
+          <tr>
+            <th>Task</th>
+            <th>Class</th>
+            <th>Due Date</th>
+            <th>Important</th>
+            <th>Priority</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tbody id="data-tbody">
+        </tbody>
+      </table>
+    </div>
+    <script src="js/main.js"></script>
+  </body>
+</html>

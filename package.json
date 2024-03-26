@@ -1,0 +1,12 @@
+{
+  "name": "Task List",
+  "version": "1.0",
+  "description": "A basic task list for storing tasks from classes.",
+  "author": "Seth Frank",
+  "scripts": {
+    "start": "node server.improved.js"
+  },
+  "dependencies": {
+    "mime": "^2.6.0"
+  }
+}
