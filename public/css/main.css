@@ -1,0 +1,32 @@
+body {
+  background:white;
+  color:black;
+}
+h1{
+  font-family: "UnifrakturCook", cursive;
+}
+table, th, td{
+  border: 1px dashed;
+  font-family: "Jacquarda Bastarda 9", serif;
+}
+th,td{
+  padding: 15px;
+
+
+}
+form, input{
+  font-family: "Silkscreen", sans-serif;
+}
+#submit{
+  justify-content: center;
+}
+button{
+  
+  font-family: "Permanent Marker", cursive;
+}
+.flexbox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
