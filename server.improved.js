@@ -8,19 +8,33 @@ const http = require( "http" ),
       dir  = "public/",
       port = 3000
 
-const taskData = []
 
-const server = http.createServer( function( request,response ) {
-  if( request.method === "GET" ) {
-    handleGet( request, response )    
-  }else if( request.method === "POST" ){
-    handlePost( request, response ) 
-  } else if( request.method === "DELETE") {
-    handleDelete(request, response)
-  } else if (request.method === "PATCH") {
-    handlePatch(request, response)
-  }
+
+const express    = require('express'),
+      app        = express(),
+      taskData     = []
+
+app.use( express.static( 'public' ) )
+app.use( express.static( 'views'  ) )
+app.use( express.json() )
+
+app.get("/taskData/", (request, response) => {
+  handleGet(request, response);
 })
+
+app.post( "/submit", (request, response) => {
+  handlePost(request, response)
+})
+
+app.delete( "/delete", (request, response) => {
+  handleDelete(request, response)
+})
+
+app.patch( "/patch", (request, response) => {
+  handlePatch(request, response)
+})
+
+
 
 // Get mode
 const handleGet = function( request, response ) {
@@ -28,7 +42,8 @@ const handleGet = function( request, response ) {
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
   } else if(request.url === "/taskData/") {
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
+    // response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
+    response.writeHead( 200, { 'Content-Type': 'application/json'});
     response.end(JSON.stringify(taskData));
   } else {
     sendFile( response, filename );
@@ -55,7 +70,8 @@ const handlePost = function( request, response ) {
 
     // Push new object to taskData array
     taskData.push(taskObject);
-    response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
+    //response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
+    response.writeHead( 200, { 'Content-Type': 'application/json'});
     response.end(JSON.stringify(taskData));
   })
 }
@@ -154,4 +170,6 @@ function determinePriority(data) {
   }
 }
 
-server.listen( process.env.PORT || port )
+
+// server.listen( process.env.PORT || port )
+const listener = app.listen( process.env.PORT || 3000 )

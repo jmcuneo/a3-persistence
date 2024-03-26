@@ -8,7 +8,6 @@ const loadData = async function() {
   const response = await fetch( "/taskData/", {
     method:"GET"
   }).then(async function(response) {
-    console.log("HELLO");
     taskData = JSON.parse(await response.text());
   })
   displayResults();
