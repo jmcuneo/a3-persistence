@@ -45,13 +45,17 @@ async function startServer() {
       const { _id, updatedData } = req.body;
       const filter = { _id: new ObjectId(_id) };
       const update = { $set: updatedData };
-      await db.collection('cars').updateOne(filter, update);
+      const result = await db.collection('cars').updateOne(filter, update);
+      if (result.modifiedCount === 0) {
+        return res.status(404).json({ error: 'Car not found' });
+      }
       res.json({ status: 'success' });
     } catch (err) {
       console.error("Failed to update car:", err);
       res.status(500).json({ error: 'Failed to update car' });
     }
   });
+  
 
   // Delete a car
   app.post('/delete', async (req, res) => {

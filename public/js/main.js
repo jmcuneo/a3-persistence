@@ -1,3 +1,4 @@
+
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
 const refreshData = async () => {
@@ -9,10 +10,8 @@ const refreshData = async () => {
   tableBody.innerHTML = ''; // Clear existing rows
 
   data.forEach((item) => {
-    if (typeof item.model === 'string' &&
-        typeof item.year === 'number' &&
-        typeof item.mpg === 'number' &&
-        typeof item.gallons === 'number') {
+    // Check if the item has all four required properties
+    if (item.model && item.year && item.mpg && item.gallons) {
       const row = document.createElement('tr');
       row.innerHTML = `
         <td contenteditable="true">${item.model}</td>
@@ -20,14 +19,13 @@ const refreshData = async () => {
         <td contenteditable="true">${item.mpg}</td>
         <td contenteditable="true">${item.gallons}</td>
         <td class="action-cell">
-          <button class="delete-button" onclick="deleteCar('${item._id.$oid}')">Delete</button>
-          <button class="update-button" onclick="updateCar('${item._id.$oid}', this.parentElement.parentElement)">Update</button>
+          <button class="delete-button" onclick="deleteCar('${item._id}')">Delete</button>
+          <button class="update-button" onclick="updateCar('${item._id}', this.parentElement.parentElement)">Update</button>
         </td>
       `;
       tableBody.appendChild(row);
     }
   });
-
 };
 
 
@@ -73,14 +71,12 @@ const updateCar = async (_id, row) => {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ _id: _id, updatedData: updatedData })
-
   });
-  console.log("Updating car with _id:", _id);
+
   if (response.ok) {
     refreshData();
   }
 };
-
 
 const deleteCar = async (_id) => {
   const response = await fetch('/delete', {
@@ -93,6 +89,7 @@ const deleteCar = async (_id) => {
     refreshData();
   }
 };
+
 
 window.onload = function () {
   document.querySelector('#data-form').onsubmit = addCar;
