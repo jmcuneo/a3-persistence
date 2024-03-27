@@ -15,19 +15,20 @@ const submit = async function( event ) {
   //Asynchronous network request
   const response = await fetch( "/submit", {
     method:"POST",
+    headers: { 'Content-Type': 'application/json' },
     body 
   });
 
   const res = await response.json();
   console.log(res);
-  res.element = addRow([res.string,res.gram0,res.gram1,res.gram2,res.gram3],res.id);
+  res.elements = addRow([res.string,res.gram0,res.gram1,res.gram2,res.gram3],res.id);
   localAppData.push(res);
 }
 
 //Find an entry by ID
 function getLocalAppDataEntry(id){
   for(var i = 0; i < localAppData.length; i++){
-    if(localAppData[i].id===id){
+    if(localAppData[i]._id===id){
       return {index:i,entry:localAppData[i]};
     }
   }
@@ -39,23 +40,26 @@ const remove = async function(event,index){
   event.preventDefault();
   const response = await fetch("/submit",{
     method:"POST",
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       type:"remove",
       index:index
     })
   });
-  //Just in case of errors, confirm the ID with the server before removing from the client.
+  //Just in case of errors, confirm with the server before removing from the client.
   const res = await response.json();
-  var rIndex = parseInt(res.index);
-  // console.log(res);
-  let searchResult = getLocalAppDataEntry(rIndex);
-  //Assuming the item hasn't already been removed 
-  //(which can happen if two people attempt to delete the same item), remove the corresponding elements.
-  if(searchResult !== undefined){
-    for(let i = 0; i < 6; i++){
-      table.children[searchResult.entry.element].remove();
+  console.log("Remove Received");
+  console.log(res);
+  if(res.deletedCount>0){
+    console.log(localAppData);
+    let searchResult = getLocalAppDataEntry(index);
+    console.log(searchResult);
+    if(searchResult !== undefined){
+      for(let i = 0; i < searchResult.entry.elements.length; i++){
+        searchResult.entry.elements[i].remove();
+      }
+      localAppData.splice(searchResult.index,1);
     }
-    localAppData.splice(searchResult.index,1);
   }
 }
 
@@ -69,20 +73,22 @@ var localAppData = [];
 const updateAllData = async function(){
   const response = await fetch("/submit",{
     method:"POST",
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       type:"getAll"
     })
   });
   const res = await response.json();
+  console.log(res);
   for(let i = table.children.length-1; i >= 6; i--){
     table.children[i].remove();
   }
   localAppData = [];
   for(let i = 0; i < res.length; i++){
     let item = res[i];
-    let element = addRow([item.string,item.gram0,item.gram1,item.gram2,item.gram3],item.id);
+    let elements = addRow([item.string,item.gram0,item.gram1,item.gram2,item.gram3],item._id);
     //Save where the HTML element is stored for removal later.
-    item.element=element;
+    item.elements=elements;
     localAppData.push(item);
   }
 }
@@ -90,11 +96,12 @@ const updateAllData = async function(){
 //Add a new set of anagrams to the rows. This just updates the HTML, localAppData needs separate updating.
 function addRow(anagrams, index){
   // For accessing element to delete by index
-  var startChildCount = table.children.length;
+  var newElements = [];
   for(let i = 0; i < anagrams.length; i++){
     let anagramEntry = document.createElement('span');
     anagramEntry.innerHTML=anagrams[i];
     table.appendChild(anagramEntry);
+    newElements.push(anagramEntry);
   }
   let lastColumn = document.createElement('span');
   let deleteButton = document.createElement('button');
@@ -103,7 +110,8 @@ function addRow(anagrams, index){
   deleteButton.onclick = (event)=>{remove(event,index)};
   lastColumn.appendChild(deleteButton);
   table.appendChild(lastColumn);
-  return startChildCount;
+  newElements.push(lastColumn);
+  return newElements;
 }
 
 //Pull from the server as soon as the page is loaded.
