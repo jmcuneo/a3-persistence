@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <script src="js/login.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body>
+<h1> Hoyoverse Player Stats Recorder</h1>
+<form id="login" class="item">
+    <label for="username_login">Username: </label>
+    <input type="text" id="username_login" value="">
+    <label for="password_login">Password: </label>
+    <input type="password" id="password_login" value="">
+    <button id="login_btn">Login</button>
+    <button id="switch0">Switch to register</button>
+</form>
+<form id="register" class="item" style="display: none">
+    <label for="username">Username: </label>
+    <input type="text" id="username" value="">
+    <label for="password">Password: </label>
+    <input type="password" id="password" value="">
+    <button id="register_btn">Register</button>
+    <button id="switch">Switch to login</button>
+</form>
+<div id="form" class="item"></div>
+</body>
+</html>

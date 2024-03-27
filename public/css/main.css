@@ -15,16 +15,16 @@ h1{
 .item{
   font-family: "Abel", sans-serif;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
+  grid-auto-rows: minmax(50px, auto);
   align-items: center;
   font-size: 22px;
   background-color: darkgrey;
   width: 70%;
   height: auto;
   margin: auto;
-  padding-top: 100px;
+  padding-top: 5%;
 }
 label{
   font-family: "Abel", sans-serif;
