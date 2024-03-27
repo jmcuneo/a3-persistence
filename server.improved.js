@@ -25,7 +25,6 @@ app.use(express.static("public") )
 app.use(express.json() )
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
-//const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}/?retryWrites=true&w=majority&appName=CS4241A3`;
 const client = new MongoClient( uri )
 
 let collection = null
