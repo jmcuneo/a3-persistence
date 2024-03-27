@@ -13,6 +13,8 @@ const add = async function(event) {
                   cook: cookInput.value},
           body = JSON.stringify(json);
 
+    console.log(json);
+
     if (json.name === "" || !isNumeric(json.prep) || !isNumeric(json.cook))
         return;
 
@@ -22,11 +24,12 @@ const add = async function(event) {
         body
     });
 
-    const text = await response.text();
+    const table = await response.text();
+    console.log(table);
     nameInput.value = "";
     prepInput.value = "";
     cookInput.value = "";
-    document.querySelector("table").innerHTML = text;
+    document.querySelector("table").innerHTML = table;
 };
 
 const remove = async function(event) {
@@ -42,9 +45,10 @@ const remove = async function(event) {
         body
     });
 
-    const text = await response.text();
+    const table = await response.text();
+    console.log(table);
     input.value = "";
-    document.querySelector("table").innerHTML = text;
+    document.querySelector("table").innerHTML = table;
 };
 
 const modify = async function(event) {
@@ -67,21 +71,25 @@ const modify = async function(event) {
         body
     });
 
-    const text = await response.text();
+    const table = await response.text();
+    console.log(table);
     nameInput.value = "";
     prepInput.value = "";
     cookInput.value = "";
-    document.querySelector("table").innerHTML = text;
+    document.querySelector("table").innerHTML = table;
 };
 
-window.onload = async function() {
+const refresh = async function() {
     const response = await fetch("/appdata", {
-        method: "GET",
-        request: "appdata"
+        method: "GET"
     });
-    const text = await response.text();
-    document.querySelector("table").innerHTML = text;
+    const table = await response.text();
+    console.log(table);
+    document.querySelector("table").innerHTML = table;
+}
 
+window.onload = async function() {
+    await refresh();
     document.querySelector("#add").onclick = add;
     document.querySelector("#remove").onclick = remove;
     document.querySelector("#modify").onclick = modify;

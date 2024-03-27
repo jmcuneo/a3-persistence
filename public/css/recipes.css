@@ -1,0 +1,18 @@
+body {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+input.add, input.remove, input.modify {
+    width: 45%;
+}
+
+#logout {
+    width: 20%;
+}
