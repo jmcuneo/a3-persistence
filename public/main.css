@@ -1,0 +1,114 @@
+body {
+  background:black;
+  color:white;
+  font-family: "Inconsolata", monospace;
+  size: 120%;
+}
+
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+header {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 4%;
+}
+
+.forms {
+  width: 30%;
+  text-align: left;
+}
+
+input[type=number], select {
+  width: 40px;
+  padding: 2px 2px;
+  margin: 8px 0;
+  border: 1px solid #000000;
+  border-radius: 4px;
+}
+
+input[type=number]:hover {
+  background-color: rgba(205, 227, 255);
+}
+
+h3 {
+  margin-bottom: 8px;
+}
+
+button {
+  font-family: "Inconsolata", monospace;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submitButton, .saveButton {
+  background-color: #014b11;
+  padding: 7px 15px;
+  margin: 8px 0;
+  border: 2px solid #0a551a;
+}
+
+.submitButton:hover, .saveButton:hover {
+  background-color: #0a5e1c;
+}
+
+.deleteButton {
+  background-color: #6f0303;
+  padding: 5px 10px;
+  margin: 4px 0;
+  border: 1px solid rgb(133, 8, 8);
+}
+
+.deleteButton:hover {
+  background-color: rgb(175, 10, 10);
+}
+
+.modButton {
+  background-color: #52023c;
+  padding: 5px 10px;
+  margin: 4px 0;
+  border: 1px solid #630548;
+}
+
+.modButton:hover {
+  background-color: #850962;
+}
+
+.sTable {
+  width: 50%;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid rgb(66, 65, 65);
+  padding: 8px;
+  text-align: center;
+}
+
+.tableLabels {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #021536;
+}
+
+.entryID {
+  text-align: center;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  background-color: #006f803d;
+}
+
+#modForm {
+  width: 30%;
+  text-align: left;
+  margin-left: 5%;
+}
