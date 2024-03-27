@@ -22,7 +22,6 @@ async function run() {
     await client.connect();
     collection = await client.db("a3-EllysGorodisch").collection("Recipes");
     users = await client.db("a3-EllysGorodisch").collection("Users");
-
     console.log("Done!");
 }
 
@@ -64,7 +63,6 @@ app.use((req, res, next) => {
     if (collection !== null) {
         next();
     } else {
-        console.log("DEBUG");
         res.status(503).send();
     }
 });
@@ -93,10 +91,9 @@ passport.use(
 );
 
 function isUserAuthenticated(req, res, next) {
-    //console.log(req);
     console.log(req.user);
     if (req.user) {
-        next(req, res);
+        next();
     } else {
         return res.send('You must login!');
     }
@@ -122,7 +119,7 @@ router.get("/github", passport.authenticate("github", {
     scope: ['user:email']
 }));
 
-router.get("/github/redirect", passport.authenticate("github"), (req, res) => {
+router.get("/github/redirect", passport.authenticate("github", {failureRedirect: "/"}), (req, res) => {
     console.log("Redirect:");
     console.log(req.user);
     if (req.user) {
@@ -140,7 +137,7 @@ router.get("/logout", (req, res) => {
 
 app.use("/auth", router);
 
-app.get("/recipes", (req, res) => {
+app.get("/recipes", isUserAuthenticated, (req, res) => {
     console.log(req.user);
     return res.render("recipes.html");
 });
