@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Kings&family=Roboto:ital,wght@0,400&display=swap');
+
+:root {
+  --animation-time: .25s;
+  --red: #f00;
+  --purple: rgb(127, 31, 127);
+}
+
+body {
+  background: linear-gradient(135deg, var(--red) 10%, var(--purple) 90%);
+  min-height: 98vh;
+  padding: 1vh 1vw;
+  color: white;
+  margin: 0;
+
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.code-input {
+  resize: both;
+}
+
+readme{
+  position: absolute;
+  top:1vh;
+  right:1vw;
+}
+h1{
+  margin: 0;
+}
+
+/* button stuff */
+refresh,
+recalc,
+modify,
+delete {
+  display: inline-block;
+  padding: 1vw;
+  border-style: solid;
+  background-color: var(--back);
+  color: var(--front);
+}
+
+.add {
+  --back: lime;
+  --front: green;
+}
+
+.add:hover {
+  --back: green;
+  --front: lime;
+}
+
+.add::before {
+  content: "Add";
+}
+
+recalc {
+  --back: aqua;
+  --front: blue;
+}
+
+recalc:hover {
+  --back: blue;
+  --front: aqua;
+}
+
+recalc::before {
+  content: "Recalculate";
+}
+
+modify {
+  --back: yellow;
+  --front: orangered;
+}
+
+modify:hover {
+  --back: orangered;
+  --front: yellow;
+}
+
+modify::before {
+  content: "Modify";
+}
+
+delete {
+  --back: red;
+  --front: darkred;
+}
+
+delete:hover {
+  --back: darkred;
+  --front: red;
+}
+
+delete::before {
+  content: "Delete";
+}
+
+refresh {
+  --back: lightgrey;
+  --front: dimgray;
+}
+
+refresh:hover {
+  --back: dimgray;
+  --front: lightgrey;
+}
