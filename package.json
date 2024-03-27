@@ -1,0 +1,35 @@
+{
+  "name": "Billing System",
+  "version": "1.0.0",
+  "description": " A simple web application for Billing System created using Node JS built on Express and with MongoDB, HTML,",
+  "main": "server.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ssunku6/a3-saitejasunku.git"
+  },
+  "keywords": [
+    "node",
+    "glitch",
+    "express"
+  ],
+  "author": "Sai Teja Sunku",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ssunku6/a3-saitejasunku/issues"
+  },
+  "homepage": "https://github.com/ssunku6/a3-saitejasunku#readme",
+  "dependencies": {
+    "connect-mongo": "^5.1.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-handlebars": "^7.1.2",
+    "express-session": "^1.18.0",
+    "method-override": "^3.0.0",
+    "mongodb": "^6.5.0",
+    "mongoose": "^8.2.3",
+    "passport": "^0.7.0"
+  }
+}
