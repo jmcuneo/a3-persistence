@@ -26,9 +26,13 @@ const submit = async function( event ) {
   if(validateForm()) {
     let task = document.querySelector( "#task" );
     let classi = document.querySelector( "#class" );
-    let duedate = document.querySelector( "#duedate" );
+    let duedateString = document.querySelector( "#duedate" );
+    // Change date into a Date object
+    const [year, month, day] = duedateString.value.split("-");
+    let duedate = new Date(year, month-1, day);
     let importance = "";
-    const importanceRadios = document.getElementsByName('importanceRadios');
+    const importanceRadios = document.getElementsByName("importanceRadios");
+    // Check which radio is checked
     importanceRadios.forEach(radio => {
       if (radio.checked) {
         importance = radio.value;
@@ -37,9 +41,8 @@ const submit = async function( event ) {
 
     let json = {};
     // Determine if this is an edit or an add
-    // Edit mode
     if(editMode) {
-      json = {_id: editData._id, task: task.value, class: classi.value, duedate: duedate.value, importance: importance, priority: 0};
+      json = {_id: editData._id, task: task.value, class: classi.value, duedate: duedate, importance: importance, priority: 0};
       const body = JSON.stringify( json );
       const response = await fetch( "/patch", {
         method:"PATCH",
@@ -51,7 +54,7 @@ const submit = async function( event ) {
       })
     // Add mode
     } else {
-      json = {_id: task._id, task: task.value, class: classi.value, duedate: duedate.value, importance: importance, priority: 0};
+      json = {_id: -1, task: task.value, class: classi.value, duedate: duedate, importance: importance, priority: 0};
       const body = JSON.stringify( json );
       const response = await fetch( "/submit", {
         method:"POST",
@@ -101,7 +104,13 @@ function displayResults() {
 
     let duedateCell = document.createElement("td");
     duedateCell.className = "table-center";
-    duedateCell.textContent = data.duedate;
+
+    //Change due date into specified format (day month year)
+    const duedate = new Date(data.duedate);
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const formattedDate = duedate.getDate() + " " + monthNames[duedate.getMonth()] + " " + duedate.getFullYear();
+
+    duedateCell.textContent = formattedDate;
     row.appendChild(duedateCell);
 
     let importanceCell = document.createElement("td");
@@ -144,7 +153,6 @@ function displayResults() {
     row.appendChild(editCell);
 
     // Append the row to the table body dependent on priority level (higher priority goes higher)
-    
     // If nothing is in the table
     if(tbody.children[0] == null) {
       tbody.appendChild(row);
@@ -184,7 +192,24 @@ const deleteElement = async function(data) {
 function editElement(data) {
   document.getElementById("task").value = data.task;
   document.getElementById("class").value = data.class;
-  document.getElementById("duedate").value = data.duedate;
+
+  const duedate = new Date(data.duedate);
+  // Get day, month, and year components
+  let day = duedate.getDate();
+  let month = duedate.getMonth() + 1;
+  const year = duedate.getFullYear();
+
+  // Check if day needs a leading 0
+  if(day < 10) {
+    day = "0" + day;
+  }
+  // Check if month needs a leading 0
+  if(month < 10) {
+    month = "0" + month;
+  }
+
+  const formattedDate = year + "-" + month + "-" + day;
+  document.getElementById("duedate").value = formattedDate;
 
   const importanceRadios = document.getElementsByName('importanceRadios');
   importanceRadios.forEach(radio => {
@@ -201,13 +226,6 @@ function editElement(data) {
 
 // Validates the format of the submission before submitting
 function validateForm() {
-  let dateInput = document.getElementById("duedate");
-  let datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
-  let importanceInput = document.getElementById("importance");
-  // Checks date format
-  if (!datePattern.test(dateInput.value)) {
-    alert("Please enter the date in MM/DD/YYYY format.");
-    return false;
-  }
+  //TODO add in to make sure something gets placed for each field
   return true;
 }
