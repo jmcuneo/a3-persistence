@@ -16,14 +16,14 @@ const appdata = [
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {
-    handleGet( request, response )    
+    handleGet( request, response )
   }else if( request.method === "POST" ){
-    handlePost( request, response ) 
+    handlePost( request, response )
   }
 })
 
 const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
+  const filename = dir + request.url.slice( 1 )
 
   if( request.url === "/" ) {
     sendFile( response, "public/index.html" )
@@ -36,7 +36,7 @@ const handlePost = function( request, response ) {
   let dataString = ""
 
   request.on( "data", function( data ) {
-      dataString += data 
+      dataString += data
   })
 
   request.on( "end", function() {
@@ -69,7 +69,7 @@ const handlePost = function( request, response ) {
 }
 
 const sendFile = function( response, filename ) {
-   const type = mime.getType( filename ) 
+   const type = mime.getType( filename )
 
    fs.readFile( filename, function( err, content ) {
 
