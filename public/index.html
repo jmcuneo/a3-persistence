@@ -19,7 +19,7 @@
     </header>
     <div class="Main">
       <h2>Add Tasks</h2>
-      <form>
+      <!-- <form>
         <div class="form-group">        
           <p class="inter-font">Enter task: </p>
           <input class="form-control" type="text" id="task" placeholder="Task">
@@ -50,13 +50,64 @@
             No
           </label>
         </div>
-
-        <!-- <div>
-          <p class="inter-font">Enter importance ('Yes' or 'No'): </p>
-          <input class="form-control" type="text" id="importance">
-        </div> -->
         <button class="button" id="submit-button" style="margin-left: 0px">Submit</button>
+      </form> -->
+
+
+
+
+      <form>
+        <div class="form-group row">
+          <label for="task" class="col-sm-2 col-form-label">Enter Task:</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" id="task" placeholder="Task">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="class" class="col-sm-2 col-form-label">Enter class:</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" id="class" placeholder="Class">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="duedate" class="col-sm-2 col-form-label">Enter due date:</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" id="duedate" pattern="(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\d{4}" required placeholder="MM/DD/YYYY">
+          </div>
+        </div>
+        <fieldset class="form-group">
+          <div class="row">
+            <legend class="col-form-label col-sm-2 pt-0">Choose importance:</legend>
+            <div class="col-sm-10">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="importanceRadios" id="importanceYes" value="Yes" checked>
+                <label class="form-check-label" for="importanceYes">
+                  Yes
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="importanceRadios" id="importanceNo" value="No">
+                <label class="form-check-label" for="importanceNo">
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary" id="submit-button">Submit</button>
+          </div>
+        </div>
       </form>
+
+
+
+
+
+
+
+
       <h2>View Tasks</h2>
       <table class="table table-striped" id="data-table">
         <thead>

@@ -28,7 +28,6 @@ const submit = async function( event ) {
     let classi = document.querySelector( "#class" );
     let duedate = document.querySelector( "#duedate" );
     let importance = "";
-
     const importanceRadios = document.getElementsByName('importanceRadios');
     importanceRadios.forEach(radio => {
       if (radio.checked) {
@@ -66,7 +65,6 @@ const submit = async function( event ) {
     document.getElementById("task").value = "";
     document.getElementById("class").value = "";
     document.getElementById("duedate").value = "";
-    //document.getElementById("importance").value = "";
 
     displayResults();
     editMode = false;
@@ -118,20 +116,31 @@ function displayResults() {
 
     let editCell = document.createElement("td");
     editCell.className = "table-center";
+
+
+    // Button group
+    const div = document.createElement('div');
+    div.classList.add('btn-group');
+    div.setAttribute('role', 'group');
+
+    // Edit button
     let editButton = document.createElement("input");
     editButton.type = "button";
-    editButton.className = "button";
+    editButton.className = "btn btn-secondary";
     editButton.value = "Edit";
     editButton.onclick = function() {editElement(data);};
-    editCell.appendChild(editButton);
+    div.appendChild(editButton);
 
+    // Delete button
     let deleteButton = document.createElement("input");
     deleteButton.type = "button";
-    deleteButton.className = "button";
+    deleteButton.className = "btn btn-secondary";
     deleteButton.value = "Delete";
     deleteButton.onclick = function() {deleteElement(data);};
-    editCell.appendChild(deleteButton);
+    div.appendChild(deleteButton);
 
+    // Append buttons to group and group to cell
+    editCell.appendChild(div);
     row.appendChild(editCell);
 
     // Append the row to the table body dependent on priority level (higher priority goes higher)
@@ -176,7 +185,15 @@ function editElement(data) {
   document.getElementById("task").value = data.task;
   document.getElementById("class").value = data.class;
   document.getElementById("duedate").value = data.duedate;
-  document.getElementById("importance").value = data.importance;
+
+  const importanceRadios = document.getElementsByName('importanceRadios');
+  importanceRadios.forEach(radio => {
+    if(radio.value === data.importance) {
+      radio.checked = true;
+    } else {
+      radio.checked = false;
+    }
+  });
 
   editData = data;
   editMode = true;
@@ -192,11 +209,5 @@ function validateForm() {
     alert("Please enter the date in MM/DD/YYYY format.");
     return false;
   }
-
-  // Checks importance input
-  // if(!(importanceInput.value === "No" || importanceInput.value === "Yes")) {
-  //   alert("Please enter 'Yes' or 'No'");
-  //   return false;
-  // }
   return true;
 }
