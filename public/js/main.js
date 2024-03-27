@@ -30,8 +30,9 @@ const submit = async function( event ) {
 
     let json = {};
     // Determine if this is an edit or an add
+    // Edit mode
     if(editMode > 0) {
-      json = {id: editMode, task: task.value, class: classi.value, duedate: duedate.value, importance: importance.value, priority: 0};
+      json = {_id: editMode, task: task.value, class: classi.value, duedate: duedate.value, importance: importance.value, priority: 0};
       const body = JSON.stringify( json );
       const response = await fetch( "/submit", {
         method:"PATCH",
@@ -40,8 +41,9 @@ const submit = async function( event ) {
         taskData = JSON.parse(await response.text());
       })
       
+    // Add mode
     } else {
-      json = {id: editMode, task: task.value, class: classi.value, duedate: duedate.value, importance: importance.value, priority: 0};
+      json = {_id: editMode, task: task.value, class: classi.value, duedate: duedate.value, importance: importance.value, priority: 0};
       const body = JSON.stringify( json );
       const response = await fetch( "/submit", {
         method:"POST",
@@ -149,13 +151,13 @@ function displayResults() {
 
 // Deletes the specified element
 const deleteElement = async function(data) {
-  data.mode = 2;
   const body = JSON.stringify( data );
   const response = await fetch( "/delete", {
     method:"DELETE",
     body
   }).then(async function(response) {
     taskData = JSON.parse(await response.text());
+    location.reload();
   })
   displayResults();
 }
@@ -167,8 +169,7 @@ function editElement(data) {
   document.getElementById("duedate").value = data.duedate;
   document.getElementById("importance").value = data.importance;
 
-  editMode = data.id;
-  data.mode = 1;
+  editMode = data._id;
 }
 
 // Validates the format of the submission before submitting

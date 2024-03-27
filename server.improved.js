@@ -7,47 +7,193 @@ const http = require( "http" ),
       mime = require( "mime" ),
       dir  = "public/",
       port = 3000
+require('dotenv').config();
+const express = require("express"),
+    { MongoClient, ObjectId } = require("mongodb"),
+    app = express()
+var taskData = []
 
 
 
-const express    = require('express'),
-      app        = express(),
-      taskData     = []
 
-app.use( express.static( 'public' ) )
-app.use( express.static( 'views'  ) )
-app.use( express.json() )
 
-app.get("/taskData/", (request, response) => {
-  handleGet(request, response);
+
+
+
+
+app.use(express.static("public") )
+app.use(express.json() )
+
+const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
+//const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}/?retryWrites=true&w=majority&appName=CS4241A3`;
+const client = new MongoClient( uri )
+
+let collection = null
+
+async function run() {
+  await client.connect()
+  collection = await client.db("taskDatabase").collection("taskCollection")
+
+  // route to get all docs
+  handleGet();
+  // app.get("/taskData/", async (request, response) => {
+  //   if (collection !== null) {
+  //     taskData = await collection.find({}).toArray()
+  //     //response.json( docs )
+  //     response.writeHead( 200, { 'Content-Type': 'application/json'});
+  //     response.end(JSON.stringify(taskData));
+  //   }
+
+    // const filename = dir + request.url.slice( 1 ) 
+    // if( request.url === "/" ) {
+    //   sendFile( response, "public/index.html" )
+    // } else if(request.url === "/taskData/") {
+    //   // response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
+    //   response.writeHead( 200, { 'Content-Type': 'application/json'});
+    //   response.end(JSON.stringify(taskData));
+    // } else {
+    //   sendFile( response, filename );
+    // }
+  // })
+}
+
+app.use( (request,response,next) => {
+  if( collection !== null ) {
+    next()
+  }else{
+    response.status( 503 ).send()
+  }
 })
 
-app.post( "/submit", (request, response) => {
-  handlePost(request, response)
+
+app.post( '/submit', async (request,response) => {
+  handlePost(request, response);
 })
 
-app.delete( "/delete", (request, response) => {
-  handleDelete(request, response)
+
+app.delete( "/delete", async (request, response) => {
+  let dataString = ""
+  request.on( "data", function( data ) {
+      dataString += data 
+  })
+
+  request.on( "end", function() {
+    let taskObject = JSON.parse( dataString );
+    collection.deleteOne({ 
+      _id:new ObjectId( taskObject._id ) 
+    })
+
+    response.writeHead( 200, { 'Content-Type': 'application/json'});
+    response.end(JSON.stringify(taskData));
+  })
 })
 
-app.patch( "/patch", (request, response) => {
+app.patch( "/patch", async (request, response) => {
   handlePatch(request, response)
+
+  const result = await collection.updateOne(
+    { _id: new ObjectId( request.body._id ) },
+    { $set:{ name:request.body.name } }
+  )
+
+  response.json( result )
 })
+
+run()
+
+//app.listen(3000)
+
+
+
+
+
+
+// const { MongoClient, ServerApiVersion } = require('mongodb');
+// const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@${prodcess.env.SERVER}/?retryWrites=true&w=majority&appName=CS4241A3`;
+
+
+// // Create a MongoClient with a MongoClientOptions object to set the Stable API version
+// const client = new MongoClient(uri, {
+//   serverApi: {
+//     version: ServerApiVersion.v1,
+//     strict: true,
+//     deprecationErrors: true,
+//   }
+// });
+
+// async function run() {
+//   try {
+//     // Connect the client to the server	(optional starting in v4.7)
+//     await client.connect();
+//     // Send a ping to confirm a successful connection
+//     await client.db("taskDatabase").command({ ping: 1 });
+//     console.log("Pinged your deployment. You successfully connected to MongoDB!");
+//   } finally {
+//     // Ensures that the client will close when you finish/error
+//     await client.close();
+//   }
+// }
+// run().catch(console.dir);
+
+      
+
+
+
+
+
+
+
+
+// const express    = require('express'),
+//       app        = express(),
+//       taskData     = []
+
+// app.use( express.static( 'public' ) )
+// app.use( express.static( 'views'  ) )
+// app.use( express.json() )
+
+// app.get("/taskData/", (request, response) => {
+//   handleGet(request, response);
+// })
+
+// app.post( "/submit", (request, response) => {
+//   handlePost(request, response)
+// })
+
+// app.delete( "/delete", (request, response) => {
+//   handleDelete(request, response)
+// })
+
+// app.patch( "/patch", (request, response) => {
+//   handlePatch(request, response)
+// })
 
 
 
 // Get mode
-const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
-  if( request.url === "/" ) {
-    sendFile( response, "public/index.html" )
-  } else if(request.url === "/taskData/") {
-    // response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
-    response.writeHead( 200, { 'Content-Type': 'application/json'});
-    response.end(JSON.stringify(taskData));
-  } else {
-    sendFile( response, filename );
-  }
+const handleGet = function() {
+  // const filename = dir + request.url.slice( 1 ) 
+  // if( request.url === "/" ) {
+  //   sendFile( response, "public/index.html" )
+  // } else if(request.url === "/taskData/") {
+  //   // response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
+  //   response.writeHead( 200, { 'Content-Type': 'application/json'});
+  //   response.end(JSON.stringify(taskData));
+  // } else {
+  //   sendFile( response, filename );
+  // }
+
+
+  app.get("/taskData/", async (request, response) => {
+    if (collection !== null) {
+      taskData = await collection.find({}).toArray()
+      //response.json( docs )
+      response.writeHead( 200, { 'Content-Type': 'application/json'});
+      response.end(JSON.stringify(taskData));
+    }
+  })
+
+  printTasks();
 }
 
 // Add mode
@@ -60,16 +206,21 @@ const handlePost = function( request, response ) {
     let taskObject = JSON.parse( dataString );
 
     // Update id
-    if(taskData.length == 0) {
-      taskObject.id = 1;
-    } else {
-      taskObject.id = taskData[taskData.length-1].id + 1;
-    }
+    // if(taskData.length == 0) {
+    //   taskObject.id = 1;
+    // } else {
+    //   taskObject.id = taskData[taskData.length-1].id + 1;
+    // }
+
+    taskObject._id = new ObjectId();
     
     determinePriority(taskObject);
 
     // Push new object to taskData array
     taskData.push(taskObject);
+
+    collection.insertOne(taskObject)
+
     //response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
     response.writeHead( 200, { 'Content-Type': 'application/json'});
     response.end(JSON.stringify(taskData));
@@ -134,7 +285,7 @@ function determineTaskIndex(taskObject) {
   let foundTask = false;
   let i = 0;
   while(foundTask === false && i < taskData.length) {
-    if(taskData[i].id === taskObject.id) {
+    if(taskData[i]._id === taskObject._id) {
       foundTask = true;
       i--;
     }
@@ -168,6 +319,12 @@ function determinePriority(data) {
   } else {
     data.priority = 4;
   }
+}
+
+function printTasks() {
+  taskData.forEach(element => {
+    console.log(element.task)    
+  });
 }
 
 
