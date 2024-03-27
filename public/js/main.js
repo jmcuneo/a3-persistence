@@ -28,7 +28,8 @@ const submit = async function( event ) {
 
   if (val1.value && val2.value && op) { //Check for requierd values
     const response = await fetch( "/submit", {
-      method:"POST",
+      method:'POST',
+      headers: { 'Content-Type': 'application/json' },
       body 
     })
 
@@ -45,7 +46,8 @@ function deleteItem( event ) {
   let body = JSON.stringify(event.srcElement.id) //Send over the id (index) of the item to delete
 
   fetch( "/delete", {
-    method:"POST",
+    method:'POST',
+    headers: { 'Content-Type': 'application/json' },
     body 
   }).then( (response) => { //handle promises
       response.json().then((resp) => { //Handle other promise
@@ -84,7 +86,8 @@ async function modSave ( event ) {
         body = JSON.stringify( json )
 
   const response = await fetch( "/modify", {
-    method:"POST",
+    method:'POST',
+    headers: { 'Content-Type': 'application/json' },
     body 
   })
 
@@ -98,7 +101,8 @@ function initialLoad(){
   let body = null;
 
   fetch( "/refresh", {
-    method:"POST",
+    method:'POST',
+    headers: { 'Content-Type': 'application/json' },
     body
   }).then( (response) => {
       response.json().then((resp) => {
