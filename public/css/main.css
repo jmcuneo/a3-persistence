@@ -1,0 +1,199 @@
+/* Element selectors */
+body {
+  font-family: 'Roboto', sans-serif;
+  /* Example of using a Google Font */
+  margin: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+  /* Adjust this value as needed */
+}
+
+
+
+.model-column {
+  min-width: 100px;
+  max-width: 100px;
+}
+
+.year-column {
+  min-width: 50px;
+  max-width: 50px;
+}
+
+.mpg-column {
+  min-width: 50px;
+  max-width: 50px;
+}
+
+.gallons-column {
+  min-width: 70px;
+  max-width: 70px;
+}
+
+.range-column {
+  min-width: 70px;
+  max-width: 70px;
+}
+
+.action-column {
+  min-width: 120px;
+  max-width: 120px;
+}
+
+
+
+/* ID selectors */
+#data-form {
+  margin-bottom: 20px;
+}
+
+#data-table {
+  margin-top: 20px;
+}
+
+/* Class selectors */
+.button {
+  background-color: #4CAF50;
+  /* Green */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+/* CSS Flexbox for layout */
+.form-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+/* Table styling */
+th,
+td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
+}
+
+/* Button styling */
+.delete-button {
+  background-color: #f44336;
+  /* Red */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+
+.update-button {
+  background-color: #3a3a3a;
+  /* Red */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+
+#refresh-button {
+  /* CSS properties for styling the button */
+  background-color: #4CAF50;
+  /* Example background color */
+  color: white;
+  /* Text color */
+  padding: 10px 20px;
+  /* Padding around the text */
+  border: none;
+  /* No border */
+  border-radius: 5px;
+  /* Rounded corners */
+  cursor: pointer;
+  /* Change cursor to pointer when hovering over the button */
+  font-size: 16px;
+  /* Font size */
+  margin-top: 10px;
+  /* Margin at the top of the button */
+}
+
+
+.action-cell {
+  text-align: center;
+  white-space: nowrap;
+  /* Prevents wrapping of buttons to the next line */
+}
+
+.action-cell button {
+  margin: 0 5px;
+  /* Adds 5px margin to the left and right of each button */
+}
+
+
+#data-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  /* Allows the form to wrap on smaller screens */
+  background-color: #f2f2f2;
+  /* Light grey background */
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+#data-form label {
+  margin-right: 10px;
+}
+
+#data-form input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 20px;
+}
+
+#data-form button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#data-form button:hover {
+  background-color: #45a049;
+}
+
+@media (max-width: 768px) {
+  #data-form {
+    flex-direction: column;
+  }
+
+  #data-form input,
+  #data-form button {
+    margin-bottom: 10px;
+    width: 100%;
+    /* Full width on small screens */
+  }
+}
+
+
+
+
+/* External stylesheet */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
