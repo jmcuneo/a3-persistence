@@ -1,5 +1,5 @@
 {
-  "name": "a2-avachadbourne",
+  "name": "a3-avachadbourne",
   "version": "1.0",
   "description": "A test",
   "author": "Ava Chadbourne",
@@ -7,6 +7,7 @@
     "start": "node server.improved.js"
   },
   "dependencies": {
+    "express": "^4.19.2",
     "mime": "^2.6.0"
   }
 }
