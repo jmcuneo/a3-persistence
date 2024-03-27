@@ -27,13 +27,20 @@ const submit = async function( event ) {
     let task = document.querySelector( "#task" );
     let classi = document.querySelector( "#class" );
     let duedate = document.querySelector( "#duedate" );
-    let importance = document.querySelector( "#importance" );
+    let importance = "";
+
+    const importanceRadios = document.getElementsByName('importanceRadios');
+    importanceRadios.forEach(radio => {
+      if (radio.checked) {
+        importance = radio.value;
+      }
+    });
 
     let json = {};
     // Determine if this is an edit or an add
     // Edit mode
     if(editMode) {
-      json = {_id: editData._id, task: task.value, class: classi.value, duedate: duedate.value, importance: importance.value, priority: 0};
+      json = {_id: editData._id, task: task.value, class: classi.value, duedate: duedate.value, importance: importance, priority: 0};
       const body = JSON.stringify( json );
       const response = await fetch( "/patch", {
         method:"PATCH",
@@ -45,7 +52,7 @@ const submit = async function( event ) {
       })
     // Add mode
     } else {
-      json = {_id: task._id, task: task.value, class: classi.value, duedate: duedate.value, importance: importance.value, priority: 0};
+      json = {_id: task._id, task: task.value, class: classi.value, duedate: duedate.value, importance: importance, priority: 0};
       const body = JSON.stringify( json );
       const response = await fetch( "/submit", {
         method:"POST",
@@ -59,7 +66,7 @@ const submit = async function( event ) {
     document.getElementById("task").value = "";
     document.getElementById("class").value = "";
     document.getElementById("duedate").value = "";
-    document.getElementById("importance").value = "";
+    //document.getElementById("importance").value = "";
 
     displayResults();
     editMode = false;
@@ -187,9 +194,9 @@ function validateForm() {
   }
 
   // Checks importance input
-  if(!(importanceInput.value === "No" || importanceInput.value === "Yes")) {
-    alert("Please enter 'Yes' or 'No'");
-    return false;
-  }
+  // if(!(importanceInput.value === "No" || importanceInput.value === "Yes")) {
+  //   alert("Please enter 'Yes' or 'No'");
+  //   return false;
+  // }
   return true;
 }
