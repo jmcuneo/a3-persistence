@@ -1,7 +1,8 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
 var taskData = [];
-editMode = -1;
+editMode = false;
+editData = null;
 
 // Getting data from the server
 const loadData = async function() {
@@ -31,19 +32,20 @@ const submit = async function( event ) {
     let json = {};
     // Determine if this is an edit or an add
     // Edit mode
-    if(editMode > 0) {
-      json = {_id: editMode, task: task.value, class: classi.value, duedate: duedate.value, importance: importance.value, priority: 0};
+    if(editMode) {
+      json = {_id: editData._id, task: task.value, class: classi.value, duedate: duedate.value, importance: importance.value, priority: 0};
       const body = JSON.stringify( json );
-      const response = await fetch( "/submit", {
+      const response = await fetch( "/patch", {
         method:"PATCH",
         body
       }).then(async function(response) {
         taskData = JSON.parse(await response.text());
+        editData = null;
+        location.reload();
       })
-      
     // Add mode
     } else {
-      json = {_id: editMode, task: task.value, class: classi.value, duedate: duedate.value, importance: importance.value, priority: 0};
+      json = {_id: task._id, task: task.value, class: classi.value, duedate: duedate.value, importance: importance.value, priority: 0};
       const body = JSON.stringify( json );
       const response = await fetch( "/submit", {
         method:"POST",
@@ -60,7 +62,7 @@ const submit = async function( event ) {
     document.getElementById("importance").value = "";
 
     displayResults();
-    editMode = -1;
+    editMode = false;
   }
 }
 
@@ -169,7 +171,8 @@ function editElement(data) {
   document.getElementById("duedate").value = data.duedate;
   document.getElementById("importance").value = data.importance;
 
-  editMode = data._id;
+  editData = data;
+  editMode = true;
 }
 
 // Validates the format of the submission before submitting
