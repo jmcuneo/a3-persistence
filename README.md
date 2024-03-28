@@ -114,4 +114,21 @@ add a little more detail about what it does.
 ### W3C Web Accessibility Tips
 **Writing Tips**:
 - *Provide informative, unique page titles*: Changed titles for index.html and repices.html from "CS4241 Assignment 3" to "Assignment 3" and "Recipes | Assignment 3" respectively
-- 
+- *Provide clear instructions*: Added instruction text at head of page
+
+**Designing Tips**:
+- *Ensure that interactive elements are easy to identify*: Changed CSS for buttons that are focused to be more obvious
+- *Provide easily identifiable feedback*: Added alert for when user tries to remove or modify a recipe that does not exist
+
+**Development Tips**:
+- *Associate a label with every form control*: Added placeholder text for each input so that users would know what to enter into each box
+- *Help users avoid and correct mistakes*: Added alert for when all fields are not filled when a form is submitted
+
+### CRAP Principles
+**Contrast**: 
+
+**Repetition**: 
+
+**Alignment**: 
+
+**Proximity**: I used proximity to organize the visual information on my page in several ways. One, by grouping together the header, input boxes, and button for each action that the user can take. This makes it easier for users to easily distinguish the different actions they can take and where they need to input information for each one. I added extra spacing between each of the groups to accentuate that they are separated, further increasing clarity. There are a total of five different groups on the page. This number include the table for displaying data and the title with the logout button and instructions. Having a smaller number of distinct groupings on the page makes it easier for users to digest the entirety of the page quickly.

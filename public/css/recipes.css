@@ -5,14 +5,37 @@ body {
 }
 
 .container {
+    margin-top: 1em;
     display: flex;
     flex-direction: column;
+}
+
+.item {
+    margin-left: 20px;
 }
 
 input.add, input.remove, input.modify {
     width: 45%;
 }
 
+.header {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 1em;
+}
+
 #logout {
     width: 20%;
+    margin-left: auto;
+    margin-right: 10em;
+}
+
+button:focus {
+    outline: 2px solid #dad4c2;
+    color: #dad4c2;
+    background-color: #13171f;
+}
+
+form {
+    padding-top: 20px;
 }

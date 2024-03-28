@@ -15,8 +15,10 @@ const add = async function(event) {
 
     console.log(json);
 
-    if (json.name === "" || !isNumeric(json.prep) || !isNumeric(json.cook))
+    if (json.name === "" || json.prep === "" || json.cook === "") {
+        alert("Please Enter All Fields");
         return;
+    }
 
     const response = await fetch("/add", {
         method: "POST",
@@ -45,10 +47,19 @@ const remove = async function(event) {
         body
     });
 
+    if (json.name === "") {
+        alert("Please Enter All Fields");
+        return;
+    }
+
     const table = await response.text();
     console.log(table);
-    input.value = "";
-    document.querySelector("table").innerHTML = table;
+    if (table.substring(0, 4) !== "<tr>") {
+        alert("Recipe Does Not Exist!");
+    } else {
+        input.value = "";
+        document.querySelector("table").innerHTML = table;
+    }
 };
 
 const modify = async function(event) {
@@ -62,8 +73,10 @@ const modify = async function(event) {
                   cook: cookInput.value},
           body = JSON.stringify(json);
 
-    if (json.name === "" || !isNumeric(json.prep) || !isNumeric(json.cook))
+    if (json.name === "" || json.prep === "" || json.cook === "") {
+        alert("Please Enter All Fields");
         return;
+    }
 
     const response = await fetch("/modify", {
         method: "POST",
@@ -73,10 +86,14 @@ const modify = async function(event) {
 
     const table = await response.text();
     console.log(table);
-    nameInput.value = "";
-    prepInput.value = "";
-    cookInput.value = "";
-    document.querySelector("table").innerHTML = table;
+    if (table.substring(0, 4) !== "<tr>") {
+        alert("Recipe Does Not Exist!");
+    } else {
+        nameInput.value = "";
+        prepInput.value = "";
+        cookInput.value = "";
+        document.querySelector("table").innerHTML = table;
+    }
 };
 
 const refresh = async function() {

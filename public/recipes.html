@@ -16,12 +16,16 @@
 
 <body>
     <div class="container">
-        <h1>Recipe Cookbook</h1>
+        <div class="header">
+            <h1 class="item">Recipe Cookbook</h1>
+            <button id="logout" onclick="location.href = '/auth/logout';">Logout</button>
+        </div>
+        <p class="item">Recipes names are not case-senstive. Prep and cook times are in minutes.</p>
         <form class="item">
             <h2>Add Recipe</h2>
             <input type="text" class="add name" placeholder="Recipe Name">
-            <input type="text" class="add prep" placeholder="Prep Time (min)">
-            <input type="text" class="add cook" placeholder="Cook Time (min)">
+            <input type="number" class="add prep" placeholder="Prep Time (min)">
+            <input type="number" class="add cook" placeholder="Cook Time (min)">
             <button id="add">Add</button>
         </form>
         <form class="item">
@@ -32,11 +36,10 @@
         <form class="item">
             <h2>Modify Recipe</h2>
             <input type="text" class="modify name" placeholder="Recipe Name">
-            <input type="text" class="modify prep" placeholder="Prep Time (min)">
-            <input type="text" class="modify cook" placeholder="Cook Time (min)">
+            <input type="number" class="modify prep" placeholder="Prep Time (min)">
+            <input type="number" class="modify cook" placeholder="Cook Time (min)">
             <button id="modify">Modify</button>
         </form>
-        <button id="logout" onclick="location.href = '/auth/logout';">Logout</button>
     </div>
     <table></table>
 </body>

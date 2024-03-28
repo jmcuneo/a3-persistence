@@ -183,11 +183,15 @@ app.post("/remove", express.json(), async (req, res) => {
     await collection.deleteOne({
         userID: req.user._id,
         name: {$regex: `^${data.name}$`, $options: "i"}
-    }).then((result) => {
+    }).then(async (result) => {
         console.log("Remove:");
         console.log(result);
+        if (result.deletedCount === 0) {
+            res.send("Error: Recipe Does Not Exist");
+        } else {
+            await createTable(res, req.user._id);
+        }
     });
-    await createTable(res, req.user._id);
 });
 
 app.post("/modify", express.json(), async (req, res) => {
@@ -204,11 +208,15 @@ app.post("/modify", express.json(), async (req, res) => {
                 total: parseInt(data.prep) + parseInt(data.cook)
             }
         }
-    ).then((result) => {
+    ).then(async (result) => {
         console.log("Modify:");
         console.log(result);
-    })
-    await createTable(res, req.user._id);
+        if (result.matchedCount === 0) {
+            res.send("Error: Recipe Does Not Exist")
+        } else {
+            await createTable(res, req.user._id);
+        }
+    });
 });
 
 app.listen(process.env.PORT || 3000);
