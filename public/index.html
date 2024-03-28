@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+  <div class="container">
+    <header> Dungeons and Dragons Character Storage </header>
+
+    <div class="infotext">
+      This application allows a user to store different DnD 5e characters they've created. Input the name, race, class, and select a primary action.
+      The combination of class and type of action will provide you with a random action.
+      You can edit or delete entries using the buttons on the right of the table.
+    </div>
+
+    <div class="formContainer">
+      <form id="characterForm">
+        <input type="text" id="charname" placeholder="character name" >
+        <input type="text" id="charrace" placeholder="character race" value="">
+        <input type="text" list="classes" id="charclass" placeholder="select a class">
+        <datalist id="classes">
+          <option value="Artificer">
+          <option value="Barbarian">
+          <option value="Bard">
+          <option value="Cleric">
+          <option value="Druid">
+          <option value="Fighter">
+          <option value="Monk">
+          <option value="Paladin">
+          <option value="Ranger">
+          <option value="Rogue">
+          <option value="Sorcerer">
+          <option value="Warlock">
+          <option value="Wizard">
+        </datalist>
+
+        <button id="submitbutton">submit</button>
+        <br>
+
+        <div id="radio-select">
+          <label>
+            <input type="radio" name="action" value="weapon"> Weapon
+          </label>
+          <label>
+            <input type="radio" name="action" value="spell"> Spell
+          </label>
+        </div>
+
+      </form>
+    </div>
+
+    <table id="characterTable">
+      <tbody id="charTableBody">
+        <tr>
+          <td>Character Name</td>
+          <td>Character Race</td>
+          <td>Class</td>
+          <td>Primary Modifier</td>
+          <td>Action</td>
+          <td>More Options</td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    <div class="formContainer" >
+      <form id="editForm" style="display: none;">
+        <input type="text" id="editname">
+        <input type="text" id="editrace">
+        <input type="text" id="editclass">
+        <input type="text" id="editmodifier" >
+        <input type="text" id="editaction" >
+        <button id="savebutton">save</button>
+        <button id="cancelbutton">cancel</button>
+      </form>
+    </div>
+
+  </div>
+  </body>
+</html>
