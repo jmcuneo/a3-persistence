@@ -137,31 +137,34 @@ app.get('/', (req, res) => {
 });
 
 app.get('/app', async (req, res) => {
-  if (!req.user) {
-      return res.redirect('/'); // Redirect to login if not authenticated
-  }
-  const db = await connectToDatabase();
-  const userSurveysCollection = db.collection('surveys');
+    if (!req.user) {
+        return res.redirect('/'); // Redirect to login if not authenticated
+    }
+    const db = await connectToDatabase();
+    const userSurveysCollection = db.collection('surveys');
+    const carsCollection = db.collection('cars');
 
-  try {
-      const userData = await userSurveysCollection.findOne({ userId: req.user._id });
-      let showAlert = false;
-      if (req.query.newUser && !req.session.newUserAlertShown) {
-          req.session.newUserAlertShown = true;
-          showAlert = true;
-      }
-      if (userData) {
-          // If user has survey data, render the page without the survey form
-          res.render('app', { newUser: showAlert, userData, showSurveyForm: false });
-      } else {
-          // If user does not have survey data, render the page with the survey form
-          res.render('app', { newUser: showAlert, userData, showSurveyForm: true });
-      }
-  } catch (err) {
-      console.error('Failed to fetch user survey data:', err);
-      res.status(500).send('Internal Server Error');
-  }
+    try {
+        const userData = await userSurveysCollection.findOne({ userId: req.user._id });
+        const carsData = await carsCollection.find({ userId: req.user._id }).toArray(); // Fetch car data
+        let showAlert = false;
+        if (req.query.newUser && !req.session.newUserAlertShown) {
+            req.session.newUserAlertShown = true;
+            showAlert = true;
+        }
+        if (userData) {
+            // If user has survey data, render the page without the survey form
+            res.render('app', { newUser: showAlert, userData, showSurveyForm: false, carsData });
+        } else {
+            // If user does not have survey data, render the page with the survey form
+            res.render('app', { newUser: showAlert, userData, showSurveyForm: true, carsData });
+        }
+    } catch (err) {
+        console.error('Failed to fetch user data:', err);
+        res.status(500).send('Internal Server Error');
+    }
 });
+
 
 app.post('/login',
     passport.authenticate('local', {
