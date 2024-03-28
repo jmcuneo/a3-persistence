@@ -15,26 +15,6 @@ const port = 3000;
 app.set('views', path.join(__dirname, 'public'));
 app.set('view engine', 'ejs');
 
-const client = new MongoClient(process.env.MONGODB_URI, {
-    serverSelectionTimeoutMS: 5000, // Keep the connection alive for 5 seconds
-    socketTimeoutMS: 45000 // Close sockets after 45 seconds of inactivity
-});
-
-let db;
-let usersCollection;
-let carsCollection;
-let userSurveysCollection;
-
-client.connect()
-  .then(() => {
-    console.log('Connected to MongoDB');
-    db = client.db("4241database");
-    usersCollection = db.collection('users');
-    carsCollection = db.collection('cars');
-    userSurveysCollection = db.collection('surveys');
-  })
-  .catch(err => console.error('Failed to connect to MongoDB:', err));
-
 // Middleware
 app.use(express.static('public'));
 app.use(express.json());
@@ -52,6 +32,15 @@ app.use((req, res, next) => {
     next();
 });
 
+// Function to create a new MongoClient and connect to the database
+async function connectToDatabase() {
+    const client = new MongoClient(process.env.MONGODB_URI, {
+   
+    });
+    await client.connect();
+    return client.db("4241database");
+}
+
 // Configure GitHub Strategy
 passport.use(new GitHubStrategy({
         clientID: process.env.GITHUB_CLIENT_ID,
@@ -59,6 +48,8 @@ passport.use(new GitHubStrategy({
         callbackURL: "https://a3-hanzalahqamar.vercel.app/auth/github/callback"
     },
     async function(accessToken, refreshToken, profile, done) {
+        const db = await connectToDatabase();
+        const usersCollection = db.collection('users');
         try {
             let user = await usersCollection.findOne({ githubId: profile.id });
             if (!user) {
@@ -90,6 +81,8 @@ app.get('/auth/github/callback',
 // Passport local strategy
 passport.use(new LocalStrategy(
     async (username, password, done) => {
+        const db = await connectToDatabase();
+        const usersCollection = db.collection('users');
         try {
             let user = await usersCollection.findOne({ username: username });
             if (!user) {
@@ -125,6 +118,8 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
+    const db = await connectToDatabase();
+    const usersCollection = db.collection('users');
     try {
         const user = await usersCollection.findOne({ _id: new ObjectId(id) });
         done(null, user);
@@ -145,6 +140,8 @@ app.get('/app', async (req, res) => {
   if (!req.user) {
       return res.redirect('/'); // Redirect to login if not authenticated
   }
+  const db = await connectToDatabase();
+  const userSurveysCollection = db.collection('surveys');
 
   try {
       const userData = await userSurveysCollection.findOne({ userId: req.user._id });
@@ -189,6 +186,9 @@ app.get('/data', async (req, res) => {
     if (!req.user) {
         return res.status(401).json({ error: 'Not authenticated' });
     }
+    const db = await connectToDatabase();
+    const carsCollection = db.collection('cars');
+
     try {
         const cars = await carsCollection.find({ userId: req.user._id }).toArray();
         res.json(cars);
@@ -202,6 +202,9 @@ app.post('/add', async (req, res) => {
     if (!req.user) {
         return res.status(401).json({ error: 'Not authenticated' });
     }
+    const db = await connectToDatabase();
+    const carsCollection = db.collection('cars');
+
     try {
         const car = { ...req.body, userId: req.user._id };
         const result = await carsCollection.insertOne(car);
@@ -216,6 +219,9 @@ app.post('/update', async (req, res) => {
     if (!req.user) {
         return res.status(401).json({ error: 'Not authenticated' });
     }
+    const db = await connectToDatabase();
+    const carsCollection = db.collection('cars');
+
     try {
         const { _id, updatedData } = req.body;
         const filter = { _id: new ObjectId(_id), userId: req.user._id };
@@ -235,6 +241,9 @@ app.post('/delete', async (req, res) => {
   if (!req.user) {
     return res.status(401).json({ error: 'Not authenticated' });
   }
+  const db = await connectToDatabase();
+  const carsCollection = db.collection('cars');
+
   try {
     const _id = req.body._id;
     const filter = { _id: new ObjectId(_id), userId: req.user._id };
@@ -262,6 +271,8 @@ app.post('/survey', async (req, res) => {
   if (!req.user) {
       return res.status(401).json({ error: 'Not authenticated' });
   }
+  const db = await connectToDatabase();
+  const userSurveysCollection = db.collection('surveys');
 
   try {
       // Check if survey data already exists for the user
@@ -285,6 +296,8 @@ app.get('/survey', async (req, res) => {
   if (!req.user) {
       return res.status(401).json({ error: 'Not authenticated' });
   }
+  const db = await connectToDatabase();
+  const userSurveysCollection = db.collection('surveys');
 
   try {
       const existingSurveyData = await userSurveysCollection.findOne({ userId: req.user._id });
@@ -303,6 +316,8 @@ app.post('/submit-survey', async (req, res) => {
   if (!req.user) {
       return res.status(401).json({ error: 'Not authenticated' });
   }
+  const db = await connectToDatabase();
+  const userSurveysCollection = db.collection('surveys');
 
   try {
       // Check if there is already a survey for the user
@@ -325,6 +340,8 @@ app.get('/load-survey', async (req, res) => {
   if (!req.user) {
       return res.status(401).json({ error: 'Not authenticated' });
   }
+  const db = await connectToDatabase();
+  const userSurveysCollection = db.collection('surveys');
 
   try {
       const surveys = await userSurveysCollection.find({ userId: req.user._id }).toArray();
@@ -339,4 +356,3 @@ app.get('/load-survey', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
-
