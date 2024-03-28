@@ -186,6 +186,9 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/data', async (req, res) => {
+    // Log the value of req.user to see if it's defined and what it contains
+    console.log('req.user:', req.user);
+
     if (!req.user) {
         return res.status(401).json({ error: 'Not authenticated' });
     }
@@ -200,6 +203,7 @@ app.get('/data', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
 
 app.post('/add', async (req, res) => {
     if (!req.user) {
