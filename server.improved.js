@@ -3,6 +3,32 @@ const express    = require('express'),
 
 require('dotenv').config({path: '.env'})
 
+const { MongoClient, ObjectId } = require('mongodb')
+const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
+const client = new MongoClient( uri )
+let collection = null
+
+async function run() {
+  await client.connect()
+  collection = await client.db("sample_mflix").collection("number-data")
+
+  // route to get all docs
+  app.get("/docs", async (req, res) => {
+    if (collection !== null) {
+      const docs = await collection.find({}).toArray()
+      res.json( docs )
+    }
+  })
+}
+
+app.use( (req,res,next) => {
+  if( collection !== null ) {
+    next()
+  }else{
+    res.status(503).send()
+  }
+})
+
 //Base starting data
 const appdata = [
   { "val1": 2, "val2": 2, "op": "+", "output" : 4, "guess" : null},
@@ -63,7 +89,7 @@ app.post( '/refresh', (req, res) => {
   res.end( JSON.stringify( appdata ) )
 })
 
-app.post( '/submit', (req, res) => {
+app.post( '/submit', async (req, res) => {
   let data = req.body
   console.log(data)
 
@@ -74,11 +100,10 @@ app.post( '/submit', (req, res) => {
   } else if (data.guess == ''){
     guess = null
   }
-  
-  //Add data to table
-  appdata.push({val1: parseInt(data.val1), val2: parseInt(data.val2), op: data.op, output, guess})
-  res.writeHead( 200, { 'Content-Type': 'application/json' })
-  res.end( JSON.stringify( appdata ) )
+
+  let newData = {val1: parseInt(data.val1), val2: parseInt(data.val2), op: data.op, output, guess}
+  const result = await collection.insertOne(newData)
+  res.json( result )
 })
 
 //Delete an item from the table
@@ -174,4 +199,5 @@ function pickData (mod, old, valType) {
   }
 }
 
+run()
 app.listen(process.env.PORT)

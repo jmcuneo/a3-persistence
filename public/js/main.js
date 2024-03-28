@@ -50,9 +50,8 @@ function deleteItem( event ) {
     headers: { 'Content-Type': 'application/json',
                 'Accept': "application/json" },
     body 
-  }).then((response) => response.json()).then((resp) => { //Handle other promise
-        displayData(resp) //Display returned data
-    })
+  }).then( response => response.json() )
+  .then( json => displayData(json) )
 
 }
 
