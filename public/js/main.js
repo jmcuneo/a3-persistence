@@ -2,7 +2,9 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
 const refreshData = async () => {
-  const response = await fetch('/data');
+  const response = await fetch('/data', {
+    credentials: 'include' // Include credentials in the request
+});
   const data = await response.json();
   console.log("Data fetched from server:", data); // Log the fetched data
 
