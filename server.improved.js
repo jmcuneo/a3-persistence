@@ -32,14 +32,20 @@ app.use((req, res, next) => {
     next();
 });
 
-// Function to create a new MongoClient and connect to the database
+let cachedDb = null;
+
 async function connectToDatabase() {
-    const client = new MongoClient(process.env.MONGODB_URI, {
-   
-    });
+    if (cachedDb) {
+        console.log('Using cached database instance');
+        return cachedDb;
+    }
+    const client = new MongoClient(process.env.MONGODB_URI);
     await client.connect();
-    return client.db("4241database");
+    const db = client.db("4241database");
+    cachedDb = db;
+    return db;
 }
+
 
 // Configure GitHub Strategy
 passport.use(new GitHubStrategy({
