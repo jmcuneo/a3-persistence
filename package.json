@@ -1,0 +1,14 @@
+{
+  "name": "assignmenta2forwebware",
+  "version": "1.0",
+  "description": "This is Austin Rebello's submission website for the A2 assignment in the WPI course Webware.",
+  "author": "Austin Rebello",
+  "scripts": {
+    "start": "node server.improved.js"
+  },
+  "dependencies": {
+    "cookie-session": "^2.1.0",
+    "express-handlebars": "^7.1.2",
+    "mime": "^2.6.0"
+  }
+}

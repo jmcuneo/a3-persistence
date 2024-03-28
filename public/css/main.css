@@ -1,0 +1,63 @@
+/** Element Selectors **/
+body {
+  background: black;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background-color: #223322;
+}
+
+table {
+  margin: auto;
+  border: 3px solid white;
+  width: 90%;
+}
+
+td {
+  padding: auto;
+}
+
+form * {
+  margin-bottom: 5px;
+}
+
+
+/** Class Selectors **/
+.formDiv h2 {
+  font-weight: normal;
+}
+
+.formDiv {
+  width: 32%;
+  background-color: #333433;
+  margin: 1%;
+  padding-bottom: 2%;
+}
+
+/** ID Selectors **/
+#addForm h2 {
+  color: #b5f7c6;
+}
+
+#deleteForm h2 {
+  color: #faaaaa;
+}
+
+#editForm h2 {
+  color: #faedaa;
+}
+
+#allForms {
+  display: flex;
+}
+
+#resultsTable {
+  background-color: #333433;
+  width: 75%;
+  margin: auto;
+  padding-bottom: 2%;
+  padding-top: 1%;
+}

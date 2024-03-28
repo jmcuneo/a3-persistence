@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <script src="./js/main.js"></script>
+    <link rel="stylesheet" href="./css/main.css">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    <h2>Person Directory</h2>
+    <div id = "allForms">
+      <div id = "addForm" class = "formDiv">
+        <h2>Add a person to the table.</h2>
+        <form id = "formOne">
+          <label for="firstName">First Name: </label>
+          <input type="text" id="firstName" placeholder="your first name here" required><br>
+          <label for="lastName">Last Name: </label>
+          <input type="text" id="lastName" placeholder="your last name here" required><br>
+          <label for="age">Age: </label>
+          <input type="text" id="age" placeholder="0" required><br>
+          <button id = "buttonAdd" >Add</button>
+        </form>
+      </div>
+
+      <div id = "deleteForm" class = "formDiv">
+        <h2>Remove a person from the table by ID</h2>
+        <form id = "formTwo">
+          <label for="id">User ID:</label>
+          <input type="text" id="id" placeholder="0" required><br>
+          <button id = "buttonRemove" >Delete</button>
+        </form>
+      </div>
+
+      <div id = "editForm" class = "formDiv">
+        <h2>Edit an existing person.</h2>
+        <form id = "formThree">
+          <label for="idEdit">Select User by ID: </label>
+          <input type="text" id="idEdit" placeholder="0" required><br>
+          <label for="firstNameEdit">Edited First Name: </label>
+          <input type="text" id="firstNameEdit" placeholder="your first name here" required><br>
+          <label for="lastNameEdit">Edited Last Name: </label>
+          <input type="text" id="lastNameEdit" placeholder="your last name here" required><br>
+          <label for="ageEdit">Edited Age: </label>
+          <input type="text" id="ageEdit" placeholder="0" required><br>
+          <button id = "buttonEdit" >Edit</button>
+        </form>
+      </div>
+    </div>
+    <div id = "outerDiv">
+      <div id = "resultsTable">
+        <h2>People's Table</h2>
+        <table id = "peopleTable">
+
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
