@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <h1>Course Logging System</h1>
+      <p>A simple system to log all the courses you've ever taken. Ever. The trick? There is no user access, so you better hope this is only being used by one person.</p>
+      <p>To create a new course, input the information in the log form, and click log. That same course can be updated by accessing it from the course ID. Remove a course in the remove form.</p>
+    </header>
+    <section id="logForm">
+      <h2>Log Course</h2>
+      <form>
+        <label for="cID">Course ID</label> <br>
+        <input type="number" name="cID" id="cID" > <br>
+        <label for="cTerm">Term</label> <br>
+        <input type="text" name="cTerm" id="cTerm" > <br>
+        <label for="cName">Course Name</label> <br>
+        <input type="text" name="cName" id="cName" > <br>
+        <label for="prof">Professor</label> <br>
+        <input type="text" name="prof" id="prof"> <br>
+        <button id="log">Log</button>
+      </form>
+    </section>
+
+    <section id="removeForm"">
+      <h2>Remove Course</h2>
+      <form>
+        <label for="removeCID">Course ID</label> <br>
+        <input type="number" name="removeCID" id="removeCID" > <br>
+        <button id="remove">Remove</button>
+      </form>
+    </section>
+
+    <section id="view">
+      <h2>View Courses</h2>
+      <table id="courses">
+        <thead>
+          <tr>
+            <th>Course ID</th>
+            <th>Course Name</th>
+            <th>Professor</th>
+            <th>CRN</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </section>
+  
+  </body>
+</html>
