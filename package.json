@@ -4,7 +4,10 @@
   "description": "",
   "author": "",
   "scripts": {
-    "start": "node --env-file=.env server.js"
+    "start": "node --env-file=.env index.js"
+  },
+  "engines":{
+    "node":"20.x"
   },
   "dependencies": {
     "express": "^4.19.2",
