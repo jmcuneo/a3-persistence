@@ -1,19 +1,18 @@
 # Car Data Application
 
 Link:
-https://a3-hanzalahqamar.vercel.app
+https://a3-hanzalahqamar.glitch.me
 
-Reload the page a few times and try logging in a few times if you encounter errors.
-Sometimes the Vercel page bugs and shows a internal server error because no one has accessed it in a long time and the database connection timed out. Just let Vercel warm up.
-
-Either log in through github or create a new account by entering a new unique username and any password, and it will create a new account for that username. 
-
-add cars with the correct parameters into the table, you can edit them by clicking on the fields after they are added into the table and editing them, then pressing update
+Did not use my Vercel link (listed below for partial credit) because there was some minor database interaction issues, resulting in many 401 errors and data not persisting sometimes.
+glitch never had this issue, so i decided to use glitch instead to be safe.
 
 # Car Data Application Summary
 
 ## Application Goal
 The goal is to provide a user-friendly platform for managing car data and conducting surveys on car preferences. Features include adding, viewing, updating, and deleting car information, participating in car surveys, viewing submitted survey data, and user authentication using local and GitHub OAuth strategies.
+
+The surveys can only be submitted once per user, but the editable data is the car data table adding feature.
+These table entries can be edited (by selecting the field, and then pressing update), deleted and added. They fill the persistent requirement of this assignment.
 
 **Login Page:**
 ![Login Page](<Screenshot 2024-03-28 at 1.44.37 AM.png>)
@@ -25,6 +24,8 @@ The goal is to provide a user-friendly platform for managing car data and conduc
 ## Challenges Faced
 Challenges included implementing authentication with Passport.js, validating user input, designing a user-friendly interface with Tacit CSS, integrating MongoDB for data storage, and managing survey form logic.
 Deploying to vercel also required lots of debugging, such as making sure the database connection didnt time out and the deployment could never access it again, and also helping the app recognize the github oauth properly.
+Did not end up using Vercel because there was so much database interaction issues, resulting in many 401 errors and data not persisting.
+glitch never had this issue, so i decided to use glitch instead to be safe.
 
 ## Authentication Strategy
 Two strategies were used: LocalStrategy for username/password login and GitHubStrategy for OAuth with GitHub. This approach provides both traditional and modern login options to accommodate different user preferences.
@@ -54,6 +55,10 @@ A few good things about vercel:
 A few inconveniences:
 - Minor changes to the package.json have to be made.
 - Vercel.json needs to be created and populated with the correct input before deploying the app to make sure it runs properly.
+- Did not use Vercel in the end because there was so much database interaction issues, resulting in many 401 errors and data not persisting.
+glitch never had this issue, so i decided to use glitch instead to be safe.
+- here is my app deployment on vercel for partial credit: https://a3-hanzalahqamar.vercel.app/.
+it works most of the time, but sometimes the data doesnt get pulled for the logged in user for the table of cars because of some weird database interaction timeouts issues with vercel hosting.
 
     Youtube Tutorial to host using Vercel:
 https://www.youtube.com/watch?v=vCuf62T2snY
