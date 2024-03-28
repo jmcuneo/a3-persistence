@@ -1,0 +1,31 @@
+{
+  "name": "a2-shortstack",
+  "description": "Assignment 2 - Car Table Website: Basic Two-tier Web Application using HTML/CSS/JS and Node.js   ===",
+  "author": "Hanzalah Qamar",
+  "scripts": {
+    "start": "node server.improved.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "bootstrap": "^5.3.3",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.9",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "http": "^0.0.1-security",
+    "mime": "^2.6.0",
+    "mongodb": "^6.5.0",
+    "passport": "^0.7.0",
+    "passport-github": "^1.1.0",
+    "passport-local": "^1.0.0"
+  },
+  "version": "1.0.0",
+  "main": "server.improved.js",
+  "engines": {
+    "node": "20.x"
+  },
+  "keywords": [],
+  "license": "ISC"
+}
