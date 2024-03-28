@@ -1,7 +1,8 @@
 # Car Data Application
 
 Link:
-http://a3-joshua-cuneo.glitch.me
+https://a3-persistence.vercel.app
+
 
 # Car Data Application Summary
 
@@ -36,11 +37,20 @@ The Tacit CSS Framework was used for its minimalistic and classless design. Cust
 # Technical Achievements
 - **Tech Achievement 1**: I used OAuth authentication for the login via the GitHub strategy.
 
-- **Tech Achievement 2**: Hosted on Vercel: Explain why it was better or worse
+- **Tech Achievement 2**: Hosted on Vercel: 
+I think that vercel was very simple and straightforward to deploy on
+A few good things about vercel:
+- It automatically redeploys the app whenever the github is pushed to, so you dont need to manually redeploy after every change you push to github
+- You dont need to manually create an env file in the vercel deployment, it just asks you to paste the env contents into a form when you first deploy, and it takes care of everything else for you
+- Github Oauth worked flawlessly because the link for the page stays the same each deployment.
 
+A few inconveniences:
+- Minor changes to the package.json have to be made.
+- Vercel.json needs to be created and populated with the correct input before deploying the app to make sure it runs properly.
 
 - **Tech Achievement 3**:
-Got 100% on all four lighthouse tests for both the login and app page
+Got 100% on all four lighthouse tests for both the login and app page.
+Note that it needs to be run in incognito because extensions interfere with the performance test.
 
 
 # Design/Evaluation Achievements
