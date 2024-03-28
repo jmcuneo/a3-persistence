@@ -15,8 +15,11 @@ passport.use(new GitHubStrategy({
     }
 ));
 
-app.use(express.static( 'public' ))
+app.use(express.static('public'))
 app.use(express.static('views'))
+
+app.get("/auth", passport.authenticate('passport-github2'));
+
 
 app.listen(process.env.PORT || 3000)
 
