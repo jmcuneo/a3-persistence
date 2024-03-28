@@ -4,7 +4,7 @@
   "description": "",
   "author": "",
   "scripts": {
-    "start": "node --env-file=.env index.js"
+    "start": "node index.js"
   },
   "engines":{
     "node":"20.x"
