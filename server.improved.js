@@ -15,11 +15,15 @@ const port = 3000;
 app.set('views', path.join(__dirname, 'public'));
 app.set('view engine', 'ejs');
 
-const client = new MongoClient(process.env.MONGODB_URI);
+const client = new MongoClient(process.env.MONGODB_URI, {
+    serverSelectionTimeoutMS: 5000, // Keep the connection alive for 5 seconds
+    socketTimeoutMS: 45000 // Close sockets after 45 seconds of inactivity
+});
+
 let db;
 let usersCollection;
 let carsCollection;
-let userSurveysCollection; // Corrected variable name
+let userSurveysCollection;
 
 client.connect()
   .then(() => {
@@ -27,7 +31,7 @@ client.connect()
     db = client.db("4241database");
     usersCollection = db.collection('users');
     carsCollection = db.collection('cars');
-    userSurveysCollection = db.collection('surveys'); // Corrected collection name
+    userSurveysCollection = db.collection('surveys');
   })
   .catch(err => console.error('Failed to connect to MongoDB:', err));
 
@@ -162,8 +166,6 @@ app.get('/app', async (req, res) => {
   }
 });
 
-
-
 app.post('/login',
     passport.authenticate('local', {
         failureRedirect: '/',
@@ -229,7 +231,6 @@ app.post('/update', async (req, res) => {
     }
 });
 
-// Delete a car
 app.post('/delete', async (req, res) => {
   if (!req.user) {
     return res.status(401).json({ error: 'Not authenticated' });
@@ -248,7 +249,6 @@ app.post('/delete', async (req, res) => {
   }
 });
 
-
 app.get('/username', (req, res) => {
   if (req.user) {
       res.json({ username: req.user.username });
@@ -256,6 +256,7 @@ app.get('/username', (req, res) => {
       res.json({ username: null });
   }
 });
+
 
 app.post('/survey', async (req, res) => {
   if (!req.user) {
@@ -319,9 +320,6 @@ app.post('/submit-survey', async (req, res) => {
       res.status(500).json({ error: 'Failed to submit survey' });
   }
 });
-
-
-
 
 app.get('/load-survey', async (req, res) => {
   if (!req.user) {

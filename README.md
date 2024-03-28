@@ -1,139 +1,114 @@
-Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
-===
+# Car Data Application
 
-Check out the [CS 4241 Guides](https://github.com/jmcuneo/cs4241-guides) for help with the technologies discussed in this assignment.
+Link:
+https://a3-hanzalahqamar.vercel.app
 
-This assignnment continues where we left off, extending it to use the most popular Node.js server framework (express), 
-a database (mongodb), and a CSS application framework / template of your choice (Boostrap, Material Design, Semantic UI, Pure etc.)
+Reload the page a few times and try logging in a few times if you encounter errors.
+Sometimes the Vercel page bugs because no one has accessed it in a long time. Just let Vercel warm up.
 
-Baseline Requirements
----
+Either log in through github or create a new account by entering a new unique username and any password, and it will create a new account for that username. 
 
-Your application is required to implement the following functionalities:
+add cars with the correct parameters into the table, you can edit them by clicking on the fields after they are added into the table and editing them, then pressing update
 
-- a `Server`, created using Express (no alternatives will be accepted for this assignment)
-- a `Results` functionality which shows all data associated with a logged in user (except passwords)
-- a `Form/Entry` functionality which allows users to add, modify, and delete data items (must be all three!) associated with their user name / account. 
-- Persistent data storage in between server sessions using [mongodb](https://www.mongodb.com/cloud/atlas) (you *must* use mongodb for this assignment). You can use either the [official mongodb node.js library](https://www.npmjs.com/package/mongodb) or use the [Mongoose library](https://www.npmjs.com/package/mongoose), which enables you to define formal schemas for your database. Please be aware that the course staff cannot provide in-depth support for use of Mongoose.  
-- Use of a [CSS framework or template](https://github.com/troxler/awesome-css-frameworks). 
-This should do the bulk of your styling/CSS for you and be appropriate to your application. 
-For example, don't use [NES.css](https://nostalgic-css.github.io/NES.css/) (which is awesome!) unless you're creating a game or some type of retro 80s site.
+# Car Data Application Summary
 
-Your application is required to demonstrate the use of the following concepts:  
+## Application Goal
+The goal is to provide a user-friendly platform for managing car data and conducting surveys on car preferences. Features include adding, viewing, updating, and deleting car information, participating in car surveys, viewing submitted survey data, and user authentication using local and GitHub OAuth strategies.
 
-HTML:  
-- HTML input tags and form fields of various flavors (`<textarea>`, `<input>`, checkboxes, radio buttons etc.)
-- HTML that can display all data *for a particular authenticated user*. Note that this is different from the last assignnment, which required the display of all data in memory on the server.
+**Login Page:**
+![Login Page](<Screenshot 2024-03-28 at 1.44.37 AM.png>)
 
-Note that it might make sense to have two pages for this assignment, one that handles login / authentication and one that contains the rest of your application.
-For example, when visiting the home page for the assignment, users could be presented with a login form. After submitting the login form, if the login is 
-successful, they are taken to the main application. If they fail, they are sent back to the login to try again. For this assignment, it is acceptable to simply create 
-new user accounts upon login if none exist; however, you must alert your users to this fact.  
-
-CSS:  
-- CSS styling should primarily be provided by your chosen template/framework. 
-Oftentimes a great deal of care has been put into designing CSS templates; 
-don't override their stylesheets unless you are extremely confident in your graphic design capabilities. 
-The idea is to use CSS templates that give you a professional looking design aesthetic without requiring you to be a graphic designer yourself.
-
-JavaScript:  
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server. 
-See the [previous assignment](https://github.com/cs-4241-23/shortstack) for reference.
-
-Node.js:  
-- A server using Express and a persistent database (mongodb).
-
-General:  
-- Your site should achieve at least 90% on the `Performance`, `Best Practices`, `Accessibility`, and `SEO` tests 
-using Google [Lighthouse](https://developers.google.com/web/tools/lighthouse) (don't worry about the PWA test, and don't worry about scores for mobile devices).
-Test early and often so that fixing problems doesn't lead to suffering at the end of the assignment. 
-
-Deliverables
----
-
-Do the following to complete this assignment:
-
-1. Implement your project with the above requirements. I'd begin by converting your A2 assignment. First, change the server to use express. Then, modify the server to use mongodb instead of storing data locally. Last but not least, implement user accounts and login. User accounts and login is often the hardest part of this assignment, so budget your time accordingly.
-2. If you developed your project locally, deploy your project to Glitch (unless completing the alternative server technical acheivement described below), and fill in the appropriate fields in your package.json file.
-3. Test your project to make sure that when someone goes to your main page on Glitch (or an alternative server), it displays correctly.
-4. Ensure that your project has the proper naming scheme `a3-FirstnameLastname` so we can find it.
-5. Fork this repository and modify the README to the specifications below.
-6. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a3-FirstnameLastname`.
-
-Acheivements
----
-
-Below are suggested technical and design achievements. You can use these to help boost your grade up to an A and customize the 
-assignment to your personal interests, for a maximum twenty additional points and a maximum grade of a 100%. 
-These are recommended acheivements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README, 
-why it was challenging, and how many points you think the achievement should be worth. 
-ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THEM.
-
-*Technical*
-- (10 points) Implement OAuth authentication, perhaps with a library like [passport.js](http://www.passportjs.org/). 
-*You must either use Github authenticaion or provide a username/password to access a dummy account*. 
-Course staff cannot be expected, for example, to have a personal Facebook, Google, or Twitter account to use when grading this assignment. 
-Please contact the course staff if you have any questions about this. THIS IS THE HARDEST ACHEIVEMENT OFFERED IN WEBWARE. You have been warned!  
-- (5 points) Instead of Glitch, host your site on a different service. Find a service that is reputable and has a free tier. Post your findings on Slack in the #assignment3 channel. DO NOT feel compelled to purchase a paid tier from any service, although if you already have one, you are welcome to use it. Make sure to describe this a bit in your README. What was better about using the service you chose as compared to Glitch? What (if anything) was worse? 
-- (5 points) Get 100% (not 98%, not 99%, but 100%) in all four lighthouse tests required for this assignment.  
-
-*Design/UX*
-- (10 points) Make your site accessible using the [resources and hints available from the W3C](https://www.w3.org/WAI/), Implement/follow twelve tips from their [tips for writing](https://www.w3.org/WAI/tips/writing/), [tips for designing](https://www.w3.org/WAI/tips/designing/), and [tips for development](https://www.w3.org/WAI/tips/developing/). *Note that all twelve must require active work on your part*. 
-For example, even though your page will most likely not have a captcha, you don't get this as one of your twelve tips to follow because you're effectively 
-getting it "for free" without having to actively change anything about your site. 
-Contact the course staff if you have any questions about what qualifies and doesn't qualify in this regard. 
-List each tip that you followed and describe what you did to follow it in your site.
-- (5 points) Describe how your site uses the CRAP principles in the Non-Designer's Design Book readings. 
-Which element received the most emphasis (contrast) on each page? 
-How did you use proximity to organize the visual information on your page? 
-What design elements (colors, fonts, layouts, etc.) did you use repeatedly throughout your site? 
-How did you use alignment to organize information and/or increase contrast for particular elements. 
-Write a paragraph of at least 125 words *for each of four principles* (four paragraphs, 500 words in total). 
+**App Page:**
+![App Page](<Screenshot 2024-03-28 at 1.45.32 AM.png>)
 
 
-FAQ
----
-**Q: Am I required modify my A2 submission for this assignment?**
+## Challenges Faced
+Challenges included implementing authentication with Passport.js, validating user input, designing a user-friendly interface with Tacit CSS, integrating MongoDB for data storage, and managing survey form logic.
 
-No. If you want to start fresh for A3, you are welcome to do so. The option to start with A2 is simply there as a convenience for you.
+## Authentication Strategy
+Two strategies were used: LocalStrategy for username/password login and GitHubStrategy for OAuth with GitHub. This approach provides both traditional and modern login options to accommodate different user preferences.
 
-**Q: Which CSS framework should I use? How do I use it?**
+## CSS Framework and Customizations
+The Tacit CSS Framework was used for its minimalistic and classless design. Custom CSS modifications were made for specific layout requirements, such as setting the display style for the 'Intro' field in the survey form.
 
-This is for you to figure out. While we do require Express and MongoDB for this assignment, we do not require a specific CSS framework, so we are not going to be discussing a specific one. You will be responsible for choosing a CSS framework and learning how to use it.
+## Middleware Used
+- `express.static`: Serves static files such as HTML, images, and CSS from a specified directory.
+- `express.json()`: Parses incoming request payloads as JSON, facilitating the handling of JSON content from client-side applications.
+- `express.urlencoded({ extended: false })`: Parses incoming requests with URL-encoded payloads, typically from HTML forms.
+- `express-session`: Manages user sessions across web requests, enabling persistent state between browsing sessions.
+- `passport`: Provides authentication middleware capable of using different strategies like username/password authentication or OAuth with services like GitHub.
+- Custom Cache-Control Middleware: Modifies the `Cache-Control` header for all responses to `no-store`, preventing browsers from caching sensitive user data.
 
-**Q: How do I keep my .env file out of my git repo?**
 
-Create a .gitignore file on your local machine and list your .env file in it. Note that while your .env file should NOT appear in your repo, you will still want to add it to your Glitch project so that your website runs successfully.
+# Technical Achievements
+**Tech Achievement 1**: I used OAuth authentication for the login via the GitHub strategy.
 
-**Q: I'm confused about how user accounts work for this assignment.**
+**Tech Achievement 2**: Hosted on Vercel: 
+I think that vercel was very simple and straightforward to deploy on
+A few good things about vercel:
+- It automatically redeploys the app whenever the github is pushed to, so you dont need to manually redeploy after every change you push to github
+- You dont need to manually create an env file in the vercel deployment, it just asks you to paste the env contents into a form when you first deploy, and it takes care of everything else for you
+- Github Oauth worked flawlessly because the link for the page stays the same each deployment.
 
-For the base requirements (discounting the achievements), it should follow this logic:
+A few inconveniences:
+- Minor changes to the package.json have to be made.
+- Vercel.json needs to be created and populated with the correct input before deploying the app to make sure it runs properly.
 
-1. If the user logs in and the account does not exist, create the account and inform the user the account has been created.
-2. If the user logs in and the account exists but the password is incorrect, inform the user.
-3. If the user logs in, the account exists, and the password is correct, then take the user to the page that shows the data specific to the user.
+    Youtube Tutorial to host using Vercel:
+https://www.youtube.com/watch?v=vCuf62T2snY
 
-Note that implementing some of the technical achievements may override this requirement, which is fine.
 
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
+ **Tech Achievement 3**:
+Got 100% on all four lighthouse tests for both the login and app page.
+Note that it needs to be run in incognito because extensions interfere with the performance test.
 
-## Your Web Application Title
 
-your glitch (or alternative server) link e.g. http://a3-joshua-cuneo.glitch.me
+# Design/Evaluation Achievements
 
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
+- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative:
 
-- the goal of the application
-- challenges you faced in realizing the application
-- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why
-  - include any modifications to the CSS framework you made via custom CSS you authored
-- the five Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function for *one* (and one alone) middleware please 
-add a little more detail about what it does.
+**Tips for Writing:**
 
-## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
+1. Provide informative, unique page titles: Each HTML page has a unique and descriptive title element that succinctly describes the content and purpose of the page (e.g., "Login" and "Car Data").
 
-### Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+2. Use headings to convey meaning and structure: HTML headings (h1, h2, etc.) are used to structure content hierarchically, making it easier for screen readers to navigate the page.
+
+3. Write meaningful link text: All links have descriptive text that provides context for the link's destination, such as "Logout" and "Sign in with GitHub," rather than generic text like "click here."
+
+**Tips for Designing:**
+
+4. Ensure sufficient color contrast: The color scheme of the site has been chosen to ensure sufficient contrast between text and background colors, improving readability for users with visual impairments.
+
+5. Don't use color alone to convey information: In addition to color, other visual indicators (such as text labels) are used to convey information, ensuring that the content is accessible to users who may have difficulty distinguishing colors.
+
+6. Ensure that interactive elements are easy to identify: Interactive elements such as buttons and form fields are styled to be visually distinct and easily identifiable.
+
+**Tips for Developing**:
+
+7. Ensure keyboard control for all functionality: All interactive elements on the site can be accessed and used via a keyboard, ensuring accessibility for users who cannot use a mouse.
+
+8. Use ARIA roles and properties appropriately: ARIA (Accessible Rich Internet Applications) roles and properties are used to enhance the accessibility of dynamic content and complex user interface components.
+
+9. Ensure that form elements include clearly associated labels: All form elements have associated label elements with a for attribute that matches the id of the corresponding input, ensuring that screen readers can accurately announce the form fields.
+
+10. Provide clear feedback for user interactions: Visual and/or textual feedback is provided for user interactions, such as form submissions and button clicks, to confirm the action taken.
+
+11. Test and validate accessibility: Accessibility testing has been conducted using tools such as WAVE (Web Accessibility Evaluation Tool) to identify and address any accessibility issues.
+
+12. Use semantic HTML: Semantic HTML elements (such as header, nav, main, footer) are used to convey the structure and purpose of the content, enhancing accessibility for screen reader users.
+
+
+- **Design Achievement 2**: How my site includes the four CRAP principles
+
+Contrast:
+The most emphasized element on each page of my site is the main header, "Car Data" and "Login," which has been given a larger font size and bold weight to stand out prominently. This creates a strong contrast with the rest of the content, immediately drawing the user's attention to the purpose of the page. Additionally, I used a different color for the "Logout" and "Sign in with GitHub" links to differentiate them from regular text and emphasize their importance as interactive elements. The contrast principle is further applied in the form tables and buttons, where I used distinct colors to highlight actionable items, ensuring they are easily identifiable and accessible to users. This approach helps in maintaining a clear visual hierarchy and aids in user navigation.
+
+Repetition:
+Throughout the site, I maintained consistency in design elements to create a cohesive and visually appealing experience. The use of the Tacit CSS framework ensures that the fonts, colors, and button styles are consistent across all pages. The same font family is used for both headers and body text, creating a harmonious look and feel. The color scheme is kept minimal, with a primary color for headers and buttons and a secondary color for links, providing a clear visual hierarchy. The layout of forms and tables is also repeated on different pages, making it easy for users to navigate and interact with the site, as they become familiar with the consistent structure and design. This repetition of elements reinforces the brand identity and creates a sense of familiarity for the user.
+
+Alignment:
+To organize information and enhance readability, I used alignment strategically throughout the site. Text and form fields are left-aligned, creating a clean and organized layout that guides the user's eye through the content logically. Buttons are aligned with the corresponding input fields, providing a clear visual connection between actions and their related inputs. In the navigation header, the user information and logout link are right-aligned, creating a visual balance with the page title on the left. This alignment not only organizes the information but also increases contrast for particular elements, making the site more visually appealing and user-friendly. Proper alignment is crucial for creating a structured and professional-looking interface.
+
+Proximity:
+Proximity is used on the site to group related items and create a clear visual structure. In the forms, labels are placed close to their respective input fields, indicating their association and making it easy for users to understand what information is required. The survey form groups related questions together, such as the radio buttons for "Favorite Body Style," enhancing the user's ability to quickly comprehend the options. Similarly, the table displaying car data keeps related information, such as model and year, close to each other, facilitating quick scanning and comprehension. By using proximity to organize visual information, the site provides a logical and intuitive user experience. This principle is essential for creating a user-friendly layout that minimizes confusion and enhances the overall usability of the site.
+
