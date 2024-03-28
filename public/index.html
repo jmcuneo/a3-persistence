@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>CS4241 Assignment 2</title>
+  <meta charset="utf-8">
+  <script src="js/main.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+
+  <!-- get rid of favicon error -->
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body>
+<div class="container">
+  <h1>Arcade Game Score Tracker</h1>
+<form>
+  <input type="text" id="playerName" name="playerName" placeholder="Player Name">
+  <input type="number" id="score" name="score" placeholder="Score">
+  <input type="date" id="gameDate" name="gameDate">
+  <button>Submit Score</button>
+</form>
+<div id="scoreDisplay"></div>
+
+<div id="editForm" style="display: none;">
+  <input type="text" id="editPlayerName" placeholder="Edit Player Name">
+  <input type="number" id="editScore" placeholder="Edit Score">
+  <input type="date" id="editGameDate">
+  <button type="button" onclick="submitEdit()">Save Changes</button>
+  <button type="button" onclick="cancelEdit()">Cancel</button>
+</div>
+</div>
+
+</body>
+</html>

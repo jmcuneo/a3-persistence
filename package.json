@@ -1,0 +1,11 @@
+{
+  "name": "a2-zeshengchen",
+  "description": "an arcade game scores tracking application",
+  "author": "Zesheng Chen",
+  "scripts": {
+    "start": "node server.improved.js"
+  },
+  "dependencies": {
+    "mime": "^2.6.0"
+  }
+}
