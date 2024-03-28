@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="This is the app page.">
     <title>Car Data</title>
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/yegor256/tacit@gh-pages/tacit-css-1.7.1.min.css" />
+
 </head>
+
 <body>
     <div class="header">
         <h1>Car Data</h1>
         <div class="user-info">
-            User: <span id="username">Guest</span>
+            User: <b><span id="username"></span></b>
+            <br>
             <a href="/logout" class="logout-link">Logout</a>
         </div>
     </div>
-    
-    <form id="data-form">
+
+    <form id="data-form" class="form">
         <label for="model">Model:</label>
         <input type="text" id="model" name="model" required>
 
@@ -32,7 +36,7 @@
         <button type="submit">Add Car</button>
     </form>
 
-    <button id="refresh-button">Refresh Data</button>
+    <button id="refresh-button" class="button">Refresh Data</button>
 
     <table id="data-table">
         <thead>
@@ -50,22 +54,22 @@
     </table>
 
     <div class="additional-inputs">
-        
         <% if (showSurveyForm) { %>
             <h2>Car Survey</h2>
-            <form id="survey-form">
+            <form id="survey-form" class="form">
                 <label for="first-car">Name Of My First Car:</label>
                 <input type="text" id="first-car" name="firstCar">
                 <br>
-            
+
                 <label for="intro">Intro:</label>
-                <textarea id="intro" name="intro" rows="4" cols="50"></textarea>
+                <textarea id="intro" name="intro" rows="4" cols="50" style="display: block;"></textarea>
+
                 <br>
-            
+
                 <label for="like-cars">I Like Cars:</label>
                 <input type="checkbox" id="like-cars" name="likeCars">
                 <br>
-            
+
                 <label>Favorite Body Style:</label>
                 <label for="body-coupe">Coupe</label>
                 <input type="radio" id="body-coupe" name="bodyStyle" value="coupe">
@@ -74,7 +78,7 @@
                 <label for="body-suv">SUV</label>
                 <input type="radio" id="body-suv" name="bodyStyle" value="suv">
                 <br>
-            
+
                 <label for="fuel-type">Favorite Fuel Type:</label>
                 <select id="fuel-type" name="fuelType">
                     <option value="gas">Gas</option>
@@ -82,39 +86,41 @@
                     <option value="hybrid">Hybrid</option>
                 </select>
                 <br>
-            
-                <button type="button" id="submit-survey">Submit</button>
+
+                <button type="button" id="submit-survey" class="button">Submit</button>
             </form>
-            
-<!--             
-            <script>
-                
-            </script> -->
-            
-        <% } %>
+            <% } %>
     </div>
     <div class="user-survey-data">
-        
         <% if (userData) { %>
             <h2>Submitted User Survey Data</h2>
-            <p><strong>Name Of My First Car:</strong> <%= userData.firstCar %></p>
-            <p><strong>Intro:</strong> <%= userData.intro %></p>
-            <p><strong>I Like Cars:</strong> <%= userData.likeCars ? 'Yes' : 'No' %></p>
-            <p><strong>Favorite Body Style:</strong> <%= userData.bodyStyle %></p>
-            <p><strong>Favorite Fuel Type:</strong> <%= userData.fuelType %></p>
-        <% } else { %>
-            <p></p>
-        <% } %>
+            <p><strong>Name Of My First Car:</strong>
+                <%= userData.firstCar %>
+            </p>
+            <p><strong>Intro:</strong>
+                <%= userData.intro %>
+            </p>
+            <p><strong>I Like Cars:</strong>
+                <%= userData.likeCars ? 'Yes' : 'No' %>
+            </p>
+            <p><strong>Favorite Body Style:</strong>
+                <%= userData.bodyStyle %>
+            </p>
+            <p><strong>Favorite Fuel Type:</strong>
+                <%= userData.fuelType %>
+            </p>
+            <% } else { %>
+                <p>No survey data available.</p>
+                <% } %>
     </div>
-    
-    
-    
+
     <% if (newUser) { %>
         <script>
             alert('New user created successfully.');
         </script>
-    <% } %>
+        <% } %>
 
-    <script src="js/main.js"></script>
+            <script src="js/main.js"></script>
 </body>
+
 </html>
