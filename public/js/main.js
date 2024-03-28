@@ -45,6 +45,7 @@ const deleteCourse = async function (event) {
 	// perform delete request using fields
 	const response = await fetch("/delete", {
 		method: "DELETE",
+		headers: { 'Content-Type': 'application/json' },
 		body
 	})
 
