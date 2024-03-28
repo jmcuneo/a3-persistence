@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+
+</head>
+<body>
+<div class="top-nav">
+    <h1 class="title">Billing System</h1>
+</div>
+
+<div class="flex-container">
+    <div class="flex-item inside-form">
+        <form> <!-- form for user to enter purchase data -->
+            <label>Product Name</label>
+            <br>
+            <input autofocus autocomplete="off" type="text" id="productname" placeholder="Enter product name">
+            <br>
+            <label>Date Of Purchase</label>
+            <input autocomplete="off" type="date" id="purchasedate">
+            <br>
+            <label>Product Cost</label>
+            <input autocomplete="off" type="number" id="cost" placeholder="Enter cost for single">
+            <br>
+            <label>Product Quantity</label>
+            <input autocomplete="off" type="number" id="quantity" placeholder="Enter quantity">
+            <br>
+            <label>Product Category</label>
+            <br>
+            <select id="category">
+                <option disabled selected>Choose Category</option>
+                <option value="food">Food</option>
+                <option value="electronics">Electronics</option>
+                <option value="furniture">Furniture</option>
+                <option value="clothing">Clothing</option>
+                <option value="kitchen">Kitchen</option>
+                <option value="living-bedroom">Living/Bedroom space</option>
+                <option value="other">Other</option>
+            </select>
+            <br>
+            <label>Product Description</label>
+            <br>
+            <input autocomplete="off" type="text" id="description" placeholder="Enter any product description">
+            <br>
+            <button id="submit" class="submit-btn">SUBMIT</button>
+            <button type="reset" class="submit-btn">RESET</button>
+        </form>
+    </div>
+    <div class="flex-item display-results">
+        <h1>Purchase Data</h1>
+        <table id="my-table" class="table-info"> <!-- creating a table for purchase data-->
+            <thead> <!-- for table heading columns, 1st row -->
+            <tr>
+                <th>Product Details</th>
+                <th>Final Price</th>
+                <th>Modify</th>
+            </tr>
+            </thead>
+            <tbody id='table-body'> <!-- for table body with all rows/cells filled with data -->
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<div class="popup" id="popup">
+    <h2>Form Update</h2>
+    <form> <!-- form for user to update purchase data -->
+        <label>Product Name</label>
+        <br>
+        <input autocomplete="off" type="text" id="updproductname" placeholder="Enter product name">
+        <br>
+        <label>Date Of Purchase</label>
+        <input autocomplete="off" type="date" id="updpurchasedate">
+        <br>
+        <label>Product Cost</label>
+        <input autocomplete="off" type="number" id="updcost"  placeholder="Enter cost for single">
+        <br>
+        <label>Product Quantity</label>
+        <input autocomplete="off" type="number" id="updquantity" placeholder="Enter quantity">
+        <br>
+        <label>Product Category</label>
+        <br>
+        <select id="updcategory">
+            <option disabled selected>Choose Category</option>
+            <option value="food">Food</option>
+            <option value="electronics">Electronics</option>
+            <option value="furniture">Furniture</option>
+            <option value="clothing">Clothing</option>
+            <option value="kitchen">Kitchen</option>
+            <option value="living-bedroom">Living/Bedroom space</option>
+            <option value="other">Other</option>
+        </select>
+        <br>
+        <label>Product Description</label>
+        <br>
+        <input autocomplete="off" type="text" id="upddescription" placeholder="Enter any product description">
+        <br>
+        <input type="hidden" id="updindex">
+        <button type="button" id="updsubmit" class="submit-btn" onclick="updateRow(); closePopup()">UPDATE</button>
+        <button id="reset" type="reset" class="submit-btn">RESET</button>
+    </form>
+    <button class="submit-btn" type="button" onclick="closePopup()">CANCEL</button>
+</div>
+
+<div class="footer">
+    <footer><b>Copyright &#169; Sai Teja Sunku, 2024</b></footer>
+</div>
+
+</body>
+</html>
