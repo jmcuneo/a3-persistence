@@ -2,34 +2,43 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
 const refreshData = async () => {
-  const response = await fetch('/data', {
-    credentials: 'include' // Include credentials in the request
-});
-  const data = await response.json();
-  console.log("Data fetched from server:", data); // Log the fetched data
+  try {
+    const response = await fetch('/data', {
+      credentials: 'include' // Include credentials in the request
+    });
 
-  const tableBody = document.querySelector('#data-table tbody');
-  tableBody.innerHTML = ''; // Clear existing rows
-
-  data.forEach((item) => {
-    // Check if the item has all four required properties
-    if (item.model && item.year && item.mpg && item.gallons) {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td contenteditable="true">${item.model}</td>
-        <td contenteditable="true">${item.year}</td>
-        <td contenteditable="true">${item.mpg}</td>
-        <td contenteditable="true">${item.gallons}</td>
-        <td class="action-cell">
-          <button class="delete-button" onclick="deleteCar('${item._id}')">Delete</button>
-          <button class="update-button" onclick="updateCar('${item._id}', this.parentElement.parentElement)">Update</button>
-        </td>
-      `;
-      tableBody.appendChild(row);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
-  });
-};
 
+    const data = await response.json();
+    console.log("Data fetched from server:", data); // Log the fetched data
+
+    const tableBody = document.querySelector('#data-table tbody');
+    tableBody.innerHTML = ''; // Clear existing rows
+
+    data.forEach((item) => {
+      // Check if the item has all four required properties
+      if (item.model && item.year && item.mpg && item.gallons) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td contenteditable="true">${item.model}</td>
+          <td contenteditable="true">${item.year}</td>
+          <td contenteditable="true">${item.mpg}</td>
+          <td contenteditable="true">${item.gallons}</td>
+          <td class="action-cell">
+            <button class="delete-button" onclick="deleteCar('${item._id}')">Delete</button>
+            <button class="update-button" onclick="updateCar('${item._id}', this.parentElement.parentElement)">Update</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      }
+    });
+  } catch (error) {
+    console.error('Failed to refresh data:', error);
+    // Handle the error appropriately in your UI
+  }
+};
 
 const addCar = async (event) => {
   event.preventDefault();
