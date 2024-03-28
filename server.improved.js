@@ -98,7 +98,7 @@ function deleteData (request, response) {
   } )
 }
 
-app.post( '/delete', (req, res) => {
+app.post( '/remove', (req, res) => {
   let data = req.body
   console.log("Index for deletion: " + data)
   let removed = appdata.splice(data, 1) //Remove from table

@@ -45,14 +45,13 @@ const submit = async function( event ) {
 function deleteItem( event ) {
   let body = JSON.stringify(event.srcElement.id) //Send over the id (index) of the item to delete
 
-  fetch( "/delete", {
+  fetch( "/remove", {
     method:'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json',
+                'Accept': "application/json" },
     body 
-  }).then( (response) => { //handle promises
-      response.json().then((resp) => { //Handle other promise
+  }).then((response) => response.json()).then((resp) => { //Handle other promise
         displayData(resp) //Display returned data
-      })
     })
 
 }
