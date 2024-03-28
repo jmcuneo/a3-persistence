@@ -1,0 +1,62 @@
+h1 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 50px;
+  text-align: center;
+}
+
+body {
+  background:#f1f1f1;
+  color:black;
+}
+
+div {
+  font-size: 20px;
+}
+
+button {
+  font-size: 18px;
+}
+
+input {
+  font-size: 18px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 100px;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+#newButton {
+  color: white;
+  background-color: #255FF4;
+  border-color: #255FF4;
+  border-radius: 1.5em;
+  width: 90px;
+}
+
+#deleteButton {
+  color: white;
+  background-color: #f44336;
+  border-color: #f44336;
+  border-radius: 1.5em;
+  width: 90px;
+}
