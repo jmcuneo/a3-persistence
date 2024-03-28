@@ -17,7 +17,8 @@ const logCourse = async function (event) {
 
 	console.log(cID.value);
 	// send the json as post request
-	const response = await fetch("/submit", {
+	console.log(body);
+	const response = await fetch("/courses/add", {
 		method: "POST",
 		headers: { 'Content-Type': 'application/json' },
 		body
@@ -43,7 +44,7 @@ const deleteCourse = async function (event) {
 		body = JSON.stringify(json)
 
 	// perform delete request using fields
-	const response = await fetch("/delete", {
+	const response = await fetch("/courses/delete", {
 		method: "DELETE",
 		headers: { 'Content-Type': 'application/json' },
 		body
