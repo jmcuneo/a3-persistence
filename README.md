@@ -4,7 +4,7 @@ Link:
 https://a3-hanzalahqamar.vercel.app
 
 Reload the page a few times and try logging in a few times if you encounter errors.
-Sometimes the Vercel page bugs because no one has accessed it in a long time. Just let Vercel warm up.
+Sometimes the Vercel page bugs and shows a internal server error because no one has accessed it in a long time and the database connection timed out. Just let Vercel warm up.
 
 Either log in through github or create a new account by entering a new unique username and any password, and it will create a new account for that username. 
 
@@ -24,6 +24,7 @@ The goal is to provide a user-friendly platform for managing car data and conduc
 
 ## Challenges Faced
 Challenges included implementing authentication with Passport.js, validating user input, designing a user-friendly interface with Tacit CSS, integrating MongoDB for data storage, and managing survey form logic.
+Deploying to vercel also required lots of debugging, such as making sure the database connection didnt time out and the deployment could never access it again, and also helping the app recognize the github oauth properly.
 
 ## Authentication Strategy
 Two strategies were used: LocalStrategy for username/password login and GitHubStrategy for OAuth with GitHub. This approach provides both traditional and modern login options to accommodate different user preferences.
