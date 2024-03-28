@@ -16,13 +16,18 @@ async function run() {
   collection = await client.db("foodLogData").collection("collection1")
   // route to get all docs
   app.get("/docs", async (req, res) => {
-    console.log("Collection: " + collection);
+    //console.log("Collection: " + collection);
     if (collection !== null) {
-      const docs = await collection.find({})
-      res.json( docs )
-      console.log("DOCS: " + docs);
+      try { // Wrap in try-catch for error handling      
+        const docs = await collection.find({}).toArray(); // Use 'await'
+        //console.log("DOCS:", docs);  // This log should now show docs
+        res.json(docs);
+      } catch (error) {
+        console.error("Error fetching docs:", error);
+        res.status(500).send("Error retrieving documents"); 
+      } 
     }
-  })
+  });
 }
 
 app.use( (req,res,next) => {

@@ -55,9 +55,12 @@ async function fetchAllDocs() {
     if (!response.ok) {
       throw new Error(`Request failed with status: ${response.status}`);
     }
-
+    //console.log(response);
     const docsArray = await response.json();
-    console.log("docsArray: " + docsArray);
+    //console.log(docsArray);
+    // Accessing the _id of the first item
+    //const firstItemId = docsArray[0]._id; 
+    //console.log("First item's _id:", firstItemId);
     displayItems(docsArray);
   } catch (error) {
     console.error("Error fetching documents:", error);
@@ -67,7 +70,7 @@ async function fetchAllDocs() {
 
 async function handleDelete(index, items) {
   console.log("DELETING ITEM");
-  const itemId = items[index].id; // Get the itemId
+  const itemId = items[index]._id; // Get the itemId
   try {
     const response = await fetch('/delete-item', {
       method: 'POST',
@@ -177,7 +180,7 @@ async function handleEdit(index, items) {
       const response = await fetch('/edit-item', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ itemId: itemToEdit.id, ...updatedData })
+          body: JSON.stringify({ itemId: itemToEdit._id, ...updatedData })
       });
 
       if (response.ok) {
@@ -218,6 +221,7 @@ window.onload = function() {
 }
 
 function displayItems(items) {
+  console.log("Displaying Items");
   const itemsList = document.getElementById('itemsList');
   itemsList.innerHTML = ''; 
 
@@ -232,10 +236,10 @@ function displayItems(items) {
     const item = items[i];
 
     // Find existing row, or create a new one
-    let row = document.querySelector(`#dataTable tr[data-item-id="${item.id}"]`);
+    let row = document.querySelector(`#dataTable tr[data-item-id="${item._id}"]`);
     if (!row) {
         row = document.createElement('tr');
-        row.dataset.itemId = item.id; // Add a data-item-id attribute
+        row.dataset.itemId = item._id; // Add a data-item-id attribute
     } else {
         row.innerHTML = ''; // Clear existing cells if the row is reused
     }
@@ -286,6 +290,7 @@ function displayItems(items) {
     editCell.appendChild(editButton);
     row.appendChild(editCell);
     row.appendChild(deleteCell);
-  } 
-  console.log(items)
+
+    console.log("Item: " + items[i._id]);
+  }
 }
