@@ -93,7 +93,7 @@ Write a paragraph of at least 125 words *for each of four principles* (four para
 Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
 ---
 
-## Your Web Application Title
+# Your Web Application Title
 
 your glitch (or alternative server) link e.g. http://a3-joshua-cuneo.glitch.me
 
@@ -110,8 +110,8 @@ add a little more detail about what it does.
 ## Technical Achievements
 - **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
 
-### Design/Evaluation Achievements
-#### W3C Web Accessibility Tips
+## Design/Evaluation Achievements
+### W3C Web Accessibility Tips
 **Writing Tips**:
 - *Provide informative, unique page titles*: Changed titles for index.html and repices.html from "CS4241 Assignment 3" to "Assignment 3" and "Recipes | Assignment 3" respectively
 - 
