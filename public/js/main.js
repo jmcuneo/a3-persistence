@@ -91,11 +91,9 @@ const deleteCar = async (_id) => {
 };
 
 
-
-
 const updateUsernameDisplay = (username) => {
   const usernameSpan = document.getElementById('username');
-  usernameSpan.textContent = username || 'Guest';
+  usernameSpan.textContent = username;
 };
 
 // Update the username display based on the logged-in user
