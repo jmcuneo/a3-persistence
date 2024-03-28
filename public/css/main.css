@@ -97,6 +97,40 @@ td {
 }
 
 
+
+/* a[href="/logout"] {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f44336;
+  padding-top: 20px;
+   Red 
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+} 
+
+
+
+*/
+
+.github-login-button {
+  display: inline-block;
+  background-color: #000;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.github-login-button:hover {
+  background-color: #333;
+}
+
+
 .update-button {
   background-color: #3a3a3a;
   /* Red */

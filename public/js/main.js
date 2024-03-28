@@ -91,8 +91,62 @@ const deleteCar = async (_id) => {
 };
 
 
-window.onload = function () {
-  document.querySelector('#data-form').onsubmit = addCar;
-  document.querySelector('#refresh-button').onclick = refreshData;
-  refreshData(); // Load initial data
+
+
+const updateUsernameDisplay = (username) => {
+  const usernameSpan = document.getElementById('username');
+  usernameSpan.textContent = username || 'Guest';
 };
+
+// Update the username display based on the logged-in user
+fetch('/username')
+  .then(response => response.json())
+  .then(data => {
+      updateUsernameDisplay(data.username);
+  });
+
+  const submitSurvey = async () => {
+    const firstCar = document.getElementById('first-car').value;
+    const intro = document.getElementById('intro').value;
+    const likeCars = document.getElementById('like-cars').checked;
+    const bodyStyle = document.querySelector('input[name="bodyStyle"]:checked').value;
+    const fuelType = document.getElementById('fuel-type').value;
+
+    try {
+        const response = await fetch('/submit-survey', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ firstCar, intro, likeCars, bodyStyle, fuelType })
+        });
+        if (response.ok || response.redirected) {
+            alert('Survey submitted successfully.');
+            window.location.href = response.url; // Redirect to the new URL
+        } else {
+            const data = await response.json();
+            alert('Failed to submit survey: ' + data.error);
+        }
+    } catch (error) {
+        console.error('Failed to submit survey:', error);
+        alert('Failed to submit survey. Please try again later.');
+    }
+};
+
+
+
+// Assign the submitSurvey function to the form's submit event
+
+
+  
+  window.onload = function () {
+    document.querySelector('#data-form').onsubmit = addCar; // Add this line to submit survey data
+    document.querySelector('#refresh-button').onclick = refreshData;
+    refreshData(); // Load initial data
+  };
+  
+  const surveyForm = document.getElementById('survey-form');
+  const submitButton = document.getElementById('submit-survey');
+  if (surveyForm && submitButton) {
+      submitButton.addEventListener('click', submitSurvey);
+  }
