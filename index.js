@@ -30,16 +30,13 @@ async function runDB() {
   // route to get all docs
   app.get("/docs", async (req, res) => {
     if (collection !== null) {
-      const docs = await collection.find({}).toArray()
+      const docs = await collection.find({userId:req.userId}).toArray()
       res.json( docs )
     }
   })
 }
 
 runDB();
-
-var maxId = 0;
-const appdata = [];
 
 const handlePost = function(request, response) {
     // console.log("HANDLING POST");
@@ -68,13 +65,13 @@ const handleNewEntry = async function(response,data){
   var anagrams = anagram.getAnagrams(string,4);
   //Send this back as a unique identifier, which will allow the client to delete entries.
   let nextData = {
+    userId:data.userId,
     string:string,
     gram0:anagrams[0],
     gram1:anagrams[1],
     gram2:anagrams[2],
     gram3:anagrams[3]
   };
-  maxId++;
   const result = await collection.insertOne(nextData);
   nextData.id = result.insertedId;
   //TODO: Use result in some way
