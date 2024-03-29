@@ -6,7 +6,15 @@ app.use(express.static('public'));
 app.use(express.static('views'));
 app.use(express.json());
 
+require('dotenv').config();
 app.listen(process.env.PORT || 3000);
+
+// Connect to database
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGO_URI)
+  .then (() => {console.log("We're in!")})
+  .catch ((error) => {console.log("error")})
 
 
 var gpa = 0.0;
