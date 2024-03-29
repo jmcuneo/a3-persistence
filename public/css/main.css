@@ -1,4 +1,4 @@
-body {
+/* body {
   background:white;
   color:black;
 }
@@ -16,14 +16,14 @@ th,td{
 }
 form, input{
   font-family: "Silkscreen", sans-serif;
-}
+} */
 #submit{
   justify-content: center;
 }
-button{
+/* button{
   
   font-family: "Permanent Marker", cursive;
-}
+} */
 .flexbox{
   display: flex;
   justify-content: center;
