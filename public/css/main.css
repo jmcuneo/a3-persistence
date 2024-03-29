@@ -1,0 +1,61 @@
+/*An element selector that allows me to style (width, margins, colors, fonts, flexbox, etc) the entire body element on the webpage*/
+body {
+  max-width: 550px;
+  margin: auto;
+  padding: 10px;
+  background: #A0E1FF;
+  color: #012556;
+  font-family: "Madimi One", sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/*An element selector that allows me to style (max width) of the form the entire form element on the webpage (separate from results table)*/
+form {
+  max-width: 550px;
+}
+
+/*An element selector that allows me to use a websafe font for the input fields*/
+input {
+  font-family: "Madimi One", sans-serif;
+}
+
+/*An element selector that allows me to use a websafe font for the select fields*/
+select {
+  font-family: "Madimi One", sans-serif;
+}
+
+/*An element selector that allows me to use a websafe font for the button fields*/
+button {
+  font-family: "Madimi One", sans-serif;
+}
+
+/*A class selector that allows me to style (font size) the workout form label on the webpage*/
+.workout_form_label {
+  font-size: 45px;
+}
+
+/*A class selector that allows me to style (bold font weight for headers and bottom padding) the entire results table on the webpage*/
+.table-div {
+  font-weight: bold;
+  padding-bottom: 20px;
+}
+
+/*An ID selector that allows me to style (tops margins and normal font weight to contrast with headers) the results table data cells on the webpage*/
+#workout_data_table {
+  margin-top: 20px;
+  font-weight: normal;
+}
+
+/*An ID selector that allows me to style (background color and a border for neatness) the results table header cells even more on the webpage*/
+#workout_data_table th {
+  background-color: #3280C9;
+  border: 1px solid #012556;
+}
+
+/*An ID selector that allows me to style (background color and a border for neatness) the results table data cells even more on the webpage*/
+#workout_data_table td {
+  background-color: #E0FDFF;
+  border: 1px solid #012556;
+}

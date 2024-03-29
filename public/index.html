@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>CS4241 Assignment 2</title>
+  <meta charset="utf-8">
+  <script src="js/main.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+
+  <!-- get rid of favicon error -->
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap" rel="stylesheet">
+</head>
+<body>
+<form action="/workout_calorie_calculator" method="post">
+
+
+  <label class="workout_form_label">Workout Calorie Calculator</label>
+
+  <br><br>
+
+  <div>
+  <label for="workout_start_time">Workout Starting Time:</label>
+  <input type="time" id="workout_start_time" name="start_time">
+
+  <label for="workout_end_time">Workout Ending Time:</label>
+  <input type="time" id="workout_end_time" name="end_time">
+  </div>
+
+  <br><br>
+
+  <div>
+  <label>Workout Type:</label><br>
+
+  <input type="radio" id="Soccer" name="workout_type" value="Soccer">
+  <label for="Soccer">Soccer</label><br>
+  <input type="radio" id="Football" name="workout_type" value="Football">
+  <label for="Football">Football</label><br>
+  <input type="radio" id="Boxing" name="workout_type" value="Boxing">
+  <label for="Boxing">Boxing</label><br>
+  <input type="radio" id="Wrestling" name="workout_type" value="Wrestling">
+  <label for="Wrestling">Wrestling</label><br>
+
+  <label for="workout_intensity">Workout Intensity:</label>
+  <select name="intensity_select" id="workout_intensity">
+    <option value="Low">1 - Low</option>
+    <option value="Medium">2 - Medium</option>
+    <option value="High">3 - High</option>
+
+  </select>
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+<br><br>
+
+  <div>
+  <table id="workout_data_table">
+    <tr>
+      <th>Starting Time</th>
+      <th>Ending Time</th>
+      <th>Workout Type</th>
+      <th>Workout Intensity</th>
+      <th>Estimated Calories Burned</th>
+    </tr>
+  </table>
+  </div>
+
+</body>
+</html>
