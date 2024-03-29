@@ -7,6 +7,6 @@
     "start": "node server.improved.js"
   },
   "dependencies": {
-    "mime": "^2.6.0"
+    "express": "^4.19.2"
   }
 }
