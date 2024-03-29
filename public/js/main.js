@@ -55,12 +55,7 @@ async function fetchAllDocs() {
     if (!response.ok) {
       throw new Error(`Request failed with status: ${response.status}`);
     }
-    //console.log(response);
     const docsArray = await response.json();
-    //console.log(docsArray);
-    // Accessing the _id of the first item
-    //const firstItemId = docsArray[0]._id; 
-    //console.log("First item's _id:", firstItemId);
     displayItems(docsArray);
   } catch (error) {
     console.error("Error fetching documents:", error);
@@ -70,23 +65,24 @@ async function fetchAllDocs() {
 
 async function handleDelete(index, items) {
   console.log("DELETING ITEM");
-  const itemId = items[index]._id; // Get the itemId
+  const itemId = items[index]._id.toString(); // _id is an ObjectId
+  console.log(itemId);
+  console.log(index)
+  onsole.log(items[index])
   try {
-    const response = await fetch('/delete-item', {
-      method: 'POST',
+    const response = await fetch('/delete', {
+      method: 'DELETE', // Change method to DELETE
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ itemId })
     });
 
     if (response.ok) {
-        fetchAllDocs();
-    } 
-    else {
-        console.error('Delete failed:', response.status);
+      fetchAllDocs(); // Update the list
+    } else {
+      console.error('Delete failed:', response.status, await response.text()); // Log error details
     }
-  } 
-  catch (error) {
-      console.error('Error deleting item:', error);
+  } catch (error) {
+    console.error('Error deleting item:', error);
   }
 }
 
@@ -166,8 +162,6 @@ function hideEditForm() {
 }
 
 async function handleEdit(index, items) {
-  const itemToEdit = items[index]; 
-
   // Create and display the form
   const editForm = createEditForm(itemToEdit); 
   displayEditForm(editForm);
@@ -177,24 +171,22 @@ async function handleEdit(index, items) {
     event.preventDefault();
     try {
       const updatedData = extractDataFromForm(editForm);
+      const itemId = items[index]._id.toString(); // Assuming _id is an ObjectId
+
       const response = await fetch('/edit-item', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ itemId: itemToEdit._id, ...updatedData })
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ itemId, ...updatedData })
       });
 
       if (response.ok) {
-          fetchAllDocs();
-          hideEditForm(); 
-      } 
-      else {
-          console.error('Edit failed:', response.status); 
-          // Handle the failure - display error message in the form?
+        fetchAllDocs();  // Update the list
+        hideEditForm(); 
+      } else {
+        console.error('Edit failed:', response.status, await response.text()); 
       }
-    } 
-    catch (error) {
-        console.error('Error editing item:', error);
-        // Handle the error - display error message in the form?
+    } catch (error) {
+      console.error('Error editing item:', error);
     }
   });
 }
@@ -282,6 +274,7 @@ function displayItems(items) {
       if (!isEditFormOpen) { 
          isEditFormOpen = true; 
          const index = i; // Pass the index
+         console.log(items)
          handleEdit(index, items); // Pass the items array 
       }
    });
