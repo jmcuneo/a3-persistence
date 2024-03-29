@@ -143,11 +143,12 @@ app.get("/recipes", isUserAuthenticated, (req, res) => {
 });
 
 async function createTable(res, userID) {
-    let table = "<tr><th>Recipe Name</th><th>Prep Time</th><th>Cook Time</th><th>Total Time</th></tr>";
+    let table = "<tr><th>Recipe Name</th><th>Meal</th><th>Prep Time</th><th>Cook Time</th><th>Total Time</th></tr>";
     collection.find({}).toArray().then((data) => {
         data = data.filter((a) => a.userID === userID);
         for (let d of data)
             table += `<tr><td>${d.name}</td>
+                          <td>${d.type}</td>
                           <td>${d.prep} min${d.prep == 1 ? "" : "s"}</td>
                           <td>${d.cook} min${d.cook == 1 ? "" : "s"}</td>
                           <td>${d.total} min${d.total == 1 ? "" : "s"}</td></tr>`;
@@ -167,6 +168,7 @@ app.post("/add", express.json(), async (req, res) => {
     await collection.insertOne({
         userID: req.user._id,
         name: data.name,
+        type: data.type,
         prep: data.prep,
         cook: data.cook,
         total: parseInt(data.prep) + parseInt(data.cook)
@@ -203,6 +205,7 @@ app.post("/modify", express.json(), async (req, res) => {
             name: {$regex: `^${data.name}$`, $options: "i"}
         }, {
             $set: {
+                type: data.type,
                 prep: data.prep,
                 cook: data.cook,
                 total: parseInt(data.prep) + parseInt(data.cook)

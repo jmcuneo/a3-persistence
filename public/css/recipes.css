@@ -39,3 +39,7 @@ button:focus {
 form {
     padding-top: 20px;
 }
+
+select {
+    width: 30%;
+}

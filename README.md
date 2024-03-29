@@ -108,21 +108,28 @@ Include a very brief summary of your project here. Images are encouraged, along 
 add a little more detail about what it does.
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
+- **Implement OAuth Authentication**: I used OAuth authentication via the GitHub strategy for logging in to the site. User accounts are stored in MongoDB.
+- **Alternate Hosting**: 
+- **Lighthouse Tests**: Have a 100% in all four Lighthouse tests
 
 ## Design/Evaluation Achievements
 ### W3C Web Accessibility Tips
 **Writing Tips**:
 - *Provide informative, unique page titles*: Changed titles for index.html and repices.html from "CS4241 Assignment 3" to "Assignment 3" and "Recipes | Assignment 3" respectively
+- *Use headings to convey meaning and structure*: Added clear headings and subheadings so that users are clear about what each section entails
 - *Provide clear instructions*: Added instruction text at head of page
 
 **Designing Tips**:
+- *Provide sufficient contrast between foreground and background*: Used a dark mode color scheme with high contrast between the text and button colors and the background (confirmed using the Chrome DevTools for rendering page for people with different visual deficiencies)
 - *Ensure that interactive elements are easy to identify*: Changed CSS for buttons that are focused to be more obvious
+- *Ensure that form elements include clearly associated labels*: Added placeholder text for each input box so that users know what to enter into each box
 - *Provide easily identifiable feedback*: Added alert for when user tries to remove or modify a recipe that does not exist
+- *Use headings and spacing to group related content*: Grouped the headers, inputs, and buttons for each user action into visually distinct sections
 
 **Development Tips**:
 - *Associate a label with every form control*: Added placeholder text for each input so that users would know what to enter into each box
 - *Help users avoid and correct mistakes*: Added alert for when all fields are not filled when a form is submitted
+- *Identify page language and language changes*: Added "<html lang="en">" to the start of index.html and recipes.html
 
 ### CRAP Principles
 **Contrast**: 
@@ -131,5 +138,4 @@ add a little more detail about what it does.
 
 **Alignment**: 
 
-**Proximity**:
-I used proximity to organize the visual information on my page in several ways. One, by grouping together the header, input boxes, and button for each action that the user can take. This makes it easier for users to easily distinguish the different actions they can take and where they need to input information for each one. I added extra spacing between each of the groups to accentuate that they are separated, further increasing clarity. There are a total of five different groups on the page. This number include the table for displaying data and the title with the logout button and instructions. Having a smaller number of distinct groupings on the page makes it easier for users to digest the entirety of the page quickly.
+**Proximity**: I used proximity to organize the visual information on my page in several ways. One, by grouping together the header, input boxes, and button for each action that the user can take. This makes it easier for users to easily distinguish the different actions they can take and where they need to input information for each one. I added extra spacing between each of the groups to accentuate that they are separated, further increasing clarity. There are a total of five different groups on the page. This number include the table for displaying data and the title with the logout button and instructions. Having a smaller number of distinct groupings on the page makes it easier for users to digest the entirety of the page quickly.

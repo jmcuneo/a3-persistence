@@ -8,16 +8,19 @@ const add = async function(event) {
     const nameInput = document.querySelector(".add.name"),
           prepInput = document.querySelector(".add.prep"),
           cookInput = document.querySelector(".add.cook"),
-          json = {name: nameInput.value,
-                  prep: prepInput.value,
-                  cook: cookInput.value},
+          typeInput = document.querySelector(".add.type"),
+          json = {
+            name: nameInput.value,
+            prep: prepInput.value,
+            cook: cookInput.value,
+            type: typeInput.value
+          },
           body = JSON.stringify(json);
 
     console.log(json);
 
     if (json.name === "" || json.prep === "" || json.cook === "") {
-        alert("Please Enter All Fields");
-        return;
+        return alert("Please Enter All Fields");
     }
 
     const response = await fetch("/add", {
@@ -37,8 +40,10 @@ const add = async function(event) {
 const remove = async function(event) {
     event.preventDefault();
 
-    const input = document.querySelector("input.remove");
-          json = {name: input.value},
+    const nameInput = document.querySelector(".remove.name"),
+          json = {
+            name: nameInput.value
+          },
           body = JSON.stringify(json);
 
     const response = await fetch("/remove", {
@@ -48,8 +53,7 @@ const remove = async function(event) {
     });
 
     if (json.name === "") {
-        alert("Please Enter All Fields");
-        return;
+        return alert("Please Enter All Fields");
     }
 
     const table = await response.text();
@@ -57,7 +61,7 @@ const remove = async function(event) {
     if (table.substring(0, 4) !== "<tr>") {
         alert("Recipe Does Not Exist!");
     } else {
-        input.value = "";
+        nameInput.value = "";
         document.querySelector("table").innerHTML = table;
     }
 };
@@ -68,14 +72,17 @@ const modify = async function(event) {
     const nameInput = document.querySelector(".modify.name"),
           prepInput = document.querySelector(".modify.prep"),
           cookInput = document.querySelector(".modify.cook"),
-          json = {name: nameInput.value,
-                  prep: prepInput.value,
-                  cook: cookInput.value},
+          typeInput = document.querySelector(".modify.type"),
+          json = {
+            name: nameInput.value,
+            prep: prepInput.value,
+            cook: cookInput.value,
+            type: typeInput.value
+          },
           body = JSON.stringify(json);
 
     if (json.name === "" || json.prep === "" || json.cook === "") {
-        alert("Please Enter All Fields");
-        return;
+        return alert("Please Enter All Fields");
     }
 
     const response = await fetch("/modify", {
