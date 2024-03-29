@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 3</title>
+    <meta charset="utf-8">
+    
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+
+  <body>
+    <div class="header">What To Bring</div>
+    <div class="text-grid">
+      <form>
+        <input type="text" id="yourname" maxlength="10" value="" placeholder="Enter Name"> <!--placeholder allows user to type directly without deleting valuetag first-->
+        <input type="text" id="youritem" maxlength="10" value="" placeholder="Enter Item">
+        <input type="number" min= "0" step="1" maxlength="10" oninput="validity.valid||(value='');" id="numItems" value="" placeholder="Enter Quanitity"> <!--only allow whole, positive numbers-->
+        <input type="number" min="0" maxlength="10" id="itemPrice" value="" placeholder="Enter Item Price">
+        <button id="submit">submit</button>
+      </form>
+    </div>
+
+    <div>
+      <form>
+        <input type="text" id="suggestItem" maxlength="10" value="" placeholder="Enter Item">
+        <input type="number" min= "0" step="1" maxlength="10" oninput="validity.valid||(value='');" id="suggestQty" value="" placeholder="Enter Quanitity"> <!--only allow whole, positive numbers-->
+        <button id="suggest">suggest</button>
+      </form>
+    </div>
+
+    <!--Start of Flex-->
+    </div>
+    <div class="flex-container">
+      <!-- Table to display fetched user data -->
+      <div class="column">
+        <h2>Who's Bringing What:</h2>
+        <table id="table">
+          <tr>
+            <th>Name</th>
+            <th>Item</th>
+            <th>Quanitity</th>
+            <th>Total Cost</th>
+            <th>Delete an Item</th>
+          </tr>
+        </table>
+      </div>
+      <!--Guest List-->
+      <div class="column">
+        <h2 id="number">Who's Coming:</h2>
+        <ul id="guestList"></ul>
+      </div>
+      <div class="column">
+        <h2>Suggestions:</h2>
+        <table id="tableSuggest">
+          <tr>
+            <th>Item</th>
+            <th>Quanitity</th>
+            <th>Bring This Item</th>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

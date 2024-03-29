@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css?family=Oswald");
+body {
+  font-family: "Oswald", serif;
+  background-color: #6d8ba6;
+  text-transform: capitalize;
+}
+
+/* Banner at top of screen*/
+.header {
+  display: flex;
+  justify-content: center;
+  background-color: #698c35;
+  text-align: center;
+  color: #f2ae30;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+/* container has two columns -> left column tabel and header for table, right table list and header for list*/
+.flex-container {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: left;
+  margin: 10px;
+  padding: 10px;
+}
+
+.column {
+  margin: 50px;
+}
+
+/*arial font to make table clear and readable*/
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/* table rows*/
+td,
+th {
+  border: 3px solid #ad6b31;
+  background-color: #bf7c41;
+  text-align: left;
+  font-weight: bold;
+  padding: 8px;
+}
+
+/*header rows -> green*/
+th {
+  color: #cecfd9;
+  background-color: #698c35;
+}
+
+li {
+  font-size: 23px;
+}
+
+/*submit and remove buttons with rounded edges and interactive*/
+button {
+  display: inline-block;
+  text-decoration: none; /* remove underline */
+  border-radius: 10px; /* rounded corners */
+  margin: 3px;
+  padding: 3px;
+  color: #222;
+  font-weight: bold;
+
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 1)
+  );
+
+  border: 1px solid #666; /* dark outline */
+}
+
+button:active {
+  background-color: #ccc;
+  background-image: none;
+  box-shadow: inset 0 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+/*use flex to easily center on the page
+* includes all input boxes and submit button
+*/
+form {
+  padding-top: 5px;
+  display: flex;
+  justify-content: center;
+  width: 900px;
+  margin: auto;
+}
