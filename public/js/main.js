@@ -15,10 +15,6 @@ window.onload = function()
 // Submit a new entry to the GPA data
 const submit = async function(event) 
 {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
   event.preventDefault();
   
   const classInput = document.querySelector("#class");
@@ -34,11 +30,11 @@ const submit = async function(event)
 
   const json = {class: classInput.value, grade: gradeInput.value, credits: creditsInput.value};
   const body = JSON.stringify(json);
-
   const response = await fetch("/submit",
   {
     method:"POST",
-    body
+    headers: {'Content-Type': 'application/json'},
+    body: body
   });
 
   const text = await response.text();
@@ -63,11 +59,11 @@ const adjustLastEntry = async function(event)
 
   const json = {class: classInput.value, grade: gradeInput.value, credits: creditsInput.value};
   const body = JSON.stringify(json);
-
   const response = await fetch("/adjust",
   {
     method:"POST",
-    body
+    headers: {'Content-Type': 'application/json'},
+    body: body
   });
 
   const text = await response.text();
@@ -93,7 +89,7 @@ const deleteLastEntry = async function(event)
   const response = await fetch("/delete",
   {
     method:"POST",
-    body
+    body: body
   });
 
   table.deleteRow(rowCount);
@@ -107,6 +103,7 @@ const getData = async function()
   {
     method:"GET",
   });
+
   const text = await response.text();
   buildInitialTable(JSON.parse(text));
 }
