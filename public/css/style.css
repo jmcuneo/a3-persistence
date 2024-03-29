@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+body{
+    font-family: "Nunito Sans", sans-serif; /* Applying Google Font for entire body*/
+}
+
+.flex-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+}
+
+.flex-item{
+    margin: 100px 10px 10px 10px;
+}
+
+.inside-form{
+    border: 2px solid #ced4da;
+    width: 50%;
+    padding: 20px;
+}
