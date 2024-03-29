@@ -1,112 +1,76 @@
-const http = require( "http" ),
-    fs   = require( "fs" ),
-    // IMPORTANT: you must run `npm install` in the directory for this assignment
-    // to install the mime library if you"re testing this on your local machine.
-    // However, Glitch will install it automatically by looking in your package.json
-    // file.
-    mime = require( "mime" ),
-    dir  = "public/",
-    port = 3000
+require('dotenv').config();
 
-let appdata = [
-  // I am doing a simple arcade game score tracker
-  { "playerName": "Jane", "score": 1800, "gameDate": "2024-03-20", "ranking": 1 },
-  { "playerName": "Smith", "score": 1000, "gameDate": "2024-03-21", "ranking": 2 },
-  { "playerName": "Zesh", "score": 600, "gameDate": "2024-03-21", "ranking": 3 }
-];
+let db, scoresCollection;
 
-const server = http.createServer( function( request,response ) {
-  if (request.method === "GET" && request.url === "/get-scores") {
-    response.writeHead(200, { "Content-Type": "application/json" });
-    response.end(JSON.stringify(appdata));
-  }
-  else if( request.method === "GET" ) {
-    handleGet( request, response )
-  }
-  else if( request.method === "POST" ){
-    handlePost( request, response )
-  }
-})
+const express = require('express');
+const { MongoClient, ObjectId } = require('mongodb');
+const app = express();
 
-const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 )
+const port = process.env.PORT || 3000;
+const uri =
+    `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}/?retryWrites=true&w=majority&appName=Cluster0`;
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-  if( request.url === "/" ) {
-    sendFile( response, "public/index.html" )
-  }else{
-    sendFile( response, filename )
-  }
+async function connectToDb() {
+  await client.connect();
+  db = client.db("a3Database");
+  scoresCollection = db.collection("a3Collection");
+  console.log("Connected to MongoDB");
 }
 
-const handlePost = function( request, response ) {
-  let dataString = ""
+connectToDb().catch(console.error);
 
-  request.on( "data", function( data ) {
-    dataString += data
-  })
+// Middleware
+app.use(express.static('public'));
+app.use(express.json());
 
-  request.on( "end", function() {
-    let receivedData = JSON.parse(dataString);
 
-    // add a score
-    if (receivedData.action === "add") {
-      //receivedData.ranking = appdata.length + 1;
-      appdata.push(receivedData);
-    }
+// Fetch scores
+app.get('/get-scores', async (req, res) => {
+  try {
+    const scores = await scoresCollection.find().toArray();
+    res.json(scores);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
-    // delete a score
-    else if (receivedData.action === "delete") {
-      appdata = appdata.filter(item => item.playerName !== receivedData.playerName);
-    }
+// Add a score
+app.post('/submit', async (req, res) => {
+  try {
+    const result = await scoresCollection.insertOne(req.body);
+    const updatedScores = await scoresCollection.find().toArray();
+    res.json(updatedScores);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
-    // modify a score
-    else if (receivedData.action === "modify") {
-      if (receivedData.index >= 0 && receivedData.index < appdata.length) {
-        const score = appdata[receivedData.index];
-        score.playerName = receivedData.playerName;
-        score.score = receivedData.score;
-        score.gameDate = receivedData.gameDate;
-      }
-    }
+// Delete a score
+app.post('/delete', async (req, res) => {
+  try {
+    await scoresCollection.deleteOne({ _id: new ObjectId(req.body._id) });
+    const updatedScores = await scoresCollection.find().toArray();
+    res.json(updatedScores);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
-    // reorganize the datasets
-    recalculateRankings();
+// Modify a score
+app.post('/modify', async (req, res) => {
+  try {
+    await scoresCollection.updateOne(
+        { _id: new ObjectId(req.body._id) },
+        { $set: { playerName: req.body.playerName, score: req.body.score, gameDate: req.body.gameDate } }
+    );
+    const updatedScores = await scoresCollection.find().toArray();
+    res.json(updatedScores);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
-    response.writeHead( 200, "OK", {"Content-Type": "application/json" })
-    response.end(JSON.stringify(appdata));
-  });
-}
-
-/**
- * calculate ranking based on scores and reorganize the datasets
- */
-function recalculateRankings() {
-  appdata.sort((a, b) => b.score - a.score);
-  appdata.forEach((item, index) => {
-    item.ranking = index + 1;
-  });
-}
-
-const sendFile = function( response, filename ) {
-  const type = mime.getType( filename )
-
-  fs.readFile( filename, function( err, content ) {
-
-    // if the error = null, then we"ve loaded the file successfully
-    if( err === null ) {
-
-      // status code: https://httpstatuses.com
-      response.writeHeader( 200, { "Content-Type": type })
-      response.end( content )
-
-    }else{
-
-      // file not found, error code 404
-      response.writeHeader( 404 )
-      response.end( "404 Error: File Not Found" )
-
-    }
-  })
-}
-
-server.listen( process.env.PORT || port )
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}/`);
+});
