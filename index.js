@@ -30,7 +30,8 @@ async function runDB() {
   // route to get all docs
   app.get("/docs", async (req, res) => {
     if (collection !== null) {
-      const docs = await collection.find({userId:req.userId}).toArray()
+      // const docs = await collection.find({userId:req.userId}).toArray()
+      const docs = await collection.find({}).toArray()
       res.json( docs )
     }
   })
