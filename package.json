@@ -1,0 +1,12 @@
+{
+  "name": "a2-parkerfrizzle",
+  "version": "1.0.0",
+  "description": "A simple to-do list app made for Assignment 2 for CS 4241",
+  "author": "Parker Frizzle",
+  "scripts": {
+    "start": "node server.improved.js"
+  },
+  "dependencies": {
+    "mime": "^2.6.0"
+  }
+}
