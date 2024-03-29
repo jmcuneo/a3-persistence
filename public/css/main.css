@@ -1,0 +1,50 @@
+body {
+  background-color: #2FF5AD;
+}
+
+h1 {
+  font-family: "Audiowide", sans-serif;
+  background-color: #23E0E0;
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+}
+
+p {
+  font-family: "Audiowide", sans-serif;
+  background-color: #7BFFA3;
+  font-size: 30px;
+  text-align: center;
+}
+
+table, th, td {
+  width: 50%;
+  border: 2px solid;
+  background-color: #93DEDB;
+  text-align: center;
+}
+
+br {
+  display: block;
+  margin: 5px 0;
+}
+
+label { 
+  display: block;
+  width: 250px;
+}
+
+ul {
+  list-style: none;
+}
+
+input {
+  width: 10%;
+}
+
+button {
+  width: 150px;
+  border: 3px dotted;
+  font-family: "Fugaz One", sans-serif;
+  font-size: 15px;
+}
