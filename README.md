@@ -129,7 +129,7 @@ add a little more detail about what it does.
 **Development Tips**:
 - *Associate a label with every form control*: Added placeholder text for each input so that users would know what to enter into each box
 - *Help users avoid and correct mistakes*: Added alert for when all fields are not filled when a form is submitted
-- *Identify page language and language changes*: Added "<html lang="en">" to the start of index.html and recipes.html
+- *Identify page language and language changes*: Added "`<html lang="en">`" to the start of index.html and recipes.html
 
 ### CRAP Principles
 **Contrast**: 
