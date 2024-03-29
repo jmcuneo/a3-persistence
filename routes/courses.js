@@ -5,7 +5,6 @@ const appData = [];
 
 router.post("/add", (req, res) => {
 	course = req.body;
-	console.log(req);
 
 	if (appData.some(data => data.cID === course.cID)) {
 		// course already exists, let's update the record :)

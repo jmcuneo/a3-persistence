@@ -17,7 +17,6 @@ const logCourse = async function (event) {
 
 	console.log(cID.value);
 	// send the json as post request
-	console.log(body);
 	const response = await fetch("/courses/add", {
 		method: "POST",
 		headers: { 'Content-Type': 'application/json' },
