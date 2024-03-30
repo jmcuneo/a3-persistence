@@ -54,6 +54,9 @@ async function run() {
           len--;
         }
       }
+
+      taskData.push(username);
+      
       response.writeHead( 200, { 'Content-Type': 'application/json'});
       response.end(JSON.stringify(taskData));
     }
