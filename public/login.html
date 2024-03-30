@@ -3,18 +3,30 @@
 <head>
     <title>Login - Arcade Game Score Tracker</title>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Track and manage arcade game scores with our user-friendly tracker. Log in to view, add, or edit your high scores and see how you rank amongst other players.">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
     <link rel="stylesheet" href="main.css">
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 <body>
 
+<div class="container">
 <div id="loginForm">
-    <h2>Login</h2>
-    <form id="login">
-        <input type="text" id="username" placeholder="Username" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <button type="submit">Login</button>
+    <h2>Game Score Tracker User Login</h2>
+    <form id="login" class="pure-form pure-form-stacked">
+        <fieldset>
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Username" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Password" required>
+
+            <button type="submit" class="pure-button pure-button-primary">Login</button>
+        </fieldset>
     </form>
+</div>
 </div>
 
 <script src="login.js"></script>

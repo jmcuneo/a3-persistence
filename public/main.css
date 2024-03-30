@@ -3,7 +3,7 @@ body {
   background-color: #5EE1F2;
   margin: 0;
   padding: 20px;
-  color: #1c1e21;
+  color: #333;
 }
 
 .container {
@@ -22,41 +22,50 @@ h1 {
 
 form, #editForm {
   background-color: #5EF2D3;
-  padding: 20px;
+  padding: 10px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
 }
 
-input[type="text"],
-input[type="number"],
-input[type="date"],
+input[type="text"], input[type="number"], input[type="date"] {
+  border: 1px solid #ccc;
+}
+
+.pure-button-primary {
+  background-color: #0055a4;
+  color: white;
+}
+
 button {
   width: 100%;
-  padding: 10px;
+  padding: 10px 15px;
   margin-top: 8px;
   display: block;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-}
-
-button {
-  background-color: #0084ff;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  margin-top: 10px;
-  cursor: pointer;
-  border-radius: 4px;
   font-weight: bold;
+  background-color: #0055a4;
+  color: white;
+  cursor: pointer;
 }
 
 button:hover {
   background-color: #006be1;
+  opacity: 0.9;
 }
 
-#scoreDisplay {
+button.delete-button {
+  background-color: #d8000c;
+  color: white;
+}
+
+button.delete-button:hover {
+  background-color: #ff0018;
+}
+
+#scoreDisplay, #editForm {
   margin-top: 20px;
 }
 
@@ -67,24 +76,6 @@ button:hover {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   margin-bottom: 8px;
 }
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th, td {
-  text-align: left;
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
-}
-
-th {
-  background-color: #f1f1f1;
-}
-tr:nth-child(odd) {background-color: #f9f9f9;}
-tr:nth-child(even) {background-color: #fff;}
-tr:hover {background-color: #f1f1f1;}
 
 #editForm {
   display: none;
