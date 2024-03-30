@@ -1,0 +1,102 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #5EE1F2;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #000000;
+  margin-bottom: 20px;
+}
+
+form, #editForm {
+  background-color: #5EF2D3;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+input[type="text"], input[type="number"], input[type="date"] {
+  border: 1px solid #ccc;
+}
+
+.pure-button-primary {
+  background-color: #005a9c;
+  color: white;
+}
+
+button {
+  width: 100%;
+  padding: 10px 15px;
+  margin-top: 8px;
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-weight: bold;
+  background-color: #0055a4;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #004080;
+  opacity: 0.9;
+}
+
+button.delete-button {
+  background-color: #d8000c;
+  color: white;
+}
+
+button.delete-button:hover {
+  background-color: #ff0018;
+}
+
+#scoreDisplay, #editForm {
+  margin-top: 20px;
+}
+
+#scoreDisplay div, #editForm div {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 8px;
+}
+
+#editForm {
+  display: none;
+}
+
+a, button, input, textarea {
+  outline: 1px dashed #005a9c;
+}
+
+a, button, input[type="submit"], input[type="button"], .pure-button {
+  transition: background-color 0.3s ease;
+}
+
+a:hover, button:hover, input[type="submit"]:hover, input[type="button"]:hover, .pure-button:hover {
+  background-color: #006be1;
+}
+
+
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+    margin: 10px auto;
+  }
+}

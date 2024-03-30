@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Application - Arcade Game Score Tracker</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Track and manage arcade game scores with our user-friendly tracker!">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
+  <link rel="stylesheet" href="main.css">
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body>
+
+<nav role="navigation" class="pure-menu pure-menu-horizontal">
+<div id="logoutForm" class="pure-menu pure-menu-horizontal">
+  <ul class="pure-menu-list">
+    <li class="pure-menu-item"><button type="button" id="logoutButton" class="pure-button">Logout</button></li>
+  </ul>
+</div>
+</nav>
+
+
+<main role="main" class="container">
+  <h1>Arcade Game Score Tracker</h1>
+  <form class="pure-form pure-form-stacked">
+    <fieldset>
+      <legend>Score Entry</legend>
+      <label for="playerName">Player Name</label>
+      <input type="text" id="playerName" name="playerName" placeholder="Player Name">
+
+      <label for="score">Score</label>
+      <input type="number" id="score" name="score" placeholder="Score">
+
+      <label for="gameDate">Game Date</label>
+      <input type="date" id="gameDate" name="gameDate">
+
+      <button type="submit" class="pure-button pure-button-primary">Submit Score</button>
+    </fieldset>
+</form>
+<div id="scoreDisplay"></div>
+
+  <div id="editForm" style="display: none;">
+    <form class="pure-form pure-form-stacked">
+    <input type="text" id="editPlayerName" placeholder="Edit Player Name">
+    <input type="number" id="editScore" placeholder="Edit Score">
+    <input type="date" id="editGameDate">
+    <button type="button" onclick="submitEdit()" class="pure-button pure-button-primary">Save Changes</button>
+    <button type="button" onclick="cancelEdit()" class="pure-button">Cancel</button>
+    </form>
+  </div>
+  </main>
+
+<script src="app.js"></script>
+</body>
+</html>
