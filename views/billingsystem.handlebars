@@ -5,23 +5,23 @@
 
 <div class="flex-container">
     <div class="flex-item inside-form">
-        <form> <!-- form for user to enter purchase data -->
+        <form action="/add-data" method="POST"> <!-- form for user to enter purchase data -->
             <label>Product Name</label>
             <br>
-            <input autofocus autocomplete="off" type="text" id="productname" placeholder="Enter product name">
+            <input autofocus autocomplete="off" type="text" name="productName" id="productname" placeholder="Enter product name" required>
             <br>
             <label>Date Of Purchase</label>
-            <input autocomplete="off" type="date" id="purchasedate">
+            <input autocomplete="off" type="date" id="purchasedate" name="purchaseDate" required>
             <br>
             <label>Product Cost</label>
-            <input autocomplete="off" type="number" id="cost" placeholder="Enter cost for single">
+            <input autocomplete="off" type="number" id="cost" name="cost" placeholder="Enter cost for single" required>
             <br>
             <label>Product Quantity</label>
-            <input autocomplete="off" type="number" id="quantity" placeholder="Enter quantity">
+            <input autocomplete="off" type="number" id="quantity" name="quantity" placeholder="Enter quantity" required>
             <br>
             <label>Product Category</label>
             <br>
-            <select id="category">
+            <select id="category" name="category">
                 <option disabled selected>Choose Category</option>
                 <option value="food">Food</option>
                 <option value="electronics">Electronics</option>
@@ -34,26 +34,58 @@
             <br>
             <label>Product Description</label>
             <br>
-            <input autocomplete="off" type="text" id="description" placeholder="Enter any product description">
+            <input autocomplete="off" type="text" id="description" name="description" placeholder="Enter any product description" required>
+            <input type="hidden" value="{{id}}" name="githubId">
             <br>
-            <button id="submit" class="submit-btn">SUBMIT</button>
+            <button type="submit" id="submit" class="submit-btn">SUBMIT</button>
             <button type="reset" class="submit-btn">RESET</button>
         </form>
     </div>
     <div class="flex-item display-results">
-        <h1>Purchase Data</h1>
-        <table id="my-table" class="table-info"> <!-- creating a table for purchase data-->
-            <thead> <!-- for table heading columns, 1st row -->
-            <tr>
-                <th>Product Details</th>
-                <th>Final Price</th>
-                <th>Modify</th>
-            </tr>
-            </thead>
-            <tbody id='table-body'> <!-- for table body with all rows/cells filled with data -->
+        <h1>Purchase Data (Data for {{username}})</h1>
+        {{#if billingdata }}
+            <table id="my-table" class="table-info"> <!-- creating a table for purchase data-->
+                <thead> <!-- for table heading columns, 1st row -->
+                <tr>
+                    <th>Product Details</th>
+                    <th>Final Price</th>
+                    <th>Modify</th>
+                </tr>
+                </thead>
+                <tbody id='table-body'> <!-- for table body with all rows/cells filled with data -->
+                    {{#each billingdata}}
+                        <tr>
+                            <td>
+                                <ul>
+                                    <li>{{productName}}</li>
+                                    <li>{{purchaseDate}}</li>
+                                    <li>{{cost}}</li>
+                                    <li>{{quantity}}</li>
+                                    <li>{{category}}</li>
+                                    <li>{{description}}</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <ul>
+                                    <li>{{totalPrice}}</li>
+                                    <li>{{discount}}</li>
+                                    <li>{{afterDiscount}}</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <button onClick="deleteRow(this)" data-name = ${displayText[index].productname} data-index = ${index} id="deleteData" class="submit-btn">DELETE</button>
+                                <button type="button" onclick="openPopup(); displayRow(this)" class="show-popup submit-btn" data-updindex = ${index} data-updname = ${displayText[index].productname}
+                                        data-dop = ${displayText[index].purchasedate} data-cost = ${displayText[index].cost} data-quantity = ${displayText[index].quantity}
+                                        data-category = ${displayText[index].category} data-desc = ${displayText[index].description}>UPDATE</button>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        {{else}}
+            <p>You have not created any purchase data</p>
+        {{/if}}
 
-            </tbody>
-        </table>
 
     </div>
 </div>

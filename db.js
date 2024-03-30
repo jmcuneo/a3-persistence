@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
 const dotenv = require('dotenv') //for .env file
 dotenv.config({path: './config/.env'})
-const url = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}/?retryWrites=true&w=majority&appName=Cluster0`
+const url = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}/billingsystem`
 
-//establishing monogdb connection
+//establishing mongodb connection
 const connectDb = async ()=> {
     try {
         const conn = await mongoose.connect(url, {

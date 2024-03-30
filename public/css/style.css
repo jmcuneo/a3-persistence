@@ -2,13 +2,15 @@
 
 body{
     font-family: "Nunito Sans", sans-serif; /* Applying Google Font for entire body*/
+    background: #E0FFFF;
+    margin: 0;
 }
 
 .flex-container{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 .flex-item{
@@ -19,4 +21,83 @@ body{
     border: 2px solid #ced4da;
     width: 50%;
     padding: 20px;
+}
+
+.top-nav{
+    background-image: linear-gradient(140deg, #EADEDB 0%, #FF7F50 50%, #BFD641 75%);
+    text-align: center;
+    color: white;
+    top: 0;
+    left: 0;
+    height: 10%;
+    width: 100%;
+    position: absolute;
+    z-index: 999;
+}
+
+.title{
+    margin: 5px 0 0 0;
+}
+
+/* for the form elements */
+input[type=text], input[type=number], input[type=date], select{
+    width: 50%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+}
+
+/* to form a perfect table*/
+.table-info{
+    border-collapse: collapse; /* removes borders */
+    margin: 0 0 0 10px;
+}
+
+.table-info td{ /* for columns */
+    border: 1px solid #000; /* add border */
+}
+
+.table-info th{ /* for columns heads */
+    padding: 0 100px 0 100px;
+    border: 1px solid #000;
+    background: #61F2A7;
+    text-align: center;
+}
+
+.submit-btn{
+    background: #66CDAA;
+    color: #fff;
+    padding: 15px 20px;
+    border: 2px solid #fff;
+    cursor: pointer;
+    border-radius: 25px;
+    font-family: inherit;
+}
+
+/* popup */
+.popup{
+    width: 500px;
+    height: 500px;
+    background: #fff;
+    border-radius: 25px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    margin-top: 100px;
+    padding: 0 30px 60px;
+    overflow: scroll;
+    visibility: hidden;
+    transition: all 0.4s ease;
+}
+
+.open-popup{
+    visibility: visible;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.dashboard{
+    margin: 100px 0 0 50px;
 }
