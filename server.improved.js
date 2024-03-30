@@ -1,27 +1,59 @@
 require('dotenv').config();
 const express = require("express"),
+    cookie = require("cookie-session"),
+    hbs = require( 'express-handlebars' ).engine,
     { MongoClient, ObjectId } = require("mongodb"),
     app = express()
 var taskData = []
+var username = "";
 
 
 app.use(express.static("public") )
 app.use(express.json() )
+// use express.urlencoded to get data sent by defaut form actions
+// or GET requests
+app.use(express.urlencoded({extended:true}))
+
+
+// we're going to use handlebars, but really all the template
+// engines are equally painful. choose your own poison at:
+// http://expressjs.com/en/guide/using-template-engines.html
+app.engine( 'handlebars',  hbs() )
+app.set(    'view engine', 'handlebars' )
+app.set(    'views',       './public' )
+
+
+// cookie middleware! The keys are used for encryption and should be
+// changed
+app.use( cookie({
+  name: 'session',
+  keys: ['key1', 'key2']
+}))
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 const client = new MongoClient( uri )
 
-let collection = null
+let taskCollection = null
 
 // Runs the connection with the client
 async function run() {
   await client.connect()
-  collection = await client.db("taskDatabase").collection("taskCollection")
+  taskCollection = await client.db("taskDatabase").collection("taskCollection")
   // route to get all docs
   app.get("/taskData/", async (request, response) => {
-    if (collection !== null) {
-      taskData = await collection.find({}).toArray()
-      //response.json( docs )
+    if (taskCollection !== null) {
+      taskData = await taskCollection.find({}).toArray()
+
+      // Limit only data from that user
+      let len = taskData.length;
+      for (let i = 0; i < len; i++) {
+        const element = taskData[i];
+        if(element.username !== username) {
+          taskData.splice(i, 1);
+          i--;
+          len--;
+        }
+      }
       response.writeHead( 200, { 'Content-Type': 'application/json'});
       response.end(JSON.stringify(taskData));
     }
@@ -30,12 +62,82 @@ async function run() {
 
 // Express use
 app.use( (request,response,next) => {
-  if( collection !== null ) {
+  if( taskCollection !== null ) {
     next()
   }else{
     response.status( 503 ).send()
   }
 })
+
+
+// Called when loging in
+app.post( '/login', async (request,response)=> {
+
+  console.log( request.body )
+  
+  // Get user collection to check users
+  let userCollection = await client.db("taskDatabase").collection("usersCollection");
+  if (userCollection !== null) {
+    let users = await userCollection.find({}).toArray();
+    let foundUser = false;
+
+    // Determine if username-password match in the database
+    users.forEach(user => {
+      if(user.username === request.body.username && user.password === request.body.password) {
+        foundUser = true;
+        username = request.body.username;
+      }      
+    });
+
+    if(foundUser) {
+      request.session.login = true
+      response.redirect( 'index.html' )
+    } else {
+      request.session.login = false
+      response.render('login', { msg:'Login failed, please try again', layout:false })
+    }
+  }
+})
+
+
+
+app.get( '/', (req,res) => {
+  res.render( 'login', { msg:'', layout:false })
+})
+
+// add some middleware that always sends unauthenicaetd users to the login page
+app.use( function( req,res,next) {
+  if( req.session.login === true )
+    next()
+  else
+    res.render('login', { msg:'Login failed, please try again', layout:false })
+})
+
+app.get( '/index.html', ( req, res) => {
+    res.render( 'index', {layout:false })
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Called when adding a task
@@ -49,12 +151,14 @@ app.post( '/submit', async (request,response) => {
     let taskObject = JSON.parse( dataString );
     // Assign task an unique ID
     taskObject._id = new ObjectId();
+    // Assign user
+    taskObject.username = username;
     determinePriority(taskObject);
 
     // Push new object to taskData array
     taskData.push(taskObject);
     // Insert object into database
-    collection.insertOne(taskObject);
+    taskCollection.insertOne(taskObject);
     response.writeHead( 200, { 'Content-Type': 'application/json'});
     response.end(JSON.stringify(taskData));
   })
@@ -70,7 +174,7 @@ app.delete( "/delete", async (request, response) => {
   request.on( "end", function() {
     let taskObject = JSON.parse( dataString );
     // Delete object from the database
-    collection.deleteOne({ 
+    taskCollection.deleteOne({ 
       _id:new ObjectId( taskObject._id ) 
     })
     response.writeHead( 200, { 'Content-Type': 'application/json'});
@@ -88,9 +192,10 @@ app.patch( "/patch", async (request, response) => {
     let taskObject = JSON.parse( dataString );
     determinePriority(taskObject);
     // Update object in the database
-    collection.updateOne(
+    taskCollection.updateOne(
       { _id: new ObjectId( taskObject._id ) },
       { $set:{task:taskObject.task, 
+              username:username,
               class:taskObject.class, 
               duedate:taskObject.duedate, 
               importance:taskObject.importance, 
@@ -139,7 +244,11 @@ const listener = app.listen( process.env.PORT || 3000 )
 
 
       
-
+function printTasks() {
+  taskData.forEach(element => {
+    console.log(element.task);    
+  });
+}
 
 
 

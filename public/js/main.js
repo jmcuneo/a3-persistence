@@ -42,7 +42,7 @@ const submit = async function( event ) {
     let json = {};
     // Determine if this is an edit or an add
     if(editMode) {
-      json = {_id: editData._id, task: task.value, class: classi.value, duedate: duedate, importance: importance, priority: 0};
+      json = {_id: editData._id, username: "", task: task.value, class: classi.value, duedate: duedate, importance: importance, priority: 0};
       const body = JSON.stringify( json );
       const response = await fetch( "/patch", {
         method:"PATCH",
@@ -54,7 +54,7 @@ const submit = async function( event ) {
       })
     // Add mode
     } else {
-      json = {_id: -1, task: task.value, class: classi.value, duedate: duedate, importance: importance, priority: 0};
+      json = {_id: -1, username: "", task: task.value, class: classi.value, duedate: duedate, importance: importance, priority: 0};
       const body = JSON.stringify( json );
       const response = await fetch( "/submit", {
         method:"POST",
