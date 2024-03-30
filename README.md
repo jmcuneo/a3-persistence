@@ -3,7 +3,7 @@ Readme
 
 ## Application - Arcade Game Score Tracker
 
-glitch link: http://a3-ZeshengChen.glitch.me
+glitch link: http://a3-zeshengchen.glitch.me
 
 
 ![LighthouseTestingResult.png](LighthouseTestingResult.png)
