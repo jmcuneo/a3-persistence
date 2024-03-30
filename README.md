@@ -128,8 +128,9 @@ add a little more detail about what it does.
 
 **Development Tips**:
 - *Associate a label with every form control*: Added placeholder text for each input so that users would know what to enter into each box
+- *Identify page language and language changes*: Added `<html lang="en">` to the start of index.html and recipes.html
+- *Use mark-up to convey meaning and structure*: Added WAI-ARIA roles and labels to main regions of the page
 - *Help users avoid and correct mistakes*: Added alert for when all fields are not filled when a form is submitted
-- *Identify page language and language changes*: Added "`<html lang="en">`" to the start of index.html and recipes.html
 
 ### CRAP Principles
 **Contrast**: 
