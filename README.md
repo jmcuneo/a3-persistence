@@ -5,7 +5,8 @@ Readme
 
 glitch link: http://a3-ZeshengChen.glitch.me
 
-![](C:\Users\Owner\Documents\GitHub\a3-ZeshengChen\LighthouseTestingResult.png)
+
+![LighthouseTestingResult.png](LighthouseTestingResult.png)
 This web application serves as a user-friendly platform to track and manage arcade game scores. 
 It provides functionality for users to log in, 
 view their score history, and add, modify, 
