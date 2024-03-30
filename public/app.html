@@ -12,16 +12,20 @@
 </head>
 <body>
 
+<nav role="navigation" class="pure-menu pure-menu-horizontal">
 <div id="logoutForm" class="pure-menu pure-menu-horizontal">
   <ul class="pure-menu-list">
     <li class="pure-menu-item"><button type="button" id="logoutButton" class="pure-button">Logout</button></li>
   </ul>
 </div>
+</nav>
 
-<div class="container">
+
+<main role="main" class="container">
   <h1>Arcade Game Score Tracker</h1>
   <form class="pure-form pure-form-stacked">
     <fieldset>
+      <legend>Score Entry</legend>
       <label for="playerName">Player Name</label>
       <input type="text" id="playerName" name="playerName" placeholder="Player Name">
 
@@ -45,7 +49,7 @@
     <button type="button" onclick="cancelEdit()" class="pure-button">Cancel</button>
     </form>
   </div>
-</div>
+  </main>
 
 <script src="app.js"></script>
 </body>

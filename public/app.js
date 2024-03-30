@@ -27,6 +27,7 @@ async function submit(event) {
 
     if (playerName && scoreValue && gameDate) {
         await addScore(playerName, Number(scoreValue), gameDate);
+        alert('Score added successfully!');
     }
 }
 

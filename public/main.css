@@ -33,7 +33,7 @@ input[type="text"], input[type="number"], input[type="date"] {
 }
 
 .pure-button-primary {
-  background-color: #0055a4;
+  background-color: #005a9c;
   color: white;
 }
 
@@ -52,7 +52,7 @@ button {
 }
 
 button:hover {
-  background-color: #006be1;
+  background-color: #004080;
   opacity: 0.9;
 }
 
@@ -79,4 +79,24 @@ button.delete-button:hover {
 
 #editForm {
   display: none;
+}
+
+a, button, input, textarea {
+  outline: 1px dashed #005a9c;
+}
+
+a, button, input[type="submit"], input[type="button"], .pure-button {
+  transition: background-color 0.3s ease;
+}
+
+a:hover, button:hover, input[type="submit"]:hover, input[type="button"]:hover, .pure-button:hover {
+  background-color: #006be1;
+}
+
+
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+    margin: 10px auto;
+  }
 }
