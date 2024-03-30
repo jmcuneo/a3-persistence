@@ -8,7 +8,24 @@ const fs   = require( "fs" ),
       dir  = "public/",
       port = 3000,
       express = require("express"),
-      app = express()
+      app = express();
+
+      // var express = require('express');
+      var passport = require('passport');
+      var util = require('util');
+      var session = require('express-session');
+      var bodyParser = require('body-parser');
+      var methodOverride = require('method-override');
+      var GitHubStrategy = require('passport-github2').Strategy;
+      var partials = require('express-partials');
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
 
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
@@ -104,8 +121,64 @@ const handleGetAll = async function(response,data){
   }
 }
 
-app.use(express.static('public'));
+passport.use(new GitHubStrategy({
+  clientID: process.env.GITHUB_ID,
+  clientSecret: process.env.GITHUB_SECRET,
+  callbackURL: "http://127.0.0.1:3000/auth/github/callback"
+},
+function(accessToken, refreshToken, profile, done) {
+  // asynchronous verification, for effect...
+  process.nextTick(function () {
+    
+    // To keep the example simple, the user's GitHub profile is returned to
+    // represent the logged-in user.  In a typical application, you would want
+    // to associate the GitHub account with a user record in your database,
+    // and return that user instead.
+    return done(null, profile);
+  });
+}
+));
+
+
+app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+// Initialize Passport!  Also use passport.session() middleware, to support
+// persistent login sessions (recommended).
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.json());
+
+
+app.get('/',function(req,res){
+  if(req.user){
+    console.log(req.user);
+    res.sendFile(__dirname+'/public/index.html')
+  }else{
+    res.redirect('/login');
+  }
+})
+
+app.get('/login',function(req,res){
+  res.sendFile(__dirname+'/public/login.html');
+});
+
+app.get('/auth/github',
+  passport.authenticate('github', { scope: [ 'user:email' ] }),
+  function(req, res){
+    // The request will be redirected to GitHub for authentication, so this
+    // function will not be called.
+});
+
+app.get('/auth/github/callback', 
+  passport.authenticate('github', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
+
+app.get('/logout', function(req, res){
+  req.logout((res,req)=>{});
+  res.redirect('/');
+});
+
 app.post('/submit',handlePost);
 
 app.use( (req,res,next) => {
@@ -115,6 +188,8 @@ app.use( (req,res,next) => {
     res.status( 503 ).send()
   }
 });
+
+app.use(express.static('public'));
 
 console.log(process.env.port);
 app.listen(process.env.PORT);
