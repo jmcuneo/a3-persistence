@@ -1,0 +1,54 @@
+ <!-- index.html -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 A2 Calculator</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css"><!--reference to the .css file that houses styling information-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap"> <!--references the font for the entire webpage-->
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <style>
+      body{     
+        font-family: "Madimi One", sans-serif;      
+        font-weight: 400;
+        font-style: normal;
+      }
+    </style> <!--references the font styling for the webpage.-->
+  </head>
+  <body>
+    <form>
+      <h1> Calculator: Addition, Subtraction, Multiplication, and Division</h1>
+      <label for= "num1"> First Number:</label>
+      <input type="number" id="num1"> 
+      <br>
+      <label for= "num2"> Second Number:</label>
+      <input type="number" id="num2">
+      <br>
+
+      <button id="addButton"> Addition</button>
+      <button id="subtractButton"> Subtraction</button>
+      <button id="multiplyButton"> Multiplication</button>
+      <button id="divideButton"> Division</button> 
+      <br>
+    </form>
+    <br>
+    <div id="t">
+    <table id="result" class= "center"></table>
+    <h2>Previous Results:</h2>
+    <table id="previousResults">
+      <thead>
+        <tr>
+          <th>Operation #:</th>
+          <th>Result:</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dynamic rows here -->
+      </tbody>
+    </table>
+  </div>
+  </body>
+</html>

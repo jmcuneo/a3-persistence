@@ -1,6 +1,7 @@
 Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
 ===
 
+
 Check out the [CS 4241 Guides](https://github.com/jmcuneo/cs4241-guides) for help with the technologies discussed in this assignment.
 
 This assignnment continues where we left off, extending it to use the most popular Node.js server framework (express), 
