@@ -100,8 +100,8 @@ function updateScoreToDisplay(scores){
         scoreElement.innerHTML =
             `
       Player: ${score.playerName}, Score: ${score.score}, Date: ${score.gameDate}, Ranking: ${score.ranking}
-      <button onclick="deleteScore('${score._id}')">Delete</button>
       <button onclick="showEditForm('${score._id}', ${index})">Edit</button>
+      <button onclick="deleteScore('${score._id}')">Delete</button>
     `;
         display.appendChild(scoreElement);
     });
