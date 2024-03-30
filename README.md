@@ -11,18 +11,17 @@ Baseline Requirements
 
 Your application is required to implement the following functionalities:
 
-- a `Server`, created using Express (no alternatives will be accepted for this assignment)
-- a `Results` functionality which shows all data associated with a logged in user (except passwords)
-- a `Form/Entry` functionality which allows users to add, modify, and delete data items (must be all three!) associated with their user name / account. 
-- Persistent data storage in between server sessions using [mongodb](https://www.mongodb.com/cloud/atlas) (you *must* use mongodb for this assignment). You can use either the [official mongodb node.js library](https://www.npmjs.com/package/mongodb) or use the [Mongoose library](https://www.npmjs.com/package/mongoose), which enables you to define formal schemas for your database. Please be aware that the course staff cannot provide in-depth support for use of Mongoose.  
-- Use of a [CSS framework or template](https://github.com/troxler/awesome-css-frameworks). 
-This should do the bulk of your styling/CSS for you and be appropriate to your application. 
+- (15 points) a `Server`, created using Express (no alternatives will be accepted for this assignment)
+- (10 points) a `Results` functionality which shows all data associated with a logged in user (except passwords)
+- (15 points) a `Form/Entry` functionality which allows users to add, modify, and delete data items (must be all three!) associated with their user name / account.
+- Persistent data storage in between server sessions using [mongodb](https://www.mongodb.com/cloud/atlas) (you *must* use mongodb for this assignment). You can use either the [official mongodb node.js library](https://www.npmjs.com/package/mongodb) or use the [Mongoose library](https://www.npmjs.com/package/mongoose), which enables you to define formal schemas for your database. Please be aware that the course staff cannot provide in-depth support for use of Mongoose.  (15 pts.)
+- (10 points) Use of a [CSS framework or template](https://github.com/troxler/awesome-css-frameworks). This should do the bulk of your styling/CSS for you and be appropriate to your application. 
 For example, don't use [NES.css](https://nostalgic-css.github.io/NES.css/) (which is awesome!) unless you're creating a game or some type of retro 80s site.
 
 Your application is required to demonstrate the use of the following concepts:  
 
 HTML:  
-- HTML input tags and form fields of various flavors (`<textarea>`, `<input>`, checkboxes, radio buttons etc.)
+- (5 points) HTML input tags and form fields of various flavors (`<textarea>`, `<input>`, checkboxes, radio buttons, etc.)
 - HTML that can display all data *for a particular authenticated user*. Note that this is different from the last assignnment, which required the display of all data in memory on the server.
 
 Note that it might make sense to have two pages for this assignment, one that handles login / authentication and one that contains the rest of your application.
@@ -44,7 +43,7 @@ Node.js:
 - A server using Express and a persistent database (mongodb).
 
 General:  
-- Your site should achieve at least 90% on the `Performance`, `Best Practices`, `Accessibility`, and `SEO` tests 
+- (10 points) Your site should achieve at least 90% on the `Performance`, `Best Practices`, `Accessibility`, and `SEO` tests 
 using Google [Lighthouse](https://developers.google.com/web/tools/lighthouse) (don't worry about the PWA test, and don't worry about scores for mobile devices).
 Test early and often so that fixing problems doesn't lead to suffering at the end of the assignment. 
 
@@ -114,6 +113,29 @@ For the base requirements (discounting the achievements), it should follow this 
 3. If the user logs in, the account exists, and the password is correct, then take the user to the page that shows the data specific to the user.
 
 Note that implementing some of the technical achievements may override this requirement, which is fine.
+
+**Q: I'm getting a syntax error when trying to connect to MongoDB using the code in the tutorial.**
+
+Your version of Node may be outdated. Check out [this link](https://stackoverflow.com/questions/77749884/session-options-session-syntaxerror-unexpected-token-mongoose-give-a) for more information.
+
+**Q: Do I have to handle multiple user accounts?**
+
+No. You only need one dummy account UNLESS you are doing the GitHub login technical achievement. Make sure you mention in your README how the user should log in!
+
+**Q: If we use OAuth for logging in, do we still need the same pattern of behavior from the website when logging in (as described above)?**
+
+Yes, insofar as the logged in user should still be taken to a page with the user's data, the login should fail for the incorrect password, and a new account should be created if the username is unrecognized.
+
+Note that if you are doing OAuth, this last part might be difficult (especially if you are doing GitHub authentication). If that's the case, then the user should be taken to a page where they can create an account for your site.
+
+**Q: Does "HTML input tags and form fields of various flavors" mean that we need to use multiple different kinds of inputs, or does it mean that we just need to use some form of input?**
+
+You should have at least two different input types for this assignment. The purpose is to show your understanding beyond the simple `input` type you saw in A2.
+
+**Q: Am I allowed to use other libraries/frameworks/etc. in this assignment?**
+
+Yes, so long as those are IN ADDITION TO Express, MongoDB, and a CSS framework of your choice. Describe in your README any additional libraries or frameworks you used for this assignment. Also remember that the staff might not be familiar with these, so we may be unable to help you if you run into technical problems.
+
 
 Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
 ---
