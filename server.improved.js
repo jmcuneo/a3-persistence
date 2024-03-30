@@ -80,18 +80,35 @@ app.post( '/login', async (request,response)=> {
   if (userCollection !== null) {
     let users = await userCollection.find({}).toArray();
     let foundUser = false;
+    let foundUsername = false;
 
     // Determine if username-password match in the database
     users.forEach(user => {
-      if(user.username === request.body.username && user.password === request.body.password) {
-        foundUser = true;
-        username = request.body.username;
-      }      
+      if(user.username === request.body.username) {
+        foundUsername = true;
+        if (user.password === request.body.password) {
+          foundUser = true;
+          username = request.body.username;
+        } 
+      } 
     });
 
+    // Found user
     if(foundUser) {
       request.session.login = true
       response.redirect( 'index.html' )
+
+    // No username, create account
+    } else if(!foundUsername) {
+      request.session.login = false
+
+      userObject = {_id: new ObjectId(), username : request.body.username, password : request.body.password}
+      userCollection.insertOne(userObject);
+
+      response.render('login', { msg:'New account created under username and password', layout:false })
+
+      
+      
     } else {
       request.session.login = false
       response.render('login', { msg:'Login failed, please try again', layout:false })
