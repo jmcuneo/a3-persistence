@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Application - Arcade Game Score Tracker</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="main.css">
+
+  <!-- get rid of favicon error -->
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body>
+
+<div id="logoutForm">
+  <button type="button" id="logoutButton">Logout</button>
+</div>
+
+<div class="container">
+  <h1>Arcade Game Score Tracker</h1>
+<form>
+  <input type="text" id="playerName" name="playerName" placeholder="Player Name">
+  <input type="number" id="score" name="score" placeholder="Score">
+  <input type="date" id="gameDate" name="gameDate">
+  <button type="submit">Submit Score</button>
+</form>
+<div id="scoreDisplay"></div>
+
+<div id="editForm" style="display: none;">
+  <input type="text" id="editPlayerName" placeholder="Edit Player Name">
+  <input type="number" id="editScore" placeholder="Edit Score">
+  <input type="date" id="editGameDate">
+  <button type="button" onclick="submitEdit()">Save Changes</button>
+  <button type="button" onclick="cancelEdit()">Cancel</button>
+</div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
