@@ -1,0 +1,37 @@
+div{
+  display: grid;
+  gap: 10px;
+  grid-auto-rows: minmax(50px, auto);
+}
+
+header {
+  display: block;
+  background: darkred;
+  color: white;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 200%;
+}
+
+.submission {
+  background: white;
+  color: black;
+  text-align: center;
+  font-family: serif;
+  grid-row: 1;
+}
+
+#submitButton {
+  font-family: serif;
+  grid-row: 2;
+}
+
+#liftingDatabase{
+  width: 100%;
+  grid-row: 3;
+  font-family: serif;
+}
+
+ul{
+  list-style-type: none;
+}

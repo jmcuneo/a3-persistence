@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>CS4241 Assignment 2</title>
+  <meta charset="utf-8">
+  <script src="js/main.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<header>
+  Powerlifting Database
+</header>
+<div>
+  <body class = "submission">
+  <form id="powerliftingEntry" action="/powerlifting-database" method="post">
+    <ul>
+      <li>
+        <label for="name">Lifter Name:</label>
+        <input type="text" id="name" required>
+      </li>
+      <li>
+        <label for="bodyWeight">Body Weight:</label>
+        <input type="number" id="bodyWeight" min="1" required>
+      </li>
+      <li>
+        <label for="squat">Squat Attempt:</label>
+        <input type="number" id="squat" min="1" required >
+      </li>
+      <li>
+        <label for="benchPress">Bench Press Attempt:</label>
+        <input type="number" id="benchPress" min="1" required>
+      </li>
+      <li>
+        <label for="deadLift">Dead Lift Attempt:</label>
+        <input type="number" id="deadLift" min="1" required>
+      </li>
+    </ul>
+  </form>
+  </body>
+  <button class="submitButton">Submit</button>
+  <table id="liftingDatabase">
+  </table>
+</div>
+<template id="categories">
+  <tr>
+    <th>Name</th>
+    <th>Body Weight</th>
+    <th>Squat</th>
+    <th>Bench Press</th>
+    <th>Dead Lift</th>
+    <th>Total</th>
+  </tr>
+</template>
+<template id="entry">
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</template>
+</html>
