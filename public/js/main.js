@@ -15,7 +15,8 @@ const submit = async function( event ) {
     workout_intensity: document.querySelector("#workout_intensity").value
   }
 
-  const response = await fetch("/workout_calorie_calculator", {
+
+  const response = await fetch("/add", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -24,8 +25,8 @@ const submit = async function( event ) {
   });
 
   const data = await response.json(); // Parse the response as JSON
+  console.log(data);
   addTable(data);
-  console.log("text:", data);
 }
 
 /*This function deals with adding rows in the table with whatever data you give it, and gives each row an edit and delete button*/
@@ -69,14 +70,22 @@ function updateTable(dataArr) {
 /*This function deals with confirming any edits on a particular data row by sending a PUT request to the server*/
 async function confirmEdit(row, starting_time, ending_time, workout_type, workout_intensity) {
   const index = row.rowIndex - 1;
+  const fetchDataVar = await fetch("/workout_data", {
+    method: "GET"
+  });
+  const workout = await fetchDataVar.json();
+  const workout_id = workout[index]._id;
+
   const json = {
     index: index,
     starting_time: starting_time,
     ending_time: ending_time,
     workout_type: workout_type,
-    workout_intensity: workout_intensity
+    workout_intensity: workout_intensity,
+    workout_id: workout_id
   }
-  const response = await fetch("/edit_row/" + index, {
+
+  const response = await fetch("/update", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"
@@ -190,12 +199,18 @@ function editRow(row) {
 /*This function deals with row deletion*/
 async function deleteRow(row) {
   const index = row.rowIndex - 1; // Adjust for header row
-  const response = await fetch("/delete_row/" + index, {
+  const fetchDataVar = await fetch("/workout_data", {
+    method: "GET"
+  });
+  const workout = await fetchDataVar.json();
+  const workout_id = workout[index]._id;
+  console.log(workout[index]);
+  const response = await fetch("/remove", {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ index }),
+    body: JSON.stringify({ workout_id }),
   });
 
   if (response.ok) {
