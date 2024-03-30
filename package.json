@@ -1,12 +1,12 @@
 {
-  "name": "",
+  "name": "a3-persistence",
   "version": "",
   "description": "",
-  "author": "",
+  "author": "Bryon Tom",
   "scripts": {
     "start": "node server.improved.js"
   },
   "dependencies": {
-    "mime": "^2.6.0"
+    "express": "^4.17.1"
   }
 }
