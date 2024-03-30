@@ -73,10 +73,10 @@
                                 </ul>
                             </td>
                             <td>
-                                <button onClick="deleteRow(this)" data-name = ${displayText[index].productname} data-index = ${index} id="deleteData" class="submit-btn">DELETE</button>
-                                <button type="button" onclick="openPopup(); displayRow(this)" class="show-popup submit-btn" data-updindex = ${index} data-updname = ${displayText[index].productname}
-                                        data-dop = ${displayText[index].purchasedate} data-cost = ${displayText[index].cost} data-quantity = ${displayText[index].quantity}
-                                        data-category = ${displayText[index].category} data-desc = ${displayText[index].description}>UPDATE</button>
+                                <button onClick="deleteRow(this)" data-index = "{{_id}}" id="deleteData" class="submit-btn">DELETE</button>
+                                <button type="button" onclick="openPopup(); displayRow(this)" class="show-popup submit-btn" data-updindex = "{{_id}}" data-updname = "{{productName}}"
+                                        data-dop = "{{purchaseDate}}" data-cost = "{{cost}}" data-quantity = "{{quantity}}"
+                                        data-category = "{{category}}" data-desc = "{{description}}" data-github = "{{githubId}}">UPDATE</button>
                             </td>
                         </tr>
                     {{/each}}
@@ -92,23 +92,24 @@
 
 <div class="popup" id="popup">
     <h2>Form Update</h2>
-    <form> <!-- form for user to update purchase data -->
+    <form action="/update_data", method="POST"> <!-- form for user to update purchase data -->
+        <input type="hidden" name="_method" value="PUT">
         <label>Product Name</label>
         <br>
-        <input autocomplete="off" type="text" id="updproductname" placeholder="Enter product name">
+        <input autocomplete="off" type="text" id="updproductname" name="productName" placeholder="Enter product name" required>
         <br>
         <label>Date Of Purchase</label>
-        <input autocomplete="off" type="date" id="updpurchasedate">
+        <input autocomplete="off" type="date" id="updpurchasedate" name="purchaseDate" required>
         <br>
         <label>Product Cost</label>
-        <input autocomplete="off" type="number" id="updcost"  placeholder="Enter cost for single">
+        <input autocomplete="off" type="number" id="updcost" name="cost" placeholder="Enter cost for single" required>
         <br>
         <label>Product Quantity</label>
-        <input autocomplete="off" type="number" id="updquantity" placeholder="Enter quantity">
+        <input autocomplete="off" type="number" id="updquantity" name="quantity" placeholder="Enter quantity" required>
         <br>
         <label>Product Category</label>
         <br>
-        <select id="updcategory">
+        <select id="updcategory" name="category">
             <option disabled selected>Choose Category</option>
             <option value="food">Food</option>
             <option value="electronics">Electronics</option>
@@ -121,10 +122,11 @@
         <br>
         <label>Product Description</label>
         <br>
-        <input autocomplete="off" type="text" id="upddescription" placeholder="Enter any product description">
+        <input autocomplete="off" type="text" id="upddescription" name="description" placeholder="Enter any product description" required>
         <br>
-        <input type="hidden" id="updindex">
-        <button type="button" id="updsubmit" class="submit-btn" onclick="updateRow(); closePopup()">UPDATE</button>
+        <input type="hidden" id="githubid" name="githubId" readonly>
+        <input type="hidden" id="updindex" name="_id" readonly>
+        <button type="submit" id="updsubmit" class="submit-btn" onclick="updateRow(); closePopup()">UPDATE</button>
         <button id="reset" type="reset" class="submit-btn">RESET</button>
     </form>
     <button class="submit-btn" type="button" onclick="closePopup()">CANCEL</button>

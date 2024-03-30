@@ -5,6 +5,8 @@ const exphbs = require('express-handlebars')
 const passport = require('passport')
 const session = require('express-session')
 const path = require('path')
+const methodOverride = require('method-override')
+const bodyParser = require('body-parser');
 //const {Strategy: GitHubStrategy} = require("passport-github");
 const GitHubStrategy = require('passport-github').Strategy;
 
@@ -21,7 +23,18 @@ const app = express()
 
 //body parser for middleware to handle form data
 app.use(express.urlencoded({extended:false}))
+app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.json())
+
+//method override for PUT and DELETE
+app.use(methodOverride(function (req, res) {
+    if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+        // look in urlencoded POST bodies and delete it
+        let method = req.body._method
+        delete req.body._method
+        return method
+    }
+}))
 
 //set handlebars and middleware
 app.engine('handlebars', exphbs.engine({defaultLayout: 'main', extname:'handlebars'}))
@@ -46,8 +59,15 @@ app.use(passport.session())
 app.use(express.static(path.join(__dirname, 'public')))
 
 //call the routes
-app.use('/', require('./routes/routes'))
 app.use('/auth', require('./routes/auth'))
+app.use('/', require('./routes/routes'))
+
+
+//set global var
+// app.use(function (req, res, next){
+//     res.locals.user = req.user || null
+//     next()
+// })
 
 // app.use(passport.initialize())
 // app.use(passport.session())

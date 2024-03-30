@@ -2,6 +2,7 @@ const GitHubStrategy = require('passport-github').Strategy;
 const mongoose = require('mongoose')
 const User = require('../models/User')
 
+
 module.exports = function (passport){
     //github
     passport.use(new GitHubStrategy({
@@ -11,6 +12,8 @@ module.exports = function (passport){
         },
         async function(accessToken, refreshToken, profile, cb) {
             console.log(profile)
+            process.env.accessToken = accessToken
+            process.env.profile = profile
             //cb(null, profile)
             //for mongodb
             const newUser = {

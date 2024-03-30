@@ -9,6 +9,7 @@ router.get('/github', passport.authenticate('github', {scope: ['profile']}))
 router.get('/github/callback', passport.authenticate('github', { failureRedirect: '/' }),
     function(req, res) {
         // Successful authentication, redirect home.
+        req.session.accessToken = process.env.accessToken
         res.redirect('/dashboard')
     }
     )
