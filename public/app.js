@@ -19,26 +19,20 @@ async function submit(event) {
     // a new .html page for displaying results...
     // this was the original browser behavior and still
     // remains to this day
-    console.log("Submit button clicked");
     event.preventDefault()
 
     const playerName = document.querySelector("#playerName").value;
     const scoreValue = document.querySelector("#score").value;
     const gameDate = document.querySelector("#gameDate").value;
-    //json = { action: "add", playerName: playerName, score: Number(score), gameDate: gameDate},
-    //body = JSON.stringify(json);
+
     if (playerName && scoreValue && gameDate) {
         await addScore(playerName, Number(scoreValue), gameDate);
     }
-    // else {
-    //     console.error("Please fill in all the fields.");
-    //     alert("Please fill in all the fields.");
-    // }
 }
 
 // submit the new score
 async function addScore(playerName, score, gameDate) {
-    console.log('Submitting score...');
+    console.log('Submitting score ing');
 
     const response = await fetch('/add-score', {
         method: 'POST',
@@ -65,7 +59,6 @@ async function deleteScore(scoreId) {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ _id: scoreId })
     });
-
     await getAndUpdateScores();
 }
 
@@ -76,7 +69,6 @@ async function modifyScore(scoreId, playerName, score, gameDate) {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ _id: scoreId, playerName, score, gameDate })
     });
-
     await getAndUpdateScores();
 }
 
@@ -111,10 +103,6 @@ function updateScoreToDisplay(scores){
       <button onclick="deleteScore('${score._id}')">Delete</button>
       <button onclick="showEditForm('${score._id}', ${index})">Edit</button>
     `;
-        // if (!Array.isArray(scores)) {
-        //     console.error("Expected scores to be an array", scores);
-        //     return; // Exit if scores is not an array
-        // }
         display.appendChild(scoreElement);
     });
     currentScores = scores;
@@ -151,7 +139,6 @@ async function submitEdit() {
     const score = document.querySelector("#editScore").value;
     const gameDate = document.querySelector("#editGameDate").value;
 
-    //const scores = await getAndUpdateScores();
     const scoreId = currentScores[currentEditingIndex]._id;
 
     await modifyScore(scoreId, playerName, Number(score), gameDate);
@@ -177,10 +164,9 @@ document.getElementById('logoutButton').addEventListener('click', async () => {
 
 // check if the status is logged in
 async function checkLoginStatus() {
-    const response = await fetch('/status'); // Assuming this endpoint exists
+    const response = await fetch('/status');
     const data = await response.json();
     if (data.loggedIn) {
-        //document.getElementById('loginForm').style.display = 'none';
         document.getElementById('logoutForm').style.display = 'block';
         await fetchScoresAndDisplay(); // load scores if logged in
     } else {
@@ -193,6 +179,7 @@ async function checkLoginStatus() {
 async function fetchScoresAndDisplay() {
     try {
         const response = await fetch('/get-scores');
+
         if (!response.ok) {
             throw new Error('Failed to fetch scores');
         }

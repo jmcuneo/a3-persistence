@@ -149,7 +149,6 @@ app.post('/delete-score', async (req, res) => {
     const scores = await scoresCollection.find().toArray();
     const rankedScores = calculateRankings(scores);
     res.json(rankedScores);
-    //res.json({ status: "success" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
@@ -166,7 +165,6 @@ app.post('/modify-score', async (req, res) => {
     const scores = await scoresCollection.find().toArray();
     const rankedScores = calculateRankings(scores);
     res.json(rankedScores);
-    //res.json({ status: "success" });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
@@ -175,10 +173,8 @@ app.post('/modify-score', async (req, res) => {
 
 // server-side function to recalculate rankings
 function calculateRankings(scores) {
-  // Sort the scores in descending order
   scores.sort((a, b) => b.score - a.score);
 
-  // Assign rankings
   scores.forEach((score, index) => {
     score.ranking = index + 1;
   });
