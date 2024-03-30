@@ -1,13 +1,47 @@
 const express = require('express'),
+  { MongoClient, ObjectId } = require("mongodb"),
   app = express(),
   gpaData = [];
 
 app.use(express.static('public'));
 app.use(express.static('views'));
 app.use(express.json());
+require('dotenv').config();
+
+
+const uri = `mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.HOST}`
+const client = new MongoClient( uri )
+
+let collection = null
+
+async function run() {
+  await client.connect()
+  collection = await client.db("gpadb").collection("gpaEntries")
+
+  // route to get all docs
+  if (collection !== null) {
+    const docs = await collection.find({}).toArray()
+    console.log(docs);
+  }
+}
+
+run()
+
+app.use( (req,res,next) => {
+  if( collection !== null ) {
+    next()
+  }else{
+    res.status( 503 ).send()
+  }
+})
+
+app.post( '/add', async (req,res) => {
+  const result = await collection.insertOne( req.body )
+  res.json( result )
+})
+
 
 app.listen(process.env.PORT || 3000);
-
 
 var gpa = 0.0;
 
