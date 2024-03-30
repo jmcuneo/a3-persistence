@@ -10,19 +10,33 @@ const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env
 const app = express();
 const port = 3000;
 
-app.use(express.static("public"));
-app.use(express.json());
-
 const passport = require('passport');
 const session = require('express-session');
-const LocalStrategy = require('passport-local').Strategy;
+const GitHubStrategy = require('passport-github').Strategy;
 
-passport.use(new LocalStrategy(
-    function(username, password, done) {
-      collection2.findOne({ username: username, password: password }, function (err, user) {
-        if (err) { return done(err); }
-        if (!user) { return done(null, false); }
-        return done(null, user);
+passport.use(new GitHubStrategy({
+      clientID: `${process.env.CLIENTID}`,
+      clientSecret: `${process.env.CLIENTSECRET}`,
+      callbackURL: "http://localhost:3000/auth/github/callback"
+    },
+    function(accessToken, refreshToken, profile, done) {
+      const user = {
+        githubId: profile.id,
+        username: profile.username,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        profile: profile
+      };
+
+      // Save the user to MongoDB database
+
+
+      collection2.insertOne(user, (err, result) => {
+        if (err) {
+          return done(err);
+        }
+        // Pass the user object to the done callback
+        done(null, user);
       });
     }
 ));
@@ -48,17 +62,30 @@ app.get('/', ensureAuthenticated, (req, res) => {
   sendFile(res, "public/index.html");
 });
 
-app.post('/login', passport.authenticate('local', {
-  successRedirect: '/'
-}));
+// Login page route
+// app.get('/login', (req, res) => {
+//   res.send('Login Page'); // Replace with your login page content
+// });
+
+app.get('/login', passport.authenticate('github'));
+
+app.get('/auth/github/callback',
+    passport.authenticate('github',
+        { failureRedirect: '/login', successRedirect: '/public/index.html' }),
+    function(req, res) {
+      // Successful authentication, redirect home.
+      return res.redirect('/');
+    }
+);
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
-    console.log("Hello")
     return next();
   }
   res.redirect('/login');
 }
+
+
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -74,6 +101,7 @@ let collection2 = null
 async function run() {
   try {
     await client.connect();
+    // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
     collection = await client.db("Workout_Data").collection("workouts");
@@ -94,6 +122,8 @@ app.get("/", (req, res) => {
   sendFile(res, "public/index.html");
 });
 
+
+
 app.use(async (req, res, next) => {
   try {
     if (collection !== null) {
@@ -106,6 +136,10 @@ app.use(async (req, res, next) => {
     res.status(503).send("Service Unavailable");
   }
 });
+
+app.use(express.static("public"));
+
+app.use(express.json());
 
 app.post( '/add', async (req,res) => {
   console.log("Reached function");
@@ -133,7 +167,6 @@ app.post( '/add', async (req,res) => {
   res.json( req.body )
 })
 
-// assumes req.body takes form { _id:5d91fb30f3f81b282d7be0dd } etc.
 app.delete( '/remove', async (req,res) => {
   console.log(req.body)
   const result = await collection.deleteOne({
