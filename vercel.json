@@ -8,8 +8,16 @@
     ],
     "routes": [
         {
-            "src":"/(.*)",
-            "dest":"/"
+            "src":"/",
+            "dest":"/index"
+        },
+        {
+            "src":"/main",
+            "dest":"/main"
+        },
+        {
+            "src":"/index",
+            "dest":"/index"
         }
     ]
 
