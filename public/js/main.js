@@ -13,7 +13,7 @@ const submit = async function( event ) {
         json = { type:"anagram",string: input.value, dict:dropdown.value },
         body = JSON.stringify( json );
 
-  console.log(dropdown.value);
+  console.log("DROPDOWN",dropdown.value);
   //Asynchronous network request
   const response = await fetch( "/submit", {
     method:"POST",
@@ -22,7 +22,7 @@ const submit = async function( event ) {
   });
 
   const res = await response.json();
-  console.log(res);
+  // console.log(res);
   res.elements = addRow([res.string,res.gram0,res.gram1,res.gram2,res.gram3],res.id);
   localAppData.push(res);
 }
@@ -67,6 +67,7 @@ const remove = async function(event,index){
 
 
 const submitButton = document.querySelector("#submit");
+submitButton.onclick=submit;
 const table = document.querySelector("#table");
 var localAppData = [];
 

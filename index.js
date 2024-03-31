@@ -44,14 +44,14 @@ async function runDB() {
   await clientDB.connect()
   collection = await clientDB.db("datatest").collection("test")
 
-  // route to get all docs
-  app.get("/docs", async (req, res) => {
-    if (collection !== null) {
-      const docs = await collection.find({userId:req.user.id}).toArray()
-      // const docs = await collection.find({}).toArray()
-      res.json( docs )
-    }
-  })
+  // // route to get all docs
+  // app.get("/docs", async (req, res) => {
+  //   if (collection !== null) {
+  //     const docs = await collection.find({userId:req.session.passport.user.id}).toArray()
+  //     // const docs = await collection.find({}).toArray()
+  //     res.json( docs )
+  //   }
+  // })
 }
 
 runDB();
