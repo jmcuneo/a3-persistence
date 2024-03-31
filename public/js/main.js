@@ -13,14 +13,19 @@ const submit = async function( event ) {
         charclass = document.querySelector( "#charclass" ),
         action = document.querySelector('input[name="action"]:checked').value;
 
-    json = { "charname": charname.value,
-        "charrace": charrace.value,
-        "charclass": charclass.value,
-        "action": action},
-        body = JSON.stringify( json )
+    const json = {
+            "charname": charname.value,
+            "charrace": charrace.value,
+            "charclass": charclass.value,
+            "action": action
+        },
+        body = JSON.stringify(json)
 
   const response = await fetch( "/submit", {
     method:"POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
     body 
   })
 
@@ -121,7 +126,7 @@ const cancel = function ( event ){
 const loadTable = async function (){
     console.log("loading table")
 
-    await fetch('/api/appdata')
+    await fetch('/docs')
         .then(response => response.json())
         .then(data => {
             const existingTableBody = document.getElementById("charTableBody");

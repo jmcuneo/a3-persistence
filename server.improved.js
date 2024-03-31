@@ -1,12 +1,14 @@
 const http = require( "http" ),
       fs   = require( "fs" ),
+      express = require('express'),
       // IMPORTANT: you must run `npm install` in the directory for this assignment
       // to install the mime library if you"re testing this on your local machine.
       // However, Glitch will install it automatically by looking in your package.json
       // file.
       mime = require( "mime" ),
       dir  = "public/",
-      port = 3000
+      port = 3000,
+      app = express();
 
 const appdata = [
   { "name": "Duolian", "race": "Earth Genasi", "class": "Paladin", "modifier": "Charisma", "action": "Greatsword"},
@@ -14,27 +16,19 @@ const appdata = [
   { "name": "Thaddeus Thunderclap", "race": "Gnome", "class": "Wizard", "modifier": "Intelligence", "action": "Thunderclap"}
 ]
 
-const server = http.createServer( function( request,response ) {
-  if( request.method === "GET" ) {
-    handleGet( request, response )    
-  }else if( request.method === "POST" ){
-    handlePost( request, response ) 
-  }
+//Allow loading of files in public dir
+app.use(express.static("public"))
+
+// Load main home page
+app.get( '/', ( req, res ) => sendFile(res, "public/index.html") )
+
+
+//Pass app data on get request
+app.get('/api/appdata', async(req,res)=>{
+  res.writeHead(200, { "Content-Type": "application/json" });
+  res.end(JSON.stringify(appdata));
 })
 
-const handleGet = function( request, response ) {
-  const filename = dir + request.url.slice( 1 ) 
-
-  if( request.url === "/" ) {
-    sendFile( response, "public/index.html" )
-  }else if (request.url === "/api/appdata") {
-    response.writeHead(200, { "Content-Type": "application/json" });
-    response.end(JSON.stringify(appdata));
-  }
-  else{
-    sendFile( response, filename )
-  }
-}
 
 const handlePost = function( request, response ) {
   let dataString = ""
@@ -62,6 +56,7 @@ const handlePost = function( request, response ) {
     response.end("Character Information Received")
   })
 }
+
 
 const saveData = function( jsonData ){
   let myDataJSON = JSON.parse( jsonData )
@@ -233,4 +228,5 @@ const sendFile = function( response, filename ) {
    })
 }
 
-server.listen( process.env.PORT || port )
+console.log("Starting server...");
+app.listen( process.env.PORT || 3000 )
