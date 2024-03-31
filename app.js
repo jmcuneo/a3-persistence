@@ -1,6 +1,7 @@
 const express = require("express"),
 	app = express(),
 	dotenv = require("dotenv").config(),
+	cors = require("cors")
 	port = 3000;
 
 // const shiftRouter = require("./routes/courses");
@@ -48,6 +49,7 @@ app.engine('handlebars', handlebars.engine());
 app.set("view engine", "handlebars");
 app.set("views", "./views");
 app.use(express.json());
+app.use(cors())
 app.use(session({
 	secret: 'sessionSecretHehe',
 	resave: false,
