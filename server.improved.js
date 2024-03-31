@@ -106,14 +106,19 @@ passport.use(new GitHubStrategy({
     }
 ));
 
-// app.get('/', ensureAuthenticated, (req, res) => {
-//   sendFile(res, "public/index.html");
-// });
-
 // Login page route
 // app.get('/login', (req, res) => {
 //   res.send('Login Page'); // Replace with your login page content
 // });
+
+app.get('/', (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    return res.redirect('/auth/github/');
+  }
+  next();
+}, (req, res) => {
+  sendFile(res, "public/index.html");
+});
 
 app.get('/auth/github/',
     passport.authenticate('github'));
@@ -129,13 +134,6 @@ app.get('/auth/github/callback',
       }
     }
 );
-
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login');
-}
 
 
 passport.serializeUser(function(user, done) {
@@ -173,14 +171,14 @@ app.post( '/add', async (req,res) => {
 
   req.body.totalWorkoutDuration = totalWorkoutDuration;
   req.body.estimated_calories = estimated_calories;
-  req.body._id = await collection.insertOne(req.body);
+  req.body._id = await client.db("Workout_Data").collection(req.session.passport.user.id).insertOne(req.body);
 
   res.json( req.body )
 })
 
 app.delete( '/remove', async (req,res) => {
   console.log(req.body)
-  const result = await collection.deleteOne({
+  const result = await client.db("Workout_Data").collection(req.session.passport.user.id).deleteOne({
     _id:new ObjectId( req.body.workout_id )
   })
 
@@ -205,7 +203,7 @@ app.put( '/update', async (req,res) => {
 
   req.body.json.estimated_calories = estimated_calories
 
-  await collection.updateOne(
+  await client.db("Workout_Data").collection(req.session.passport.user.id).updateOne(
       { _id: new ObjectId( req.body.json.workout_id ) },
       { $set:{ starting_time:req.body.json.starting_time,
           ending_time:req.body.json.ending_time,
@@ -220,7 +218,7 @@ app.put( '/update', async (req,res) => {
 
 app.get("/workout_data", async (req, res) => {
   try {
-    const data = await collection.find().toArray();
+    const data = await client.db("Workout_Data").collection(req.session.passport.user.id).find().toArray();
     res.json(data);
   } catch (err) {
     console.error(err);
