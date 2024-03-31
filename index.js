@@ -58,7 +58,7 @@ runDB();
 
 const handlePost = function(request, response) {
   // console.log(request.session);
-    if(!request.session){
+    if(!request.session || !request.session.passport){
       return;
     }
     let userId = request.session.passport.user.id;

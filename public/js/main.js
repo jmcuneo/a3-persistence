@@ -23,7 +23,7 @@ const submit = async function( event ) {
 
   const res = await response.json();
   // console.log(res);
-  res.elements = addRow([res.string,res.gram0,res.gram1,res.gram2,res.gram3],res.id);
+  res.elements = addRow([res.string,res.dict,res.gram0,res.gram1,res.gram2,res.gram3],res.id);
   localAppData.push(res);
 }
 
