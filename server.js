@@ -44,6 +44,21 @@ app.post( '/delete', async (req,res) => {
     res.send("Data successfully deleted")
 })
 
+app.post( '/edit', async (req,res) => {
+    console.log("Request Body: ", req.body);
+    const result = await collection.updateOne(
+        { _id: new ObjectId(req.body.id) },
+        {$set: {
+                "name": req.body.name,
+                "race": req.body.race,
+                "class": req.body.class,
+                "modifier": req.body.modifier,
+                "action": req.body.action
+            }}
+        );
+    res.send("Data successfully edited")
+})
+
 const saveData = async function (myDataJSON) {
     let charModifier = "unknown"
     let randAction = "Unarmed Strikes"

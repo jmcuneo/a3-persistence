@@ -1,6 +1,7 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 let editOriginalName
 let editOriginalRace
+let editID
 const submit = async function( event ) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
@@ -61,15 +62,11 @@ const deleteEntry = async function (deleteId){
 const save = async function( event ){
     event.preventDefault();
 
-    console.log("global var values: ", editOriginalName, editOriginalRace)
-
-    await deleteEntry(editOriginalName, editOriginalRace);
-
     await saveEdit(event)
 }
 
 
-const editEntry = function (editName, editRace, editClass, editMod, editAction){
+const editEntry = function (editName, editRace, editClass, editMod, editAction, editId){
     console.log("edit data for ", editName)
     document.getElementById("editForm").style.display = 'block';
     document.getElementById("editname").value = editName;
@@ -79,12 +76,11 @@ const editEntry = function (editName, editRace, editClass, editMod, editAction){
     document.getElementById("editaction").value = editAction;
     editOriginalName = editName;
     editOriginalRace = editRace;
+    editID = editId
 }
 
 const saveEdit = async function ( event ){
     event.preventDefault()
-    console.log("saving edit, deleting ", editOriginalName, editOriginalRace)
-
 
     const charname = document.querySelector( "#editname" ),
         charrace = document.querySelector( "#editrace" ),
@@ -96,11 +92,15 @@ const saveEdit = async function ( event ){
         "race": charrace.value,
         "class": charclass.value,
         "modifier": charmod.value,
-        "action": action.value},
+        "action": action.value,
+        "id": editID},
         body = JSON.stringify( json )
 
     const response = await fetch( "/edit", {
         method:"POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
         body
     })
 
@@ -119,6 +119,7 @@ const cancel = function ( event ){
 
     editOriginalRace = ""
     editOriginalName = ""
+    editID = ""
 
 }
 
@@ -164,7 +165,7 @@ const loadTable = async function (){
                             break;
                         case 5:
                             const button2 = document.createElement("button")
-                            button2.onclick = () => editEntry(data[i].name, data[i].race, data[i].class, data[i].modifier, data[i].action);
+                            button2.onclick = () => editEntry(data[i].name, data[i].race, data[i].class, data[i].modifier, data[i].action, data[i]._id);
                             button2.id = "editButton"
                             button2.textContent = "Edit"
                             cell.appendChild(button2);
