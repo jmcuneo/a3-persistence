@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
 
 body{
-    font-family: "Nunito Sans", sans-serif; /* Applying Google Font for entire body*/
-    background: #E0FFFF;
+    font-family: "Nunito Sans", sans-serif !important; /* Applying Google Font for entire body*/
+    background: #E0FFFF !important;
     margin: 0;
 }
 
@@ -25,14 +25,13 @@ body{
 
 .top-nav{
     background-image: linear-gradient(140deg, #EADEDB 0%, #FF7F50 50%, #BFD641 75%);
-    text-align: center;
+    text-align: center !important;
     color: white;
-    top: 0;
-    left: 0;
-    height: 10%;
-    width: 100%;
-    position: absolute;
-    z-index: 999;
+    /* top: 0;
+    left: 0; */
+    /* height: 10% !important; */
+    /* width: 100%; */
+    /* position: absolute; */
 }
 
 .title{

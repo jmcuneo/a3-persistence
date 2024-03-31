@@ -35,6 +35,7 @@ async function deleteRow(r) {
     })
 
     const text = await response.text()
+    alert("Deleted Successfully!!")
     location.reload()
     // let displayText = JSON.parse(text)
     // addItem(displayText) //displaying the updated data received from server

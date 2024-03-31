@@ -1,96 +1,122 @@
 const express = require('express')
 const router = express.Router()
 const Data = require('../models/Data')
-const {cache} = require("express/lib/application");
+const { cache } = require("express/lib/application");
 
-const isAuth = (req, res, next) =>{
-    if(req.user){
+const isAuth = (req, res, next) => {
+    if (req.user) {
         next()
     }
-    else{
+    else {
         res.redirect('/')
     }
 }
 
-const isGuest = (req, res, next) =>{
-    if(req.user){
+const isGuest = (req, res, next) => {
+    if (req.user) {
         res.redirect('/dashboard')
-    } else{
+    } else {
         next()
     }
 }
 
+function calculatePrice(bilingObj) {
+    //DERIVED FIELDS
+    let totalPrice = 0
+    let discount = 0
+    let afterDiscount = 0
+    let finalPrice = 0
+    totalPrice = bilingObj.cost * bilingObj.quantity //calculating total price based on quantity and cost
+
+    //calculating discount based on total price
+    if (totalPrice < 50) {
+        discount = 0.10 //10%
+    }
+    else if (totalPrice <= 50 && totalPrice > 100) {
+        discount = 0.20 //20%
+    }
+    else if (totalPrice <= 100 && totalPrice > 500) {
+        discount = 0.30 //30%
+    }
+    else if (totalPrice >= 500) {
+        discount = 0.40 //40%
+    }
+
+    afterDiscount = discount * totalPrice //applying discount
+    finalPrice = totalPrice - afterDiscount //final price including quantity
+
+    //adding properties and values for prices
+    bilingObj.totalprice = totalPrice
+    bilingObj.discount = discount * 100
+    bilingObj.afterdiscount = finalPrice
+
+    return bilingObj
+
+}
+
 //routes to redirect to user to different pages
-router.get('/', isGuest, (req, res) =>{
-    res.render('login', {stuff: "This is login page"})
+router.get('/', isGuest, (req, res) => {
+    res.render('login', { stuff: "This is login page" })
 })
 
 
 
 router.get('/dashboard', isAuth, async (req, res) => {
-    console.log(req.user)
-    // if(req.user){
-    //     res.redirect('/dashboard')
-    // } else{
-    let username = "ssunku6"
-    console.log("username = "+req.user.username)
+    console.log("username = " + req.user.displayName)
     //console.log("username = "+req.user.username)
-    res.render('dashboard', {name: username})
+    res.render('dashboard', { name: req.user.displayName })
 
     // res.render('dashboard', {name: req.user.username})
 
 })
 
-router.get('/billingsystem', isAuth, async(req, res) =>{
-    let name = "ssunku6"
-    let id = "128723424"
-    try{
-        const billingdata = await Data.find({githubId: id}).lean()
-        // res.set('Cache-Control', 'no-cache, no-store, must-revalidate')
-        // res.set('Pragma', 'no-cache')
-        res.render('billingsystem', {username: name, billingdata: billingdata, id:id})
-    } catch(err){
-        console.error(err)
+router.get('/billingsystem', isAuth, async (req, res) => {
+    try {
+        const billingdata = await Data.find({ githubId: req.user.githubId }).lean()
+        res.render('billingsystem', { username: req.user.displayName, billingdata: billingdata, id: req.user.githubId })
+    } catch (err) {
         res.render('error')
     }
 })
 
-router.get('/instructions', isAuth, (req, res) =>{
-    res.render('instructions' )
+router.get('/instructions', isAuth, (req, res) => {
+    res.render('instructions')
 })
 
 router.post('/add-data', isAuth, async (req, res) => {
-    try{
+    try {
         req.body.user = req.user.id
+        let bilingObj = {
+            cost: req.body.cost,
+            quantity: req.body.quantity
+        }
+        let billingData = calculatePrice(bilingObj)
+        req.body.totalPrice = billingData.totalprice
+        req.body.discount = billingData.discount
+        req.body.afterDiscount = billingData.afterdiscount
         await Data.create(req.body)
         res.redirect('/billingsystem')
-    } catch (err){
-        console.error(err)
+    } catch (err) {
         res.render('error')
     }
 })
 
-router.put('/update_data', isAuth, async (req, res) =>{
-    //console.log("updated data: ",req.body)
-    let data = await Data.findOneAndUpdate({_id: req.body._id}, req.body, {
-        runValidators: true
-    })
-    res.redirect('/billingsystem')
+router.put('/update_data', isAuth, async (req, res) => {
+    try {
+        let data = await Data.findOneAndUpdate({ _id: req.body._id }, req.body, {
+            runValidators: true
+        })
+        res.redirect('/billingsystem')
+    } catch (err) {
+        res.render('error')
+    }
 })
 
 router.delete('/delete_data', isAuth, async (req, res) => {
-    console.log("id to be deleted: ")
-    console.log(req.body._id)
-    try{
-        await Data.deleteOne({_id: req.body._id})
-        // let name = "ssunku6"
-        // let id = "128723424"
-        // const billingdata = await Data.find({githubId: id}).lean()
-        // res.render('billingsystem', {username: name, billingdata: billingdata, id:id})
+    try {
+        await Data.deleteOne({ _id: req.body._id })
         res.redirect('/billingsystem')
-
-    } catch (err){
-        console.error(err)
+    } catch (err) {
         res.render('error')
     }
 })
