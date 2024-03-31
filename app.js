@@ -28,7 +28,7 @@ passport.deserializeUser(function (obj, done) {
 passport.use(new GithubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "https://a3-persistence.vercel.app/auth/github/callback"
+    callbackURL: "http://ssgreene.tech/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
