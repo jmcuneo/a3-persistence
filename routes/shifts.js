@@ -2,8 +2,6 @@ const 	app = require('express'),
 		mongo = require("mongodb").MongoClient;
 		router = app.Router();
 
-const schema = require("../models/shiftSchema");
-
 
 router.post("/add", (req, res) => {
 	const uri = process.env.MONGO;
