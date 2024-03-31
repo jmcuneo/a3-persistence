@@ -1,21 +1,22 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
-const logCourse = async function (event) {
+const logShift = async function (event) {
 	// stop form submission from trying to load
 	// a new .html page for displaying results...
 	// this was the original browser behavior and still
 	// remains to this day
 	event.preventDefault()
 
+	const form = document.getElementById("logForm");
 	// define fields to receive from submission, and convert to json
-	const cID = document.querySelector("#cID"),
-		cTerm = document.querySelector("#cTerm"),
-		cName = document.querySelector("#cName"),
-		prof = document.querySelector("#prof"),
-		json = { cID: parseInt(cID.value), cName: cName.value, prof: prof.value, crn: cTerm.value.concat("-", cID.value) },
+	const shiftID = document.querySelector("#logShiftID"),
+		shiftDate = document.querySelector("#shiftDate"),
+		shiftStart = document.querySelector("#shiftStart"),
+		shiftEnd = document.querySelector("#shiftEnd"),
+		json = { id: shiftID.value, date: shiftDate.value, start: shiftStart.value, end: shiftEnd.value },
 		body = JSON.stringify(json);
 
-	console.log(cID.value);
+	form.reset();
 	// send the json as post request
 	const response = await fetch("/courses/add", {
 		method: "POST",
@@ -30,7 +31,7 @@ const logCourse = async function (event) {
 	renderCourses(jsn);
 }
 
-const deleteCourse = async function (event) {
+const deleteShift = async function (event) {
 	// stop form submission from trying to load
 	// a new .html page for displaying results...
 	// this was the original browser behavior and still

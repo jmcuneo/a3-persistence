@@ -14,6 +14,7 @@
     "express-handlebars": "^7.1.2",
     "express-session": "^1.18.0",
     "https-proxy-agent": "^7.0.4",
+    "mongodb": "^6.5.0",
     "passport": "^0.7.0",
     "passport-github2": "^0.1.12"
   }

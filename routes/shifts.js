@@ -3,8 +3,8 @@ const	app = require('express'),
 
 const appData = [];
 
-router.post("/add", (req, res) => {
-	course = req.body;
+router.post("/log", (req, res) => {
+	shift = req.body;
 
 	if (appData.some(data => data.cID === course.cID)) {
 		// course already exists, let's update the record :)
