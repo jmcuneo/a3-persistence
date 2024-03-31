@@ -13,23 +13,6 @@ app.use(express.json());
 let collection = null
 let entries = []
 
-const middleware_post = (req, res, next) => {
-    let dataString = '';
-
-    req.on('data', function (data) {
-        dataString += data;
-    });
-
-    req.on('end', function () {
-        const json = JSON.parse(dataString);
-        json.total = Number(json.squat) + Number(json.benchPress) + Number(json.deadLift);
-
-        entries.push(json);
-        req.json = JSON.stringify(entries);
-        next();
-    });
-};
-
 async function run() {
     await client.connect()
     collection = await client.db("datatest").collection("test")
@@ -50,30 +33,28 @@ async function run() {
         }
     })
 
-    app.post('/submit', middleware_post, (req, res) => {
-        //entries.push( req.body )
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.end(JSON.stringify(entries));
+    app.get('/entries', async (req, res) => {
+        if (collection !== null) {
+            const docs = await collection.find({}).toArray()
+            res.json( docs )
+        }
     });
 
-    app.get('/entries', (req, res) => {
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify(entries));
+    app.post('/submit', (req, res) => {
+        let dataString = '';
+
+        req.on('data', function (data) {
+            dataString += data;
+        });
+
+        req.on('end', async function () {
+            const json = JSON.parse(dataString);
+            json.total = Number(json.squat) + Number(json.benchPress) + Number(json.deadLift);
+
+            const result = await collection.insertOne(json);
+            res.json(result);
+        });
     });
-
-    app.post('/add', async (req, res) => {
-        const result = await collection.insertOne(req.body)
-        res.json(result)
-    })
-
-    // assumes req.body takes form { _id:5d91fb30f3f81b282d7be0dd } etc.
-    app.post('/remove', async (req, res) => {
-        const result = await collection.deleteOne({
-            _id: new ObjectId(req.body._id)
-        })
-
-        res.json(result)
-    })
 
     app.post('/update', async (req, res) => {
         const result = await collection.updateOne(
@@ -83,9 +64,18 @@ async function run() {
 
         res.json(result)
     })
-}
 
-run()
+    app.post('/remove', async (req, res) => {
+        const result = await collection.deleteOne({
+            _id: new ObjectId(req.body._id)
+        })
+
+        res.json(result)
+    })
+
+    run()
+
+}
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
