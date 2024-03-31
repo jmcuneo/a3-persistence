@@ -1,26 +1,3 @@
-// //function to update row
-// //called when update button in the respective row clicked
-// async function updateRow() {
-//     //fetching the updated values from the form
-//     let updateLoad = JSON.stringify({
-//         updindex: document.getElementById("updindex").value,
-//         productname: document.getElementById("updproductname").value,
-//         purchasedate: document.getElementById("updpurchasedate").value,
-//         cost: document.getElementById("updcost").value,
-//         quantity: document.getElementById("updquantity").value,
-//         category: document.getElementById("updcategory").value,
-//         description: document.getElementById("upddescription").value
-//     })
-//
-//     const response = await fetch("/update_data", {
-//         method: "PUT",
-//         body: updateLoad, //sending the values to server using PUT request
-//     })
-//
-//     // const text = await response.text()
-//     // let displayText = JSON.parse(text)
-//     // addItem(displayText) //displaying updated data received from server
-// }
 
 async function deleteRow(r) {
     //saving the object containing the index to remove
@@ -37,8 +14,6 @@ async function deleteRow(r) {
     const text = await response.text()
     alert("Deleted Successfully!!")
     location.reload()
-    // let displayText = JSON.parse(text)
-    // addItem(displayText) //displaying the updated data received from server
 
 }
 

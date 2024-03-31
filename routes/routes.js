@@ -56,18 +56,12 @@ function calculatePrice(bilingObj) {
 
 //routes to redirect to user to different pages
 router.get('/', isGuest, (req, res) => {
-    res.render('login', { stuff: "This is login page" })
+    res.render('login')
 })
 
 
-
 router.get('/dashboard', isAuth, async (req, res) => {
-    console.log("username = " + req.user.displayName)
-    //console.log("username = "+req.user.username)
     res.render('dashboard', { name: req.user.displayName })
-
-    // res.render('dashboard', {name: req.user.username})
-
 })
 
 router.get('/billingsystem', isAuth, async (req, res) => {
