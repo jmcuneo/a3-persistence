@@ -122,7 +122,7 @@ const updateAllData = async function(){
 //Add a new set of anagrams to the rows. This just updates the HTML, localAppData needs separate updating.
 function addRow(anagrams, index){
   // For accessing element to delete by index
-  let newRow = documnet.createElement("tr");
+  let newRow = document.createElement("tr");
   newRow.setAttribute('scope','row');
   // var newElements = [];
   for(let i = 0; i < anagrams.length; i++){
