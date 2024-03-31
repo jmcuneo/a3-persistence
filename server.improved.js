@@ -4,7 +4,8 @@ const express = require( 'express' ),
       hbs     = require( 'express-handlebars' ).engine,
       app     = express()
 
-// FOR GLITCH OR OTHER SERVER: const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
+// FOR GLITCH OR OTHER SERVER: 
+// const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 // FOR TESTING
 const uri = `mongodb+srv://austinwebwareuser:austinwebwareuser@webwareclustera3.utwkatb.mongodb.net/`
 
