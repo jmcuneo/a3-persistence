@@ -135,6 +135,7 @@ module.exports = {
     */
     getAnagrams: function(str, dictName, numAnagrams){
         var ld = getLetterData(sanitize(str));
+        console.log(dictName);
         var dict = buildLetterDictionary(dictionaries[dictName],ld);
         var output = [];
         for(var i = 0; i < numAnagrams; i++){
