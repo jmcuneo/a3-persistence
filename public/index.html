@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Super amazing form website">
+    <script async src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+
+  <body>
+      <div id="container">
+        <main>
+          <header class="centered">
+            <h1>Shrimple To-Do List</h1>
+            <p>Make sure all fields are filled out for submissions.
+            <br> To delete, only the name is necessary.
+            <br> Also, priority is a number from 1-10, with 1 being the highest. 
+            <br>To edit, make sure the name matches exactly, then click the button</p>
+          </header>
+          <form id="form">
+            <label for="name">Name: </label><input type="text" id="name" placeholder="Name" required>
+            <label for="description">Description: </label><input type="text" id="description" placeholder="Description"><br>
+            <label for="date">Creation Date: </label><input type="date" id="date" required>
+            <label for="priority">Priority: </label><input type="number" id="priority" min="0" max="10">
+            <button id="starter">submit</button>
+            <button id="delete">delete</button>
+            <button id="edit">edit</button>
+          </form>
+          <div class="centered">
+            <h2>Results</h2>
+            <button id="getResults">Refresh Results</button>
+            <div id="tableContainer">
+              <table id="table"></table>
+            </div>
+          </div>
+        </main>
+      </div>
+  </body>
+
+
+</html>

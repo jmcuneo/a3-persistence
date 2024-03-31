@@ -1,0 +1,83 @@
+/*Declare variables in root to use them in the whole css file*/
+:root {
+  --text-color: #323841;
+  --secondary-color: #FAD762;
+  --tertiary-color: #7e61fa;
+}
+
+body {
+  font-family: "Madimi One", sans-serif;
+  margin: 0;
+  background-color: #61A6FA   ;
+  background-size: 65px;
+  color: var(--text-color);
+  background-image: url(water2.webp);
+}
+
+/* Border box includes padding and border in the element's total width and height. */
+* {
+  box-sizing: border-box;
+}
+
+#container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Reserve space for table to improve CLS */
+#tableContainer {
+  min-height: 500px;
+}
+
+p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+h1, h2{
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+main {
+  background-color: #61A6FA;
+  flex: 1;
+  padding: 20px;
+}
+
+/* New stuff */
+
+input {
+  width: 100%;
+  padding: 5px;
+  margin: 5px 0;
+  border-radius: 5px;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  max-width: 100%;
+}
+
+button {
+  background-color: #FAD762;
+  color: var(--text-color);
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  margin: 5px;
+}
+
+.centered {
+  text-align: center;
+}
