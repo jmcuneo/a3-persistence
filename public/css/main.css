@@ -1,0 +1,73 @@
+body {
+  background:white;
+  color:black;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border: 2px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
+  color: #333333;
+  font-weight: bold;
+}
+
+.deletebutton{
+  margin-left: 10px;
+  padding:5px 10px;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  cursor: pointer;
+  border-width: 1px;
+}
+
+.deletebutton:hover{
+  background-color: #0056b3
+}
+
+.roboto-serif{
+  font-family: "Roboto Serif", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+          "wdth" 100,
+          "GRAD" 0;
+}
+
+#inputform{
+  margin-bottom:40px;
+}
+
+.inputfield{
+  margin-bottom:20px;
+}
+
+#submit{
+  padding:5px 10px;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  cursor: pointer;
+  border-width: 1px;
+  margin-bottom: 15px
+}
+
+#submit:hover{
+  background-color: #0056b3;
+}
+
+h1{
+  font-size: 150%;
+}
+
+.note{
+  font-size: 10px
+}
