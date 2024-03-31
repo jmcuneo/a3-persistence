@@ -47,8 +47,8 @@ async function runDB() {
   // route to get all docs
   app.get("/docs", async (req, res) => {
     if (collection !== null) {
-      // const docs = await collection.find({userId:req.userId}).toArray()
-      const docs = await collection.find({}).toArray()
+      const docs = await collection.find({userId:req.user.id}).toArray()
+      // const docs = await collection.find({}).toArray()
       res.json( docs )
     }
   })
@@ -57,6 +57,8 @@ async function runDB() {
 runDB();
 
 const handlePost = function(request, response) {
+  // console.log(request.session);
+    let userId = request.session.passport.user.id;
     // console.log("HANDLING POST");
     let data = request.body;
     console.log(data);
@@ -64,7 +66,7 @@ const handlePost = function(request, response) {
     switch(type){
       //Entry is a new anagram request
       case "anagram":
-        handleNewEntry(response,data);
+        handleNewEntry(response,data,userId);
         break;
       //Entry is a request to remove a specific anagram.
       case "remove":
@@ -72,18 +74,18 @@ const handlePost = function(request, response) {
         break;
       //Entry is a request to get all current appdata.
       case "getAll":
-        handleGetAll(response,data);
+        handleGetAll(response,userId);
         break;
     }
 }
 
 //When a new anagram request comes, sends back the new appdata entry.
-const handleNewEntry = async function(response,data){
+const handleNewEntry = async function(response,data,userId){
   var string = data.string;
   var anagrams = anagram.getAnagrams(string,4);
   //Send this back as a unique identifier, which will allow the client to delete entries.
   let nextData = {
-    userId:data.userId,
+    userId:userId,
     string:string,
     gram0:anagrams[0],
     gram1:anagrams[1],
@@ -110,13 +112,13 @@ const handleRemove = async function(response, data){
 }
 
 //Give the client all appdata
-const handleGetAll = async function(response,data){
+const handleGetAll = async function(response,userId){
   if(collection===null){
     response.writeHead(409, "ERROR",{"Content-Type":"text/plain"});
     response.end();
   }else{
     response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
-    const docs = await collection.find({}).toArray()
+    const docs = await collection.find({userId:userId}).toArray()
     response.end(JSON.stringify(docs));
   }
 }
@@ -150,7 +152,7 @@ app.use(express.json());
 
 app.get('/',function(req,res){
   if(req.user){
-    console.log(req.user);
+    // console.log(req.user);
     res.sendFile(__dirname+'/public/index.html')
   }else{
     res.redirect('/login');
@@ -179,8 +181,6 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
-app.post('/submit',handlePost);
-
 app.use( (req,res,next) => {
   if( collection !== null ) {
     next()
@@ -190,6 +190,8 @@ app.use( (req,res,next) => {
 });
 
 app.use(express.static('public'));
+
+app.post('/submit',handlePost);
 
 console.log(process.env.port);
 app.listen(process.env.PORT);
