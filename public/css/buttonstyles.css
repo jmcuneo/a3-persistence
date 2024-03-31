@@ -13,3 +13,8 @@
     background-size:34px;
     border:0;
   }
+  
+  footer{
+    position: fixed;
+    bottom:0%;
+  }
