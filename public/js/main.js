@@ -79,7 +79,7 @@ const refresh = async function(event, index){
   let searchResult = getLocalAppDataEntry(index);
   if(searchResult !== undefined){
     for(let i = 2; i < 6; i++){
-      searchResult.entry.elements[i].innerHTML = res.anagrams[i-2];
+      searchResult.entry.elements[0].children[i].innerHTML = res.anagrams[i-2];
     }
     localAppData[searchResult.index].gram0 = res.anagrams[0];
     localAppData[searchResult.index].gram1 = res.anagrams[1];
