@@ -91,8 +91,8 @@ const renderCourses = function (json) {
 
 // bind buttons to respective functions
 window.onload = function () {
-	const log = document.querySelector("#log");
-	const remove = document.querySelector("#remove");
-	log.onclick = logCourse;
-	remove.onclick = deleteCourse;
+	const log = document.querySelector("#logShift");
+	const remove = document.querySelector("#removeShift");
+	log.onclick = logShift;
+	remove.onclick = deleteShift;
 }
