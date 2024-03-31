@@ -18,7 +18,7 @@ const logShift = async function (event) {
 
 	form.reset();
 	// send the json as post request
-	const response = await fetch("/courses/add", {
+	const response = await fetch("/shifts/add", {
 		method: "POST",
 		headers: { 'Content-Type': 'application/json' },
 		body

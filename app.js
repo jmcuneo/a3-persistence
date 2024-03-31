@@ -3,7 +3,7 @@ const express = require("express"),
 	dotenv = require("dotenv").config(),
 	port = 3000;
 
-// const shiftRouter = require("./routes/courses");
+const shiftRouter = require("./routes/shifts");
 const passport = require("passport");
 const GithubStrategy = require("passport-github2").Strategy;
 const handlebars = require("express-handlebars");
@@ -57,6 +57,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use("/shifts", shiftRouter);
 
 const ensureAuthenticated = function (req, res, next) {
 	if (req.isAuthenticated()) {

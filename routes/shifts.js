@@ -1,9 +1,23 @@
-const	app = require('express'),
+const 	app = require('express'),
+		mongo = require("mongodb").MongoClient;
 		router = app.Router();
 
-const appData = [];
+const schema = require("../models/shiftSchema");
 
-router.post("/log", (req, res) => {
+
+router.post("/add", (req, res) => {
+	const uri = process.env.MONGO;
+
+	mongo.connect(uri, function (err, db) {
+		if (err) throw err;
+		const dbo = db.db("webware");
+		dbo.collection("shifts").find({}).toArray(function (err, result) {
+			if (err) throw err;
+			console.log(result);
+			db.close();
+		})
+	})
+
 	shift = req.body;
 
 	if (appData.some(data => data.cID === course.cID)) {
