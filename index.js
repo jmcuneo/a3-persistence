@@ -126,7 +126,7 @@ const handleGetAll = async function(response,userId){
 passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_ID,
   clientSecret: process.env.GITHUB_SECRET,
-  callbackURL: "http://127.0.0.1:3000/auth/github/callback"
+  callbackURL: "https://a3-milojacobs.onrender.com/auth/github/callback"
 },
 function(accessToken, refreshToken, profile, done) {
   // asynchronous verification, for effect...
