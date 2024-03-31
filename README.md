@@ -29,7 +29,6 @@ add a little more detail about what it does.
 - **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy using the Passport and 
 Passport-github2 libraries.
 - **Tech Achievement 2**: I hosted via Render rather than Glitch. It was very straightforward to deploy on.
-- **Tech Achievement 3**: I got 100% on all lighthouse tests. See lighthouse.pdf for the generated report.
 
 **Pros of Render**:
   - Automatic re-deployment whenever you push a new version to Github
@@ -38,6 +37,8 @@ Passport-github2 libraries.
 
 **Cons of Render**:
   - The free version is rather slow, especially when someone is loading the site for the first time in a while. That first load can take up to a minute, but once it's up it's not bad at all.
+
+- **Tech Achievement 3**: I got 100% on all lighthouse tests. See lighthouse.pdf for the generated report.
 
 ### Design/Evaluation Achievements
 - **None.** I did 20 points of technical achievements instead.
