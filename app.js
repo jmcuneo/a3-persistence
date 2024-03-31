@@ -53,7 +53,10 @@ app.use(express.json());
 // 	resave: false, 
 // 	saveUninitialized: false
 // }));
-app.use(session)
+app.use(session({
+	name: 'session',
+	keys: 'secret cat'
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
