@@ -33,6 +33,7 @@ passport.serializeUser(function(user, cb) {
 	});
   });
 
+console.log(process.env.GITHUB_CLIENT_ID);
 passport.use(new GithubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
