@@ -76,7 +76,7 @@ app.get('/auth/github/callback',
 		res.redirect('/');
 	});
 
-app.get("/", (req, res) => {
+app.get("/", ensureAuthenticated, (req, res) => {
 	// shifts = [
 	// 	{id: "1", date: "2", start: "3", end: "4", duration: "5" },
 	// 	{id: "10", date: "9", start: "8", end: "7", duration: "6" },
