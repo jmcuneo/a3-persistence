@@ -1,16 +1,12 @@
-const fs   = require( "fs" ),
+const 
       // IMPORTANT: you must run `npm install` in the directory for this assignment
       // to install the mime library if you're testing this on your local machine.
       // However, Glitch will install it automatically by looking in your package.json
       // file.
-      mime = require( "mime" ),
       anagram = require("./anagram"),
-      dir  = "public/",
-      port = 3000,
       express = require("express"),
       app = express();
 
-      // var express = require('express');
       var passport = require('passport');
       var session = require('express-session');
       var GitHubStrategy = require('passport-github2').Strategy;
