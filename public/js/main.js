@@ -105,9 +105,10 @@ const updateAllData = async function(){
   });
   const res = await response.json();
   console.log(res);
-  for(let i = table.children.length-1; i >= 8; i--){
-    table.children[i].remove();
-  }
+  // for(let i = table.children.length-1; i >= 8; i--){
+  //   table.children[i].remove();
+  // }
+  table.children[1].remove();
   localAppData = [];
   for(let i = 0; i < res.length; i++){
     let item = res[i];
@@ -121,31 +122,34 @@ const updateAllData = async function(){
 //Add a new set of anagrams to the rows. This just updates the HTML, localAppData needs separate updating.
 function addRow(anagrams, index){
   // For accessing element to delete by index
-  var newElements = [];
+  let newRow = documnet.createElement("tr");
+  newRow.setAttribute('scope','row');
+  // var newElements = [];
   for(let i = 0; i < anagrams.length; i++){
-    let anagramEntry = document.createElement('span');
+    let anagramEntry = document.createElement('td');
     anagramEntry.innerHTML=anagrams[i];
-    table.appendChild(anagramEntry);
-    newElements.push(anagramEntry);
+    newRow.appendChild(anagramEntry);
+    // newElements.push(anagramEntry);
   }
-  let penultimateColumn = document.createElement('span');
+  let penultimateColumn = document.createElement('td');
   let deleteButton = document.createElement('button');
   // deleteButton.innerHTML = "Remove";
   deleteButton.setAttribute('class','delete');
   deleteButton.onclick = (event)=>{remove(event,index)};
   penultimateColumn.appendChild(deleteButton);
-  table.appendChild(penultimateColumn);
-  newElements.push(penultimateColumn);
-  let lastColumn = document.createElement('span');
+  newRow.appendChild(penultimateColumn);
+  // newElements.push(penultimateColumn);
+  let lastColumn = document.createElement('td');
   let refreshButton = document.createElement('button');
   // deleteButton.innerHTML = "Remove";
   refreshButton.setAttribute('class','refresh');
   refreshButton.onclick = (event)=>{refresh(event,index)};
   lastColumn.appendChild(refreshButton);
-  table.appendChild(lastColumn);
-  newElements.push(lastColumn);
+  newRow.appendChild(lastColumn);
+  table.children[1].appendChild(newRow);
+  // newElements.push(lastColumn);
   
-  return newElements;
+  return [newRow];
 }
 
 //Pull from the server as soon as the page is loaded.

@@ -1,0 +1,15 @@
+  .delete{
+    background:url('../img/bin.png') no-repeat 0 0;
+    width: 40px;
+    height: 40px;
+    background-size:34px;
+    border:0;
+  }
+  
+  .refresh{
+    background:url('../img/refresh.png') no-repeat 0 0;
+    width: 40px;
+    height: 40px;
+    background-size:34px;
+    border:0;
+  }
