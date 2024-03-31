@@ -67,7 +67,6 @@ const remove = async function(event,index){
 
 
 const submitButton = document.querySelector("#submit");
-submitButton.onclick = submit;
 const table = document.querySelector("#table");
 var localAppData = [];
 

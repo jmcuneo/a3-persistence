@@ -61,7 +61,7 @@ const handlePost = function(request, response) {
     let userId = request.session.passport.user.id;
     // console.log("HANDLING POST");
     let data = request.body;
-    console.log(data);
+    console.log("DATA",data);
     var type = data.type;
     switch(type){
       //Entry is a new anagram request
