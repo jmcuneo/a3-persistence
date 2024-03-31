@@ -17,39 +17,30 @@ const session = require('express-session');
 //   the user by ID when deserializing.  However, since this example does not
 //   have a database of user records, the complete GitHub profile is serialized
 //   and deserialized.
-passport.serializeUser(function(user, cb) {
-	process.nextTick(function() {
-	  return cb(null, {
-		id: user.id,
-		username: user.username,
-		picture: user.picture
-	  });
-	});
-  });
-  
-  passport.deserializeUser(function(user, cb) {
-	process.nextTick(function() {
-	  return cb(null, user);
-	});
-  });
+passport.serializeUser(function (user, done) {
+	done(null, user);
+});
 
-console.log(process.env.GITHUB_CLIENT_ID);
-passport.use(new GithubStrategy({
-    clientID: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "https://ssgreene.tech/auth/github/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    // asynchronous verification, for effect...
-    process.nextTick(function () {
-      
-      // To keep the example simple, the user's GitHub profile is returned to
-      // represent the logged-in user.  In a typical application, you would want
-      // to associate the GitHub account with a user record in your database,
-      // and return that user instead.
-      return done(null, profile);
-    });
-  }
+passport.deserializeUser(function (obj, done) {
+	done(null, obj);
+});
+
+passport.use(new GitHubStrategy({
+	clientID: GITHUB_CLIENT_ID,
+	clientSecret: GITHUB_CLIENT_SECRET,
+	callbackURL: "http://localhost:3000/auth/github/callback"
+},
+	function (accessToken, refreshToken, profile, done) {
+		// asynchronous verification, for effect...
+		process.nextTick(function () {
+
+			// To keep the example simple, the user's GitHub profile is returned to
+			// represent the logged-in user.  In a typical application, you would want
+			// to associate the GitHub account with a user record in your database,
+			// and return that user instead.
+			return done(null, profile);
+		});
+	}
 ));
 
 
@@ -59,7 +50,7 @@ app.set("views", "./views");
 app.use(express.json());
 app.use(session({
 	secret: 'keyboard cat',
-	resave: false, 
+	resave: false,
 	saveUninitialized: false
 }));
 app.use(passport.initialize());
