@@ -108,7 +108,9 @@ const updateAllData = async function(){
   // for(let i = table.children.length-1; i >= 8; i--){
   //   table.children[i].remove();
   // }
-  table.children[1].remove();
+  for(let i = 0; i < table.children[1].children.length; i++){
+    table.children[1].children[i].remove();
+  }
   localAppData = [];
   for(let i = 0; i < res.length; i++){
     let item = res[i];
