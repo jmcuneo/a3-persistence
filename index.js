@@ -79,6 +79,9 @@ const handlePost = function(request, response) {
       case "getAll":
         handleGetAll(response,userId);
         break;
+      case "refresh":
+        handleRefresh(response,data);
+        break;
     }
 }
 
@@ -114,6 +117,26 @@ const handleRemove = async function(response, data){
   });
   response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
   response.end(JSON.stringify(result));
+}
+
+const handleRefresh = async function(response, data){
+  var id = data.index;
+  var currentValue = await collection.find({_id:new ObjectId(id)}).toArray();
+  if(currentValue.length == 0){
+    response.writeHead(409, "ERROR",{"Content-Type":"text/plain"});
+    response.end();
+  }else{
+    let val = currentValue[0];
+    let anagrams = anagram.getAnagrams(val.string,val.dict,4);
+    await collection.updateOne({_id:new ObjectId(id)},{$set: {
+      gram0:anagrams[0],
+      gram1:anagrams[1],
+      gram2:anagrams[2],
+      gram3:anagrams[3]
+    }});
+    response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
+    response.end(JSON.stringify({anagrams:anagrams}));
+  }
 }
 
 //Give the client all appdata

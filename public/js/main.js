@@ -65,6 +65,29 @@ const remove = async function(event,index){
   }
 }
 
+const refresh = async function(event, index){
+  event.preventDefault();
+  const response = await fetch("/submit",{
+    method:"POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      type:"refresh",
+      index:index,
+    })
+  });
+  const res = await response.json();
+  let searchResult = getLocalAppDataEntry(index);
+  if(searchResult !== undefined){
+    for(let i = 2; i < 6; i++){
+      searchResult.entry.elements[i].innerHTML = res.anagrams[i];
+    }
+    localAppData[searchResult.index].gram0 = res.anagrams[0];
+    localAppData[searchResult.index].gram1 = res.anagrams[1];
+    localAppData[searchResult.index].gram2 = res.anagrams[2];
+    localAppData[searchResult.index].gram3 = res.anagrams[3];
+  }
+}
+
 
 const submitButton = document.querySelector("#submit");
 submitButton.onclick=submit;
@@ -82,7 +105,7 @@ const updateAllData = async function(){
   });
   const res = await response.json();
   console.log(res);
-  for(let i = table.children.length-1; i >= 7; i--){
+  for(let i = table.children.length-1; i >= 8; i--){
     table.children[i].remove();
   }
   localAppData = [];
@@ -105,14 +128,23 @@ function addRow(anagrams, index){
     table.appendChild(anagramEntry);
     newElements.push(anagramEntry);
   }
-  let lastColumn = document.createElement('span');
+  let penultimateColumn = document.createElement('span');
   let deleteButton = document.createElement('button');
   // deleteButton.innerHTML = "Remove";
   deleteButton.setAttribute('class','delete');
   deleteButton.onclick = (event)=>{remove(event,index)};
-  lastColumn.appendChild(deleteButton);
+  penultimateColumn.appendChild(deleteButton);
+  table.appendChild(penultimateColumn);
+  newElements.push(penultimateColumn);
+  let lastColumn = document.createElement('span');
+  let refreshButton = document.createElement('button');
+  // deleteButton.innerHTML = "Remove";
+  deleteButton.setAttribute('class','refresh');
+  deleteButton.onclick = (event)=>{refresh(event,index)};
+  penultimateColumn.appendChild(deleteButton);
   table.appendChild(lastColumn);
   newElements.push(lastColumn);
+  
   return newElements;
 }
 
