@@ -17,13 +17,21 @@ const session = require('express-session');
 //   the user by ID when deserializing.  However, since this example does not
 //   have a database of user records, the complete GitHub profile is serialized
 //   and deserialized.
-passport.serializeUser(function (user, done) {
-	done(null, user);
-});
-
-passport.deserializeUser(function (obj, done) {
-	done(null, obj);
-});
+passport.serializeUser(function(user, cb) {
+	process.nextTick(function() {
+	  return cb(null, {
+		id: user.id,
+		username: user.username,
+		picture: user.picture
+	  });
+	});
+  });
+  
+  passport.deserializeUser(function(user, cb) {
+	process.nextTick(function() {
+	  return cb(null, user);
+	});
+  });
 
 passport.use(new GithubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
@@ -53,9 +61,8 @@ app.use(session({
 	resave: false, 
 	saveUninitialized: false
 }));
-
-app.use(passport.initialize());
 app.use(passport.session());
+app.use(passport.initialize());
 
 const ensureAuthenticated = function (req, res, next) {
 	if (req.isAuthenticated()) {
@@ -63,7 +70,6 @@ const ensureAuthenticated = function (req, res, next) {
 	}
 	res.render("login");
 }
-
 
 
 app.get('/auth/github',
