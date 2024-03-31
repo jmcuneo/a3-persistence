@@ -65,6 +65,7 @@ const remove = async function(event,index){
   }
 }
 
+//Send a request to re-generate an anagram and update the table based on the result.
 const refresh = async function(event, index){
   event.preventDefault();
   const response = await fetch("/submit",{

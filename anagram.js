@@ -1,6 +1,6 @@
 const fs   = require( "fs" );
 
-//Read the scrabble dictionary txt file, split it by newlines to make a list of all words.
+//Read the dictionary txt files, split them by newlines to make a list of all words.
 const dictionaries = 
 {
   "Scrabble":fs.readFileSync("dictionaries/scrabble.txt", { encoding: 'utf8', flag: 'r' }).split(/\r?\n/),

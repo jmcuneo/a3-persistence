@@ -12,17 +12,16 @@ const fs   = require( "fs" ),
 
       // var express = require('express');
       var passport = require('passport');
-      var util = require('util');
       var session = require('express-session');
-      var bodyParser = require('body-parser');
-      var methodOverride = require('method-override');
       var GitHubStrategy = require('passport-github2').Strategy;
-      var partials = require('express-partials');
 
+    
+//No extra steps to serialize the user. Just use the whole object for simplicity.
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
 
+//See comment above.
 passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
@@ -30,6 +29,7 @@ passport.deserializeUser(function(obj, done) {
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 
+//Set up DB object
 const clientDB = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -40,24 +40,17 @@ const clientDB = new MongoClient(uri, {
 
 let collection = null;
 
+//Initialize DB connection
 async function runDB() {
   await clientDB.connect()
   collection = await clientDB.db("datatest").collection("test")
-
-  // // route to get all docs
-  // app.get("/docs", async (req, res) => {
-  //   if (collection !== null) {
-  //     const docs = await collection.find({userId:req.session.passport.user.id}).toArray()
-  //     // const docs = await collection.find({}).toArray()
-  //     res.json( docs )
-  //   }
-  // })
 }
 
 runDB();
 
+//When a post is submitted
 const handlePost = function(request, response) {
-  // console.log(request.session);
+  // If the user isn't logged in, don't do anything special.
     if(!request.session || !request.session.passport){
       return;
     }
@@ -119,6 +112,7 @@ const handleRemove = async function(response, data){
   response.end(JSON.stringify(result));
 }
 
+//When a request comes in to refresh (modify) an entry, update it in the DB and send back the new anagrams.
 const handleRefresh = async function(response, data){
   var id = data.index;
   var currentValue = await collection.find({_id:new ObjectId(id)}).toArray();
@@ -139,7 +133,7 @@ const handleRefresh = async function(response, data){
   }
 }
 
-//Give the client all appdata
+//Give the client all appdata associated with their user id.
 const handleGetAll = async function(response,userId){
   if(collection===null){
     response.writeHead(409, "ERROR",{"Content-Type":"text/plain"});
@@ -151,28 +145,23 @@ const handleGetAll = async function(response,userId){
   }
 }
 
+//Set up OAuth for Github
+//followed tutorial from https://github.com/cfsghost/passport-github/tree/master/examples/login
 passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_ID,
   clientSecret: process.env.GITHUB_SECRET,
   callbackURL: "https://a3-milojacobs.onrender.com/auth/github/callback"
-},
-function(accessToken, refreshToken, profile, done) {
-  // asynchronous verification, for effect...
-  process.nextTick(function () {
-    
-    // To keep the example simple, the user's GitHub profile is returned to
-    // represent the logged-in user.  In a typical application, you would want
-    // to associate the GitHub account with a user record in your database,
-    // and return that user instead.
-    return done(null, profile);
-  });
-}
+  },
+  function(accessToken, refreshToken, profile, done) {
+    process.nextTick(function () {
+      //Use the full user OBJ
+      return done(null, profile);
+    });
+  }
 ));
 
-
+//Passport and session setup
 app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
-// Initialize Passport!  Also use passport.session() middleware, to support
-// persistent login sessions (recommended).
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.json());
@@ -180,17 +169,21 @@ app.use(express.json());
 
 app.get('/',function(req,res){
   if(req.user){
-    // console.log(req.user);
+    // If we've successfully logged in, give the user the main page.
     res.sendFile(__dirname+'/public/index.html')
   }else{
+    // Otherwise, redirect them to the login page.
     res.redirect('/login');
   }
 })
 
+//Login page
 app.get('/login',function(req,res){
   res.sendFile(__dirname+'/public/login.html');
 });
 
+//Followed from https://github.com/cfsghost/passport-github/tree/master/examples/login
+//Authenticate via Github.
 app.get('/auth/github',
   passport.authenticate('github', { scope: [ 'user:email' ] }),
   function(req, res){
@@ -198,17 +191,22 @@ app.get('/auth/github',
     // function will not be called.
 });
 
+//Followed from https://github.com/cfsghost/passport-github/tree/master/examples/login
+//Redirect back home once logged in
 app.get('/auth/github/callback', 
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
     res.redirect('/');
   });
 
+//Modified from https://github.com/cfsghost/passport-github/tree/master/examples/login
+//On logout, bring back to home page.
 app.get('/logout', function(req, res){
   req.logout((res,req)=>{});
   res.redirect('/');
 });
 
+//Make sure DB is working
 app.use( (req,res,next) => {
   if( collection !== null ) {
     next()
@@ -217,9 +215,11 @@ app.use( (req,res,next) => {
   }
 });
 
+//Use the public directory as static
 app.use(express.static('public'));
 
+//All post requests go through /submit.
 app.post('/submit',handlePost);
 
-console.log(process.env.port);
+// console.log(process.env.port);
 app.listen(process.env.PORT);
