@@ -135,6 +135,7 @@ function addRow(anagrams, index){
   }
   let penultimateColumn = document.createElement('td');
   let deleteButton = document.createElement('button');
+  deleteButton.setAttribute('aria-label','delete');
   // deleteButton.innerHTML = "Remove";
   deleteButton.setAttribute('class','delete');
   deleteButton.onclick = (event)=>{remove(event,index)};
@@ -145,6 +146,7 @@ function addRow(anagrams, index){
   let refreshButton = document.createElement('button');
   // deleteButton.innerHTML = "Remove";
   refreshButton.setAttribute('class','refresh');
+  deleteButton.setAttribute('aria-label','refresh');
   refreshButton.onclick = (event)=>{refresh(event,index)};
   lastColumn.appendChild(refreshButton);
   newRow.appendChild(lastColumn);
