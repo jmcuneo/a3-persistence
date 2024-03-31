@@ -7,7 +7,7 @@ const express = require("express"),
 const passport = require("passport");
 const GithubStrategy = require("passport-github2").Strategy;
 const handlebars = require("express-handlebars");
-const session = require('express-session');
+const session = require("express-session");
 
 
 // Passport session setup.
@@ -49,9 +49,10 @@ app.set("view engine", "handlebars");
 app.set("views", "./views");
 app.use(express.json());
 app.use(session({
-	secret: 'keyboard cat',
+	secret: 'sessionSecretHehe',
 	resave: false,
-	saveUninitialized: false
+	saveUninitialized: false,
+	cookie: { maxAge: 60000 * 60 * 24 }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
