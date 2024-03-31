@@ -9,15 +9,15 @@
     "routes": [
         {
             "src":"/",
-            "dest":"/index"
+            "dest":"views/index"
         },
         {
             "src":"/main",
-            "dest":"/main"
+            "dest":"views/main"
         },
         {
             "src":"/index",
-            "dest":"/index"
+            "dest":"views/index"
         }
     ]
 
