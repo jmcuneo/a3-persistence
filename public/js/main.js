@@ -9,8 +9,9 @@ const submit = async function( event ) {
   event.preventDefault()
   
   const input = document.querySelector( "#string" ),
-        json = { type:"anagram",string: input.value },
-        body = JSON.stringify( json )
+        json = { type:"anagram",string: input.value, dict:dropdown.value },
+        body = JSON.stringify( json ),
+        dropdown = document.querySelector("#select");
 
   //Asynchronous network request
   const response = await fetch( "/submit", {
@@ -80,13 +81,13 @@ const updateAllData = async function(){
   });
   const res = await response.json();
   console.log(res);
-  for(let i = table.children.length-1; i >= 6; i--){
+  for(let i = table.children.length-1; i >= 7; i--){
     table.children[i].remove();
   }
   localAppData = [];
   for(let i = 0; i < res.length; i++){
     let item = res[i];
-    let elements = addRow([item.string,item.gram0,item.gram1,item.gram2,item.gram3],item._id);
+    let elements = addRow([item.string,item.dict,item.gram0,item.gram1,item.gram2,item.gram3],item._id);
     //Save where the HTML element is stored for removal later.
     item.elements=elements;
     localAppData.push(item);

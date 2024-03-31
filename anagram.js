@@ -1,7 +1,11 @@
 const fs   = require( "fs" );
 
 //Read the scrabble dictionary txt file, split it by newlines to make a list of all words.
-const dictionary = fs.readFileSync("dictionary.txt", { encoding: 'utf8', flag: 'r' }).split(/\r?\n/);
+const dictionaries = 
+{
+  "Scrabble":fs.readFileSync("dictionaries/scrabble.txt", { encoding: 'utf8', flag: 'r' }).split(/\r?\n/),
+  "MIT":fs.readFileSync("dictionaries/mit.txt", { encoding: 'utf8', flag: 'r' }).split(/\r?\n/)
+}
 
 //Creates a set of all allowed letters.
 const lettersString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -129,9 +133,9 @@ module.exports = {
     and return a given number of anagrams (if they exist). If no anagrams exist, it returns
     an empty list.
     */
-    getAnagrams: function(str, numAnagrams){
+    getAnagrams: function(str, dictName, numAnagrams){
         var ld = getLetterData(sanitize(str));
-        var dict = buildLetterDictionary(dictionary,ld);
+        var dict = buildLetterDictionary(dictionaries[dictName],ld);
         var output = [];
         for(var i = 0; i < numAnagrams; i++){
             //Technically it's not guaranteed that these anagrams are unique.

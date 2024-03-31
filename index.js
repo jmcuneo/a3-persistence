@@ -82,11 +82,13 @@ const handlePost = function(request, response) {
 //When a new anagram request comes, sends back the new appdata entry.
 const handleNewEntry = async function(response,data,userId){
   var string = data.string;
-  var anagrams = anagram.getAnagrams(string,4);
+  var dict = data.dict;
+  var anagrams = anagram.getAnagrams(string,dict,4);
   //Send this back as a unique identifier, which will allow the client to delete entries.
   let nextData = {
     userId:userId,
     string:string,
+    dict:dict,
     gram0:anagrams[0],
     gram1:anagrams[1],
     gram2:anagrams[2],
