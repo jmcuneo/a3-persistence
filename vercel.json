@@ -1,24 +1,12 @@
 {
-    "version": 2,
+    "version":2,
     "builds": [
-        {
-        "src": "./server.improved.js",
-        "use": "@vercel/node"
-        }
+      { "src": "server.improved.js", "use": "@vercel/node" }
     ],
     "routes": [
         {
-            "src":"/",
-            "dest":"views/index"
-        },
-        {
-            "src":"/main",
-            "dest":"views/main"
-        },
-        {
-            "src":"/index",
-            "dest":"views/index"
+          "src": "/(.*)",
+          "dest": "/"
         }
     ]
-
 }
