@@ -139,9 +139,9 @@ function addRow(anagrams, index){
   let lastColumn = document.createElement('span');
   let refreshButton = document.createElement('button');
   // deleteButton.innerHTML = "Remove";
-  deleteButton.setAttribute('class','refresh');
-  deleteButton.onclick = (event)=>{refresh(event,index)};
-  penultimateColumn.appendChild(deleteButton);
+  refreshButton.setAttribute('class','refresh');
+  refreshButton.onclick = (event)=>{refresh(event,index)};
+  penultimateColumn.appendChild(refreshButton);
   table.appendChild(lastColumn);
   newElements.push(lastColumn);
   
