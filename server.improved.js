@@ -1,91 +1,32 @@
-const express = require("express");
-const fs = require("fs");
-const mime = require("mime");
-
 require('dotenv').config()
 
+const express = require("express");
+const session = require('express-session');
+const passport = require('passport');
+const fs = require("fs");
+const mime = require("mime");
+const GitHubStrategy = require('passport-github').Strategy;
 const { ObjectId, MongoClient, ServerApiVersion } = require('mongodb');
-const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 
+const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 const app = express();
 const port = 3000;
 
-const passport = require('passport');
-const session = require('express-session');
-const GitHubStrategy = require('passport-github').Strategy;
-
-passport.use(new GitHubStrategy({
-      clientID: process.env.CLIENTID,
-      clientSecret: process.env.CLIENTSECRET,
-      callbackURL: "http://localhost:3000/auth/github/callback"
-    },
-    function(accessToken, refreshToken, profile, done) {
-      const user = {
-        githubId: profile.id,
-        username: profile.username,
-        accessToken: accessToken,
-        refreshToken: refreshToken,
-        profile: profile
-      };
-
-      // Save the user to MongoDB database
-
-
-      collection2.insertOne(user, (err, result) => {
-        if (err) {
-          return done(err);
-        }
-        // Pass the user object to the done callback
-        done(null, user);
-      });
-    }
-));
-
+app.use(express.static("public"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(session({
   secret: `${process.env.SECRETKEY}`,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: { maxAge: null }
 }));
-
 app.use(passport.initialize());
 app.use(passport.session());
-
-passport.serializeUser(function(user, done) {
-  done(null, user);
+app.use((req, res, next) => {
+  res.header('Cache-Control', 'no-store');
+  next();
 });
-
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
-
-app.get('/', ensureAuthenticated, (req, res) => {
-  sendFile(res, "public/index.html");
-});
-
-// Login page route
-// app.get('/login', (req, res) => {
-//   res.send('Login Page'); // Replace with your login page content
-// });
-
-app.get('/login', passport.authenticate('github'));
-
-app.get('/auth/github/callback',
-    passport.authenticate('github',
-        { failureRedirect: '/login' }),
-    function(req, res) {
-      // Successful authentication, redirect home.
-      return res.redirect('/');
-    }
-);
-
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login');
-}
-
-
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -118,12 +59,6 @@ run().then(() => {
   });
 }).catch(console.error);
 
-app.get("/", (req, res) => {
-  sendFile(res, "public/index.html");
-});
-
-
-
 app.use(async (req, res, next) => {
   try {
     if (collection !== null) {
@@ -137,9 +72,85 @@ app.use(async (req, res, next) => {
   }
 });
 
-app.use(express.static("public"));
+passport.use(new GitHubStrategy({
+      clientID: process.env.CLIENTID,
+      clientSecret: process.env.CLIENTSECRET,
+      callbackURL: "http://localhost:3000/auth/github/callback"
+    },
+    function(accessToken, refreshToken, profile, done) {
+      const user = {
+        githubId: profile.id,
+        username: profile.username,
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        profile: profile
+      };
 
-app.use(express.json());
+      // Save the user to MongoDB database
+
+
+      collection2.insertOne(user, (err, result) => {
+        if (err) {
+          return done(err);
+        }
+        // Pass the user object to the done callback
+        done(null, user);
+      });
+      if (accessToken) {
+        return done(null, profile);
+      } else {
+        return done(new Error('Could not authenticate user'));
+      }
+
+      return done(null, profile);
+    }
+));
+
+// app.get('/', ensureAuthenticated, (req, res) => {
+//   sendFile(res, "public/index.html");
+// });
+
+// Login page route
+// app.get('/login', (req, res) => {
+//   res.send('Login Page'); // Replace with your login page content
+// });
+
+app.get('/auth/github/',
+    passport.authenticate('github'));
+
+app.get('/auth/github/callback',
+    passport.authenticate('github',
+        { failureRedirect: '/login' }),
+    async (req, res) => {
+      if (!req.user) {
+        return res.status(401).send('Could not authenticate user');
+      }else {
+        res.redirect('/');
+      }
+    }
+);
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+}
+
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
+
+// app.get("/", (req, res) => {
+//   sendFile(res, "public/index.html");
+// });
+
 
 app.post( '/add', async (req,res) => {
   console.log("Reached function");

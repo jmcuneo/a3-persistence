@@ -11,18 +11,18 @@ Baseline Requirements
 
 Your application is required to implement the following functionalities:
 
-- a `Server`, created using Express (no alternatives will be accepted for this assignment)
+- a `Server`, created using Express (no alternatives will be accepted for this assignment) (DONE)
 - a `Results` functionality which shows all data associated with a logged in user (except passwords)
 - a `Form/Entry` functionality which allows users to add, modify, and delete data items (must be all three!) associated with their user name / account. 
-- Persistent data storage in between server sessions using [mongodb](https://www.mongodb.com/cloud/atlas) (you *must* use mongodb for this assignment). You can use either the [official mongodb node.js library](https://www.npmjs.com/package/mongodb) or use the [Mongoose library](https://www.npmjs.com/package/mongoose), which enables you to define formal schemas for your database. Please be aware that the course staff cannot provide in-depth support for use of Mongoose.  
+- Persistent data storage in between server sessions using [mongodb](https://www.mongodb.com/cloud/atlas) (you *must* use mongodb for this assignment). You can use either the [official mongodb node.js library](https://www.npmjs.com/package/mongodb) or use the [Mongoose library](https://www.npmjs.com/package/mongoose), which enables you to define formal schemas for your database. Please be aware that the course staff cannot provide in-depth support for use of Mongoose. (DONE)
 - Use of a [CSS framework or template](https://github.com/troxler/awesome-css-frameworks). 
 This should do the bulk of your styling/CSS for you and be appropriate to your application. 
-For example, don't use [NES.css](https://nostalgic-css.github.io/NES.css/) (which is awesome!) unless you're creating a game or some type of retro 80s site.
+For example, don't use [NES.css](https://nostalgic-css.github.io/NES.css/) (which is awesome!) unless you're creating a game or some type of retro 80s site. (DONE)
 
 Your application is required to demonstrate the use of the following concepts:  
 
 HTML:  
-- HTML input tags and form fields of various flavors (`<textarea>`, `<input>`, checkboxes, radio buttons etc.)
+- HTML input tags and form fields of various flavors (`<textarea>`, `<input>`, checkboxes, radio buttons etc.) (DONE)
 - HTML that can display all data *for a particular authenticated user*. Note that this is different from the last assignnment, which required the display of all data in memory on the server.
 
 Note that it might make sense to have two pages for this assignment, one that handles login / authentication and one that contains the rest of your application.
@@ -34,14 +34,14 @@ CSS:
 - CSS styling should primarily be provided by your chosen template/framework. 
 Oftentimes a great deal of care has been put into designing CSS templates; 
 don't override their stylesheets unless you are extremely confident in your graphic design capabilities. 
-The idea is to use CSS templates that give you a professional looking design aesthetic without requiring you to be a graphic designer yourself.
+The idea is to use CSS templates that give you a professional looking design aesthetic without requiring you to be a graphic designer yourself. (DONE)
 
 JavaScript:  
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server. 
-See the [previous assignment](https://github.com/cs-4241-23/shortstack) for reference.
+- At minimum, a small amount of front-end JavaScript to get / fetch data from the server.  
+See the [previous assignment](https://github.com/cs-4241-23/shortstack) for reference. (DONE)
 
 Node.js:  
-- A server using Express and a persistent database (mongodb).
+- A server using Express and a persistent database (mongodb). (DONE)
 
 General:  
 - Your site should achieve at least 90% on the `Performance`, `Best Practices`, `Accessibility`, and `SEO` tests 
