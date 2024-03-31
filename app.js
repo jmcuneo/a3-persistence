@@ -7,7 +7,7 @@ const express = require("express"),
 const passport = require("passport");
 const GithubStrategy = require("passport-github2").Strategy;
 const handlebars = require("express-handlebars");
-const session = require('cookie-session');
+// const session = require('cookie-session');
 
 
 // Passport session setup.
@@ -53,12 +53,9 @@ app.use(express.json());
 // 	resave: false, 
 // 	saveUninitialized: false
 // }));
-app.use(session({
-	name: 'session',
-	keys: 'secret cat'
-}));
+?
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 
 const ensureAuthenticated = function (req, res, next) {
 	if (req.isAuthenticated()) {
