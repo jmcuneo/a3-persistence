@@ -79,7 +79,7 @@ const refresh = async function(event, index){
   let searchResult = getLocalAppDataEntry(index);
   if(searchResult !== undefined){
     for(let i = 2; i < 6; i++){
-      searchResult.entry.elements[i].innerHTML = res.anagrams[i];
+      searchResult.entry.elements[i].innerHTML = res.anagrams[i-2];
     }
     localAppData[searchResult.index].gram0 = res.anagrams[0];
     localAppData[searchResult.index].gram1 = res.anagrams[1];
@@ -141,7 +141,7 @@ function addRow(anagrams, index){
   // deleteButton.innerHTML = "Remove";
   refreshButton.setAttribute('class','refresh');
   refreshButton.onclick = (event)=>{refresh(event,index)};
-  penultimateColumn.appendChild(refreshButton);
+  lastColumn.appendChild(refreshButton);
   table.appendChild(lastColumn);
   newElements.push(lastColumn);
   
