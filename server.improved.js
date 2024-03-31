@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const appdata = [
   {
     taskName: "Find my lost goldfish",
@@ -23,11 +25,39 @@ appdata.forEach( task => {
 
 const express    = require('express'),
   app        = express(),
-  path = require('path')
+  // path = require('path'),
+  { MongoClient, ObjectId } = require("mongodb")
 
 app.use( express.static( 'public' ) )
-// app.use( express.static( 'views'  ) )
 app.use( express.json() )
+
+const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.PASS}@${process.env.HOST}`
+const client = new MongoClient( uri )
+
+let collection = null
+
+async function run() {
+  await client.connect()
+  collection = await client.db("datatest").collection("test")
+
+  // route to get all docs
+  app.get("/docs", async (req, res) => {
+    if (collection !== null) {
+      const docs = await collection.find({}).toArray()
+      res.json( docs )
+    }
+  })
+}
+
+run()
+
+app.use( (req,res,next) => {
+  if( collection !== null ) {
+    next()
+  }else{
+    res.status( 503 ).send()
+  }
+})
 
 app.get('/tasks', function(req, res) {
   res.writeHead( 200, "OK", {"Content-Type": "application/json"})
