@@ -146,7 +146,7 @@ function addRow(anagrams, index){
   let refreshButton = document.createElement('button');
   // deleteButton.innerHTML = "Remove";
   refreshButton.setAttribute('class','refresh');
-  deleteButton.setAttribute('aria-label','refresh');
+  refreshButton.setAttribute('aria-label','refresh');
   refreshButton.onclick = (event)=>{refresh(event,index)};
   lastColumn.appendChild(refreshButton);
   newRow.appendChild(lastColumn);
