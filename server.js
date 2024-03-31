@@ -36,6 +36,12 @@ app.use( (req,res,next) => {
 app.post( '/submit', async (req,res) => {
     console.log("Request Body: ", req.body);
     await saveData(req.body)
+    res.send("Data successfully added")
+})
+
+app.post( '/delete', async (req,res) => {
+    const result = await collection.deleteOne({ _id: new ObjectId(req.body.deleteId) });
+    res.send("Data successfully deleted")
 })
 
 const saveData = async function (myDataJSON) {

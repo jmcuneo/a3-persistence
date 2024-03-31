@@ -38,19 +38,19 @@ const submit = async function( event ) {
   await loadTable()
 }
 
-const deleteEntry = async function (deleteName, deleteRace){
+const deleteEntry = async function (deleteId){
 
-    console.log("delete entry: ", deleteName, deleteRace)
+    console.log("delete entry: ", deleteId)
 
     const json = {
-        "deleteName": deleteName,
-        "deleteRace": deleteRace
+        "deleteId": deleteId,
     }
-
     const body = JSON.stringify(json)
-
     const response = await fetch( "/delete", {
         method:"POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
         body
     })
 
@@ -170,7 +170,7 @@ const loadTable = async function (){
                             cell.appendChild(button2);
 
                             const button = document.createElement("button")
-                            button.onclick = () => deleteEntry(data[i].name, data[i].race);
+                            button.onclick = () => deleteEntry(data[i]._id);
                             button.id = "deleteButton"
                             button.textContent = "Delete"
                             cell.appendChild(button);
