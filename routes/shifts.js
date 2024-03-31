@@ -1,32 +1,20 @@
 const 	app = require('express'),
-		mongo = require("mongodb").MongoClient;
+		Shift = require("../models/shiftSchema")
 		router = app.Router();
 
 
-router.post("/add", (req, res) => {
+router.post("/add", async (req, res) => {
 	const uri = process.env.MONGO;
 
-	mongo.connect(uri, function (err, db) {
-		if (err) throw err;
-		const dbo = db.db("webware");
-		dbo.collection("shifts").find({}).toArray(function (err, result) {
-			if (err) throw err;
-			console.log(result);
-			db.close();
-		})
-	})
-
 	shift = req.body;
+	shift.username=req.user.username;
 
-	if (appData.some(data => data.cID === course.cID)) {
-		// course already exists, let's update the record :)
-		const courseIndex = appData.findIndex(data => data.cID === course.cID);
-		appData[courseIndex] = course;
-	} else {
-		appData.push(course);
-	}
-	console.log(appData);
-	res.json(appData);
+	const shifts = await Shift.find();
+	console.log(shifts);
+	
+	res.locals.user = req.user.username;
+	res.locals.shiftRecords = shifts;
+	res.render("index");
 })
 
 router.delete("/delete", (req, res) => {

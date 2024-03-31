@@ -8,6 +8,7 @@ const passport = require("passport");
 const GithubStrategy = require("passport-github2").Strategy;
 const handlebars = require("express-handlebars");
 const session = require("express-session");
+require("./db")
 
 
 // Passport session setup.
