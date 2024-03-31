@@ -3,7 +3,7 @@ const express = require("express"),
 	dotenv = require("dotenv").config(),
 	port = 3000;
 
-const shiftRouter = require("./routes/courses");
+// const shiftRouter = require("./routes/courses");
 const passport = require("passport");
 const GithubStrategy = require("passport-github2").Strategy;
 const handlebars = require("express-handlebars");
