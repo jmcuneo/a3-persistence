@@ -4,7 +4,7 @@ const fs   = require( "fs" );
 const dictionaries = 
 {
   "Scrabble":fs.readFileSync("dictionaries/scrabble.txt", { encoding: 'utf8', flag: 'r' }).split(/\r?\n/),
-  "MIT":fs.readFileSync("dictionaries/mit.txt", { encoding: 'utf8', flag: 'r' }).split(/\r?\n/)
+  "MIT":fs.readFileSync("dictionaries/mit2.txt", { encoding: 'utf8', flag: 'r' }).split(/\r?\n/)
 }
 
 //Creates a set of all allowed letters.

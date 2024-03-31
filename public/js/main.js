@@ -9,9 +9,9 @@ const submit = async function( event ) {
   event.preventDefault()
   
   const input = document.querySelector( "#string" ),
+        dropdown = document.querySelector("#dropdown")
         json = { type:"anagram",string: input.value, dict:dropdown.value },
-        body = JSON.stringify( json ),
-        dropdown = document.querySelector("#select");
+        body = JSON.stringify( json );
 
   //Asynchronous network request
   const response = await fetch( "/submit", {
