@@ -58,6 +58,9 @@ runDB();
 
 const handlePost = function(request, response) {
   // console.log(request.session);
+    if(!request.session){
+      return;
+    }
     let userId = request.session.passport.user.id;
     // console.log("HANDLING POST");
     let data = request.body;
