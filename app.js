@@ -36,7 +36,7 @@ passport.serializeUser(function(user, cb) {
 passport.use(new GithubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "http://ssgreene.tech/auth/github/callback"
+    callbackURL: "https://ssgreene.tech/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
@@ -61,8 +61,8 @@ app.use(session({
 	resave: false, 
 	saveUninitialized: false
 }));
-app.use(passport.session());
 app.use(passport.initialize());
+app.use(passport.session());
 
 const ensureAuthenticated = function (req, res, next) {
 	if (req.isAuthenticated()) {
