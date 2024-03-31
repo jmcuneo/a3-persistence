@@ -15,8 +15,8 @@ const session = require('express-session');
 const GitHubStrategy = require('passport-github').Strategy;
 
 passport.use(new GitHubStrategy({
-      clientID: `${process.env.CLIENTID}`,
-      clientSecret: `${process.env.CLIENTSECRET}`,
+      clientID: process.env.CLIENTID,
+      clientSecret: process.env.CLIENTSECRET,
       callbackURL: "http://localhost:3000/auth/github/callback"
     },
     function(accessToken, refreshToken, profile, done) {
