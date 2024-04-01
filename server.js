@@ -44,7 +44,17 @@ let todos = [
 
 // Home route
 app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+// login route
+app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login.html"));
+});
+
+// register route
+app.get("/register", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "register.html"));
 });
 
 // Get all todos
@@ -53,7 +63,7 @@ app.get("/todos", (req, res) => {
     const now = new Date();
     const createdAt = new Date(todo.createdAt);
     const timeSinceAdded = Math.floor((now - createdAt) / 1000 / 60); // in minutes
-    return { ...todo, timeSinceAdded: `${timeSinceAdded} min ago` };
+    return { ...todo, timeSinceAdded: `${timeSinceAdded} minutes ago` };
   });
   res.json(todosWithTimeSinceAdded);
 });
