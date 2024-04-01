@@ -32,6 +32,7 @@ router.post("/add", async (req, res) => {
 		delete shift._id;
 		delete shift.user;
 	})
+	console.log(shifts);
 
 	res.locals.user = req.user.username;
 	res.locals.shiftRecords = shifts;
