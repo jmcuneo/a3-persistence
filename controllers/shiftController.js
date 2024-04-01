@@ -3,7 +3,7 @@ const User = require("../models/userSchema");
 
 const addShift = async (req, res) => {
 	const username = req.user.username;
-	const userResults = await User.find({}).where("user").equals(username);
+	const userResults = await User.find({});
 	res.json(userResults);
 	
 }
