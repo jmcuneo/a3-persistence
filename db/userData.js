@@ -26,4 +26,6 @@ const getNextID = async function() {
 	return nextID;
 }
 
+module.exports = { getNextID }
+
 
