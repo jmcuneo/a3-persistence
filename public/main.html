@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 3</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/main.js"></script>
+
+    <!--HONK Font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Honk&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+    <body>
+    <header>Car Database</header>
+      <div class="grid-container">
+        <div>
+      <img id = "image" class = "image" alt="KaChow" src="https://upload.wikimedia.org/wikipedia/en/8/82/Lightning_McQueen.png">
+        </div>
+          <div id="formDiv">
+            <h2> Use the form below to add to the table</h2>
+          <form>
+            <input type="text" id="model" placeholder="Car Model">
+            <input type="text" id="year" placeholder="Year">
+            <input type="text" id="mpg" placeholder="Miles per Gallon (MPG)">
+            <input type="text" id="fuelLoad" placeholder="Fuel Tank Size in Gallons">
+            <button id="submit">submit</button>
+
+          </form>
+        </div>
+        <div>
+          <img id = "image2" class = "image" alt="KaChow" src="https://upload.wikimedia.org/wikipedia/en/8/82/Lightning_McQueen.png">
+        </div>
+        <div>
+          <h1>Kachow!</h1>
+        </div>
+        <div>
+          <h2> Use the form below to delete from the table</h2>
+          <form>
+            <input type="text" id="id" placeholder="Delete ID#">
+            <button id="delete">Delete</button>
+          </form>
+        </div>
+        <div><h1>Kachow!</h1></div>
+        <div></div>
+        <div>
+          <h2> Use the form below to modify values from the table</h2>
+          <form>
+            <input type="text" id="id2" placeholder="Modify ID#">
+            <input type="text" id="model2" placeholder="Car Model">
+            <input type="text" id="year2" placeholder="Year">
+            <input type="text" id="mpg2" placeholder="Miles per Gallon (MPG)">
+            <input type="text" id="fuelLoad2" placeholder="Fuel Tank Size in Gallons">
+            <button id="modify">modify</button>
+          </form>
+        </div>
+        <div></div>
+        <div class="grid-table">
+      <table id="table">
+        <tr>
+          <th>ID #</th>
+          <th>Car Model</th>
+          <th>Year</th>
+          <th>Miles Per Gallon</th>
+          <th>Fuel Tank Size in Gallons</th>
+          <th>Total Miles per Fuel Tank</th>
+        </tr>
+      </table>
+      </div>
+      </div>
+    </body>
+</html>

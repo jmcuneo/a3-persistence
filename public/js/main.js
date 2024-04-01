@@ -1,6 +1,8 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 let rowNumber = 1;
 let data;
+let isAdded = false; //bool for getData and add to fix table
+let isDeleted = false; //bool for getData and add to fix table
 let isModified = false; //bool for getData and modify to fix table
 
 function addRow(id, model, year, mpg, fuelTank){ //adds row to table
@@ -67,9 +69,12 @@ const submit = async function( event ) {
   ) {
 
   } else{
-    addRow(json.Id, json.model, json.year, json.mpg, json.fuelLoad );
+    //addRow(json.Id, json.model, json.year, json.mpg, json.fuelLoad );
     data.push(json);
-    rowNumber++;
+    //rowNumber++;
+    isAdded = true;
+    getData();
+
   }
 
 console.log(rowNumber)
@@ -119,7 +124,7 @@ const remove = async function (event) {
   const inputID = document.querySelector("#id"),
   json = {"id": inputID.value},
   body = JSON.stringify(json)
-  const response = await fetch( "/", {
+  const response = await fetch( "/submit", {
     method:"DELETE",
     body
   })
@@ -132,8 +137,12 @@ const remove = async function (event) {
 
   } else{
 
-    rowDelete(inputID.value)
+    //rowDelete(inputID.value)
     rowNumber--;
+    data.splice(parseInt(inputID.value) - 1, 1);
+    isDeleted = true;
+    console.log(data)
+    getData();
   }
 }
 const modify = async function(event){
@@ -179,6 +188,24 @@ const getData = async function() {
   }).then((response) => response.json()
   ).then((json) =>data =json)
 
+
+  if(isDeleted){
+
+    for(let i = data.length +1; i > 0; i--){
+      table.deleteRow(i)
+    }
+    isDeleted = false;
+  }
+
+  if(isAdded){
+
+    for(let i = data.length -1; i > 0; i--){
+      table.deleteRow(i)
+    }
+    isAdded = false;
+  }
+
+
   if(isModified){
 
     for(let i = data.length; i > 0; i--){
@@ -196,7 +223,7 @@ const getData = async function() {
   }
   console.log(rowNumber)
 
-  console.log(data[data.length-1].Id)
+ // console.log(data[data.length-1].Id)
 
   //const text = await response.text()
 
