@@ -10,9 +10,44 @@ const http = require( "http" ),
   mime = require( "mime" ),
   dir  = "public/",
   port = 3000,
-  express = require('express'), 
+  express = require('express'),
+  { MongoClient, ObjectId } = require("mongodb"), 
   app = express(),
   previousResults = []
+
+app.use( express.static( 'public' ) )
+app.use( express.json() )
+app.use( middleware_post )
+
+//Database Code
+//Connection String: mongodb+srv://<username>:<password>@cs4241.xgtmlzl.mongodb.net/
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://<username>:<password>@cs4241.xgtmlzl.mongodb.net/?retryWrites=true&w=majority&appName=CS4241";
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+
+let collection = null
+
+async function run() {
+  await client.connect()
+  collection = await client.db("datatest").collection("test")
+
+  // route to get all docs
+  app.get("/docs", async (req, res) => {
+    if (collection !== null) {
+      const docs = await collection.find({}).toArray()
+      res.json( docs )
+    }
+  })
+}
+
+run()
 
 const middleware_post = (req, res, next) => {
   let dataString = ''
@@ -37,9 +72,6 @@ const middleware_post = (req, res, next) => {
     next()
   })
 }
-
-app.use( express.static( 'public' ) )
-app.use( middleware_post )
 
 app.post('/addition', (req, res) => {
   const { num1, num2 } = req.clientData;
