@@ -7,8 +7,10 @@ const getNextID = async function(username) {
 	let nextID = -1;
 	userColl.find(userQuery).toArray((err, result) => {
 		if (err) throw err;
+		console.log(result);
 		if (result) {
 			// user already exists;
+			console.log("i am here");
 			nextID = (result.idLast) + 1;
 			const original = {_id: result._id};
 			const newValues = { $set: {idLast: nextID}} 
