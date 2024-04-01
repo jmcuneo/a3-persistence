@@ -84,12 +84,7 @@ app.get('/auth/github/callback',
 	});
 
 app.get("/", ensureAuthenticated, (req, res) => {
-	// shifts = [
-	// 	{id: "1", date: "2", start: "3", end: "4", duration: "5" },
-	// 	{id: "10", date: "9", start: "8", end: "7", duration: "6" },
-	// 	{id: "11", date: "12", start: "13", end: "14", duration: "15" },
-	// ]
-	shifts = [];
+	// shifts = [];
 
 	res.locals.user = req.user.username;
 	res.locals.shiftRecords = shifts;
@@ -106,5 +101,3 @@ mongoose.connect(process.env.MONGO)
 	}).catch((err) => {
 		console.log(err);
 	})
-
-// app.listen(port);
