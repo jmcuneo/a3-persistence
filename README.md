@@ -21,21 +21,15 @@ Include a very brief summary of your project here. Images are encouraged, along 
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: I followed the following 12 tips from the W3C Web Accessibility Initiative:
-  1. **Provided a short title that describes the page content and distinguishes it from other pages**. The page title is often the same as the main heading of the page. Put the unique and most relevant information first; for example, put the name of the page before the name of the organization. For pages that are part of a multi-step process, include the current step in the page title.
-  2. Use short headings to group related paragraphs and clearly describe the sections. Good headings provide an outline of the content.
-  3. Keep content clear and concise: Write in short, clear sentences and paragraphs. Avoid using unnecessarily complex words and phrases. Expand acronyms on first use. For example, Web Content Accessibility Guidelines (WCAG).
-  4. Provide sufficient contrast between foreground and background: Foreground text needs to have sufficient contrast with background colors. This includes text on images, background gradients, buttons, and other elements. 
-  5. Ensure that form elements include clearly associated labels. all fields have a descriptive label adjacent to the field. Avoid having too much space between labels and fields.
-  6. Use headings and spacing to group related content. Use whitespace and proximity to make relationships between content more apparent. Style headings to group content, reduce clutter, and make it easier to scan and understand.
-  7. Associate a label with every form control
-  Use a for attribute on the <label> element linked to the id attribute of the form element, or using WAI-ARIA attributes.
-  8. Identify page language and language changes
-  Indicate the primary language of every page by using the lang attribute in the html tag, for example <html lang="en">. 
-  9. Reflect the reading order in the code order
-  Ensure that the order of elements in the code matches the logical order of the information presented. One way to check this is to remove CSS styling and review that the order of the content makes sense.
-  10. Don’t use color alone to convey information
-  While color can be useful to convey information, color should not be the only way information is conveyed. When using color to differentiate elements, also provide additional identification that does not rely on color perception. For example, use an asterisk in addition to color to indicate required form fields, and use labels to distinguish areas on graphs.
-  11. Provide clear and consistent navigation options
-  Ensure that navigation across pages within a website has consistent naming, styling, and positioning. Provide more than one method of website navigation, such as a site search or a site map. Help users understand where they are in a website or page by providing orientation cues, such as breadcrumbs and clear headings.
-  12. Make link text meaningful
-  Write link text so that it describes the content of the link target. Avoid using ambiguous link text, such as ‘click here’ or ‘read more’. Indicate relevant information about the link target, such as document type and size, for example, ‘Proposal Documents (RTF, 20MB)’.
+  1. *Provided a short title that describes the page content and distinguishes it from other pages*. I gave both of my pages appropriate titles that are unique to their functionality with the most relevant information first.
+  2. *Used short headings to group related paragraphs and clearly describe the sections.* I made good use of headings and subheadings that provide an outline of the content and what needs to be done. 
+  3. *Kept content clear and concise: Write in short, clear sentences and paragraphs. Avoid using unnecessarily complex words and phrases. Expand acronyms on first use.* I ensured that all instructions were straight to the point and no longer than 1 sentence. I used plain terms to describe my instructions and avoided the use of any abbreviations. 
+  4. *Provided sufficient contrast between foreground and background*: My text has sufficient contrast with background colors that were approved by google lighthouse's accessibility test. 
+  5. *Ensured that form elements include clearly associated labels.* All my fields have a descriptive label adjacent to the field. I avoided having too much space between labels and fields. I included lines and headers to split sections. 
+  6. *Used headings and spacing to group related content.* I used whitespace and proximity to make relationships between content more apparent. I also added lines to divide sections accordingly. 
+  7. *Associated a label with every form control* Used a for attribute on the <label> element linked to the id attribute of the form element.
+  8. *Identifed page language.* Indicated the primary language of every page by using the lang attribute in the html tag: <html lang="en">. 
+  9. *Reflected the reading order in the code order* I ensured that the order of elements in the code matches the logical order of the information presented. If I remove CSS styling and the order of the content makes sense.
+  10. *I did not rely on color to convey information.* Provided identification that does not rely on color perception by using words to instruct a user where to delete an entry rather than using the color red with no words.
+  11. *Provided clear and consistent navigation options.* Ensured that navigation across pages within a website has consistent naming, styling, and positioning. 
+  12. *Made link text meaningful.* Wrote my github OAuth link text so that it describes the content of the link target. Avoided using ambiguous link text.
