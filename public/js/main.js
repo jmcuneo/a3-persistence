@@ -17,9 +17,8 @@ const submit = async function(event) {
     });
 
     if (response.ok) {
-      const data = await response.json();
-      addToList(data);
-      console.log("Project added:", data);
+      await refreshProjectList();
+      console.log("Project added successfully");
     } else {
       console.error("Error:", response.statusText);
     }
@@ -28,15 +27,20 @@ const submit = async function(event) {
   }
 };
 
-//Add project to HTML list
+
+
+//Add project to html list
 function addToList(data) {
   console.log("Adding to list");
-  const newProject = data[data.length - 1]; // Assuming the new project is the last element in the array
-  const listItem = document.createElement("li");
-  listItem.textContent = JSON.stringify(newProject);
-
+  const newList = document.createElement("ul");
+  data.forEach(project => {
+    const listItem = document.createElement("li");
+    listItem.textContent = `Name: ${project.name}, Teammates: ${project.teammates}, Points: ${project.points}, Points Per Teammate: ${project.pointsPerTeammate}`;
+    newList.appendChild(listItem);
+  });
   const list = document.querySelector("#dataList");
-  list.appendChild(listItem);
+  list.innerHTML = ""; // Clear previous list
+  list.appendChild(newList);
 }
 
 const removeProject = async function(event) {
@@ -44,23 +48,19 @@ const removeProject = async function(event) {
 
   const removeName = document.querySelector("#removeName").value;
 
-  if (removeName === "") return; // Do nothing if empty name is submitted
-
   try {
-    const response = await fetch("/remove", { //Changed from delete to remove
+    const response = await fetch("/remove", {
       method: "POST",
       body: JSON.stringify({ name: removeName }),
       headers: {
-        "Content-Type": "application/json" // Specify JSON content type
+        "Content-Type": "application/json"
       }
     });
 
     if (response.ok) {
-      // If response is successful, remove the project from the list
       removeFromList(removeName);
       console.log("Project removed:", removeName);
     } else {
-      // Handle error response
       console.error("Error:", response.statusText);
     }
   } catch (error) {
@@ -68,23 +68,59 @@ const removeProject = async function(event) {
   }
 };
 
-const removeFromList = function(name) {
+// Remove project from HTML list
+function removeFromList(name) {
   const listItems = document.querySelectorAll("#dataList li");
-  listItems.forEach(function(item) {
+  listItems.forEach(item => {
     if (item.textContent.includes(name)) {
       item.remove();
     }
   });
-};
+}
+
+//Fetch all projects in the db
+async function fetchProjects() {
+  try {
+    const response = await fetch("/docs");
+    if (response.ok) {
+      return await response.json();
+    } else {
+      console.error("Error:", response.statusText);
+      return [];
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    return [];
+  }
+}
+
+//Refreshes display of projects
+async function refreshProjectList() {
+  try {
+    const response = await fetch("/docs");
+    if (response.ok) {
+      const projects = await response.json();
+      addToList(projects);
+    } else {
+      console.error("Error:", response.statusText);
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
 
 //
+window.onload = async function() {
+  const projects = await fetchProjects();
+  addToList(projects);
 
-
-window.onload = function() {
   const button = document.querySelector("button");
   button.onclick = submit;
 
   const removeButton = document.querySelector("#removeProject button[type=submit]");
   removeButton.onclick = removeProject;
 };
+
+
 

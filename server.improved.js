@@ -36,10 +36,16 @@ app.listen(3000)
 // route to get all docs
 app.get("/docs", async (req, res) => {
   if (collection !== null) {
-    const docs = await collection.find({}).toArray()
-    res.json( docs )
+    const projects = await collection.find({}).toArray()
+    const projectsWithPointsPerTeammate = projects.map(project => {
+      const pointsPerTeammate = project.points / project.teammates;
+      return { ...project, pointsPerTeammate };
+  });
+    res.json(projectsWithPointsPerTeammate);
+}else {
+    console.log("Error finding projects in database")
   }
-})
+});
 
 app.use( (req,res,next) => {
   if( collection !== null ) {
@@ -54,18 +60,16 @@ app.post( '/add', async (req,res) => {
   res.json( result )
 })
 
-app.post( '/remove', async (req,res) => {
+app.post('/remove', async (req, res) => {
   const projectName = req.body.name;
   const result = await collection.deleteOne({ name: projectName });
-
-  res.json( result )
 
   if (result.deletedCount === 1) {
     res.status(200).json({ message: 'Project removed successfully' });
   } else {
     res.status(404).json({ error: 'Project not found' });
   }
-})
+});
 
 app.post( '/update', async (req,res) => {
   const result = await collection.updateOne(
