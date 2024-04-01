@@ -9,9 +9,10 @@ const http = require( "http" ),
   // file.
   mime = require( "mime" ),
   dir  = "public/",
-  port = 3001,
+  port = 3000,
   express = require('express'), 
-  app = express()
+  app = express(),
+  previousResults = []
 
 const middleware_post = (req, res, next) => {
   let dataString = ''
@@ -21,112 +22,76 @@ const middleware_post = (req, res, next) => {
   })
 
   req.on( 'end', function() {
-    const json = JSON.parse( dataString )
-    previousResults.push(json)
+    if(dataString){
+      const clientData = JSON.parse(dataString)     //define client data
+      num1 = parseFloat(clientData.num1),       //extracting the first number from clientData
+      num2 = parseFloat(clientData.num2)        //extracting the second number from clientData
+      index = parseInt(clientData.index)        //extracting the index from clientdata for the delete result in array case
+
+      req.clientData = {
+        num1: num1, 
+        num2: num2,
+        index: index
+      }
+    }
+    next()
   })
-
-  req.json = JSON.stringify( previousResults )
-
-  next()
 }
 
+app.use( express.static( 'public' ) )
 app.use( middleware_post )
 
-app.post( '/submit', (req, res) => {
-  res.writeHead(200, {'Content-Type': 'application/json'})
-  res.end( req.json)
+app.post('/addition', (req, res) => {
+  const { num1, num2 } = req.clientData;
+  const result = (num1 + num2).toFixed(2);      //add the two imputted numbers together + truncates
+  addPreviousResults({ result: result });       //add this result to the array of previous results
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ result: result }));        //send the result to the client
+});
+
+app.post('/subtract', (req, res) => {
+  const { num1, num2 } = req.clientData;
+  const result = (num1 - num2).toFixed(2);          //subtract the two imputted numbers together + truncates
+  addPreviousResults({ result: result });           //add this result to the array of previous results
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ result: result }));      //send the result to the client
+});
+
+app.post('/multiply', (req, res) => {
+  const { num1, num2 } = req.clientData;
+  const result = (num1 * num2).toFixed(2);          //multiply the two imputted numbers together + truncates
+  addPreviousResults({ result: result });           //add this result to the array of previous results
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ result: result }));      //send the result to the client
+});
+
+app.post('/divide', (req, res) => {
+  const { num1, num2 } = req.clientData;
+  const result = (num1 / num2).toFixed(2);          //divide the two imputted numbers together + truncates
+  addPreviousResults({ result: result });           //add this result to the array of previous results
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ result: result }));      //send the result to the client
+});
+
+app.post('/deleteResult', (req, res) => {
+  const { index } = req.clientData;
+  previousResults.splice(index, 1);
+  res.writeHead(200, { "Content-Type": "text/plain" });        
+  res.end("Result deleted.");
+});
+
+app.post( '/addResult', (req, res) => {
+  const result = clientData.result;           //define the result and set it to the passed result
+  addPreviousResults({ result: result });     //add the result to the server side array
+  response.writeHead(200, { "Content-Type": "text/plain" });
+  response.end("Result added.");              //send a message back that it worked 
 })
+
+app.get( '/', ( req, res ) => res.send( sendFile( response, "public/index.html" ) ) )
+
+app.get( '/getPreviousResults', ( req, res ) => res.send( JSON.stringify(previousResults) ))
 
 app.listen( process.env.port || 3000 )
-
-let previousResults = [];  
-
-const server = http.createServer( function( request,response ) {
-  if( request.method === "GET" ) {        //links to handleGet() method
-    handleGet( request, response )    
-  }else if( request.method === "POST" ){      //links to handlePost() method
-    handlePost( request, response ) 
-  }
-})
-
-const handleGet = function( request, response ) {     //when a GET request is passed
-  const filename = dir + request.url.slice( 1 )     
-
-  if( request.url === "/" ) {      //default
-    sendFile( response, "public/index.html" ) 
-  }
-  else if (request.url === "/getPreviousResults") {       //if the GET reqest is to get the array of previous results
-    response.writeHead(200, { "Content-Type": "application/json" });
-    response.end(JSON.stringify(previousResults));        //give the array back to the client
-  }
-  else {
-    sendFile( response, filename )        //catch-all case
-  }
-}
-
-const handlePost = function( request, response ) {    //when a POST request is passed
-  let dataString = ""
-
-  request.on( "data", function( data ) {
-      dataString += data 
-  })
-
-  request.on( "end", function() {
-    const clientData = JSON.parse(dataString)     //define client data
-    //console.log(clientData)           //clientData console.log test
-
-    const operation = clientData.operation,   //extracting the operation from clientData
-    num1 = parseFloat(clientData.num1),       //extracting the first number from clientData
-    num2 = parseFloat(clientData.num2)        //extracting the second number from clientData
-    index = parseInt(clientData.index)        //extracting the index from clientdata for the delete result in array case
-
-    if(operation === "addition"){                //addition functionality
-      const result = (num1 + num2).toFixed(2)    //add the two imputted numbers together + truncates
-
-      addPreviousResults({ result: result })     //add this result to the array of previous results
-      response.writeHead(200, { 'Content-Type': 'application/json' })
-      response.end(JSON.stringify({ result: result }))        //send the result to the client
-    }
-    else if(operation === "subtract"){           //subtraction functionality
-      const result = (num1 - num2).toFixed(2)    //subtract the two imputted numbers together + truncates
-
-      addPreviousResults({ result: result })     //add this result to the array of previous results   
-      response.writeHead(200, { 'Content-Type': 'application/json' })
-      response.end(JSON.stringify({ result: result }))        //send the result to the client
-    }
-    else if(operation === "multiply"){           //multiplication functionality
-      const result = (num1 * num2).toFixed(2)    //multiply the two imputted numbers together + truncates
-
-      addPreviousResults({ result: result })     //add this result to the array of previous results
-      response.writeHead(200, { 'Content-Type': 'application/json' })
-      response.end(JSON.stringify({ result: result }))        //send the result to the client
-    }
-    else if(operation === "divide"){             //division functionality
-      const result = (num1 / num2).toFixed(2)    //divide the two imputted numbers together + truncates
-
-      addPreviousResults({ result: result })     //add this result to the array of previous results
-      response.writeHead(200, { 'Content-Type': 'application/json' })
-      response.end(JSON.stringify({ result: result }))        //send the result to the client
-    }
-    else if (operation === "deleteResult"){       //in the case that the client wants to delete an entry in the previous results array
-      if (index >= 0 && index < previousResults.length) {         //make sure the index is valid and not out of bounds
-        previousResults.splice(index, 1); // Delete the result at the specified index
-        response.writeHead(200, { "Content-Type": "text/plain" });        
-        response.end("Result deleted.");          //send a message back that it worked
-      } 
-    }
-    else if (operation === "addResult") {         //in the case that the client wants to add an entry to the server side array
-      const result = clientData.result;           //define the result and set it to the passed result
-      addPreviousResults({ result: result });     //add the result to the server side array
-      response.writeHead(200, { "Content-Type": "text/plain" });
-      response.end("Result added.");              //send a message back that it worked 
-    }
-    else{             //in the case that none of the previous operations are called
-      response.writeHead(400, { 'Content-Type': 'text/plain' })
-      response.end('Error')         //error because the operation passed is invalid
-    }
-  })
-}
 
 const sendFile = function( response, filename ) {
    const type = mime.getType( filename ) 
@@ -150,6 +115,7 @@ const sendFile = function( response, filename ) {
    })
 }
 
+
 //function to add a given result to the previous results array
 const addPreviousResults = function (result) {        //pass the result
   previousResults.push(result);                       //add result to the array
@@ -157,5 +123,3 @@ const addPreviousResults = function (result) {        //pass the result
       previousResults.pop();                          //if over 50, pop the oldest entry
   }
 };
-
-server.listen( process.env.PORT || port )             //declare the port

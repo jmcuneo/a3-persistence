@@ -43,6 +43,7 @@ const updateTable = async function() {
   }
 }
 
+/*
 //function to add result to the previous results table
 const addResultToPrevious = async function(result) {    
   const operation = 'addResult'     //define the operation
@@ -53,6 +54,7 @@ const addResultToPrevious = async function(result) {
   });
   updateTable(); //update the table 
 };
+*/
 
 //addition function
 const addition = async function( event ) { 
