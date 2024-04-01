@@ -3,7 +3,7 @@
 // Triggers upon site load
 window.onload = function()
 {
-  getData();
+  getGpaData();
   const submitButton = document.getElementById("submit");
   submitButton.onclick = submit;
   const adjustButton = document.getElementById("adjust");
@@ -37,7 +37,7 @@ const submit = async function(event)
     body: body
   });
 
-  getData();
+  getGpaData();
 }
 
 // Adjust a table entry
@@ -67,7 +67,7 @@ const updateEntry = async function(event)
     body: body
   });
 
-  getData();
+  getGpaData();
 }
 
 // Delete a table entry
@@ -89,11 +89,11 @@ const deleteEntry = async function(event)
     body: body
   });
 
-  getData();
+  getGpaData();
 }
 
 // Obtain the GPA table data from the server 
-const getData = async function()
+const getGpaData = async function()
 {
   let response = await fetch("/display",
   {
@@ -101,7 +101,7 @@ const getData = async function()
   });
 
   const text = await response.text();
-  buildTable(JSON.parse(text));
+  if (text !== null) buildTable(JSON.parse(text));
 }
 
 // Optain the GPA value from the server

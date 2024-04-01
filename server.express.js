@@ -11,6 +11,8 @@ require('dotenv').config();
 const uri = `mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.HOST}`
 const client = new MongoClient(uri)
 
+let username = "test";
+let password = "1234";
 let collection = null
 let data = null;
 var gpa = 0.0;
@@ -23,21 +25,49 @@ app.use((req, res, next) => {
   }
 });
 
-getData();
 app.listen(process.env.PORT || 3000);
+checkLogin(username, password);
 
 //DATABASE FUNCITONS
+// Log into account
+async function checkLogin(usernameAttempt, passwordAttempt)
+{
+  collection = await client.db("userdb").collection("users");
+
+  if (collection !== null) {
+    userData = await collection.findOne({username: usernameAttempt});
+    if (userData !== null) {
+      // User exists
+      if (userData.password === password) {
+        // Password correct
+        console.log("Logging in")
+        await client.db("gpadb").createCollection(usernameAttempt);
+        collection = await client.db("gpadb").collection(usernameAttempt);
+      }
+      else {
+        // Password incorrect
+        console.log("Incorrect password");
+      }
+    }
+    else {
+      // User does not exist; create new user
+      console.log("Creating new user");
+      await collection.insertOne({username: usernameAttempt, password: passwordAttempt});
+      await client.db("gpadb").createCollection(usernameAttempt);
+      collection = await client.db("gpadb").collection(usernameAttempt);
+    }
+  }
+}
+
 // Obtain all data in the current collection
 async function getData()
 {
-  // client.db("gpadb").createCollection("newCollection");
-  collection = await client.db("gpadb").collection("gpaEntries");
-
   // route to get all docs
   if (collection !== null) {
     data = await collection.find({}).toArray();
   }
   gpa = calculateGpa(data);
+  return data;
 }
 
 // Add entry to the database
@@ -90,7 +120,7 @@ app.post('/delete', express.text(), async (req, res) => {
 // Fetch data for the GPA table
 app.get('/display', async (req, res) => {
   res.writeHead(200, {'Content-Type': 'application/text'});
-  await getData();
+  data = await getData();
   res.end(JSON.stringify(data));
 });
 
