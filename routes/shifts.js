@@ -13,7 +13,7 @@ router.post("/add", async (req, res) => {
 		console.log(shiftID);
 		const startDate = dayjs(req.body.start);
 		const endDate = dayjs(req.body.end);
-		const duration = startDate.diff(endDate, 'day', true);
+		const duration = endDate.diff(startDate, 'hour', true);
 		const doc = {
 			id: shiftID.toString(),
 			user: req.user.username,
