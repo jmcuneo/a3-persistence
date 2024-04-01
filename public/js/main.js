@@ -23,7 +23,7 @@ const renderTasks = function() {
         formData.forEach(function(value, key){
           json[key] = value;
         })
-        json["index"] = i
+        json["_id"] = tasks[i]._id
         const body = JSON.stringify( json )
         const response = await fetch( "/tasks", {
           method:"PUT",
@@ -34,8 +34,9 @@ const renderTasks = function() {
         })
 
         editIndex = -1
-        tasks = await response.json()
-        renderTasks()
+
+        // console.log( response.json() )
+        await updateTasks()
       }
       // table.appendChild(editForm)
       row.innerHTML = `<input type="checkbox" class="trollCheckbox"/><td><input name="taskName" type="text" form="editForm" value="${task.taskName}" required></td><td><input name="priority" type="number" form="editForm" value="${task.priority}" required></td><td><input name="creation_date" type="date" form="editForm" value="${task.creation_date}" required></td><td></td><input id="edit" type="submit" form="editForm" value="Submit"/>`
@@ -66,10 +67,14 @@ const renderTasks = function() {
         // event.preventDefault()
         const response = await fetch("/tasks", {
           method: "DELETE",
-          body: JSON.stringify({index: i})
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({_id: tasks[i]._id})
         })
-        tasks = await response.json()
-        renderTasks()
+
+        // console.log( response.json() )
+        await updateTasks()
       }
       row.appendChild(deleteButton)
     }
@@ -79,7 +84,6 @@ const renderTasks = function() {
 
   const row = document.createElement("tr")
   const today = (new Date()).toISOString().split('T')[0]
-  // make a checkbox for done
 
   row.innerHTML = `<td><input type="checkbox" class="trollCheckbox"/></td><td><input name="taskName" type="text" form="addForm" placeholder="Task Name" required></td><td><input name="priority" type="number" form="addForm" placeholder="Priority" value="1" required></td><td><input name="creation_date" type="date" form="addForm" value="${today}" required></td><td></td><td><input id="add" type="submit" form="addForm" value="Add Task"/></td>`
   table.appendChild(row)
@@ -116,14 +120,18 @@ const submit = async function (event) {
     body: body,
   })
 
-  tasks = await response.json()
-  renderTasks()
+  // console.log( response.json() )
+  await updateTasks()
 }
 
 window.onload = async function() {
   const form = document.querySelector( "#addForm" )
   form.onsubmit = submit
 
+  await updateTasks()
+}
+
+const updateTasks = async function() {
   const response = await fetch("/tasks")
   tasks = await response.json()
   renderTasks()

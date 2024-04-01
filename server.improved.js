@@ -25,7 +25,6 @@ appdata.forEach( task => {
 
 const express    = require('express'),
   app        = express(),
-  // path = require('path'),
   { MongoClient, ObjectId } = require("mongodb")
 
 app.use( express.static( 'public' ) )
@@ -40,10 +39,9 @@ async function run() {
   await client.connect()
   collection = await client.db("datatest").collection("test")
 
-  // route to get all docs
-  app.get("/docs", async (req, res) => {
+  app.get("/tasks", async (req, res) => {
     if (collection !== null) {
-      const docs = await collection.find({}).toArray()
+      const docs = await collection.find({}).sort({priority: -1}).toArray()
       res.json( docs )
     }
   })
@@ -59,29 +57,16 @@ app.use( (req,res,next) => {
   }
 })
 
-app.get('/tasks', function(req, res) {
-  res.writeHead( 200, "OK", {"Content-Type": "application/json"})
-  res.end( JSON.stringify( appdata ) )
-});
-
-app.post('/tasks', function(req, res) {
+app.post('/tasks', async function(req, res) {
   const task = req.body
   task.priority = Number(task.priority)
   task.days_not_done = Math.floor((new Date() - new Date(task.creation_date)) / (1000 * 60 * 60 * 24))
 
-  let i = 0;
-  while (i < appdata.length && appdata[i].priority > task.priority) {
-    i++;
-  }
-  appdata.splice(i, 0, task);
-
-  console.log( appdata )
-
-  res.writeHead( 200, "OK", {"Content-Type": "application/json"})
-  res.end( JSON.stringify( appdata ) )
+  const result = await collection.insertOne( req.body )
+  res.json( result )
 })
 
-app.put('/tasks', function(req, res) {
+app.put('/tasks', async function(req, res) {
   const json = req.body
   const task = {
     taskName: json.taskName,
@@ -91,29 +76,27 @@ app.put('/tasks', function(req, res) {
     days_not_done: Math.floor((new Date() - new Date(json.creation_date)) / (1000 * 60 * 60 * 24)),
   }
 
-  appdata.splice(json.index, 1)
-  console.log( appdata )
+  const result = await collection.updateOne(
+    { _id: new ObjectId( json._id ) },
+    {
+      $set: {
+        taskName: task.taskName,
+        priority: task.priority,
+        creation_date: task.creation_date,
+        days_not_done: task.days_not_done,
+      }
+    }
+  )
 
-  let i = 0;
-  while (i < appdata.length && appdata[i].priority > task.priority) {
-    i++;
-  }
-  appdata.splice(i, 0, task);
-
-  console.log( "APSLICE" )
-  console.log( appdata )
-
-  res.writeHead( 200, "OK", {"Content-Type": "application/json"})
-  res.end( JSON.stringify( appdata ) )
+  res.json( result )
 })
 
-app.delete('/tasks', function(req, res) {
-  const json = req.body
-  appdata.splice(json.index, 1)
-  console.log( appdata )
+app.delete('/tasks', async function(req, res) {
+  const result = await collection.deleteOne({
+    _id:new ObjectId( req.body._id )
+  })
 
-  res.writeHead( 200, "OK", {"Content-Type": "application/json"})
-  res.end( JSON.stringify( appdata ) )
+  res.json( result )
 })
 
 app.listen( process.env.PORT || 3000 )
