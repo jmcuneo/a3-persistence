@@ -18,16 +18,12 @@
         <input type="integer" class="form-control" id="logShiftID" placeholder="12">
       </div>
       <div class="mb-3">
-        <label for="shiftDate" class="form-label">Shift Date</label>
-        <input type="date" class="form-control" id="shiftDate" placeholder="mm/dd/yyyy" required>
-      </div>
-      <div class="mb-3">
         <label for="shiftStart" class="form-label">Shift Start</label>
-        <input type="time" class="form-control" id="shiftStart" placeholder="00:00 AM" required>
+        <input type="datetime-local" class="form-control" id="shiftStart" placeholder="mm/dd/yyyy" required>
       </div>
       <div class="mb-3">
         <label for="shiftEnd" class="form-label">Shift End</label>
-        <input type="time" class="form-control" id="shiftEnd" placeholder="00:00 PM" required>
+        <input type="datetime-local" class="form-control" id="shiftEnd" placeholder="00:00 AM" required>
       </div>
       <button type="submit" class="btn btn-primary" id="logShift">Submit</button>
     </form>
@@ -54,7 +50,6 @@
       <thead>
         <tr>
           <th scope="col">Shift #</th>
-          <th scope="col">Shift Date</th>
           <th scope="col">Shift Start</th>
           <th scope="col">Shift End</th>
           <th scope="col">Duration</th>
