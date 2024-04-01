@@ -23,4 +23,4 @@ const shiftSchema = new mongoose.Schema({
     },
 })
 
-module.exports = mongoose.model('ShiftSchema', shiftSchema)
+module.exports = mongoose.model('Shift', shiftSchema)

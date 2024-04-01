@@ -4,16 +4,14 @@ const 	app = require('express'),
 
 
 router.post("/add", async (req, res) => {
-	const uri = process.env.MONGO;
 
-	const shift = req.body;
+	// const shift = req.body;
 	// shift.username=req.user.username;
-
-	const shifts = await Shift.find({}).where('id').equals(shift.id);
+	const shifts = await Shift.find({});
 	console.log(shifts);
 	
-	res.locals.user = req.user.username;
-	res.locals.shiftRecords = shifts;
+	// res.locals.user = req.user.username;
+	// res.locals.shiftRecords = shifts;
 	res.render("index");
 })
 
