@@ -6,10 +6,10 @@ window.onload = function()
   getData();
   const submitButton = document.getElementById("submit");
   submitButton.onclick = submit;
-  const deleteButton = document.getElementById("delete");
-  deleteButton.onclick = deleteLastEntry;
   const adjustButton = document.getElementById("adjust");
-  adjustButton.onclick = adjustLastEntry;
+  adjustButton.onclick = updateEntry;
+  const deleteButton = document.getElementById("delete");
+  deleteButton.onclick = deleteEntry;
 }
 
 // Submit a new entry to the GPA data
@@ -32,18 +32,16 @@ const submit = async function(event)
   const body = JSON.stringify(json);
   const response = await fetch("/submit",
   {
-    method:"POST",
+    method: "POST",
     headers: {'Content-Type': 'application/json'},
     body: body
   });
 
-  const text = await response.text();
-  const newData = JSON.parse(text);
-  addToTable(newData);
+  getData();
 }
 
-// Adjust the most recent entry
-const adjustLastEntry = async function(event)
+// Adjust a table entry
+const updateEntry = async function(event)
 {
   event.preventDefault(event);
 
@@ -57,25 +55,23 @@ const adjustLastEntry = async function(event)
   const gradeInput = document.querySelector("#grade");
   const creditsInput = document.querySelector("#credits");
 
-  const json = {class: classInput.value, grade: gradeInput.value, credits: creditsInput.value};
+  const editInput = document.querySelector("#edit");
+  const newInfo = {class: classInput.value, grade: gradeInput.value, credits: creditsInput.value};
+  const json = {class: editInput.value, data: newInfo};
+
   const body = JSON.stringify(json);
   const response = await fetch("/adjust",
   {
-    method:"POST",
+    method: "POST",
     headers: {'Content-Type': 'application/json'},
     body: body
   });
 
-  const text = await response.text();
-  const newData = JSON.parse(text);
-
-  const table = document.getElementById("table");
-  table.deleteRow(rowCount);
-  addToTable(newData);
+  getData();
 }
 
-// Delete the most recent entry
-const deleteLastEntry = async function(event)
+// Delete a table entry
+const deleteEntry = async function(event)
 {
   event.preventDefault(event);
 
@@ -85,15 +81,15 @@ const deleteLastEntry = async function(event)
     return;
   }
 
-  const body = JSON.stringify(rowCount);
+  const editInput = document.querySelector("#edit");
+  const body = editInput.value;
   const response = await fetch("/delete",
   {
-    method:"POST",
+    method: "POST",
     body: body
   });
 
-  table.deleteRow(rowCount);
-  getGpa();
+  getData();
 }
 
 // Obtain the GPA table data from the server 
@@ -101,30 +97,36 @@ const getData = async function()
 {
   let response = await fetch("/display",
   {
-    method:"GET",
+    method: "GET",
   });
 
   const text = await response.text();
-  buildInitialTable(JSON.parse(text));
+  buildTable(JSON.parse(text));
 }
 
-// Optain the final GPA value from the server
+// Optain the GPA value from the server
 const getGpa = async function()
 {
   let response = await fetch("/gpa",
   {
-    method:"GET",
+    method: "GET",
   });
   const text = await response.text();
   displayGpa(text);
 }
 
-// Create the initial GPA table with current data
-const buildInitialTable = function(initialData)
+// Create the GPA table with current data
+const buildTable = function(data)
 {
-  for (let i = 0; i < initialData.length; i++)
+  let table = document.getElementById("table");
+  while (table.rows.length > 1)
   {
-    addToTable(initialData[i]);
+    table.deleteRow(1);
+  }
+
+  for (let i = 0; i < data.length; i++)
+  {
+    addToTable(data[i]);
   }
 }
 

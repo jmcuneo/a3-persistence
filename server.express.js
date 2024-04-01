@@ -1,5 +1,5 @@
 const express = require('express'),
-  { MongoClient, ObjectId } = require("mongodb"),
+  {MongoClient, ObjectId} = require("mongodb"),
   app = express(),
   gpaData = [];
 
@@ -8,76 +8,90 @@ app.use(express.static('views'));
 app.use(express.json());
 require('dotenv').config();
 
-
 const uri = `mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.HOST}`
-const client = new MongoClient( uri )
+const client = new MongoClient(uri)
 
 let collection = null
+let data = null;
+var gpa = 0.0;
 
-async function run() {
-  await client.connect()
-  collection = await client.db("gpadb").collection("gpaEntries")
+app.use((req, res, next) => {
+  if(collection !== null) {
+    next();
+  } else {
+    res.status(503).send()
+  }
+});
+
+getData();
+app.listen(process.env.PORT || 3000);
+
+//DATABASE FUNCITONS
+// Obtain all data in the current collection
+async function getData()
+{
+  // client.db("gpadb").createCollection("newCollection");
+  collection = await client.db("gpadb").collection("gpaEntries");
 
   // route to get all docs
   if (collection !== null) {
-    const docs = await collection.find({}).toArray()
-    console.log(docs);
+    data = await collection.find({}).toArray();
   }
+  gpa = calculateGpa(data);
 }
 
-run()
+// Add entry to the database
+async function addToData(entry)
+{
+  const result = await collection.insertOne(entry);
+}
 
-app.use( (req,res,next) => {
-  if( collection !== null ) {
-    next()
-  }else{
-    res.status( 503 ).send()
-  }
-})
+// Remove entry from the database
+async function deleteDataEntry(className)
+{
+  const result = await collection.deleteOne(
+    {class: className});
+}
 
-app.post( '/add', async (req,res) => {
-  const result = await collection.insertOne( req.body )
-  res.json( result )
-})
+// Update entry in the database
+async function updateDataEntry(className, newData)
+{
+  const result = await collection.updateOne(
+    {class: className},
+    {$set: {class: newData.class, grade: newData.grade, credits: newData.credits}}
+  );
+}
 
-
-app.listen(process.env.PORT || 3000);
-
-var gpa = 0.0;
-
-
+// POST AND GET REQUESTS
 // Add new element to the table
-app.post('/submit', express.json(), (req, res) => {
-  gpaData.push(req.body);
-  gpa = calculateGpa(gpaData);
+app.post('/submit', express.json(), async (req, res) => {
+  await addToData(req.body);
 
   res.writeHead(200, {'Content-Type': 'application/json'});
   res.end(JSON.stringify(req.body));
 });
 
-// Adjust latest table element
-app.post('/adjust', express.json(), (req, res) => {
-  gpaData[gpaData.length - 1] = req.body;
-  gpa = calculateGpa(gpaData);
+// Adjust an element in the table
+app.post('/adjust', express.json(), async (req, res) => {
+  await updateDataEntry(req.body.class, req.body.data);
 
   res.writeHead(200, {'Content-Type': 'application/json'});
   res.end(JSON.stringify(req.body));
 });
 
-// Delete latest element from the table
-app.post('/delete', express.text(), (req, res) => {
-  let entryToDelete = Number(JSON.parse(req.body));
-  gpaData.splice(entryToDelete - 1, 1);
-  gpa = calculateGpa(gpaData);
+// Delete an element from the table
+app.post('/delete', express.text(), async (req, res) => {
+  await deleteDataEntry(req.body);
 
   res.writeHead(200, {'Content-Type': 'application/text'});
-  res.end(entryToDelete.toString());
+  res.end(JSON.stringify(req.body));
 });
 
 // Fetch data for the GPA table
-app.get('/display', (req, res) => {
+app.get('/display', async (req, res) => {
   res.writeHead(200, {'Content-Type': 'application/text'});
-  res.end(JSON.stringify(gpaData));
+  await getData();
+  res.end(JSON.stringify(data));
 });
 
 // Fetch GPA value
@@ -86,7 +100,6 @@ app.get('/gpa', (req, res) => {
   let roundedGpa = Math.round(gpa * 100) / 100;
   res.end(roundedGpa.toString());
 });
-
 
 // Determine what the user's GPA is based on the provided info
 const calculateGpa = function(jsonData)
