@@ -8,8 +8,8 @@ const passport = require("passport");
 const GithubStrategy = require("passport-github2").Strategy;
 const handlebars = require("express-handlebars");
 const session = require("express-session");
-const mongoose = require("mongoose");
 const cors = require("cors");
+const { connect } = require("./db/connection")
 
 
 // Passport session setup.
@@ -91,13 +91,11 @@ app.get("/", ensureAuthenticated, (req, res) => {
 	res.render('index');
 })
 
-
-mongoose.connect(process.env.MONGO)
-	.then(() => {
-		console.log("Connected to Mongo Database");
-		app.listen(port, () => {
-			console.log("Listening for requests");
-		});
-	}).catch((err) => {
-		console.log(err);
-	})
+connect().then(() => {
+	console.log("Connected to Mongo");
+	app.listen(port, () => {
+		console.log("Listening to Web Requests");
+	});
+}).catch((err) => {
+	console.log(err);
+});

@@ -1,11 +1,11 @@
 const 	app = require('express'),
-		db = require("../db/connection"),
+		{ connect, database } = require("../db/connection"),
 		router = app.Router();
 
 
 router.post("/add", async (req, res) => {
-	let collection = await db.collection("user-data");
-	let results = await collection.find({}).toArray();
+	connect();
+	
 	res.send(results).status(200);
 })
 
