@@ -51,8 +51,8 @@ const deleteShift = async function (event) {
 	})
 
 	// wait for server to respond, being an updated collection of data.
-	const text = await response.json()
-	renderCourses(text)
+	// const text = await response.json()
+	// renderCourses(text)
 }
 
 const renderCourses = function (json) {
