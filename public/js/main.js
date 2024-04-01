@@ -29,7 +29,7 @@ const updateTodos = async () => {
     // Delete button
     const deleteBtn = document.createElement("button");
     deleteBtn.innerHTML = "&times;";
-    deleteBtn.classList.add("btn", "btn-danger", "btn-sm");
+    deleteBtn.classList.add("btn", "btn-danger", "btn-sm", "ms-2");
     deleteBtn.onclick = () => deleteTodo(todo.id);
 
     // Creation date
@@ -39,9 +39,16 @@ const updateTodos = async () => {
     ).toLocaleString()}`;
     createdAtSpan.classList.add("badge", "bg-secondary", "ms-2");
 
+    // Time since added
+    const timeSinceAddedSpan = document.createElement("span");
+    // Assuming `todo.timeSinceAdded` exists and is calculated server-side
+    timeSinceAddedSpan.textContent = `${todo.timeSinceAdded}`;
+    timeSinceAddedSpan.classList.add("badge", "bg-info", "ms-2");
+
     todoItem.appendChild(checkBox);
     todoItem.appendChild(titleSpan);
     todoItem.appendChild(createdAtSpan);
+    todoItem.appendChild(timeSinceAddedSpan); // Now including this
     todoItem.appendChild(deleteBtn);
     todosList.appendChild(todoItem);
   });

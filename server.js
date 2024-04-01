@@ -53,7 +53,7 @@ app.get("/todos", (req, res) => {
     const now = new Date();
     const createdAt = new Date(todo.createdAt);
     const timeSinceAdded = Math.floor((now - createdAt) / 1000 / 60); // in minutes
-    return { ...todo, timeSinceAdded: `${timeSinceAdded} minutes ago` };
+    return { ...todo, timeSinceAdded: `${timeSinceAdded} min ago` };
   });
   res.json(todosWithTimeSinceAdded);
 });
