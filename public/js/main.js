@@ -68,7 +68,7 @@ async function handleDelete(index, items) {
   const itemId = items[index]._id.toString(); // _id is an ObjectId
   console.log(itemId);
   console.log(index)
-  onsole.log(items[index])
+  console.log(items[index])
   try {
     const response = await fetch('/delete', {
       method: 'DELETE', // Change method to DELETE
@@ -163,7 +163,7 @@ function hideEditForm() {
 
 async function handleEdit(index, items) {
   // Create and display the form
-  const editForm = createEditForm(itemToEdit); 
+  const editForm = createEditForm(items[index]); 
   displayEditForm(editForm);
 
   // Handle form submission
@@ -171,7 +171,7 @@ async function handleEdit(index, items) {
     event.preventDefault();
     try {
       const updatedData = extractDataFromForm(editForm);
-      const itemId = items[index]._id.toString(); // Assuming _id is an ObjectId
+      const itemId = items[index]._id.toString(); // _id is an ObjectId
 
       const response = await fetch('/edit-item', {
         method: 'POST',
@@ -249,7 +249,6 @@ function displayItems(items) {
         row.appendChild(createCell(cellText, greenCell)); 
     }
     itemsList.appendChild(row);
-    console.log('Updated row:', row.outerHTML);
 
     // Add buttons cell
     const deleteCell = document.createElement('td');
@@ -274,7 +273,6 @@ function displayItems(items) {
       if (!isEditFormOpen) { 
          isEditFormOpen = true; 
          const index = i; // Pass the index
-         console.log(items)
          handleEdit(index, items); // Pass the items array 
       }
    });
@@ -283,7 +281,5 @@ function displayItems(items) {
     editCell.appendChild(editButton);
     row.appendChild(editCell);
     row.appendChild(deleteCell);
-
-    console.log("Item: " + items[i._id]);
   }
 }

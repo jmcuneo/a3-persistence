@@ -16,11 +16,9 @@ async function run() {
   collection = await client.db("foodLogData").collection("collection1")
   // route to get all docs
   app.get("/docs", async (req, res) => {
-    //console.log("Collection: " + collection);
     if (collection !== null) {
       try { // Wrap in try-catch for error handling      
         const docs = await collection.find({}).toArray(); // Use 'await'
-        //console.log("DOCS:", docs);  // This log should now show docs
         res.json(docs);
       } catch (error) {
         console.error("Error fetching docs:", error);
@@ -39,7 +37,10 @@ app.use( (req,res,next) => {
 })
 
 app.post( '/add', async (req,res) => {
-  const result = await collection.insertOne( req.body )
+  const newItem = req.body;
+  const updatedItem = calculateItemProperties(newItem);
+
+  const result = await collection.insertOne( updatedItem )
   res.json( result )
 })
 
@@ -49,9 +50,6 @@ app.delete('/delete', async (req, res) => {
     // Directly create ObjectId from the string ID
     const objectId = new ObjectId(itemId);
     const deleteResult = await collection.deleteOne({ _id: objectId });
-
-    console.log("Received itemID:", itemId); 
-    console.log("Type of itemID:", typeof itemId);
 
     if (deleteResult.deletedCount === 1) {
       res.status(200).send("Document deleted");
@@ -68,13 +66,10 @@ app.post('/edit-item', async (req, res) => {
   const itemId = req.body.itemId;
   const updatedData = req.body; 
   delete updatedData.itemId;  // Remove itemId from the update object
+  const finalData = calculateItemProperties(updatedData);
 
   try {
-    /*
-    const objectId = ObjectId.createFromTime(parseInt(itemId, 16) / 1000);
-    const updateResult = await collection.updateOne({ _id: objectId }, { $set: updatedData });
-    */
-    const updateResult = await collection.updateOne({ _id: new ObjectId(itemId) }, { $set: updatedData });
+    const updateResult = await collection.updateOne({ _id: new ObjectId(itemId) }, { $set: finalData });
 
     if (updateResult.modifiedCount === 1) {
       res.status(200).send("Document updated");
@@ -86,6 +81,15 @@ app.post('/edit-item', async (req, res) => {
     res.status(500).send("Error updating document");
   }
 });
+
+function calculateItemProperties(item) {
+  item.total = (parseFloat(item.wages, 10) + parseFloat(item.tips, 10)).toFixed(2);
+  item.gasUsed = (parseFloat(item.miles, 10) / parseFloat(item.mpg, 10)).toFixed(2);
+  item.gasCost = (parseFloat(item.gasUsed, 10) * parseFloat(item.gasPrice, 10)).toFixed(2); //compute cost of gas
+  item.income = (parseFloat(item.total, 10) - parseFloat(item.gasCost, 10)).toFixed(2); //compute income
+  item.hourlyPay = (parseFloat(item.income, 10)/(parseFloat(item.time, 10)/60)).toFixed(2); //compute hourly pay
+  return item; // Return the modified item
+}
 
 run()
 app.listen(3000)
