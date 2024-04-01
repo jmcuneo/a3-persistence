@@ -2,50 +2,50 @@
 const updateTodos = async () => {
   const response = await fetch("/todos");
   const todosFromServer = await response.json();
-  clientTodos = todosFromServer;
-
   const todosList = document.getElementById("todos-list");
   todosList.innerHTML = "";
 
-  clientTodos.forEach((todo) => {
+  todosFromServer.forEach((todo) => {
     const todoItem = document.createElement("li");
+    todoItem.classList.add(
+      "list-group-item",
+      "d-flex",
+      "justify-content-between",
+      "align-items-center"
+    );
 
-    // Checkbox
+    // Checkbox for marking completion
     const checkBox = document.createElement("input");
     checkBox.type = "checkbox";
     checkBox.checked = todo.completed;
+    checkBox.classList.add("form-check-input", "me-2");
     checkBox.addEventListener("change", () => toggleTodo(todo.id));
-
-    // Delete button
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "x";
-    deleteBtn.classList.add("delete-btn");
-    deleteBtn.onclick = () => deleteTodo(todo.id);
 
     // Todo title
     const titleSpan = document.createElement("span");
     titleSpan.textContent = todo.title;
-    titleSpan.classList.add("todo-title");
+    titleSpan.classList.add("flex-grow-1");
+
+    // Delete button
+    const deleteBtn = document.createElement("button");
+    deleteBtn.innerHTML = "&times;";
+    deleteBtn.classList.add("btn", "btn-danger", "btn-sm");
+    deleteBtn.onclick = () => deleteTodo(todo.id);
 
     // Creation date
     const createdAtSpan = document.createElement("span");
-    createdAtSpan.textContent = `Created at: ${new Date(todo.createdAt).toLocaleString()}`;
-    createdAtSpan.classList.add("todo-created-at");
-
-    // Time since added
-    const timeSinceAddedSpan = document.createElement("span");
-    timeSinceAddedSpan.textContent = todo.timeSinceAdded;
-    timeSinceAddedSpan.classList.add("todo-time-since-added");
+    createdAtSpan.textContent = `Created at: ${new Date(
+      todo.createdAt
+    ).toLocaleString()}`;
+    createdAtSpan.classList.add("badge", "bg-secondary", "ms-2");
 
     todoItem.appendChild(checkBox);
     todoItem.appendChild(titleSpan);
-    todoItem.appendChild(deleteBtn);
     todoItem.appendChild(createdAtSpan);
-    todoItem.appendChild(timeSinceAddedSpan);
+    todoItem.appendChild(deleteBtn);
     todosList.appendChild(todoItem);
   });
 };
-
 
 // Toggle todo completion status
 const toggleTodo = async (id) => {
