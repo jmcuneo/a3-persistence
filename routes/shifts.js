@@ -30,10 +30,12 @@ router.post("/add", async (req, res) => {
 	const shifts = await db.collection("shifts").find({}).toArray();
 	shifts.forEach((shift) => {
 		delete shift._id;
+		delete shift.user;
 	})
-	console.log(shifts);
-	
-	res.json({f: 'test'}).status(200);
+
+	res.locals.user = req.user.username;
+	res.locals.shiftRecords = shifts;
+	res.render("index").status(200);
 })
 
 router.delete("/delete", (req, res) => {
