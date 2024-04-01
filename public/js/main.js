@@ -37,7 +37,13 @@ async function fetchData() {
 
     const data = await response.text();
     console.log("Data recieved from server.");
-    const json = JSON.parse(data);
+    let json = null;
+    try {
+        json = JSON.parse(data);
+    } catch (e) {
+        console.log(data);
+        console.log(e);
+    }
 
     // User is not logged in
     if (json.nocontent) {
