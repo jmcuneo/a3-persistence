@@ -1,0 +1,128 @@
+/* base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f4f4f4;
+}
+
+/* container styles */
+.container {
+  width: 50vw;
+  min-width: 50vw;
+  max-width: 80vw;
+  background-color: #fff;
+  padding: 2vh;
+  border-radius: 1vh;
+  box-shadow: 0 0.4vh 0.8vh rgba(0, 0, 0, 0.1);
+  margin: 5vh auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 2vh;
+}
+
+/* list styles */
+
+.todo-title {
+  flex-grow: 1;
+  margin: 0 1vw;
+}
+
+.todo-created-at,
+.todo-time-since-added {
+  font-size: 0.8em;
+  color: #666;
+  margin-left: 1vw;
+}
+
+ul#todos-list li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 1vh;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+ul#todos-list li:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+ul#todos-list {
+  list-style: none;
+}
+
+ul#todos-list li {
+  background-color: #f9f9f9;
+  border: 0.1vh solid #e0e0e0;
+  border-radius: 0.4vh;
+  padding: 1vh;
+  margin-bottom: 1vh;
+  display: flex;
+  align-items: center;
+}
+
+input[type="checkbox"] {
+  margin-right: 1vw;
+}
+
+ul#todos-list li:hover {
+  box-shadow: 0 0.2vh 0.4vh rgba(0, 0, 0, 0.05);
+}
+
+/* Style for delete button */
+.delete-btn {
+  margin-left: auto; /* Push the button to the end of the list item */
+  padding: 0 0.5vw;
+  border: none;
+  background: none;
+  color: #999;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.delete-btn:hover {
+  color: #666; /* Darken the color on hover for feedback */
+}
+
+/* form styles */
+#form {
+  display: flex;
+  gap: 1vw;
+}
+
+#form input[type="text"] {
+  flex-grow: 1;
+  padding: 1vh;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+#form button {
+  padding: 1vh 1.5vh;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#form button:hover {
+  background-color: #0056b3;
+}
