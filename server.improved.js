@@ -1,14 +1,46 @@
 //server.improved.js
 //server-side code
+
 const http = require( "http" ),
-      fs   = require( "fs" ),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you"re testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
-      mime = require( "mime" ),
-      dir  = "public/",
-      port = 3000
+  fs   = require( "fs" ),
+  // IMPORTANT: you must run `npm install` in the directory for this assignment
+  // to install the mime library if you"re testing this on your local machine.
+  // However, Glitch will install it automatically by looking in your package.json
+  // file.
+  mime = require( "mime" ),
+  dir  = "public/",
+  port = 3000,
+  express = require('express'), 
+  app = express()
+  dreams = []
+
+const middleware_post = (req, res, next) => {
+  let dataString = ''
+
+  req.on( 'data', function(data){
+    dataString += data
+  })
+
+  req.on( 'end', function() {
+    const json = JSON.parse( datastring )
+    previousResults.push(json)
+  })
+
+  req.json = JSON.stringify( previousResults )
+
+  next()
+}
+
+app.use( middleware_post )
+
+app.post( '/submit', (req, res) => {
+  res.writeHead(200, {'Content-Type': 'application/json'})
+  res.end( req.json)
+})
+
+app.get()
+
+app.listen( process.env.PORT || 3000 )
 
 let previousResults = [];   //array used to store the previous results
 
