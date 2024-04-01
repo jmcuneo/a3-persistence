@@ -29,6 +29,15 @@ const submit = async function( event ) {
   addTable(data);
 }
 
+const logout = async function() {
+  await fetch("/logout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+}
+
 /*This function deals with adding rows in the table with whatever data you give it, and gives each row an edit and delete button*/
 function addRow(table, data) {
   const row = table.insertRow();
@@ -222,8 +231,11 @@ async function deleteRow(row) {
 
 /*This segment of code allows for the table to be dynamically updated each time you refresh the page, taking advantage of the server data*/
 window.onload = async function () {
-  const button = document.querySelector("button");
+  const button = document.querySelector("#submit_button");
   button.onclick = submit;
+
+  const logoutButton = document.querySelector("#logout_button");
+  logoutButton.onclick = logout;
 
   const fetchDataVar = await fetch("/workout_data", {
     method: "GET"

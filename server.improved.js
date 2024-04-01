@@ -149,6 +149,14 @@ passport.deserializeUser(function(user, done) {
 //   sendFile(res, "public/index.html");
 // });
 
+app.post('/logout', (req, res) => {
+  req.logout(function(err) {
+    console.log(err)
+    req.session.destroy(function (err) { // destroys the session
+      res.redirect('auth/github')
+    });
+  });
+})
 
 app.post( '/add', async (req,res) => {
   console.log("Reached function");
