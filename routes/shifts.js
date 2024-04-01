@@ -28,7 +28,7 @@ router.post("/add", async (req, res) => {
 	}
 	
 	
-	res.send(1).status(200);
+	res.json({f: 'test'}).status(200);
 })
 
 router.delete("/delete", (req, res) => {
