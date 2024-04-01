@@ -15,7 +15,7 @@ const submit = async function( event ) {
   const name = document.getElementById("name"),
     description = document.getElementById("description"),
     priority = document.getElementById("priority"),
-    json = {Name: name.value, Description: description.value, "Creation Date": creationDateFormatted, Priority: priority.value},
+    json = {name: name.value, description: description.value, creationDate: creationDateFormatted, priority: priority.value, recommendedDeadline: ""},
     body = JSON.stringify(json)
 
   const response = await fetch( "/submit", {
@@ -43,7 +43,7 @@ const submit = async function( event ) {
 async function deleteData(event) {
   event.preventDefault();
   const name = document.getElementById("name"),
-        json = {"Name": name.value},
+        json = {"name": name.value},
         body = JSON.stringify(json);
 
   const response = await fetch("/delete", {
@@ -70,7 +70,7 @@ async function editData(event) {
         description = document.getElementById("description"),
         creationDate = date.toISOString().slice(0,10),
         priority = document.getElementById("priority"),
-        json = {Name: name.value, Description: description.value, "Creation Date": creationDate, Priority: priority.value},
+        json = {name: name.value, description: description.value, creationDate: creationDate, priority: priority.value, recommendedDeadline: ""},
         body = JSON.stringify(json);
 
   const response = await fetch("/edit", {
@@ -101,11 +101,12 @@ async function getResults(event) {
   }
 
   try {
-    const response = await fetch("/data.json", {
+    const response = await fetch("/data", {
       method: "GET"
     });
     const text = await response.text();
     data = JSON.parse(text);
+    console.log(data);
   }
   catch (error) {
     console.log("Error: ", error);
@@ -130,27 +131,49 @@ async function getResults(event) {
   for (let i = 0; i < data.length; i++) {
     row = table.insertRow(i+1);
     cell = row.insertCell(0);
-    cell.textContent = data[i].Name;
+    cell.textContent = data[i].name;
     cell = row.insertCell(1);
-    cell.textContent = data[i].Description;
+    cell.textContent = data[i].description;
     cell = row.insertCell(2);
-    cell.textContent = data[i]["Creation Date"];
+    cell.textContent = data[i].creationDate;
     cell = row.insertCell(3);
-    cell.textContent = data[i].Priority;
+    cell.textContent = data[i].priority;
     cell = row.insertCell(4);
-    cell.textContent = data[i]["Recommended Deadline"];
+    cell.textContent = data[i].recommendedDeadline;
   }
   
 
 }
 
+var currentUser = {};
+
+async function getUserProfile(event) {
+  try {
+  const response = await fetch("/user", {
+    method: "GET"
+  });
+  const text = await response.text();
+  console.log(text);
+  currentUser = JSON.parse(text);
+  }
+  catch (error) {
+    console.log("Error: ", error);
+  }
+
+}
+
+
+
 // Load functions when the window loads
 window.onload = function() {
   
-  const submitButton = document.getElementById("starter");
+  
+  try {
+    const submitButton = document.getElementById("starter");
+    const editButton = document.getElementById("edit");
 
-  // Make sure form is valid when submitted
-  submitButton.addEventListener('click', function(event) {
+      // Make sure form is valid when submitted
+    submitButton.addEventListener('click', function(event) {
     let form = document.querySelector('form');
     if (!form.checkValidity()) {
       event.preventDefault();
@@ -158,21 +181,26 @@ window.onload = function() {
     } else {
       submit(event);
     }
-  });
+    });
+    editButton.addEventListener('click', function(event) {
+      let form = document.querySelector('form');
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        alert('Please fill out all required fields correctly.');
+      } else {
+        editData(event);
+      }
+    });
 
-  const deleteButton = document.getElementById("delete");
-  deleteButton.onclick = deleteData;
-  const resultButton = document.getElementById("getResults");
-  resultButton.onclick = getResults;
-  const editButton = document.getElementById("edit");
-  editButton.addEventListener('click', function(event) {
-    let form = document.querySelector('form');
-    if (!form.checkValidity()) {
-      event.preventDefault();
-      alert('Please fill out all required fields correctly.');
-    } else {
-      editData(event);
-    }
-  });
-  getResults();
+    // Add event listeners to buttons
+    const deleteButton = document.getElementById("delete");
+    deleteButton.onclick = deleteData;
+    const resultButton = document.getElementById("getResults");
+    resultButton.onclick = getResults;
+    
+
+    getResults();
+    getUserProfile();
+  }
+  catch (error) {}
 }
