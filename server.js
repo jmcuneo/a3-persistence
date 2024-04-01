@@ -12,7 +12,8 @@ let collection = null
 
 async function run() {
   await client.connect()
-  collection = await client.db("Assignment3DB").collection("A3Collection")
+  collection = await client.db("Assignment3DB").collection("PartRecord")
+  login = await client.db("Assignment3DB").collection("LoginRecord")
   console.log("Connected!")
 
   // route to get all docs
@@ -26,9 +27,12 @@ async function run() {
 
 run()
 
+var active_user = ""
+
+// Try to do this without updating
 app.post( '/add', async (req,res) => {
   weight = parseInt(req.body.new_quantity)*parseFloat(req.body.weight_per_unit)
-  const result = await collection.insertOne( {part_name: req.body.part_name, new_material: req.body.new_material, new_quantity: req.body.new_quantity, weight: weight} )
+  const result = await collection.insertOne( {part_name: req.body.part_name, new_material: req.body.new_material, new_quantity: req.body.new_quantity, weight: weight, related_user: active_user} )
   res.json( result )
 })
 
@@ -44,9 +48,23 @@ app.post( '/modify', async (req,res) => {
 })
 
 app.get('/receive', async (req, res) => {
-  const result = await collection.find().toArray()
+  console.log(req.body.related_user)
+  const result = await collection.find({related_user: active_user}).toArray()
   console.log(result)
   res.json( result )
+})
+
+app.post( '/login', async (req,res) => {
+  const in_db = await login.find({username: req.body.username}).toArray()
+  if(in_db.length == 0){
+    const result = await login.insertOne(req.body)
+    active_user = req.body.username
+    res.json(result)
+  }else{
+    const result = await login.find({username: req.body.username, password: req.body.password}).toArray()
+    if(result.length != 0){active_user = req.body.username}
+    res.json(result)
+  }
 })
 
 app.listen(3000)
