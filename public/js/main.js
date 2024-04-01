@@ -40,6 +40,7 @@ const submit = async function( event ) {
 
   const response = await fetch( "/submit", {
     method:"POST",
+    headers: {'Content-Type': 'application/json'},
     body 
   })
 
