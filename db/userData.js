@@ -5,7 +5,7 @@ const getNextID = async function(username) {
 	const userColl = db.collection("user-data");
 	const userQuery = { user: username }
 	let nextID = -1;
-	userColl.find(userQuery).toArray((err, result) => {
+	await userColl.find(userQuery).toArray((err, result) => {
 		if (err) throw err;
 		console.log(result);
 		if (result) {
