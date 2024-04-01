@@ -5,10 +5,11 @@ const 	app = require('express'),
 
 router.post("/add", async (req, res) => {
 	const db = database();
-	const collection = db.collection("user-data");
-	const query = await collection.find({}).toArray();
+	const userColl = db.collection("user-data");
+	const userQuery = { user: req.user.username }
+	const userResult = await userColl.findOne(userQuery);
 	
-	res.send(query).status(200);
+	res.send(userResult).status(200);
 })
 
 router.delete("/delete", (req, res) => {
