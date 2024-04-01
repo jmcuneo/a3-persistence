@@ -36,7 +36,7 @@ window.onload = async function() {
 
 
   //WORKS!
-  const populateTable = await fetch("/appdata",
+  const populateTable = await fetch("/get_appdata",
       {
         method:"GET"
       })
