@@ -11,7 +11,7 @@ router.post("/add", async (req, res) => {
 		let shiftID = await getNextID(req.user.username);
 		console.log(shiftID);
 		const doc = {
-			id: shiftID,
+			id: shiftID.toString(),
 			user: req.user.username,
 			date: req.body.date,
 			start: req.body.start,
@@ -35,7 +35,7 @@ router.post("/add", async (req, res) => {
 
 	res.locals.user = req.user.username;
 	res.locals.shiftRecords = shifts;
-	res.render("index").status(200);
+	res.render("index");
 })
 
 router.delete("/delete", (req, res) => {
