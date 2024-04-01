@@ -7,7 +7,22 @@ router.post("/add", async (req, res) => {
 	const db = database();
 	const userColl = db.collection("user-data");
 	const userQuery = { user: req.user.username }
-	const userResult = await userColl.findOne(userQuery);
+	
+	let nextID = -1;
+
+	userColl.find(userQuery).toArray((err, result) => {
+		if (err) throw err;
+		if (result) {
+			// user already exists;
+			nextID = (result.idLast) + 1;
+
+		} else {
+			// user does not exist
+			userColl.insertOne({user: req.user.username, idLast: 0})
+			nextID = 0;
+		}
+	});
+
 	
 	res.send(userResult).status(200);
 })
