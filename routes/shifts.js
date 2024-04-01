@@ -24,9 +24,12 @@ router.post("/add", async (req, res) => {
 		await db.collection("shifts").insertOne(doc);
 	} else {
 		const old = { id: req.body.id }
-		const update = { $set: {date: req.body.date, 
-								start: req.body.start, 
-								end: req.body.end}
+		const startDate = dayjs(req.body.start);
+		const endDate = dayjs(req.body.end);
+		const duration = endDate.diff(startDate, 'hour', true); 
+		const update = { $set: {start: startDate.toString(), 
+								end: endDate.toString(), 
+								duration: duration.toString()}
 						};
 		await db.collection("shifts").updateOne(old, update)
 	}

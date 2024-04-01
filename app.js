@@ -83,12 +83,17 @@ app.get('/auth/github/callback',
 		res.redirect('/');
 	});
 
-app.get("/", ensureAuthenticated, (req, res) => {
-	shifts = [];
+app.get("/", ensureAuthenticated, async (req, res) => {
+	const shifts = await db.collection("shifts").find({}).toArray();
+	shifts.forEach((shift) => {
+		delete shift._id;
+		delete shift.user;
+	})
+	console.log(shifts);
 
 	res.locals.user = req.user.username;
 	res.locals.shiftRecords = shifts;
-	res.render('index');
+	res.render("index");
 })
 
 connect().then(() => {
