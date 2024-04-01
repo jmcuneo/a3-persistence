@@ -6,7 +6,7 @@ const 	app = require('express'),
 
 router.post("/add", async (req, res) => {
 	const db = database();
-	let respon = await getNextID();
+	let respon = await getNextID(req.user.username);
 	console.log(respon);
 	
 

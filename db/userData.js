@@ -1,9 +1,9 @@
 const { connect, database } = require("../db/connection");
 
-const getNextID = async function() {
+const getNextID = async function(username) {
 	const db = database();
 	const userColl = db.collection("user-data");
-	const userQuery = { user: req.user.username }
+	const userQuery = { user: username }
 	let nextID = -1;
 	userColl.find(userQuery).toArray((err, result) => {
 		if (err) throw err;
@@ -19,7 +19,7 @@ const getNextID = async function() {
 
 		} else {
 			// user does not exist
-			userColl.insertOne({user: req.user.username, idLast: 0})
+			userColl.insertOne({user: username, idLast: 0})
 			nextID = 0;
 		}
 	});
