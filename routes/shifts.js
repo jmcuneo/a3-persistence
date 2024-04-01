@@ -16,9 +16,9 @@ router.post("/add", async (req, res) => {
 		const doc = {
 			id: shiftID.toString(),
 			user: req.user.username,
-			start: startDate.toString(),
-			end: endDate.toString(),
-			duration: duration.toString()
+			start: startDate.toDateString(),
+			end: endDate.toDateString(),
+			duration: duration.toDateString()
 		};
 		await db.collection("shifts").insertOne(doc);
 	} else {
