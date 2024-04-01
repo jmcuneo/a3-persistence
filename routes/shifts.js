@@ -27,7 +27,10 @@ router.post("/add", async (req, res) => {
 		await db.collection("shifts").updateOne(old, update)
 	}
 	
-	const shifts = db.collection("shifts").find({});
+	const shifts = await db.collection("shifts").find({}).toArray();
+	shifts.forEach((shift) => {
+		delete shift._id;
+	})
 	console.log(shifts);
 	
 	res.json({f: 'test'}).status(200);
