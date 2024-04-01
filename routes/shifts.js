@@ -9,7 +9,6 @@ router.post("/add", async (req, res) => {
 	let respon = await getNextID(req.user.username);
 	console.log(respon);
 	
-
 	
 	res.json(respon).status(200);
 })
