@@ -1,12 +1,16 @@
 const mongoose = require("mongoose");
 mongoose.set("debug", true);
 
-const userData = new mongoose.Schema({
-    user: String,
-    idLast: String
-})
+const userData = new mongoose.Schema(
+    { 
+        user: { type: String, required: true },
+        idLast: { type: String, required: true }
+    },
+    {
+        collection: "user-data"
+    }
+)
 
-const User = mongoose.model("user-data", userData, "user-data");
-
+const User = mongoose.model("UserData", userData);
 
 module.exports = User;

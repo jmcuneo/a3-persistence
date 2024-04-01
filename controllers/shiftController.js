@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const addShift = async (req, res) => {
 	const username = req.user.username;
 	const userResults = await User.find({});
+	console.log(userResults);
 	res.json(userResults);
 	
 }
