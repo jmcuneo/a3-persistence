@@ -7,7 +7,7 @@ const express = require('express'),
 ]
 
 const logger = (req, res, next) => {
-    console.log('url:', req.url)
+    //console.log('url:', req.url)
     next()
 }
 
@@ -21,8 +21,47 @@ app.get('/index.html', (req, res) => res.send('Hello World!'))
 
 //POST: Modifies appdata and returns
 app.post( '/post_to_appdata', (req, res) => {
-  appdata.push( req.body.newdata )
+
+  // ... do something with the data here!!!
+
+  let newData = req.body
+  console.log(newData)
+
+  let replaceData = false;
+  let replaceIndex = 0;
+
+  for(let i = 0; i < appdata.length; i++)
+  {
+    if(newData.username === appdata[i].username)
+    {
+      replaceData = true;
+      replaceIndex = i;
+    }
+  }
+
+
+  if(replaceData)
+  {
+    appdata[replaceIndex].score = newData.score;
+    appdata[replaceIndex].time = newData.time;
+    appdata[replaceIndex].scoreOverTime = Math.round((newData.score / newData.time) * 10) / 10;
+  }
+  else
+  {
+    let curDate = new Date()
+    newData.scoreOverTime = Math.round((newData.score / newData.time) * 10) / 10;
+    newData.date = (curDate.getMonth() + 1) + "/" + curDate.getDate() + "/" + curDate.getFullYear()
+    newData.ID = appdata.length + 1;
+
+    appdata.push(newData)
+    console.log(newData)
+  }
+
+
+
   res.writeHead( 200, { 'Content-Type': 'application/json' })
+
+
   res.end( JSON.stringify( appdata ) )
 })
 

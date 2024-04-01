@@ -10,22 +10,22 @@ const submit = async function( event ) {
   event.preventDefault()
   
   const input = document.querySelector( "#userinput"),
-        json = { username: input[0].value, score: input[1].value, time: input[2].value },
-        body = JSON.stringify( json )
+       json = { username: input[0].value, score: input[1].value, time: input[2].value },
+       body = JSON.stringify( json )
 
+  //let newData = { "username": input[0].value, "score": input[1].value, "time": input[2].value }
 
-  const response = await fetch( "/submit", {
-    method:"POST",
-    body 
+  const response = await fetch("/post_to_appdata", {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(json)
+
   })
+      .then(response => response.json())
+      .then(console.log)
 
-  const text = await response.text()
 
-
-  console.log( "text:", text )
-
-  let newData = { "username": input[0].value, "score": input[1].value, "time": input[2].value }
-
+  //Reload page to show changes to the dataset
   location.reload()
 
 }
