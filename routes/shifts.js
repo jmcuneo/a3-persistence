@@ -1,5 +1,5 @@
 const 	app = require('express'),
-		shiftController = require("../controllers/shiftController"),
+		{ shiftController } = require("../controllers/shiftController"),
 		router = app.Router();
 
 

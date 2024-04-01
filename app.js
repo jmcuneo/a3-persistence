@@ -45,11 +45,6 @@ passport.use(new GithubStrategy({
 	}
 ));
 
-mongoose.connect(process.env.MONGO, {
-	useNewUrlParser: true,
-	useUnifiedTopology: true
-});
-
 
 app.engine('handlebars', handlebars.engine());
 app.set("view engine", "handlebars");
@@ -102,4 +97,14 @@ app.get("/", ensureAuthenticated, (req, res) => {
 })
 
 
-app.listen(port);
+mongoose.connect(process.env.MONGO)
+	.then(() => {
+		console.log("Connected to Mongo Database");
+		app.listen(port, () => {
+			console.log("Listening for requests");
+		});
+	}).catch((err) => {
+		console.log(err);
+	})
+
+// app.listen(port);
