@@ -27,6 +27,8 @@ router.post("/add", async (req, res) => {
 		await db.collection("shifts").updateOne(old, update)
 	}
 	
+	const shifts = db.collection("shifts").find({});
+	console.log(shifts);
 	
 	res.json({f: 'test'}).status(200);
 })
