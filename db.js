@@ -1,12 +1,18 @@
-const mongoose = require("mongoose");
+const { MongoClient } = require("mongodb");
 
 const uri = process.env.MONGO;
 
-mongoose.connect(uri, {
+const mongoClient = new MongoClient(uri, {
 	useNewUrlParser: true,
-	useUnifiedTopology: true,
-}).then(() => {
-	console.log("Connected to Mongo");
-}).catch((error) => {
-	console.error("Error connecting to Mongo", error);
+	useUnifiedTopology: true
 });
+
+const connect = async() => {
+	try {
+		await mongoClient.connect();
+	} catch (err) {
+		console.error("Mongo connection error", err);
+	}
+};
+
+module.exports = connect;
