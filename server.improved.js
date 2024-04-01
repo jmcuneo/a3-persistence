@@ -99,7 +99,7 @@ app.post( '/login', async (request,response)=> {
     // Found user
     if(foundUser) {
       request.session.login = true
-      response.redirect( 'index.html' )
+      response.redirect( 'taskList.html' )
 
     // No username, create account
     } else if(!foundUsername) {
@@ -133,8 +133,8 @@ app.use( function( req,res,next) {
     res.render('login', { msg:'Login failed, please try again', layout:false })
 })
 
-app.get( '/index.html', ( req, res) => {
-    res.render( 'index', {layout:false })
+app.get( '/taskList.html', ( req, res) => {
+    res.render( 'taskList', {layout:false })
 })
 
 
