@@ -3,6 +3,9 @@
   "version": "1.0",
   "description": "A basic task list for storing tasks from classes.",
   "author": "Seth Frank",
+  "engines" :{
+    "node": "14.x"
+  },
   "scripts": {
     "start": "node server.improved.js"
   },
