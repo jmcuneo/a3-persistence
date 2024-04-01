@@ -11,58 +11,53 @@ const submit = async function( event ) {
   const inputCredits = document.querySelector("#yourcredits");
 
   const name = inputName.value.trim()
-  if (name ===""){
-    alert("Please enter a valid name.")
-    return
-  }
-
   const credits = parseInt(inputCredits.value.trim())
-  if (isNaN(credits) || credits < 0){
-    alert("Please enter a valid number of credits.")
+
+  if (name ==="" || isNaN(credits) || credits < 0){
+    alert("Please enter a valid name and credits.")
     return
   }
 
-  const json = {"yourname":inputName.value, "yourcredits":inputCredits.value};
+  const json = {name: inputName.value, credits: inputCredits.value};
   const body = JSON.stringify(json);
 
-  const response = await fetch( "/submit", {
-    method:"POST",
-    body 
-  }).then( function(response){
+  await fetch( "/submit", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body
+  }).then(function(response){
     return response.json()
-  }).then( function(json){
+  }).then(function(json){
     console.log(json)
 
     inputName.value = ""
     inputCredits.value = ""
 
-    fetchStudentData();
+    fetchStudentData()
   })
-
 }
 
 const deleteStudent = async function (studentName){
-  console.log("Deleting:", studentName)
-  const response = await fetch( "/delete", {
+  await fetch( "/delete", {
     method:"POST",
     headers:{
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({"yourname": studentName})
-  }).then( function(response){
+    body: JSON.stringify({name: studentName})
+  }).then(function(response){
     return response.json()
-  }).then( function(json){
+  }).then(function(json){
     console.log(json)
 
-    fetchStudentData();
+    fetchStudentData()
   })
 }
 
 const formatHeader = function(header){
   switch(header.toLowerCase()){
-    case "yourname":
+    case "name":
       return "Name"
-    case "yourcredits":
+    case "credits":
       return "Credits"
     case "classstanding":
       return "Class Standing"
@@ -80,10 +75,11 @@ const fetchStudentData = async function(){
   studentTable.innerHTML = ""
 
   if (studentData.length > 0){
-    const headers = Object.keys(studentData[0])
+    const headers = Object.keys(studentData[0]).filter(header => header !== "_id")
     const headerRow = document.createElement("tr")
 
     headers.forEach(header => {
+      console.log(header)
       const th = document.createElement("th")
       th.textContent = formatHeader(header)
       headerRow.appendChild(th)
@@ -102,7 +98,7 @@ const fetchStudentData = async function(){
       deleteButton.textContent = "Delete"
       deleteButton.classList.add("deletebutton")
       deleteButton.addEventListener("click", function(){
-        deleteStudent(student.yourname)
+        deleteStudent(student.name)
       })
       row.appendChild(deleteButton)
 
@@ -115,5 +111,5 @@ window.onload = function() {
   const submitButton = document.querySelector("#submit");
   submitButton.onclick = submit;
 
-  fetchStudentData();
+  fetchStudentData()
 }
