@@ -33,3 +33,4 @@ Include a very brief summary of your project here. Images are encouraged, along 
   10. *I did not rely on color to convey information.* Provided identification that does not rely on color perception by using words to instruct a user where to delete an entry rather than using the color red with no words.
   11. *Provided clear and consistent navigation options.* Ensured that navigation across pages within a website has consistent naming, styling, and positioning. 
   12. *Made link text meaningful.* Wrote my github OAuth link text so that it describes the content of the link target. Avoided using ambiguous link text.
+This was challenging since there were many tips to follow and I took a good amount of time to ensure that all my elements follow the tips. It was informative to read through each of the tips regardless! 
