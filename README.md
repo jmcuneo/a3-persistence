@@ -1,7 +1,7 @@
 ## Assignment A3 - Austin Rebello
 
 Link: https://a3-austinrebello.onrender.com/
-**PLEASE NOTE:** Render can take up to a minute to fully spool up the server from idle, it is slow, but the link DOES work.
+<br>**PLEASE NOTE:** Render can take up to a minute to fully spool up the server from idle, it is slow, but the link DOES work.
 
 The goal of this application was to create a login system that allowed website content to be shown only to specific users, only showing the content actually belonging to them.
 I encountered several challenges when completing this assignment. One was the alternative hosting methods, which were a bit touchy in getting the server up and running.
