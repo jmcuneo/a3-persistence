@@ -58,6 +58,7 @@ const erase = async function( event ) {
 
   const response = await fetch( "/submit", {
     method:"DELETE",
+    headers: {'Content-Type': 'application/json'}, 
     body: JSON.stringify(valueToDel) 
   })
   const text = await response.text()

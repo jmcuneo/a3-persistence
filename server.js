@@ -24,6 +24,16 @@ const calculateEOL = (year, mpg) => {
     res.end( JSON.stringify( appdata ) )
   })
 
-  //app.delete( '/submit', (req, res) => {})
+  app.delete( '/submit', (req, res) => {
+    let index = Number(req.body.number)
+    if (index > -1){
+        appdata.splice(index, 1)
+        res.writeHead( 200, { 'Content-Type': 'application/json' })
+        res.end( JSON.stringify( appdata ) )
+    } else {
+        res.writeHead( 410, { 'Content-Type': 'text/plain' })
+        res.end("There was nothing to delete!")
+    }
+  })
 
   app.listen(3000)
