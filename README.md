@@ -15,6 +15,13 @@ Include a very brief summary of your project here. Images are encouraged, along 
 - I used the Pico css framework since it is minimalist and prioritizes semantic syntax, making every HTML element responsive and elegant by default. It required the least amount of editing and I liked how it offered a dark mode with a high enough contrast. Furthermore, this framework helped me reach 100% on every lighthouse test which I appreciated extra. 
   I did not modify the CSS framework with my own CSS, I did not delete the CSS file from my folder even though it is not referenced in either my html files because that made me feel a little uneasy. Ultimately the only styling on my application is that provided by pico.css, I did not include a customize css as stylesheets for either of my html files.
 
+- The express middleware packages I used: 
+  express.static: Serves static files, CSS files and JavaScript files, from a directory.
+  express.json: Parses incoming JSON payloads, made them available in req.body.
+  cookie-session: Provides cookies to store the session data on a user.
+  passport: Used for OAuth via github strategy.
+  session: Provides session support for data storage. 
+
 ## Technical Achievements
 - **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy. To accomplish this I registered my application on github identifiying its homepage URL and redirect URI. I then connecting this to my application by putting the client ID and secret in the .env file which is hidden. From there I installed passport.js functionality as well as the github strategy to enable the OAuth process. Finally, I combed through many documentation and tutorials to understand the implementation process and use of the github strategy for OAuth. I had a challenge with redirect URI at first, it took about 3 hours for me to realize I was missing a slash in my app.get. Furthermore, I had a hard time keeo unauthorized users out of the main page, however, I used a combination of the inclass code cookie example to understand whether a user is logged in or not to ensure that only logged in users have acccess to profile page. 
 - **Tech Achievement 3**: I achieved 100% on all 4 of the lighthouse tests. I did this as a trial and error process. I began by analyzing my intial payload then taking the google suggestions and updating my code accordingly. By taking a gradual piece by piece approach I was able to reach 100% on all 4. This was challenging when using the css frameworks because a lot of them added on many features that slowed down the page since they were unused by me in my html, this led to me using pico.css which I found enhanced my lighthouse score! 
