@@ -38,27 +38,48 @@
   </form>
   </body>
   <button class="submitButton">Submit</button>
+</div>
+
+<div>
+  <body class = "deletion">
+  <form id="deletionForm" action="/delete" method="post">
+    <ul>
+      <li>
+        <label for="id">ID:</label>
+        <input type="text" id="id" inputmode="none">
+      </li>
+    </ul>
+  </form>
+  <button class="deleteButton">Delete</button>
+  </body>
+
+
+</div>
+
+<div>
   <table id="liftingDatabase">
   </table>
+  <template id="categories">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Body Weight</th>
+      <th>Squat</th>
+      <th>Bench Press</th>
+      <th>Dead Lift</th>
+      <th>Total</th>
+    </tr>
+  </template>
+  <template id="entry">
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </template>
 </div>
-<template id="categories">
-  <tr>
-    <th>Name</th>
-    <th>Body Weight</th>
-    <th>Squat</th>
-    <th>Bench Press</th>
-    <th>Dead Lift</th>
-    <th>Total</th>
-  </tr>
-</template>
-<template id="entry">
-  <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-  </tr>
-</template>
 </html>

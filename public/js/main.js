@@ -1,5 +1,20 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
+const get = function(){
+
+  fetch( "/entries", {
+    method:"GET"
+  }).then((aResponse)=>{
+    //console.log(aResponse)
+    return aResponse.json();
+  }).then((json)=>{
+    console.log(json);
+    loadTable(json);
+  });
+
+  return false;
+}
+
 const submit = async function( event ) {
 
   event.preventDefault();
@@ -44,18 +59,24 @@ const submit = async function( event ) {
   return response;
 }
 
-const get = function(){
+const deleteEntry = async function( event ) {
 
-  fetch( "/entries", {
-    method:"GET"
+  event.preventDefault();
+
+  const input = document.getElementById("id");
+  const anEntry = {_id: input.value};
+  const body = JSON.stringify(anEntry);
+
+  const response = await fetch( "/delete", {
+    method:"POST",
+    body
   }).then((aResponse)=>{
-    return aResponse.json();
-  }).then((json)=>{
-    console.log(json);
-    loadTable(json);
+    console.log(aResponse);
   });
 
-  return false;
+  get();
+
+  return response;
 }
 
 const loadTable = function(entries){
@@ -79,12 +100,13 @@ const loadTable = function(entries){
     let lifter = entries[i];
     const entry = template.content.cloneNode(true);
     let data = entry.querySelectorAll("td");
-    data[0].textContent = lifter.name;
-    data[1].textContent = lifter.bodyWeight;
-    data[2].textContent = lifter.squat;
-    data[3].textContent = lifter.benchPress;
-    data[4].textContent = lifter.deadLift;
-    data[5].textContent = lifter.total;
+    data[0].textContent = lifter._id;
+    data[1].textContent = lifter.name;
+    data[2].textContent = lifter.bodyWeight;
+    data[3].textContent = lifter.squat;
+    data[4].textContent = lifter.benchPress;
+    data[5].textContent = lifter.deadLift;
+    data[6].textContent = lifter.total;
 
     table.append(entry);
   }
@@ -104,6 +126,8 @@ const loadTable = function(entries){
 
 window.onload = function() {
   get();
-  const button = document.querySelector(".submitButton");
-  button.onclick = submit;
+  const submitButton = document.querySelector(".submitButton");
+  submitButton.onclick = submit;
+  const deleteButton = document.querySelector(".deleteButton");
+  deleteButton.onclick = deleteEntry;
 }
