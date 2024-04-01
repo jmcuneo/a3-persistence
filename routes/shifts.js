@@ -3,18 +3,7 @@ const 	app = require('express'),
 		router = app.Router();
 
 
-router.post("/add", async (req, res) => {
-	shiftController.getAllShifts;
-
-	// const shift = req.body;
-	// shift.username=req.user.username;
-	// const shifts = await Shift.find({});
-	// console.log(shifts);
-	
-	// res.locals.user = req.user.username;
-	// res.locals.shiftRecords = shifts;
-	// res.render("index");
-})
+router.post("/add", shiftController.getAllShifts)
 
 router.delete("/delete", (req, res) => {
 	course = req.body;

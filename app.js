@@ -46,7 +46,7 @@ passport.use(new GithubStrategy({
 ));
 
 mongoose.connect(process.env.MONGO, {
-	useNewUrlParse: true,
+	useNewUrlParser: true,
 	useUnifiedTopology: true
 });
 
