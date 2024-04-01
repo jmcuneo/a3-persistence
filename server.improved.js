@@ -56,33 +56,6 @@ app.use( express.json() )
 //   }
 // }
 
-//Handles new item
-const handlePost = function( request, response ) {
-  let dataString = ""
-
-  request.on( "data", function( data ) {
-      dataString += data 
-  })
-
-  request.on( "end", function() {
-    let data = JSON.parse(dataString)
-    console.log(data)
-
-    let output = eval(data.val1 + data.op + data.val2) //Get correct answer
-    let guess = false
-    if(data.guess == output){ //If user guessed, evaluate that guess 
-      guess = true
-    } else if (data.guess == ''){
-      guess = null
-    }
-    
-    //Add data to table
-    appdata.push({val1: parseInt(data.val1), val2: parseInt(data.val2), op: data.op, output, guess})
-    //console.log(appdata)
-    
-    sendData(response) //Send data back to client
-  })
-}
 
 app.post( '/refresh', async (req, res) => {
   const result = await collection.find({}).toArray()
@@ -126,36 +99,11 @@ function deleteData (request, response) {
 
 app.post( '/remove', (req, res) => {
   let data = req.body
-  let query = { "_id": data}
+  let query = { _id: ObjectId.createFromHexString(data)}
   collection.deleteOne(query)
   const result = collection.find({}).toArray()
   res.json(result)
 })
-
-//Modify data
-function modData (request, response) {
-  let dataString = ""
-
-  request.on( "data", function( data ) {
-      dataString += data 
-  })
-
-  request.on( "end", function() {
-    let data = JSON.parse(dataString)
-    //console.log(data)
-
-    let oldData = appdata[data.index] //Get currently stored data in server
-    let comboData = combineData(data, oldData) //Combine old and new data
-
-    //If the user didnt assign a correct value, calculate it
-    if (comboData.output == null || comboData.output == '') {
-      comboData.output = eval(comboData.val1 + comboData.op + comboData.val2) 
-    }
-    
-    appdata[data.index] = comboData //Replace old server data 
-    sendData(response)
-  })
-}
 
 app.post( '/modify', async (req, res) => {
   let data = req.body

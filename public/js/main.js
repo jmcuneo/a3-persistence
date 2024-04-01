@@ -43,7 +43,7 @@ const submit = async function( event ) {
 
 //Delete an item
 function deleteItem( event ) {
-  const body = JSON.stringify(event.srcElement.id) //Send over the id (index) of the item to delete
+  const body = JSON.stringify(event.srcElement.dataset.serverInfo) //Send over the id (index) of the item to delete
 
   fetch( "/remove", {
     method:'POST',
@@ -69,7 +69,7 @@ function modItem ( event ) {
 
   //Connect the save button to this item id
   let saveButton = document.getElementsByClassName("saveButton")[0]
-  saveButton.id = event.srcElement.id
+  saveButton.dataset.serverInfo = event.srcElement.dataset.serverInfo
   saveButton.onclick = modSave
 }
 
@@ -80,7 +80,7 @@ async function modSave ( event ) {
         val2 = document.querySelector( "#newSec" ),
         op = radioValue("newOP"),
         answer = document.querySelector( "#forceAnswer" ),
-        json = {id: event.srcElement.id, val1: val1.value, val2: val2.value, op: op, output: answer.value},
+        json = {id: event.srcElement.dataset.serverInfo, val1: val1.value, val2: val2.value, op: op, output: answer.value},
         body = JSON.stringify( json )
 
   const response = await fetch( "/modify", {
@@ -134,7 +134,7 @@ function displayData(data) {
       tdID.innerHTML = i
       tdID.className = "entryID"
       tr.appendChild(tdID)
-      let tempID = null;
+      let tempId = null;
       for (let key in data[i]) {//For every data point in the row...
         let line = data[i]
         if (key != "_id") {
@@ -190,7 +190,7 @@ function makeButton(className, inner, id, eventFunc) {
 
   //Assign attributes 
   button.className = className
-  button.id = id
+  button.dataset.serverInfo = id
   button.innerHTML = inner
 
   //Connect to button functions
