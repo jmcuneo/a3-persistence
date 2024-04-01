@@ -1,0 +1,5 @@
+tr:hover:not(tr:has(th)) {
+  backdrop-filter: brightness(95%);
+  cursor: pointer;
+  text-decoration: line-through;
+}

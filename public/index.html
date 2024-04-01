@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>CS4241 Assignment 3</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Todo List: CS4241 Assignment 3 by Alexander Beck">
+  <script src="js/main.min.js" async></script>
+  <link rel="stylesheet" href="css/main.css" defer>
+
+  <!-- get rid of favicon error -->
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+  <!-- Fomantic UI -->
+  <link rel="preconnect" href="https://cdn.jsdeliver.net" crossorigin>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js" defer></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.css"
+    crossorigin>
+  <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.3/dist/semantic.min.js" defer></script>
+</head>
+
+<body>
+  <main role="main">
+    <!-- Form -->
+    <div class="ui container">
+      <div id="loginMessage" class="ui attached message">
+        <span id="notLoggedIn">
+          <div class="header" role="heading" aria-level="1">Login to access your TODO</div>
+          <a href="auth/github">
+            <button id="login" class="ui github button" tabindex="0">
+              <i class="github icon"></i>
+              Login with Github
+            </button>
+          </a>
+        </span>
+        <span id="loggedIn" style="display: none" aria-hidden="true">
+          <div class="header" id="welcomeMessage" role="heading" aria-level="1">Hello, {User}.</div>
+          <button class="ui button" id="signout" tabindex="0">
+            <i class="sign out icon"></i>
+            Logout
+          </button>
+        </span>
+      </div>
+      <form id="todoForm" class="ui attached segment form" style="display: none">
+        <div class="three fields">
+          <div class="field">
+            <label for="taskname">Task Name:</label>
+            <div class="ui input">
+              <input type="text" placeholder="Task" name="taskname" id="taskname" data-send>
+            </div>
+          </div>
+          <div class="field">
+            <label for="priority">Priority:</label>
+            <select name="priority" id="priority" class="ui fluid dropdown" data-send>
+              <option value="veryhigh">Very High</option>
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+              <option value="verylow">Very Low</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="duedate">Due Date:</label>
+            <div class="ui input">
+              <input type="date" name="duedate" id="duedate" data-send>
+            </div>
+          </div>
+          <button id="submit" class="ui button">Submit</button>
+          <button id="clear" class="ui button">Clear Data</button>
+        </div>
+      </form>
+    </div>
+    <!-- Table -->
+    <div class="ui container">
+      <div id="todo">
+        <table class="ui celled fixed single line scrolling table"></table>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>
