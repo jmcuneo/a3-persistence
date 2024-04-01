@@ -8,6 +8,10 @@ const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env
 const client = new MongoClient( uri )
 let collection = null
 
+app.use( express.static( 'public' ) )
+app.use( express.static( 'views'  ) )
+app.use( express.json() )
+
 async function run() {
   await client.connect()
   collection = await client.db("sample_mflix").collection("number-data")
@@ -29,17 +33,9 @@ app.use( (req,res,next) => {
   }
 })
 
-//Base starting data
-const appdata = [
-  { "val1": 2, "val2": 2, "op": "+", "output" : 4, "guess" : null},
-  { "val1": 3, "val2": 5, "op": "*", "output" : 15, "guess" : null},
-  { "val1": 10, "val2": 5, "op": "-", "output" : 5, "guess" : null},
-  { "val1": 36, "val2": 2, "op": "/", "output" : 18, "guess" : null},
-]
-
-app.use( express.static( 'public' ) )
-app.use( express.static( 'views'  ) )
-app.use( express.json() )
+app.post('/login', (req, res) => {
+  console.log(req.body)
+})
 
 
 // const handleGet = function( request, response ) {
