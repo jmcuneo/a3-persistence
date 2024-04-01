@@ -38,8 +38,7 @@ a {
   font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-style: normal;
-  color: #3F9BBF;
-  background-color: white;
+  color: #ffffff;
 }
 
 .footerP, a {
@@ -91,7 +90,7 @@ th {
 }
 
 body {
-  background-color: #3F9BBF;
+  background-color: #72bcda;
 }
 
 h1 {

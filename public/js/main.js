@@ -44,7 +44,7 @@ const renderTasks = function() {
 
       const cancelButton = document.createElement("button")
       cancelButton.innerHTML = "Cancel"
-      cancelButton.onclick = function (event) {
+      cancelButton.onclick = function () {
         editIndex = -1
         renderTasks()
       }
@@ -55,7 +55,7 @@ const renderTasks = function() {
 
       const editButton = document.createElement("button")
       editButton.innerHTML = "Edit"
-      editButton.onclick = function (event) {
+      editButton.onclick = function () {
         editIndex = i
         renderTasks()
       }
@@ -63,7 +63,7 @@ const renderTasks = function() {
 
       const deleteButton = document.createElement("button")
       deleteButton.innerHTML = "Delete"
-      deleteButton.onclick = async function (event) {
+      deleteButton.onclick = async function () {
         // event.preventDefault()
         const response = await fetch("/tasks", {
           method: "DELETE",
@@ -85,7 +85,7 @@ const renderTasks = function() {
   const row = document.createElement("tr")
   const today = (new Date()).toISOString().split('T')[0]
 
-  row.innerHTML = `<td><input type="checkbox" class="trollCheckbox"/></td><td><input name="taskName" type="text" form="addForm" placeholder="Task Name" required></td><td><input name="priority" type="number" form="addForm" placeholder="Priority" value="1" required></td><td><input name="creation_date" type="date" form="addForm" value="${today}" required></td><td></td><td><input id="add" type="submit" form="addForm" value="Add Task"/></td>`
+  row.innerHTML = `<td></td><td><input name="taskName" type="text" form="addForm" placeholder="Task Name" required></td><td><input name="priority" type="number" form="addForm" placeholder="Priority" value="1" required></td><td><input name="creation_date" type="date" form="addForm" value="${today}" required></td><td></td><td><input id="add" type="submit" form="addForm" value="Add Task"/></td>`
   table.appendChild(row)
 
   const checkboxes = document.querySelectorAll('.trollCheckbox');
