@@ -5,9 +5,9 @@ const express = require( 'express' ),
       app     = express()
 
 // FOR GLITCH OR OTHER SERVER: 
-// const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
-// FOR TESTING
-const uri = `mongodb+srv://austinwebwareuser:austinwebwareuser@webwareclustera3.utwkatb.mongodb.net/`
+ const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
+// FOR DEVELPOMENT:
+//const uri = `mongodb+srv://austinwebwareuser:austinwebwareuser@webwareclustera3.utwkatb.mongodb.net/`
 
 const client = new MongoClient( uri )
 
@@ -71,7 +71,7 @@ app.post( '/login', async (req,res)=> {
     } else {
 
       req.session.login = false
-      res.render('index', { msg:'Your login failed! Please try again with a new username or a valid password.', layout:false })
+      res.render('index', { msg:'<div class="w-50 mx-auto bg-danger p-3 rounded text-center"><b class="my-auto">Your login failed! Please try again with a new username or a valid password.</b></div>', layout:false })
 
     }
   }
@@ -89,7 +89,7 @@ app.use( function( req,res,next) {
   if( req.session.login === true )
     next()
   else
-    res.render('index', { msg:'login failed, please try again', layout:false })
+    res.render('index', { msg:'<div class="w-50 mx-auto bg-danger p-3 rounded text-center"><b class="my-auto">Your login failed! Please try again with a new username or a valid password.</b></div>', layout:false })
 })
 
 // middleware that checks if the database connection was successful
