@@ -10,10 +10,9 @@ const logShift = async function (event) {
 	const form = document.getElementById("logForm");
 	// define fields to receive from submission, and convert to json
 	const shiftID = document.querySelector("#logShiftID"),
-		shiftDate = document.querySelector("#shiftDate"),
 		shiftStart = document.querySelector("#shiftStart"),
 		shiftEnd = document.querySelector("#shiftEnd"),
-		json = { id: shiftID.value, date: shiftDate.value, start: shiftStart.value, end: shiftEnd.value },
+		json = { id: shiftID.value, start: shiftStart.value, end: shiftEnd.value },
 		body = JSON.stringify(json);
 
 	form.reset();

@@ -10,12 +10,15 @@ router.post("/add", async (req, res) => {
 	if (!req.body.id) {
 		let shiftID = await getNextID(req.user.username);
 		console.log(shiftID);
+		const startDate = Date.parse(req.body.start);
+		const endDate = Date.parse(req.body.end)
+		const duration = endDate - startDate;
 		const doc = {
 			id: shiftID.toString(),
 			user: req.user.username,
-			date: req.body.date,
-			start: req.body.start,
-			end: req.body.end,
+			start: startDate.toString(),
+			end: endDate.toString(),
+			duration: duration.toString()
 		};
 		await db.collection("shifts").insertOne(doc);
 	} else {
