@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Data = require('../models/Data')
+const User = require("../models/User");
 const { cache } = require("express/lib/application");
 
 const isAuth = (req, res, next) => {
@@ -77,6 +78,16 @@ router.get('/instructions', isAuth, (req, res) => {
     res.render('instructions')
 })
 
+router.get('/user_info', isAuth, async (req, res) => {
+    try {
+        const userdata = await User.find({ githubId: req.user.githubId }).lean()
+        console.log(userdata)
+        res.render('user', { userdata: userdata })
+    } catch (err) {
+        res.render('error')
+    }
+})
+
 router.post('/add-data', isAuth, async (req, res) => {
     try {
         req.body.user = req.user.id
@@ -97,6 +108,15 @@ router.post('/add-data', isAuth, async (req, res) => {
 
 router.put('/update_data', isAuth, async (req, res) => {
     try {
+        let bilingObj = {
+            cost: req.body.cost,
+            quantity: req.body.quantity
+        }
+        let billingData = calculatePrice(bilingObj)
+        req.body.totalPrice = billingData.totalprice
+        req.body.discount = billingData.discount
+        req.body.afterDiscount = billingData.afterdiscount
+
         let data = await Data.findOneAndUpdate({ _id: req.body._id }, req.body, {
             runValidators: true
         })

@@ -32,17 +32,17 @@ const DataSchema = new mongoose.Schema({
     totalPrice: {
         type: Number,
         required: true,
-        default: 5
+        default: 0
     },
     discount: {
         type: Number,
         required: true,
-        default: 5
+        default: 0
     },
     afterDiscount: {
         type: Number,
         required: true,
-        default: 5
+        default: 0
     }
 })
 

@@ -1,8 +1,8 @@
 <nav class="navbar bg-body-tertiary fixed-top top-nav">
     <div class="container-fluid">
-    <div class="container" style="text-align: center;">
-        <a class="navbar-brand" style="color: #fff;" href="#">Billing System</a>
-    </div>
+        <div class="container" style="text-align: center;">
+            <a class="navbar-brand" style="color: #fff;" href="#">Billing System</a>
+        </div>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -34,33 +34,17 @@
     </div>
 </nav>
 
+{{#each userdata}}
+    <div class="dashboard">
+        <h1>User Information</h1>
+        <label><b>Github ID</b></label>
+        <input class="form-control" type="text" value="{{githubId}}" aria-label="Disabled input example" disabled readonly>
+        <label><b>Display Name</b></label>
+        <input class="form-control" type="text" value="{{displayName}}" aria-label="Disabled input example" disabled readonly>
+        <label><b>Github URL</b></label>
+        <input class="form-control" type="text" value="{{githubUrl}}" aria-label="Disabled input example" disabled readonly>
+        <label><b>Created At</b></label>
+        <input class="form-control" type="text" value="{{createdAt}}" aria-label="Disabled input example" disabled readonly>
+    </div>
 
-<h1>Instructions</h1>
-<h2>Adding Data</h2>
-<hr>
-<ol>
-    <li>Fill the form with product information</li>
-    <li>Click on submit</li>
-</ol>
-<h2>Viewing Data</h2>
-<hr>
-<ol>
-    <li>Look at the table to see purchase data</li>
-    <li>The first column displays product information</li>
-    <li>The second column displays price information calculated based on price of single product and quantity and price after applying discount</li>
-    <li>The third column has buttons to update or delete specific purchase data</li>
-    <li>The last row of the table displays the total price of the entire purchase records</li>
-</ol>
-<h2>Deleting Data</h2>
-<hr>
-<ol>
-    <li>Click on the delete button in the corresponding row of which the data should be deleted. The change should appear immediately.</li>
-</ol>
-<h2>Updating Data</h2>
-<hr>
-<ol>
-    <li>Click on the update button in the corresponding row and a popup form opens with the existing row data populated</li>
-    <li>Make the required changes</li>
-    <li>Click update on the popup form to close and modify the data</li>
-    <li>The changes are made in the server and immediately displayed in the table</li>
-</ol>
+{{/each}}

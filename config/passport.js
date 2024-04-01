@@ -23,7 +23,11 @@ passport.use(
             callbackURL: "/auth/github/callback",
         },
         async (accessToken, refreshToken, profile, done) => {
-
+            const newUser = {
+                githubId: profile.id,
+                displayName: profile.username,
+                githubUrl: profile.profileUrl
+            }
             let user = await User.findOne({githubId: profile.id});
             if (user) return done(null, user);
             else {
