@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>CS4241 Assignment 2</title>
+  <meta charset="utf-8">
+  <script src="js/main.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Lobster&family=Workbench&display=swap"
+    rel="stylesheet">
+  <!-- get rid of favicon error -->
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <!-- credit to: https://www.valentinog.com/blog/html-table/-->
+</head>
+
+<body>
+  <div>
+    <header>
+      <h1 class="workbench-main">
+        MY SUPER SECRET CAR COLLECTION WEBSITE
+      </h1>
+    </header>
+    <div class="side-images">
+      <form>
+        <label for="model" class="inconsolata-sub">Insert Model Name</label>
+        <input type="text" id="model">
+      </form>
+      <form>
+        <label for="year" class="inconsolata-sub">Insert Model Year</label>
+        <input type="number" id="year" value="Insert Model Year">
+      </form>
+      <form>
+        <label for="mpg" class="inconsolata-sub">Insert Average MPG</label>
+        <input type="number" id="mpg" value="Insert Average MPG">
+      </form>
+      <button id="submit" class="workbench-main">submit*</button>
+    </div>
+    <div class="side-images">
+      <img src="classiccar.jpg">
+    </div>
+    <div>
+      <form>
+        <label for="row" class="inconsolata-sub">Select which row of data to delete forever and ever and ever (0
+          indexed)</label>
+        <input type="number" id="row">
+        <button id="erase" class="workbench-main">delete</button>
+      </form>
+    </div>
+    <table class="lobster-regular">
+      <!-- here goes the car data! -->
+    </table>
+</body>
+</div>
+<footer class="inconsolata-sub">
+  <p>*Upon submission, you agree to being looked at</p>
+</footer>
+
+</html>
