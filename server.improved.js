@@ -7,12 +7,13 @@ const fs = require("fs");
 const mime = require("mime");
 const GitHubStrategy = require('passport-github').Strategy;
 const { ObjectId, MongoClient, ServerApiVersion } = require('mongodb');
+const connectEnsureLogin = require("connect-ensure-login")
+const {ensureLoggedIn} = require("connect-ensure-login");
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 const app = express();
 const port = 3000;
 
-app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(session({
@@ -27,6 +28,9 @@ app.use((req, res, next) => {
   res.header('Cache-Control', 'no-store');
   next();
 });
+
+app.engine("html", require("ejs").renderFile)
+app.set("view engine", "html")
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -72,6 +76,8 @@ app.use(async (req, res, next) => {
   }
 });
 
+app.use(express.static("public"));
+
 passport.use(new GitHubStrategy({
       clientID: process.env.CLIENTID,
       clientSecret: process.env.CLIENTSECRET,
@@ -111,14 +117,14 @@ passport.use(new GitHubStrategy({
 //   res.send('Login Page'); // Replace with your login page content
 // });
 
-app.get('/', (req, res, next) => {
-  if (!req.isAuthenticated()) {
-    return res.redirect('/auth/github/');
-  }
-  next();
-}, (req, res) => {
-  sendFile(res, "public/index.html");
-});
+// app.get('/', (req, res, next) => {
+//   if (!req.isAuthenticated()) {
+//     return res.redirect('/auth/github/');
+//   }
+//   next();
+// }, (req, res) => {
+//   sendFile(res, "public/index.html");
+// });
 
 app.get('/auth/github/',
     passport.authenticate('github'));
@@ -145,17 +151,18 @@ passport.deserializeUser(function(user, done) {
 });
 
 
-// app.get("/", (req, res) => {
-//   sendFile(res, "public/index.html");
-// });
+app.get("/", ensureLoggedIn("/login.html") ,(req, res) => {
+   //res.render("/views/index.html")
+    sendFile(res, "views/index.html")
+ });
 
-app.post('/logout', (req, res) => {
-  req.logout(function(err) {
-    console.log(err)
-    req.session.destroy(function (err) { // destroys the session
-      res.redirect('auth/github')
-    });
-  });
+app.get('/logout', (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/login.html")
+  })
 })
 
 app.post( '/add', async (req,res) => {
@@ -283,3 +290,4 @@ function calcEstCaloriesBurned(workoutType, workoutIntensity, workoutDurationMin
 
   return (caloriesBurnedPerMin * workoutDurationMins).toFixed(2);
 }
+

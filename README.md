@@ -134,6 +134,8 @@ add a little more detail about what it does.
 
 ## Technical Achievements
 - **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
+- **Tech Achievement 2**: Hosted the application on Vercel (Pending)
+- **Tech Achievement 4**: The user can log out of the application (Pending)
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
