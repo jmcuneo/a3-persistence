@@ -8,6 +8,8 @@ const passport = require("passport");
 const GithubStrategy = require("passport-github2").Strategy;
 const handlebars = require("express-handlebars");
 const session = require("express-session");
+const mongoose = require("mongoose");
+const cors = require("cors");
 
 
 // Passport session setup.
@@ -43,11 +45,17 @@ passport.use(new GithubStrategy({
 	}
 ));
 
+mongoose.connect(process.env.MONGO, {
+	useNewUrlParse: true,
+	useUnifiedTopology: true
+});
+
 
 app.engine('handlebars', handlebars.engine());
 app.set("view engine", "handlebars");
 app.set("views", "./views");
 app.use(express.json());
+app.use(cors());
 app.use(express.static("public"))
 app.use(session({
 	secret: 'sessionSecretHehe',
