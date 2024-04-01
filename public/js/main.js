@@ -26,7 +26,7 @@ const logShift = async function (event) {
 
 	// server responds with updated collection of appdata (all courses)
 	const html = await response.text();
-	console.log(html);
+	document.body.innerHTML = html;
 	// render courses to page
 	// renderCourses(jsn);
 }
