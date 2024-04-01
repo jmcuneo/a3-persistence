@@ -7,15 +7,28 @@ const 	app = require('express'),
 router.post("/add", async (req, res) => {
 	const db = database();
 
-	if (req.body.id) {
+	if (!req.body.id) {
 		let shiftID = await getNextID(req.user.username);
 		console.log(shiftID);
+		const doc = {
+			id: shiftID,
+			user: req.user.username,
+			date: req.body.date,
+			start: req.body.start,
+			end: req.body.end,
+		};
+		await db.collection("shifts").insertOne(doc);
 	} else {
-		console.log("womp");
+		const old = { id: req.body.id }
+		const update = { $set: {date: req.body.date, 
+								start: req.body.start, 
+								end: req.body.end}
+						};
+		await db.collection("shifts").updateOne(old, update)
 	}
 	
 	
-	res.json(respon).status(200);
+	res.send(1).status(200);
 })
 
 router.delete("/delete", (req, res) => {
