@@ -75,7 +75,7 @@ app.use( (request,response,next) => {
 
 // Called when loging in
 app.post( '/login', async (request,response)=> {
-
+  debugger
   console.log( request.body )
   
   // Get user collection to check users
@@ -122,6 +122,10 @@ app.post( '/login', async (request,response)=> {
 
 
 app.get( '/', (req,res) => {
+  res.render( 'login', { msg:'', layout:false })
+})
+
+app.get( '/login.html', (req,res) => {
   res.render( 'login', { msg:'', layout:false })
 })
 
