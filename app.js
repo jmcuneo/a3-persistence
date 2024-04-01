@@ -9,7 +9,7 @@ const GithubStrategy = require("passport-github2").Strategy;
 const handlebars = require("express-handlebars");
 const session = require("express-session");
 const cors = require("cors");
-const { connect } = require("./db/connection")
+const { database, connect } = require("./db/connection")
 
 
 // Passport session setup.
@@ -84,6 +84,8 @@ app.get('/auth/github/callback',
 	});
 
 app.get("/", ensureAuthenticated, async (req, res) => {
+	const db = database();
+
 	const shifts = await db.collection("shifts").find({}).toArray();
 	shifts.forEach((shift) => {
 		delete shift._id;
