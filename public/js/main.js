@@ -231,5 +231,10 @@ function editElement(data) {
 // Validates the format of the submission before submitting
 function validateForm() {
   //TODO add in to make sure something gets placed for each field
-  return true;
+  if(document.getElementById("task").value === "" || document.getElementById("class").value === "" || document.getElementById("duedate").value === "") {
+    alert("Please fill in all fields");
+    return false;
+  } else {
+    return true;
+  }
 }

@@ -16,5 +16,9 @@
     "lowdb": "^1.0.0",
     "mime": "^2.6.0",
     "mongodb": "^6.5.0"
+  },
+  "devDependencies": {
+    "eleventy": "^1.0.6",
+    "webpack": "^5.91.0"
   }
 }
