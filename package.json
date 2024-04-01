@@ -4,7 +4,7 @@
   "description": "Assignment 3 - CS4241 Webware",
   "author": "Alexander Beck",
   "scripts": {
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "engines": {
     "node": "^16.x"
