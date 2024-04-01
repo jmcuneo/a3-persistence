@@ -5,4 +5,4 @@ const getAllShifts = async (req, res) => {
 	res.status(200).json(shifts); 
 }
 
-module.exports = getAllShifts;
+module.exports = { getAllShifts };
