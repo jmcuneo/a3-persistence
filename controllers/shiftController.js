@@ -1,5 +1,6 @@
 const Shift = require("../models/shiftSchema");
 const User = require("../models/userSchema");
+const mongoose = require("mongoose");
 
 const addShift = async (req, res) => {
 	const username = req.user.username;

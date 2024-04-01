@@ -51,13 +51,13 @@ app.set("view engine", "handlebars");
 app.set("views", "./views");
 app.use(express.json());
 app.use(cors());
-app.use(express.static("public"))
 app.use(session({
 	secret: 'sessionSecretHehe',
 	resave: false,
 	saveUninitialized: false,
 	cookie: { maxAge: 60000 * 60 * 24 }
 }));
+app.use(express.static("public"))
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/shifts", shiftRouter);
