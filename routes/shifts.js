@@ -1,9 +1,9 @@
 const 	app = require('express'),
-		{ getAllShifts } = require("../controllers/shiftController"),
+		{ getAllShifts, addShift } = require("../controllers/shiftController"),
 		router = app.Router();
 
 
-router.post("/add", getAllShifts)
+router.post("/add", addShift)
 
 router.delete("/delete", (req, res) => {
 	course = req.body;

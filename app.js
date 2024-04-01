@@ -84,7 +84,7 @@ app.get('/auth/github/callback',
 	});
 
 app.get("/", ensureAuthenticated, (req, res) => {
-	// shifts = [];
+	shifts = [];
 
 	res.locals.user = req.user.username;
 	res.locals.shiftRecords = shifts;
