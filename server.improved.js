@@ -9,7 +9,7 @@ const http = require( "http" ),
   // file.
   mime = require( "mime" ),
   dir  = "public/",
-  port = 3000,
+  port = 3001,
   express = require('express'), 
   app = express()
 
@@ -21,7 +21,7 @@ const middleware_post = (req, res, next) => {
   })
 
   req.on( 'end', function() {
-    const json = JSON.parse( datastring )
+    const json = JSON.parse( dataString )
     previousResults.push(json)
   })
 
@@ -37,9 +37,7 @@ app.post( '/submit', (req, res) => {
   res.end( req.json)
 })
 
-app.get()
-
-app.listen( process.env.PORT || 3000 )
+app.listen( process.env.port || 3000 )
 
 let previousResults = [];  
 
