@@ -43,7 +43,7 @@ const submit = async function( event ) {
 
 //Delete an item
 function deleteItem( event ) {
-  let body = JSON.stringify(event.srcElement.id) //Send over the id (index) of the item to delete
+  const body = JSON.stringify(event.srcElement.id) //Send over the id (index) of the item to delete
 
   fetch( "/remove", {
     method:'POST',
@@ -80,7 +80,7 @@ async function modSave ( event ) {
         val2 = document.querySelector( "#newSec" ),
         op = radioValue("newOP"),
         answer = document.querySelector( "#forceAnswer" ),
-        json = {index: event.srcElement.id, val1: val1.value, val2: val2.value, op: op, output: answer.value},
+        json = {id: event.srcElement.id, val1: val1.value, val2: val2.value, op: op, output: answer.value},
         body = JSON.stringify( json )
 
   const response = await fetch( "/modify", {
@@ -95,19 +95,14 @@ async function modSave ( event ) {
 }
 
 //Make sure to display the server data on first load
-function initialLoad(){
-  let body = null;
-
-  fetch( "/refresh", {
+async function initialLoad(){
+  const response = await fetch( "/refresh", {
     method:'POST',
     headers: { 'Content-Type': 'application/json' },
-    body
-  }).then( (response) => {
-      response.json().then((resp) => {
-        displayData(resp)
-      })
-    }
-  )
+  })
+
+  const resp = await response.json()
+  displayData(resp) //Make the server table
 }
 
 window.onload = function() {
@@ -130,7 +125,7 @@ function displayData(data) {
 
   let table = document.getElementById("serverTable") //Get the table
   for(let i = 0; i < data.length; i++){ //For every data item...
-    if(document.getElementById("data" + i) == null) {
+    // if(document.getElementById("data" + i) == null) {
       let tr = document.createElement("tr") //New table row
       tr.id = "data" + i;
       tr.className = "dataTR"
@@ -139,27 +134,33 @@ function displayData(data) {
       tdID.innerHTML = i
       tdID.className = "entryID"
       tr.appendChild(tdID)
+      let tempID = null;
       for (let key in data[i]) {//For every data point in the row...
-        let td = document.createElement("td") //New column
         let line = data[i]
-        if(key == "guess" && line[key] != null) {//Some special display for guesses
-          handleGuess(td, line[key])
+        if (key != "_id") {
+          let td = document.createElement("td") //New column
+
+          if(key == "guess" && line[key] != null) {//Some special display for guesses
+            handleGuess(td, line[key])
+          } else {
+            td.innerHTML = line[key]
+          }
+          tr.appendChild(td)
         } else {
-          td.innerHTML = line[key]
+          tempId = line[key]
         }
-        tr.appendChild(td)
       }
 
       //Make a delete button
-      let deleteTd = makeButton("deleteButton", "Delete", i, deleteItem)
+      let deleteTd = makeButton("deleteButton", "Delete", tempId, deleteItem)
       tr.appendChild(deleteTd)
 
       //Make a modify button
-      let modifyTd = makeButton("modButton", "Modify", i, modItem)
+      let modifyTd = makeButton("modButton", "Modify", tempId, modItem)
       tr.appendChild(modifyTd)
 
       table.appendChild(tr)
-    }
+    //}
   }
 }
 

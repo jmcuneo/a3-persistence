@@ -84,9 +84,9 @@ const handlePost = function( request, response ) {
   })
 }
 
-app.post( '/refresh', (req, res) => {
-  res.writeHead( 200, { 'Content-Type': 'application/json' })
-  res.end( JSON.stringify( appdata ) )
+app.post( '/refresh', async (req, res) => {
+  const result = await collection.find({}).toArray()
+  res.json(result)
 })
 
 app.post( '/submit', async (req, res) => {
@@ -102,8 +102,9 @@ app.post( '/submit', async (req, res) => {
   }
 
   let newData = {val1: parseInt(data.val1), val2: parseInt(data.val2), op: data.op, output, guess}
-  const result = await collection.insertOne(newData)
-  res.json( result )
+  collection.insertOne(newData)
+  const result = await collection.find({}).toArray()
+  res.json(result)
 })
 
 //Delete an item from the table
@@ -125,11 +126,10 @@ function deleteData (request, response) {
 
 app.post( '/remove', (req, res) => {
   let data = req.body
-  console.log("Index for deletion: " + data)
-  let removed = appdata.splice(data, 1) //Remove from table
-  console.log(removed)
-  res.writeHead( 200, { 'Content-Type': 'application/json' })
-  res.end( JSON.stringify( appdata ) )
+  let query = { "_id": data}
+  collection.deleteOne(query)
+  const result = collection.find({}).toArray()
+  res.json(result)
 })
 
 //Modify data
@@ -157,9 +157,10 @@ function modData (request, response) {
   })
 }
 
-app.post( '/modify', (req, res) => {
+app.post( '/modify', async (req, res) => {
   let data = req.body
-  let oldData = appdata[data.index] //Get currently stored data in server
+  let query = {_id: ObjectId.createFromHexString(data.id)}
+  let oldData = await collection.findOne(query) //Get currently stored data in server
   let comboData = combineData(data, oldData) //Combine old and new data
 
   //If the user didnt assign a correct value, calculate it
@@ -167,9 +168,9 @@ app.post( '/modify', (req, res) => {
     comboData.output = eval(comboData.val1 + comboData.op + comboData.val2) 
   }
   
-  appdata[data.index] = comboData //Replace old server data 
-  res.writeHead( 200, { 'Content-Type': 'application/json' })
-  res.end( JSON.stringify( appdata ) )
+  collection.replaceOne(query, comboData) //Replace old server data 
+  const result = await collection.find({}).toArray()
+  res.json(result)
 })
 
 //Combine old and new data
