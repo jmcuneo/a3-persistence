@@ -26,9 +26,9 @@ const logShift = async function (event) {
 
 	// server responds with updated collection of appdata (all courses)
 	const jsn = await response.json();
-
+	console.log(jsn);
 	// render courses to page
-	renderCourses(jsn);
+	// renderCourses(jsn);
 }
 
 const deleteShift = async function (event) {
