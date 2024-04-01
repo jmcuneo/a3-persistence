@@ -20,7 +20,7 @@ const appdata = [
 app.use(express.static("public"))
 
 // Load main home page
-app.get( '/', ( req, res ) => sendFile(res, "public/index.html") )
+app.get( '/', ( req, res ) => sendFile(res, "public/main.html") )
 
 
 //Pass app data on get request

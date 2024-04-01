@@ -1,6 +1,4 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
-let editOriginalName
-let editOriginalRace
 let editID
 const submit = async function( event ) {
   // stop form submission from trying to load
@@ -74,8 +72,6 @@ const editEntry = function (editName, editRace, editClass, editMod, editAction, 
     document.getElementById("editclass").value = editClass;
     document.getElementById("editmodifier").value = editMod;
     document.getElementById("editaction").value = editAction;
-    editOriginalName = editName;
-    editOriginalRace = editRace;
     editID = editId
 }
 
@@ -117,8 +113,6 @@ const cancel = function ( event ){
     document.getElementById("editmodifier").value = "";
     document.getElementById("editaction").value = "";
 
-    editOriginalRace = ""
-    editOriginalName = ""
     editID = ""
 
 }

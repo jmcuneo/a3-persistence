@@ -1,11 +1,19 @@
 const express = require("express"),
     { MongoClient, ObjectId } = require("mongodb"),
-    app = express()
+    app = express(),
+    path = require('path'),
+    session = require('express-session');
 
 require('dotenv').config();
 
-app.use(express.static("public") )
+app.use(express.static(path.join(__dirname, 'public')) )
 app.use(express.json() )
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}));
+
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 const client = new MongoClient( uri )
@@ -32,6 +40,42 @@ app.use( (req,res,next) => {
         res.status( 503 ).send()
     }
 })
+
+const users = [
+    { id: 1, username: 'user1', password: 'password1' },
+    { id: 2, username: 'user2', password: 'password2' }
+];
+
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+app.post('/login', (req, res) => {
+    // TODO: load from mongodb
+    const { username, password } = req.body;
+    const user = users.find(u => u.username === username && u.password === password);
+
+    if (user) {
+        req.session.userId = user.id;
+        res.redirect('/main');
+    } else {
+        res.send('Invalid username or password');
+    }
+});
+
+function requireLogin(req, res, next) {
+    if (req.session.userId) {
+        next();
+    } else {
+        res.redirect('/');
+    }
+}
+
+app.get('/main', requireLogin, (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'main.html'));
+});
+
 
 app.post( '/submit', async (req,res) => {
     console.log("Request Body: ", req.body);
