@@ -38,30 +38,29 @@ const submit = async function (event) {
 
   const response = await fetch("/submit", {
     method: "POST",
+    headers: {"Content-Type": "application/json"},
     body: JSON.stringify(newEntry),
   });
+  console.log(response.body);
   const text = await response.json();
-  const appdata = text.appdata;
-  const suggestdata = text.suggestdata;
-  const justAdded = appdata[appdata.length - 1];
+  //const appdata = text.appdata;
+  //const suggestdata = text.suggestdata;
+  //const justAdded = appdata[appdata.length - 1];
 
   /*for (let i = 0; i < suggestdata.length; i++) {
-    if (
-      suggestdata[i].Sitem == justAdded.item &&
-      suggestdata[i].Sqty == justAdded.qty
-    ) {
+    if (suggestdata[i].Sitem == justAdded.item && suggestdata[i].Sqty == justAdded.qty) {
       bring(i);
       remove(appdata.length);
-      console.log(
-        "item removed from bring and added to appdata: ",
-        suggestdata[i]
-      );
-    } 
-  } */
+      console.log("item removed from bring and added to appdata: ", suggestdata[i]);
+    }
+  };*/
 
-  makeGuestList(appdata);
-  addToTable(justAdded);
-  console.log("text:", justAdded);
+  //makeGuestList(appdata);
+  console.log("type of text: ", typeof(text))
+  addToTable(text);
+  
+  resetTextBoxes();
+  console.log("submit: ", text);
 };
 
 /**
@@ -85,11 +84,13 @@ const makeGuestList = function (array) {
 
 //entry object
 const createEntry = function (name, item, price, qty) {
-  const entry = {};
-  entry.name = name;
-  entry.item = item;
-  entry.price = price;
-  entry.qty = qty;
+  const entry = {
+    name: name,
+    item: item,
+    price: price,
+    qty: qty
+  };
+  console.log(entry);
   return entry;
 };
 
@@ -133,7 +134,7 @@ const makeTable = function (array) {
  * Adds row to HTML table
  * creates an event listener for each button created - can get index from click
  */
-const addToTable = function (entry) {
+const addToTable = function (entry) {  
   const table = document.getElementById("table");
   const row = `<tr id="entryRow">
                 <td>${entry.name}</td>
@@ -197,9 +198,11 @@ const refreshPage = async function () {
 const remove = async function (entryIndex) {
   const response = await fetch("/remove", {
     method: "POST",
-    body: JSON.stringify(entryIndex),
+    body: JSON.stringify(entryIndex)
   });
+  console.log("entry index: ", entryIndex);
   const text = await response.json();
+  console.log("remove: ", text);
   clearTable(text);
 };
 
@@ -255,7 +258,6 @@ const bring = async function (entryIndex) {
   }
   clearSuggest(suggestdata);
   makeTable(suggestdata);
-  //const justAdded = text[text.length - 1];
   console.log("Bring this item: ", text);
 };
 
@@ -275,13 +277,12 @@ window.onload = function () {
       const entryIndex = event.target.closest("tr").rowIndex - 1; // Subtract 1 because of table header
       remove.onclick = remove(entryIndex);
     }
-/*
     //check if there are any elements to remove
     if (event.target && event.target.classList.contains("bring")) {
       //use event listener to get the index and use to call remove
       const suggestIndex = event.target.closest("tr").rowIndex - 1; // Subtract 1 because of table header
       bring.onclick = bring(suggestIndex);
-    }*/
+    }
   });
 };
 
