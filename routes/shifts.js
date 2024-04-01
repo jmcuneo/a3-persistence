@@ -4,9 +4,11 @@ const 	app = require('express'),
 
 
 router.post("/add", async (req, res) => {
-	connect();
+	const db = database();
+	const collection = db.collection("user-data");
+	const query = await collection.find({}).toArray();
 	
-	res.send(results).status(200);
+	res.send(query).status(200);
 })
 
 router.delete("/delete", (req, res) => {
