@@ -4,7 +4,7 @@ mongoose.set("debug", true);
 const userData = new mongoose.Schema(
     { 
         user: { type: String, required: true },
-        idLast: { type: String, required: true }
+        idLast: { type: Number, required: true }
     },
     {
         collection: "user-data"

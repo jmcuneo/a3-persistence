@@ -4,8 +4,8 @@ const mongoose = require("mongoose");
 
 const addShift = async (req, res) => {
 	const username = req.user.username;
-	const userResults = await User.find().where("user").equals("spencer-gre").exec();
-	console.log(userResults);
+	const userResults = await User.find().then(console.log(userResults));
+	// console.log(userResults);
 	res.json(userResults);
 	
 }
