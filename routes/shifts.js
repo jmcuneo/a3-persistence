@@ -6,8 +6,13 @@ const 	app = require('express'),
 
 router.post("/add", async (req, res) => {
 	const db = database();
-	let respon = await getNextID(req.user.username);
-	console.log(respon);
+
+	if (req.body.id) {
+		let shiftID = await getNextID(req.user.username);
+		console.log(shiftID);
+	} else {
+		console.log("womp");
+	}
 	
 	
 	res.json(respon).status(200);
