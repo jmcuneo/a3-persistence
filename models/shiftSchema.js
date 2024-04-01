@@ -23,7 +23,7 @@ const shiftData = new mongoose.Schema({
     },
 })
 
-const Shift = mongoose.model("shift", shiftData);
+const Shift = mongoose.model("shifts", shiftData, "shifts");
 
 
 module.exports = Shift;
