@@ -1,6 +1,7 @@
 const 	app = require('express'),
 		{ connect, database } = require("../db/connection"),
 		{ getNextID } = require("../db/userData"),
+		dayjs = require("dayjs"),
 		router = app.Router();
 
 
@@ -10,15 +11,15 @@ router.post("/add", async (req, res) => {
 	if (!req.body.id) {
 		let shiftID = await getNextID(req.user.username);
 		console.log(shiftID);
-		const startDate = Date.parse(req.body.start);
-		const endDate = Date.parse(req.body.end)
-		const duration = endDate - startDate;
+		const startDate = dayjs(req.body.start);
+		const endDate = dayjs(req.body.end);
+		const duration = startDate.diff(endDate, 'day', true);
 		const doc = {
 			id: shiftID.toString(),
 			user: req.user.username,
-			start: startDate.toDateString(),
-			end: endDate.toDateString(),
-			duration: duration.toDateString()
+			start: startDate.toString(),
+			end: endDate.toString(),
+			duration: duration.toString()
 		};
 		await db.collection("shifts").insertOne(doc);
 	} else {
