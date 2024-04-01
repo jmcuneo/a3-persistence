@@ -1,9 +1,13 @@
 const 	app = require('express'),
-		{ getAllShifts, addShift } = require("../controllers/shiftController"),
+		db = require("../db/connection"),
 		router = app.Router();
 
 
-router.post("/add", addShift)
+router.post("/add", async (req, res) => {
+	let collection = await db.collection("user-data");
+	let results = await collection.find({}).toArray();
+	res.send(results).status(200);
+})
 
 router.delete("/delete", (req, res) => {
 	course = req.body;
