@@ -3,7 +3,7 @@ Assignment 3 - Persistence: Two-tier Web Application with Database, Express serv
 
 ## Todo List
 
-Alexander Beck, http://a3-alexanderbeck.glitch.me
+Alexander Beck, [https://a3-alexanderbeck.onrender.com](https://a3-alexanderbeck.onrender.com)
 
 The goal of this application is to be able to have a todo list for a logged in user. It allows users to log in with Github and add, edit, delete, and clear tasks. The authentication strategy used is Github, since I assumed that all TA's grading would have a Github account. The CSS framework I used is Fomantic-UI because it seemed like a modern framework. I did not make any changes to the framework, however I did add a `hover` to the items in the todo list. Some Express middlewear I used are: A post event, for when the user submits something. This middlewear checks to see if the user edited something, and if they did not, it adds it to the DB. Another middlewear I used is clear, which I used when the user wanted to clear their data. It removes all data associated with a user from the DB. I also used load, which checks to see if the user is logged in, and if they are, gets their data from the DB. I used delete, which deleted a single item from the DB. Finally, I used github auth, from passport.js, to log in a user. 
 
