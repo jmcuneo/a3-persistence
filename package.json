@@ -1,0 +1,12 @@
+{
+  "name": "HighscoreStorageApplication",
+  "version": "1.0",
+  "description": "Submission for CS 4241 Assignment #2",
+  "author": "Bashar Alqassar",
+  "scripts": {
+    "start": "node server.improved.js"
+  },
+  "dependencies": {
+    "mime": "^2.4.4"
+  }
+}

@@ -1,0 +1,66 @@
+body {
+
+  background: #ade8e8;
+}
+
+table
+{
+  background: white;
+  color: black;
+  border: 1px solid;
+  outline-width: 1px;
+}
+
+th.openSans
+{
+  border: 1px solid black;
+  background: #00e7e7;
+
+  text-align: center;
+
+  font-variation-settings: "wdth" 100;
+  font-size: 20px;
+}
+
+td
+{
+  border: 1px solid;
+
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+  font-variation-settings: "wdth" 50;
+  font-size: 14px;
+}
+
+input.openSans
+{
+  font-style: oblique;
+  border: 2px solid;
+}
+
+h1.openSans
+{
+  font-variation-settings: "wdth" 50;
+  font-size: 30px;
+
+  text-decoration: underline;
+  text-decoration-color: #0080ff;;
+
+}
+
+button.openSans
+{
+  border-radius: 10px;
+  border: 2px solid;
+}
+
+#idBlock
+{
+  background: blueviolet;
+}
+
+.openSans
+{
+  font-family: "Open Sans", sans-serif;
+  font-style: normal;
+}
