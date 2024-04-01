@@ -59,6 +59,50 @@ const submit = async function( event ) {
   return response;
 }
 
+const update = async function ( event ) {
+  event.preventDefault();
+
+  const reqInputs = document.querySelectorAll("input[required]");
+  const numInputs = document.querySelectorAll("input[min]");
+  const id = document.getElementById("id");
+  let isValid = true;
+  let allPositive = true;
+
+  numInputs.forEach(function(input) {
+    if (!(input.value >= 0)){
+      allPositive = false
+    }
+  });
+
+  reqInputs.forEach(function(input) {
+    if(!input.value.trim()){
+      isValid = false;
+    }
+  });
+
+  if(!isValid){
+    alert("Please fill out all required fields");
+    return;
+  } else if (!allPositive){
+    alert("Fields cannot be negative");
+    return;
+  }
+
+  const anEntry = {_id: id.value, name: reqInputs[0].value, bodyWeight: reqInputs[1].value, squat: reqInputs[2].value, benchPress: reqInputs[3].value, deadLift: reqInputs[4].value};
+  const body = JSON.stringify(anEntry);
+
+  const response = await fetch( "/update", {
+    method:"POST",
+    body
+  }).then((aResponse)=>{
+    console.log(aResponse);
+  });
+
+  get();
+
+  return response;
+}
+
 const deleteEntry = async function( event ) {
 
   event.preventDefault();
@@ -110,24 +154,17 @@ const loadTable = function(entries){
 
     table.append(entry);
   }
-//   entries.forEach((lifter) => {
-//     const entry = template.content.cloneNode(true);
-//     let data = entry.querySelectorAll("td");
-//     data[0].textContent = lifter.name;
-//     data[1].textContent = lifter.bodyWeight;
-//     data[2].textContent = lifter.squat;
-//     data[3].textContent = lifter.benchPress;
-//     data[4].textContent = lifter.deadLift;
-//     data[5].textContent = lifter.total;
-
-//     table.append(entry);
-//   });
 }
 
 window.onload = function() {
   get();
+
   const submitButton = document.querySelector(".submitButton");
   submitButton.onclick = submit;
+
+  const updateButton = document.querySelector(".updateButton");
+  updateButton.onclick = update;
+
   const deleteButton = document.querySelector(".deleteButton");
   deleteButton.onclick = deleteEntry;
 }

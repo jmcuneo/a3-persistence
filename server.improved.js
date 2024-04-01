@@ -65,12 +65,23 @@ async function run() {
     });
 
     app.post("/update", async (req, res) => {
-        const result = await collection.updateOne(
-            { _id: new ObjectId(req.body._id) },
-            { $set: { name: req.body.name } }
-        );
+        let dataString = "";
 
-        res.json(result);
+        req.on("data", function (data) {
+            dataString += data;
+        });
+
+        req.on("end", async function () {
+            const json = JSON.parse(dataString);
+            json.total =
+                Number(json.squat) + Number(json.benchPress) + Number(json.deadLift);
+
+            const result = await collection.updateOne(
+                { _id: new ObjectId(json._id) },
+                { $set: { name: json.name,  squat: json.squat, benchPress: json.benchPress, deadLift: json.deadLift, total: json.total} }
+            );
+            res.json(result);
+        });
     });
 
     app.post("/delete", async (req, res) => {
