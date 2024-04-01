@@ -12,7 +12,6 @@ const http = require( "http" ),
   port = 3000,
   express = require('express'), 
   app = express()
-  dreams = []
 
 const middleware_post = (req, res, next) => {
   let dataString = ''
@@ -42,7 +41,7 @@ app.get()
 
 app.listen( process.env.PORT || 3000 )
 
-let previousResults = [];   //array used to store the previous results
+let previousResults = [];  
 
 const server = http.createServer( function( request,response ) {
   if( request.method === "GET" ) {        //links to handleGet() method
