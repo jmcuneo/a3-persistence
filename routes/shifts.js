@@ -6,12 +6,12 @@ const 	app = require('express'),
 
 router.post("/add", async (req, res) => {
 	const db = database();
-	let res = await getNextID();
-	console.log(res);
+	let respon = await getNextID();
+	console.log(respon);
 	
 
 	
-	res.json(res).status(200);
+	res.json(respon).status(200);
 })
 
 router.delete("/delete", (req, res) => {
