@@ -137,6 +137,6 @@ add a little more detail about what it does.
 
 **Repetition**: 
 
-**Alignment**: 
+**Alignment**: I used alignment to organize information on the page in several ways. I made the entire page left aligned to create a sense of unity for the page. There is a strong line on the left of the page, which creates a visual connection between the input forms. I attempted to align the input elements to the right so that the strong line would align with the table but it ended up not feeling quite right. Since English speaking users read from left to right, having the inputs read from left to right as well helps users better follow the visual flow of the page. The left alignment of the input fields also adds contrast between the input fields and the table on the right.
 
 **Proximity**: I used proximity to organize the visual information on my page in several ways. One, by grouping together the header, input boxes, and button for each action that the user can take. This makes it easier for users to easily distinguish the different actions they can take and where they need to input information for each one. I added extra spacing between each of the groups to accentuate that they are separated, further increasing clarity. There are a total of five different groups on the page. This number include the table for displaying data and the title with the logout button and instructions. Having a smaller number of distinct groupings on the page makes it easier for users to digest the entirety of the page quickly.
