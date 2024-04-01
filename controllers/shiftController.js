@@ -1,6 +1,6 @@
 const Shift = require("../models/shiftSchema");
 
-exports.getAllShifts = async (req, res) => {
+const getAllShifts = async (req, res) => {
 	try {
 		const shift = Shift.find();
 		res.json(shift);
@@ -8,3 +8,5 @@ exports.getAllShifts = async (req, res) => {
 		res.status(500).json({error: "an error occured"});
 	}
 }
+
+module.exports = getAllShifts;
