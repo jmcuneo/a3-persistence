@@ -71,7 +71,7 @@ passport.use(
     new GitHubStrategy({
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        callbackURL: "https://a3-ellysgorodisch1.onrender.com/auth/github/redirect"
+        callbackURL: "https://a3-ellysgorodisch.onrender.com/auth/github/redirect"
     }, async (accessToken, refreshToken, profile, done) => {
         console.log("Strategy:");
         await users.findOne({githubID: profile.id}).then(async (user) => {
