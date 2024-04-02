@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
@@ -10,7 +10,8 @@
                   The table shows mathematical results. 
                   Entries can be deleted or modified">
     <script src="js/main.js"></script>
-    <link rel="stylesheet" href="node_modules/bulma/css/bulma.min.css">
+    <link rel="stylesheet" href="css/bulma.css" media="screen">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css"> -->
     <!-- <link rel="stylesheet" href="css/main.css"> -->
     <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,10 +22,10 @@
   <body>
     <div class="container">
       <header>
-        <h1>The Worst Calculator</h1>
+        <h1 class="title is-1">The Worst Calculator</h1>
       </header>
       <div class="forms">
-        <h2>Add Entry Form</h2>
+        <h2 class="title is-3">Add Entry Form</h2>
         <form>
           <label for="firstVal">1st Value: </label>
           <input type="number" id="firstVal">
@@ -50,23 +51,26 @@
           <input type="number" id="guess">
           <br>
 
-          <button class="submitButton">Submit</button>
+          <button id="submitButton" class="button is-primary is-medium">Submit</button>
         </form>
       </div>
-      <div class="sTable">
-        <table id="serverTable">
-          <tr class="tableLabels">
-            <th>ID</th>
-            <th>First Value</th>
-            <th>Second Value</th>
-            <th>Operator</th>
-            <th>Answer</th>
-            <th>Guess Correctness</th>
-          </tr>
+      <div id="sTable" class="table-container">
+        <table id="serverTable"
+              class="table is-bordered is-striped is-narrow is-hoverable">
+          <thead>
+            <tr class="tableLabels">
+              <th>ID</th>
+              <th>First Value</th>
+              <th>Second Value</th>
+              <th>Operator</th>
+              <th>Answer</th>
+              <th>Guess Correctness</th>
+            </tr>
+          </thead>
         </table>
       </div>
       <div id="modForm">
-        <h2>Entry Modification Form</h2>
+        <h2 class="title is-3">Entry Modification Form</h2>
         <p>All inputs are optional</p>
         <form>
           <label for="newFirst">New 1st Value: </label>

@@ -29,7 +29,7 @@ const submit = async function( event ) {
   if (val1.value && val2.value && op) { //Check for requierd values
     const response = await fetch( "/submit", {
       method:'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Accept-Encoding': 'gzip' },
       body 
     })
 
@@ -49,7 +49,7 @@ async function deleteItem( event ) {
 
   const response = await fetch( "/remove", {
     method:'POST',
-    headers: { 'Content-Type': 'application/json'},
+    headers: { 'Content-Type': 'application/json', 'Accept-Encoding': 'gzip'},
     body: body
   })
 
@@ -87,7 +87,7 @@ async function modSave ( event ) {
 
   const response = await fetch( "/modify", {
     method:'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'Accept-Encoding': 'gzip' },
     body 
   })
 
@@ -100,7 +100,8 @@ async function modSave ( event ) {
 async function initialLoad(){
   const response = await fetch( "/refresh", {
     method:'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json',
+                'Accept-Encoding': 'gzip'},
   })
 
   const resp = await response.json()
@@ -109,7 +110,7 @@ async function initialLoad(){
 
 window.onload = function() {
   initialLoad();
-  const subBtn = document.querySelector(".submitButton");
+  const subBtn = document.querySelector("#submitButton");
   subBtn.onclick = submit;
 }
 
@@ -154,11 +155,11 @@ function displayData(data) {
       }
 
       //Make a delete button
-      let deleteTd = makeButton("deleteButton", "Delete", tempId, deleteItem)
+      let deleteTd = makeButton("button is-danger is-small", "Delete", tempId, deleteItem)
       tr.appendChild(deleteTd)
 
       //Make a modify button
-      let modifyTd = makeButton("modButton", "Modify", tempId, modItem)
+      let modifyTd = makeButton("button is-info is-small", "Modify", tempId, modItem)
       tr.appendChild(modifyTd)
 
       table.appendChild(tr)
