@@ -1,16 +1,13 @@
 {
-  "name": "Task List",
-  "version": "1.0",
+  "name": "TaskList",
+  "version": "",
   "description": "A basic task list for storing tasks from classes.",
   "author": "Seth Frank",
-  "engines" :{
-    "node": "20.x"
-  },
   "scripts": {
     "start": "node server.improved.js"
   },
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.2",
     "bootstrap": "^5.3.3",
     "cookie": "^0.6.0",
     "cookie-session": "^2.1.0",
@@ -22,9 +19,7 @@
     "mime": "^2.6.0",
     "mongodb": "^6.5.0"
   },
-  "keywords": [
-    "node",
-    "glitch",
-    "express"
-  ]
+  "engines":{
+    "node": "16.x"
+  }
 }
