@@ -31,7 +31,7 @@ const submit = async function( event ) {
 }
 
 window.onload = async function() {
-  const button = document.querySelector("button");
+  const button = document.getElementById("dataButton");
   button.onclick = submit;
 
 

@@ -27,25 +27,25 @@ async function run() {
   await client.connect()
   collection = await client.db("a3-basharalqassar-db").collection("users")
   // route to get all docs
-  app.get("/docs", async (req, res) => {
-    if (collection !== null) {
-
-      let loginInfo = req.body
-      console.log(loginInfo)
-
-      const docs = await collection.find(
-          {
-          }).toArray()
-      res.json( docs )
-    }
-  })
 }
 
 run()
 
+app.get("/docs", async (req, res) => {
+  if (collection !== null) {
 
-app.get('/index.html', (req, res) => res.send('Hello World!'))
+    let loginInfo = req.body
+    console.log(loginInfo)
 
+    const docs = await collection.find(
+        {
+        }).toArray()
+    res.json( docs )
+  }
+})
+
+
+app.get('/login.html', (req, res) => res.send('Hello World!'))
 
 //POST: Modifies appdata and returns
 app.post( '/post_to_appdata', (req, res) => {
