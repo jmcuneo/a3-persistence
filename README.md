@@ -9,8 +9,7 @@ Include a very brief summary of your project here. Images are encouraged, along 
 - what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
 - what CSS framework you used and why
   - include any modifications to the CSS framework you made via custom CSS you authored
-- the five Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function for *one* (and one alone) middleware please 
-add a little more detail about what it does.
+- a list of Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function, please add a little more detail about what it does.
 
 ## Technical Achievements
 - **Tech Achievement 1**: Hosting on alternative service: I decided to use Render as a hosting service. I’m using the free version and using web service hosting. Besides it taking me forever to figure out that I needed a web service and not a static site, it was very easy to set up. I just needed to add in my environment variables and the rest was all set up through my package.json file that was already there. Overall, Render is great with the auto-deployment when changes are pushed to main and works fairly well speed wise given the free version. Overall it seems better than Glitch given the auto-deployment and more functionality with changing settings and such. Although, you can’t edit things directly in Render unlike Glitch.
