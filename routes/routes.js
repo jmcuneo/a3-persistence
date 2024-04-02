@@ -33,10 +33,10 @@ function calculatePrice(bilingObj) {
     if (totalPrice < 50) {
         discount = 0.10 //10%
     }
-    else if (totalPrice <= 50 && totalPrice > 100) {
+    else if (totalPrice >= 50 && totalPrice < 100) {
         discount = 0.20 //20%
     }
-    else if (totalPrice <= 100 && totalPrice > 500) {
+    else if (totalPrice >= 100 && totalPrice < 500) {
         discount = 0.30 //30%
     }
     else if (totalPrice >= 500) {
@@ -81,7 +81,6 @@ router.get('/instructions', isAuth, (req, res) => {
 router.get('/user_info', isAuth, async (req, res) => {
     try {
         const userdata = await User.find({ githubId: req.user.githubId }).lean()
-        console.log(userdata)
         res.render('user', { userdata: userdata })
     } catch (err) {
         res.render('error')

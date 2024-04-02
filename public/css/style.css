@@ -4,6 +4,14 @@ body{
     font-family: "Nunito Sans", sans-serif !important; /* Applying Google Font for entire body*/
     background: #E0FFFF !important;
     margin: 0;
+    position: relative;
+}
+
+.apply-translation{
+    animation: fade-in 2s forwards;
+    opacity: 0;
+    transform: translateY(540px);
+    padding: 4em 2em;
 }
 
 .flex-container{
@@ -14,13 +22,24 @@ body{
 }
 
 .flex-item{
-    margin: 100px 10px 10px 10px;
+    margin: 0 10px 10px 10px;
 }
 
 .inside-form{
     border: 2px solid #ced4da;
     width: 50%;
     padding: 20px;
+}
+
+.login-entry{
+    text-align: center;
+}
+
+.footer{
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
 }
 
 .top-nav{
@@ -36,10 +55,10 @@ body{
 
 .top-nav-custom{
     top: 0;
-    position: absolute;
+    position: relative;
     width: 100%;
 }
-
+.top-nav-custom h1{  margin-top: 0}
 .title{
     margin: 5px 0 0 0;
 }
@@ -107,25 +126,24 @@ input[type=text], input[type=number], input[type=date], select{
 /* dashboard */
 
 .dashboard{
-    margin: 100px 0 0 50px;
 }
 
 dashboard-links{
     padding: 10px 10%;
 }
 
-#services{
+#dashboard-options{
     padding: 30px 0; /*30px top & bottom, 0 left & right */
 }
 
-.services-list{
+.dashboard-options-list{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* will align content beside in columns */
     grid-gap: 40px; /* gap between each column */
     margin-top: 50px;
 }
 
-.services-list div{
+.dashboard-options-list div {
     background: #427cc5;
     padding: 40px;
     font-size: 13px;
@@ -134,7 +152,7 @@ dashboard-links{
     transition: background 0.5s, transform 0.5s; /* when hovered background changed, so transition added */
 }
 
-.services-list div a{
+.dashboard-options-list div a{
     text-decoration: none;
     color: #000;
     font-size: 20px;
@@ -142,7 +160,30 @@ dashboard-links{
     display: inline-block;
 }
 
-.services-list div:hover{
+.dashboard-options-list div:hover{
     background: #3CB371;
     transform: translateY(-10px); /* when hovered, the section moves up */
+}
+
+.modal-body-form{
+    max-height: 222px;
+    overflow: auto;
+}
+
+@keyframes fade-in {
+    from{
+        opacity: 0;
+        transform: translateY(540px);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.display-results h1 {
+    margin: 20px 0 10px;
+}
+.display-results svg {
+   height: 20px;
+    width: 20px;
 }

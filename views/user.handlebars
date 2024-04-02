@@ -34,17 +34,19 @@
     </div>
 </nav>
 
-{{#each userdata}}
-    <div class="dashboard">
-        <h1>User Information</h1>
-        <label><b>Github ID</b></label>
-        <input class="form-control" type="text" value="{{githubId}}" aria-label="Disabled input example" disabled readonly>
-        <label><b>Display Name</b></label>
-        <input class="form-control" type="text" value="{{displayName}}" aria-label="Disabled input example" disabled readonly>
-        <label><b>Github URL</b></label>
-        <input class="form-control" type="text" value="{{githubUrl}}" aria-label="Disabled input example" disabled readonly>
-        <label><b>Created At</b></label>
-        <input class="form-control" type="text" value="{{createdAt}}" aria-label="Disabled input example" disabled readonly>
-    </div>
+<div class="apply-translation">
+    {{#each userdata}}
+        <div class="dashboard">
+            <h1>User Information</h1>
+            <label><b>Github ID</b></label>
+            <input class="form-control" type="text" value="{{githubId}}" aria-label="Disabled input example" disabled readonly>
+            <label><b>Display Name</b></label>
+            <input class="form-control" type="text" value="{{displayName}}" aria-label="Disabled input example" disabled readonly>
+            <label><b>Github URL</b></label>
+            <input class="form-control" type="text" value="{{githubUrl}}" aria-label="Disabled input example" disabled readonly>
+            <label><b>Created At</b></label>
+            <input class="form-control" type="text" value="{{createdAt}}" aria-label="Disabled input example" disabled readonly>
+        </div>
 
-{{/each}}
+    {{/each}}
+</div>

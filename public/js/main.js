@@ -11,7 +11,7 @@ async function deleteRow(r) {
         body: payload, //sending the object to server with delete request
     })
 
-    const text = await response.text()
+    //const text = await response.text()
     alert("Deleted Successfully!!")
     location.reload()
 

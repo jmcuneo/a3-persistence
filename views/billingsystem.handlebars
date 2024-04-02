@@ -34,147 +34,169 @@
     </div>
 </nav>
 
-<div class="flex-container">
-    <div class="flex-item inside-form">
-        <form action="/add-data" method="POST"> <!-- form for user to enter purchase data -->
-            <label>Product Name</label>
-            <br>
-            <input autofocus autocomplete="off" type="text" name="productName" id="productname" placeholder="Enter product name" required>
-            <br>
-            <label>Date Of Purchase</label>
-            <input autocomplete="off" type="date" id="purchasedate" name="purchaseDate" required>
-            <br>
-            <label>Product Cost</label>
-            <input autocomplete="off" type="number" id="cost" name="cost" placeholder="Enter cost for single" required>
-            <br>
-            <label>Product Quantity</label>
-            <input autocomplete="off" type="number" id="quantity" name="quantity" placeholder="Enter quantity" required>
-            <br>
-            <label>Product Category</label>
-            <br>
-            <select id="category" name="category">
-                <option disabled selected>Choose Category</option>
-                <option value="food">Food</option>
-                <option value="electronics">Electronics</option>
-                <option value="furniture">Furniture</option>
-                <option value="clothing">Clothing</option>
-                <option value="kitchen">Kitchen</option>
-                <option value="living-bedroom">Living/Bedroom space</option>
-                <option value="other">Other</option>
-            </select>
-            <br>
-            <label>Product Description</label>
-            <br>
-            <input autocomplete="off" type="text" id="description" name="description" placeholder="Enter any product description" required>
-            <input type="hidden" value="{{id}}" name="githubId">
-            <br>
-            <button type="submit" id="submit" class="btn btn-outline-primary submit-btn">SUBMIT</button>
-            <button type="reset" class="btn btn-outline-primary submit-btn">RESET</button>
-        </form>
+<div class="apply-translation">
+    <div class="flex-container">
+        <div class="flex-item inside-form">
+            <form action="/add-data" method="POST"> <!-- form for user to enter purchase data -->
+                <label>Product Name</label>
+                <br>
+                <input autofocus autocomplete="off" type="text" name="productName" id="productname" placeholder="Enter product name" required>
+                <br>
+                <label>Date Of Purchase</label>
+                <input autocomplete="off" type="date" id="purchasedate" name="purchaseDate" required>
+                <br>
+                <label>Product Cost</label>
+                <input autocomplete="off" type="number" id="cost" name="cost" placeholder="Enter cost for single" required>
+                <br>
+                <label>Product Quantity</label>
+                <input autocomplete="off" type="number" id="quantity" name="quantity" placeholder="Enter quantity" required>
+                <br>
+                <label>Product Category</label>
+                <br>
+                <select id="category" name="category">
+                    <option disabled selected>Choose Category</option>
+                    <option value="food">Food</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="furniture">Furniture</option>
+                    <option value="clothing">Clothing</option>
+                    <option value="kitchen">Kitchen</option>
+                    <option value="living-bedroom">Living/Bedroom space</option>
+                    <option value="other">Other</option>
+                </select>
+                <br>
+                <label>Product Description</label>
+                <br>
+                <input autocomplete="off" type="text" id="description" name="description" placeholder="Enter any product description" required>
+                <input type="hidden" value="{{id}}" name="githubId">
+                <br>
+                <button type="submit" id="submit" class="btn btn-outline-primary submit-btn">SUBMIT</button>
+                <button type="reset" class="btn btn-outline-primary submit-btn">RESET</button>
+            </form>
+        </div>
+        <div class="flex-item display-results">
+            <h1>Purchase Data (Data for {{username}})</h1>
+            {{#if billingdata }}
+                <table class="table table-hover">
+    <!--            <table id="my-table" class="table-info"> &lt;!&ndash; creating a table for purchase data&ndash;&gt;-->
+                    <thead> <!-- for table heading columns, 1st row -->
+                    <tr>
+                        <th>#</th>
+                        <th>Product Details</th>
+                        <th>Final Price</th>
+                        <th>Modify</th>
+                    </tr>
+                    </thead>
+                    <tbody id='table-body'> <!-- for table body with all rows/cells filled with data -->
+                        {{#each billingdata}}
+                            <tr>
+                                <td>
+                                    {{@index}}
+                                </td>
+                                <td>
+                                    <ul>
+                                        <li>Product Name: {{productName}}</li>
+                                        <li>Purchase Date: {{purchaseDate}}</li>
+                                        <li>Cost: ${{cost}}</li>
+                                        <li>Quantity: {{quantity}}</li>
+                                        <li>Category: {{category}}</li>
+                                        <li>Description: {{description}}</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul>
+                                        <li>Total Price: ${{totalPrice}}</li>
+                                        <li>Discount: {{discount}}%</li>
+                                        <li>After Discount: ${{afterDiscount}}</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <button onClick="deleteRow(this)" data-index = "{{_id}}" id="deleteData" class="submit-btn btn btn-outline-danger">DELETE</button>
+                                    <button type="button" data-toggle="modal" data-target="#exampleModal" onclick="displayRow(this)" class="show-popup submit-btn btn btn-outline-primary"  data-updindex = "{{_id}}" data-updname = "{{productName}}"
+                                            data-dop = "{{purchaseDate}}" data-cost = "{{cost}}" data-quantity = "{{quantity}}"
+                                            data-category = "{{category}}" data-desc = "{{description}}" data-github = "{{githubId}}">UPDATE</button>
+                                </td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            {{else}}
+                <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+                    <symbol id="info-fill" viewBox="0 0 16 16">
+                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                    </symbol>
+                </svg>
+                <div class="alert alert-primary d-flex align-items-center" role="alert">
+                    <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+                    <div>
+                        You have not created any purchase data
+                    </div>
+                </div>
+            {{/if}}
+
+        </div>
     </div>
-    <div class="flex-item display-results">
-        <h1>Purchase Data (Data for {{username}})</h1>
-        {{#if billingdata }}
-            <table class="table table-hover">
-<!--            <table id="my-table" class="table-info"> &lt;!&ndash; creating a table for purchase data&ndash;&gt;-->
-                <thead> <!-- for table heading columns, 1st row -->
-                <tr>
-                    <th>#</th>
-                    <th>Product Details</th>
-                    <th>Final Price</th>
-                    <th>Modify</th>
-                </tr>
-                </thead>
-                <tbody id='table-body'> <!-- for table body with all rows/cells filled with data -->
-                    {{#each billingdata}}
-                        <tr>
-                            <td>
-                                {{@index}}
-                            </td>
-                            <td>
-                                <ul>
-                                    <li>Product Name: {{productName}}</li>
-                                    <li>Purchase Date: {{purchaseDate}}</li>
-                                    <li>Cost: ${{cost}}</li>
-                                    <li>Quantity: {{quantity}}</li>
-                                    <li>Category: {{category}}</li>
-                                    <li>Description: {{description}}</li>
-                                </ul>
-                            </td>
-                            <td>
-                                <ul>
-                                    <li>Total Price: ${{totalPrice}}</li>
-                                    <li>Discount: {{discount}}%</li>
-                                    <li>After Discount: ${{afterDiscount}}</li>
-                                </ul>
-                            </td>
-                            <td>
-                                <button onClick="deleteRow(this)" data-index = "{{_id}}" id="deleteData" class="submit-btn btn btn-outline-danger">DELETE</button>
-                                <button type="button" onclick="openPopup(); displayRow(this)" class="show-popup submit-btn btn btn-outline-primary"  data-updindex = "{{_id}}" data-updname = "{{productName}}"
-                                        data-dop = "{{purchaseDate}}" data-cost = "{{cost}}" data-quantity = "{{quantity}}"
-                                        data-category = "{{category}}" data-desc = "{{description}}" data-github = "{{githubId}}">UPDATE</button>
-                            </td>
-                        </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-        {{else}}
-            <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-                <symbol id="info-fill" viewBox="0 0 16 16">
-                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-                </symbol>
-            </svg>
-            <div class="alert alert-primary d-flex align-items-center" role="alert">
-                <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
-                <div>
-                    You have not created any purchase data
+
+    <!-- Modal -->
+
+<!--    <div class="popup" id="popup">-->
+<!--        <h2>Form Update</h2>-->
+<!--        -->
+<!--    </div>-->
+</div>
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update </h5>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body-form" >
+                    <form action="/update_data", method="POST"> <!-- form for user to update purchase data -->
+                        <input type="hidden" name="_method" value="PUT">
+                        <label>Product Name</label>
+                        <br>
+                        <input autocomplete="off" type="text" id="updproductname" name="productName" placeholder="Enter product name" required>
+                        <br>
+                        <label>Date Of Purchase</label>
+                        <input aria-label="purchase-date" autocomplete="off" type="date" id="updpurchasedate" name="purchaseDate" required>
+                        <br>
+                        <label>Product Cost</label>
+                        <input autocomplete="off" type="number" id="updcost" name="cost" placeholder="Enter cost for single" required>
+                        <br>
+                        <label>Product Quantity</label>
+                        <input autocomplete="off" type="number" id="updquantity" name="quantity" placeholder="Enter quantity" required>
+                        <br>
+                        <label>Product Category</label>
+                        <br>
+                        <select id="updcategory" name="category" aria-label="category">
+                            <option disabled selected>Choose Category</option>
+                            <option value="food">Food</option>
+                            <option value="electronics">Electronics</option>
+                            <option value="furniture">Furniture</option>
+                            <option value="clothing">Clothing</option>
+                            <option value="kitchen">Kitchen</option>
+                            <option value="living-bedroom">Living/Bedroom space</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <br>
+                        <label>Product Description</label>
+                        <br>
+                        <input autocomplete="off" type="text" id="upddescription" name="description" placeholder="Enter any product description" required>
+                        <br>
+                        <input type="hidden" id="githubid" name="githubId" readonly>
+                        <input type="hidden" id="updindex" name="_id" readonly>
+                        <!--        <button type="submit" id="updsubmit" class="submit-btn" onclick="updateRow(); closePopup()">UPDATE</button>-->
+
+                        <!--        <button id="reset" type="reset" class="submit-btn">RESET</button>-->
+                    </form>
+
                 </div>
             </div>
-        {{/if}}
-
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="closePopup()">Close</button>
+                <button type="submit" class="btn btn-success btn-sm" id="updsubmit">UPDATE</button>
+                <button type="reset" class="btn btn-primary btn-sm" id="reset">RESET</button>
+            </div>
+        </div>
     </div>
-</div>
-
-<div class="popup" id="popup">
-    <h2>Form Update</h2>
-    <form action="/update_data", method="POST"> <!-- form for user to update purchase data -->
-        <input type="hidden" name="_method" value="PUT">
-        <label>Product Name</label>
-        <br>
-        <input autocomplete="off" type="text" id="updproductname" name="productName" placeholder="Enter product name" required>
-        <br>
-        <label>Date Of Purchase</label>
-        <input autocomplete="off" type="date" id="updpurchasedate" name="purchaseDate" required>
-        <br>
-        <label>Product Cost</label>
-        <input autocomplete="off" type="number" id="updcost" name="cost" placeholder="Enter cost for single" required>
-        <br>
-        <label>Product Quantity</label>
-        <input autocomplete="off" type="number" id="updquantity" name="quantity" placeholder="Enter quantity" required>
-        <br>
-        <label>Product Category</label>
-        <br>
-        <select id="updcategory" name="category">
-            <option disabled selected>Choose Category</option>
-            <option value="food">Food</option>
-            <option value="electronics">Electronics</option>
-            <option value="furniture">Furniture</option>
-            <option value="clothing">Clothing</option>
-            <option value="kitchen">Kitchen</option>
-            <option value="living-bedroom">Living/Bedroom space</option>
-            <option value="other">Other</option>
-        </select>
-        <br>
-        <label>Product Description</label>
-        <br>
-        <input autocomplete="off" type="text" id="upddescription" name="description" placeholder="Enter any product description" required>
-        <br>
-        <input type="hidden" id="githubid" name="githubId" readonly>
-        <input type="hidden" id="updindex" name="_id" readonly>
-<!--        <button type="submit" id="updsubmit" class="submit-btn" onclick="updateRow(); closePopup()">UPDATE</button>-->
-        <button type="submit" class="btn btn-outline-primary submit-btn" id="updsubmit">UPDATE</button>
-        <button type="reset" class="btn btn-outline-primary submit-btn" id="reset">RESET</button>
-<!--        <button id="reset" type="reset" class="submit-btn">RESET</button>-->
-    </form>
-    <button class="btn btn-outline-danger submit-btn" type="button" onclick="closePopup()">CANCEL</button>
 </div>
