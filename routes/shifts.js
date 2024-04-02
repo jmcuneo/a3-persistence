@@ -6,9 +6,10 @@ const 	app = require('express'),
 
 
 router.post("/add", async (req, res) => {
+	console.log(req.body);
 	const db = database();
 
-	if (!req.body.id) {
+	if (req.body.id == "") {
 		let shiftID = await getNextID(req.user.username);
 		console.log(shiftID);
 		const startDate = dayjs(req.body.start);
