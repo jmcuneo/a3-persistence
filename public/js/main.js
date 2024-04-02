@@ -40,10 +40,11 @@ const deleteShift = async function (event) {
 	const form = document.getElementById("removeForm");
 
 	// define fields to receive from removal, convert to json
-	const shiftID = document.querySelector("#shiftID"),
-		json = { id: shiftID.value },
+	const removeID = document.querySelector("#shiftID"),
+		json = { removeID: removeID.value },
 		body = JSON.stringify(json)
 
+	console.log(body);
 	// perform delete request using fields
 	const response = await fetch("/shifts/delete", {
 		method: "DELETE",
