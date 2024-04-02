@@ -96,6 +96,7 @@ Sample Readme (delete the above when you're ready to submit, and modify the belo
 # Recipe Cookbook
 
 Link: https://a3-EllysGorodisch.onrender.com
+
 *Note: May take long amount of time to load*
 
 - Goal
@@ -148,7 +149,7 @@ Link: https://a3-EllysGorodisch.onrender.com
 - *Help users avoid and correct mistakes*: Added alert for when all fields are not filled when a form is submitted
 
 ### CRAP Principles
-**Contrast**: 
+**Contrast**: I used contrast heavily throughout my site. Since I am using a dark mode color palette, the contrast is very important. The text is very  contrasted from the background. The buttons are especially contrasted from both the white text and the dark blue background. The focus color of the buttons is highly contrasted with the normal button color, while still being contrasted with the text and the background. The focus color for the input and select fields also provides enough contrast for them to be distinguishable. The buttons received the most emphasis and contrast on each page, due to their color not being part of the blue-white monochrome palette of the rest of the page. This is important so that users can immediately know what they need to do to complete every action on the page.
 
 **Repetition**: I used repetition heavily while creating my site. I used the same color scheme and font throughout the site, using the Pico Sand CSS framework. I also changed the button focus color for all buttons on the site. This created a sense of cohesion and unity throughout the site, removing any doubt that the two pages belong to the same site. The input forms on the recipes page are formatted in the same way with the same elements. A header followed by input fields and then a button. The repetition of this format helps make it clearer for users to know what is an action that they can take. I repeated the same top padding above each of the forms so that the groupings are more visually distinct.
 
