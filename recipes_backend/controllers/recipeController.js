@@ -1,9 +1,11 @@
 const asyncHandler = require("express-async-handler");
+const Recipe = require("../models/recipeModel");
 //@desc Get all recipes
 //@ route GET /recipes
 //@access public
 const getRecipes = asyncHandler(async (req,res)=>{
-    res.status(200).json({message: "Get all recipes"});
+    const recipes = Recipe.find();
+    res.status(200).json(recipes);
 });
 
 //@desc Create new recipe
