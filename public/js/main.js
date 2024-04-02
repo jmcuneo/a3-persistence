@@ -54,10 +54,8 @@ const deleteShift = async function (event) {
 
 	form.reset();
 
-
 	const html = await response.text();
 	document.body.innerHTML = html;
-
 }
 
 
