@@ -50,6 +50,7 @@ router.delete("/delete", async (req, res) => {
 	const db = database();
 	const coll = db.collection("shifts");
 	const query = { id: req.body.id.toString(), user: req.user.username };
+	console.log(query);
 	const find = await coll.findOne(query);
 	if (find) {
 		const result = await coll.deleteOne({_id: find._id});
