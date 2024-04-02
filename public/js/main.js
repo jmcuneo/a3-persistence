@@ -5,8 +5,8 @@ const MongoClient = require("mongodb").MongoClient;
 const app = express();
 const port = 3000;
 const mongoUrl = "mongodb://localhost:27017"; // Your MongoDB connection URL
-const dbName = "your-database-name"; // Your MongoDB database name
-const collectionName = "your-collection-name"; // Your MongoDB collection name
+const dbName = "JacobsA3Database"; // Your MongoDB database name
+const collectionName = "A3Dataset"; // Your MongoDB collection name
 
 app.use(bodyParser.json());
 
