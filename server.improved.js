@@ -11,6 +11,9 @@ const express = require("express"),
 let users;
 let userData;
 let currentUser; // for ID for user
+let userCount; //total number of users
+let dataCount; //total number of data
+let currentUserDataCount; //current number of data for user
 
 //MONGODB CODE
 const { MongoClient, ServerApiVersion } = require('mongodb');
@@ -34,7 +37,10 @@ async function run() {
         const database = client.db("Cars");
         users = database.collection("users");
         userData = database.collection("userData");
-
+        userCount = await users.countDocuments();
+        //console.log(userCount);
+        dataCount = await userData.countDocuments();
+        //console.log(users.countDocuments());
 //        const cursor = users.find();
         //await cursor.forEach(console.log)
     } finally {
@@ -62,6 +68,7 @@ app.use(express.json())
 app.get('/', (request, response) => {
     //sendFile( response, "public/main.html" )
     response.sendFile('public/login.html', { root: __dirname })
+
 })
 app.post('/login', async (request, response) => {
     let username = Object.values(request.body)[0];
@@ -70,7 +77,23 @@ app.post('/login', async (request, response) => {
     if (user && user.password === password) {
         response.json({success: true});
         //console.log(user._id);
-        currentUser = user._id;
+        currentUser = user._id.toString();
+        console.log(currentUser);
+
+
+      let currentData = await userData.find({user: currentUser}).toArray();
+      currentUserDataCount = currentData.length;
+      console.log(currentData);
+      /*
+        for(let i = 0; i <dataCount; i++){
+            if(currentUser === userData[i].user){
+                currentUserDataCount++;
+            }
+        }
+
+         */
+
+
     } else if(user){
         response.json({success: false, message: "Invalid password"});
     }  else if(username === "" || password === ""){
@@ -79,6 +102,7 @@ app.post('/login', async (request, response) => {
         await users.insertOne({username: username, password: password});
         response.json({success: true});
         currentUser = user._id;
+        currentUserDataCount = 0;
     }
 })
 
@@ -88,13 +112,18 @@ app.get('/data', (request, response) => {
     request.on("data", function(data) {
         dataString += data
     })
-    request.on("end", function() {
+    request.on("end", async function () {
         // ... do something with the data here!!!
         //console.log("made it here")
         //console.log(typeof Object.values(JSON.parse( dataString ))[0] === 'string')
         //console.log(appdata)
-        var jsonArray = JSON.stringify(appdata)
-        response.writeHead(200, "OK", { "Content-Type": "text/plain" })
+
+        //console.log(users.find({_id: currentUser}));
+        console.log(currentUserDataCount);
+        console.log(typeof currentUserDataCount);
+        let currentData = await userData.find({user: currentUser}).toArray();
+        var jsonArray = JSON.stringify(currentData)
+        response.writeHead(200, "OK", {"Content-Type": "text/plain"})
         response.end(jsonArray)
     })
 })
@@ -106,7 +135,7 @@ app.post('/submit', (request, response) => {
     request.on("data", function(data) {
         dataString += data
     })
-    request.on("end", function() {
+    request.on("end", async function () {
         //console.log( JSON.parse( dataString ) )
 
         // ... do something with the data here!!!
@@ -119,64 +148,74 @@ app.post('/submit', (request, response) => {
         ) {
             console.log("it broke")
         } else {
-            /*
-            appdata.push({
-                "Id": Object.values(JSON.parse(dataString))[0],
-                "model": Object.values(JSON.parse(dataString))[1],
-                "year": parseInt(Object.values(JSON.parse(dataString))[2]),
-                "mpg": parseInt(Object.values(JSON.parse(dataString))[3]),
-                "fuelLoad": parseInt(Object.values(JSON.parse(dataString))[4]),
-                "tillEmpty": parseInt(Object.values(JSON.parse(dataString))[3]) *
-                    parseInt(Object.values(JSON.parse(dataString))[4])
-            })
-             */
+            currentUserDataCount++;
+            await userData.insertOne({
+                Id: parseInt(currentUserDataCount),
+                model: Object.values(JSON.parse(dataString))[1],
+                year: parseInt(Object.values(JSON.parse(dataString))[2]),
+                mpg: parseInt(Object.values(JSON.parse(dataString))[3]),
+                fuelLoad: parseInt(Object.values(JSON.parse(dataString))[4]),
+                tillEmpty: parseInt(Object.values(JSON.parse(dataString))[3]) * parseInt(Object.values(JSON.parse(dataString))[4]),
+                user: currentUser
+            });
+            //console.log(currentUserDataCount);
+            //console.log(typeof currentUserDataCount);
         }
 
         //console.log(typeof Object.values(JSON.parse( dataString ))[0] === 'string')
         //console.log(appdata)
-        var jsonArray = JSON.stringify(appdata)
-        response.writeHead(200, "OK", { "Content-Type": "text/plain" })
+        let currentData = await userData.find({user: currentUser}).toArray();
+        var jsonArray = JSON.stringify(currentData)
+        response.writeHead(200, "OK", {"Content-Type": "text/plain"})
         response.end(jsonArray)
     })
 
 })
 
-app.delete('/submit', (request, response) => {
+app.delete('/remove', (request, response) => {
     let dataString = ""
 
     request.on("data", function(data) {
         dataString += data
     })
 
-    request.on("end", function() {
+    request.on("end", async function () {
         // console.log( JSON.parse( dataString ) )
 
         // console.log("made it here to delete")
-
+        const query = {Id: parseInt(Object.values(JSON.parse(dataString))[0]), user: currentUser};
+        let currentData = await userData.find({user: currentUser}).toArray();
         //console.log(typeof Object.values(JSON.parse( dataString ))[0] === 'string')
         if (isNaN(parseInt(Object.values(JSON.parse(dataString))[0])) ||
             parseInt(Object.values(JSON.parse(dataString))[0]) <= 0 ||
-            parseInt(Object.values(JSON.parse(dataString))[0]) > appdata.length + 1) {} else {
-            for (let i = 0; i < appdata.length; i++) {
-                if (parseInt(Object.values(JSON.parse(dataString))[0]) === appdata[i].Id) {
-                    appdata.splice(i, 1)
+            parseInt(Object.values(JSON.parse(dataString))[0]) > currentData.length + 1) {
+        } else {
+            for (let i = 0; i < currentData.length; i++) {
+                if (parseInt(Object.values(JSON.parse(dataString))[0]) === currentData[i].Id) {
+                    await userData.deleteOne(query);
+                    currentUserDataCount--;
                 }
             }
         }
 
-        //console.log("app length: " + appdata.length)
-        for (let i = 0; i < appdata.length; i++) {
-            appdata[i].Id = i + 1;
+        currentData = await userData.find({user: currentUser}).toArray();
+
+        for (let i = 0; i < currentData.length; i++) {
+            const query = {Id: currentData[i].Id, user: currentUser};
+            const newValues = {$set: {Id: i + 1}};
+            userData.updateOne(query, newValues);
         }
+
+
 
         //console.log(appdata)
         var jsonArray = JSON.stringify(appdata)
-        response.writeHead(200, "OK", { "Content-Type": "text/plain" })
+        response.writeHead(200, "OK", {"Content-Type": "text/plain"})
         response.end(jsonArray)
     })
 })
 
-app.put('/submit', (request, response) => {
+app.put('/modify', (request, response) => {
     let dataString = ""
 
     request.on("data", function(data) {
@@ -186,42 +225,48 @@ app.put('/submit', (request, response) => {
     let indexToChange = 0;
     let indexFound = false;
 
-    request.on("end", function() {
+    request.on("end", async function () {
+        let currentData = await userData.find({user: currentUser}).toArray();
+        const query = {Id: parseInt(Object.values(JSON.parse(dataString))[0]), user: currentUser};
         if (isNaN(parseInt(Object.values(JSON.parse(dataString))[0])) ||
             parseInt(Object.values(JSON.parse(dataString))[0]) <= 0 ||
-            parseInt(Object.values(JSON.parse(dataString))[0]) > appdata.length
+            parseInt(Object.values(JSON.parse(dataString))[0]) > currentData.length
         ) {
 
         } else {
-            for (let i = 0; i < appdata.length; i++) {
-                if (parseInt(Object.values(JSON.parse(dataString))[0]) === appdata[i].Id) {
+            for (let i = 0; i < currentData.length; i++) {
+                if (parseInt(Object.values(JSON.parse(dataString))[0]) === currentData[i].Id) {
                     indexFound = true;
                     indexToChange = i;
                 }
 
                 if (indexFound && Object.values(JSON.parse(dataString))[1] !== "") {
-                    appdata[indexToChange].model = Object.values(JSON.parse(dataString))[1];
+                    const newValues = {$set: {model: Object.values(JSON.parse(dataString))[1]}};
+                    userData.updateOne(query, newValues);
                 }
 
                 if (indexFound && parseInt(Object.values(JSON.parse(dataString))[2]) > 0) {
-                    appdata[indexToChange].year = parseInt(Object.values(JSON.parse(dataString))[2]);
+                    const newValues = {$set: {year: parseInt(Object.values(JSON.parse(dataString))[2])}};
+                    userData.updateOne(query, newValues);
                 }
 
                 if (indexFound && parseInt(Object.values(JSON.parse(dataString))[3]) > 0) {
-                    appdata[indexToChange].mpg = parseInt(Object.values(JSON.parse(dataString))[3]);
-                    appdata[indexToChange].tillEmpty = appdata[indexToChange].mpg * appdata[indexToChange].fuelLoad;
+                    const newValues = {$set: {mpg: parseInt(Object.values(JSON.parse(dataString))[3]), tillEmpty: parseInt(Object.values(JSON.parse(dataString))[3]) * currentData[indexToChange].fuelLoad}};
+                    userData.updateOne(query, newValues);
                 }
 
                 if (indexFound && parseInt(Object.values(JSON.parse(dataString))[4]) > 0) {
-                    appdata[indexToChange].fuelLoad = parseInt(Object.values(JSON.parse(dataString))[4]);
-                    appdata[indexToChange].tillEmpty = appdata[indexToChange].mpg * appdata[indexToChange].fuelLoad;
+                    const newValues = {$set: {fuelLoad: parseInt(Object.values(JSON.parse(dataString))[4]), tillEmpty: parseInt(Object.values(JSON.parse(dataString))[4]) * currentData[indexToChange].mpg}};
+                    userData.updateOne(query, newValues);
                 }
 
             }
         }
 
-        var jsonArray = JSON.stringify(appdata)
-        response.writeHead(200, "OK", { "Content-Type": "text/plain" })
+        currentData = await userData.find({user: currentUser}).toArray();
+
+        var jsonArray = JSON.stringify(currentData)
+        response.writeHead(200, "OK", {"Content-Type": "text/plain"})
         response.end(jsonArray)
     })
 

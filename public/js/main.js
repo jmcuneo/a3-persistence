@@ -45,6 +45,11 @@ function updateIDs(){
     cells[0].innerHTML = i;
   }
 }
+
+//Helper for capitalizing car name
+function capitalFirstLetter(str){
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 const submit = async function( event ) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
@@ -73,7 +78,7 @@ const submit = async function( event ) {
     data.push(json);
     //rowNumber++;
     isAdded = true;
-    getData();
+    await getData();
 
   }
 
@@ -81,38 +86,6 @@ console.log(rowNumber)
   const text = await response.text();
   console.log( "text:", text )
 }
-
-//Helper for capitalizing car name
-function capitalFirstLetter(str){
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-// Old Delete that deleted using the same form as add
-/*
-const remove = async function (event){
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
-  event.preventDefault()
-
-  const input1 = document.querySelector( "#model" ),
-      input2 = document.querySelector("#year"),
-      input3 = document.querySelector("#mpg"),
-      input4 = document.querySelector("#fuelLoad"),
-      json = {Id: rowNumber, model: capitalFirstLetter(input1.value), year: input2.value, mpg: input3.value, fuelLoad: input4.value, tillEmpty: input3.value * input4.value},
-      body = JSON.stringify(json)
-
-  const response = await fetch( "/", {
-    method:"DELETE",
-    body
-  })
-
-  const text = await response.text()
-
-  console.log( "text:", text )
-}
-
- */
 
 const remove = async function (event) {
   // stop form submission from trying to load
@@ -124,7 +97,7 @@ const remove = async function (event) {
   const inputID = document.querySelector("#id"),
   json = {"id": inputID.value},
   body = JSON.stringify(json)
-  const response = await fetch( "/submit", {
+  const response = await fetch( "/remove", {
     method:"DELETE",
     body
   })
@@ -142,7 +115,7 @@ const remove = async function (event) {
     data.splice(parseInt(inputID.value) - 1, 1);
     isDeleted = true;
     console.log(data)
-    getData();
+    await getData();
   }
 }
 const modify = async function(event){
@@ -158,7 +131,7 @@ const modify = async function(event){
       json = {Id: input0.value, model: capitalFirstLetter(input1.value), year: input2.value, mpg: input3.value, fuelLoad: input4.value, tillEmpty: input3.value * input4.value},
       body = JSON.stringify(json)
 
-  const response = await fetch( "/submit", {
+  const response = await fetch( "/modify", {
     method:"PUT",
     body
   })
@@ -191,7 +164,7 @@ const getData = async function() {
 
   if(isDeleted){
 
-    for(let i = data.length +1; i > 0; i--){
+    for(let i = data.length +1 ; i > 0; i--){
       table.deleteRow(i)
     }
     isDeleted = false;
