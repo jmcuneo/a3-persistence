@@ -2,14 +2,14 @@
     "version": 2,
     "builds": [
         {
-            "src": "server.improved.js",
+            "src": "/public/server.improved.js",
             "use": "@vercel/node"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "server.improved.js"
+            "dest": "/public/server.improved.js"
         }
     ]
 }
