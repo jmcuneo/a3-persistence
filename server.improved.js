@@ -35,6 +35,7 @@ app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   if (password === 'test') {
     req.session.username = username;
+    req.session.login = true;
     res.redirect('main.html');
   } else {
     res.render('index', { msg: 'login failed, please try again', layout: false });
