@@ -1,3 +1,5 @@
+// require() function use cases that allow for managing dependencies used throughout the file
+
 require('dotenv').config()
 
 const express = require("express");
@@ -13,6 +15,8 @@ const {ensureLoggedIn} = require("connect-ensure-login");
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 const app = express();
 const port = 3000;
+
+// Configuring middleware used by the express routes
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -32,6 +36,8 @@ app.use((req, res, next) => {
 app.engine("html", require("ejs").renderFile)
 app.set("view engine", "html")
 
+// Defining client constant for the MongoDB database
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -43,12 +49,14 @@ const client = new MongoClient(uri, {
 let collection = null
 let collection2 = null
 
+// Function given by MongoDB to run the database
+
 async function run() {
   try {
     await client.connect();
-    // Send a ping to confirm a successful connection
+    // Sending a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    console.log("Pinged deployment. Successfully connected to MongoDB!");
     collection = await client.db("Workout_Data").collection("workouts");
     collection2 = await client.db("Workout_Data").collection("users");
   } catch (err) {
@@ -78,6 +86,8 @@ app.use(async (req, res, next) => {
 
 app.use(express.static("public"));
 
+// Using the passport.js library to implement GitHub authentication using OAuth
+
 passport.use(new GitHubStrategy({
       clientID: process.env.CLIENTID,
       clientSecret: process.env.CLIENTSECRET,
@@ -92,7 +102,7 @@ passport.use(new GitHubStrategy({
         profile: profile
       };
 
-      // Save the user to MongoDB database
+      // Saving the user to MongoDB database
 
 
       collection2.insertOne(user, (err, result) => {
@@ -112,19 +122,7 @@ passport.use(new GitHubStrategy({
     }
 ));
 
-// Login page route
-// app.get('/login', (req, res) => {
-//   res.send('Login Page'); // Replace with your login page content
-// });
-
-// app.get('/', (req, res, next) => {
-//   if (!req.isAuthenticated()) {
-//     return res.redirect('/auth/github/');
-//   }
-//   next();
-// }, (req, res) => {
-//   sendFile(res, "public/index.html");
-// });
+// Routes that check whether the user is authenticated through OAuth
 
 app.get('/auth/github/',
     passport.authenticate('github'));
@@ -150,11 +148,14 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
+// Middleware that automatically redirects to the OAuth login upon visiting the home page
 
 app.get("/", ensureLoggedIn("/login.html") ,(req, res) => {
    //res.render("/views/index.html")
     sendFile(res, "views/index.html")
  });
+
+// Route that allows the user to logout
 
 app.get('/logout', (req, res, next) => {
   req.logout((err) => {
@@ -164,6 +165,8 @@ app.get('/logout', (req, res, next) => {
     res.redirect("/login.html")
   })
 })
+
+// Handles posting workouts to the database
 
 app.post( '/add', async (req,res) => {
   console.log("Reached function");
@@ -191,6 +194,8 @@ app.post( '/add', async (req,res) => {
   res.json( req.body )
 })
 
+// Handles deleting workouts from the database
+
 app.delete( '/remove', async (req,res) => {
   console.log(req.body)
   const result = await client.db("Workout_Data").collection(req.session.passport.user.id).deleteOne({
@@ -200,6 +205,8 @@ app.delete( '/remove', async (req,res) => {
   console.log(result)
   res.json( result )
 })
+
+// Handles editing workouts that are stored in the database
 
 app.put( '/update', async (req,res) => {
 
@@ -231,6 +238,8 @@ app.put( '/update', async (req,res) => {
   res.json( req.body.json )
 })
 
+// Handles getting workouts from the database
+
 app.get("/workout_data", async (req, res) => {
   try {
     const data = await client.db("Workout_Data").collection(req.session.passport.user.id).find().toArray();
@@ -253,27 +262,31 @@ function sendFile(res, filename) {
   });
 }
 
+/*This function computes the logic for the derived field in the table. Based on the workout type, intensity, and duration in minutes, it is able to give you an estimate for calories burned.*/
+
 function calcEstCaloriesBurned(workoutType, workoutIntensity, workoutDurationMins) {
   let caloriesBurnedPerMin;
 
+  /*Stats gain from the Jamaica Hospital Medical Center's - Health Beat website & Captain Calculator*/
   switch (workoutType) {
     case "Soccer":
-      caloriesBurnedPerMin = 8;
+      caloriesBurnedPerMin = 8; // Calories burned per minute for soccer
       break;
     case "Football":
-      caloriesBurnedPerMin = 9;
+      caloriesBurnedPerMin = 9; // Calories burned per minute for football
       break;
     case "Boxing":
-      caloriesBurnedPerMin = 8;
+      caloriesBurnedPerMin = 8; // Calories burned per minute for boxing
       break;
     case "Wrestling":
-      caloriesBurnedPerMin = 9;
+      caloriesBurnedPerMin = 9; // Calories burned per minute for wrestling
       break;
     default:
       caloriesBurnedPerMin = 0;
       break;
   }
 
+  /*The intensities might not be completely accurate, but they are close*/
   switch (workoutIntensity) {
     case "Low":
       caloriesBurnedPerMin *= 0.47;
