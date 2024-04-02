@@ -56,7 +56,7 @@ const submit = async function (event) {
   };*/
 
   //makeGuestList(appdata);
-  console.log("type of text: ", typeof(text))
+  console.log("type of text submit: ", typeof(text))
   addToTable(text);
   
   resetTextBoxes();
@@ -113,9 +113,12 @@ const clearSuggest = function (array) {
   }
 };
 const makeTable = function (array) {
+  console.log(`table array:`)
+  console.log(array)
   //check if table is empty
   for (let j = 0; j < array.length; j++) {
     const entry = array[j];
+    //console.log("suggest row: ", JSON.stringify(entry.Sitem));
     const table = document.getElementById("tableSuggest");
     const row = `<tr id="suggestRow">
               <td>${entry.Sitem}</td>
@@ -196,11 +199,14 @@ const refreshPage = async function () {
  * clear table called to remove the row
  */
 const remove = async function (entryIndex) {
+  const reqObj = {entryIndex: entryIndex}
   const response = await fetch("/remove", {
     method: "POST",
-    body: JSON.stringify(entryIndex)
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(reqObj)
   });
   console.log("entry index: ", entryIndex);
+  console.log("type of entryIndex: ", typeof(entryIndex))
   const text = await response.json();
   console.log("remove: ", text);
   clearTable(text);
@@ -231,10 +237,14 @@ const suggest = async function (event) {
 
   const response = await fetch("/suggest", {
     method: "POST",
+    headers: {"Content-Type": "application/json"},
     body: JSON.stringify(newSuggest),
   });
+  //const text = await response.json();
   const text = await response.json();
   const justAdded = text[text.length - 1];
+  console.log("type of text suggest: ", typeof(text))
+  console.log("suggestdata: ", text);
   clearSuggest(text);
   makeTable(text); //implement second table
   console.log("suggest:", text);

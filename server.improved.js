@@ -19,6 +19,7 @@ let collection = null
 async function run() {
   await client.connect()
   collection = await client.db("a3-db").collection("a3Collection")
+  collectionSuggest = client.db("a3-db").collection("a3Suggest")
 
   //return collection;
   //const result = await collection.find().toArray()
@@ -29,6 +30,10 @@ async function run() {
     if (collection !== null) {
       const docs = await collection.find({}).toArray()
       res.json( docs )
+    }
+    if (collectionSuggest !== null) {
+      const docsSuggest = await collectionSuggest.find({}).toArray()
+      res.json( docsSuggest )
     }
   })
 };
@@ -197,36 +202,33 @@ app.post("/submit", express.json(), async (req, res) => {
 });
 
 //Handle Remove
-app.post("/remove", /*removePost*/ express.json(), async (req, res) => {
+app.post("/remove", express.json(), async (req, res) => {
   //get data to remove
-  console.log("type: ", typeof(req.body))
-  console.log("string: ", typeof(JSON.stringify(req.body)))
-  let indexToRemove = req;
+
+  const indexToRemove = req.body.entryIndex;
+  console.log("index to remove NaN: ", isNaN(indexToRemove))
   console.log("index to remove: ", indexToRemove)
-  let intIndex = parseInt(indexToRemove);
-  console.log("index to remove: ", intIndex)
-  /*
-  // Check if indexToRemove is valid
-  if (indexToRemove < 0 || indexToRemove >= appdata.length) {
-    return res.status(400).send("Invalid index");
-  }*/
+  
+  // Check if indexToRemove is valid/
+  
+  if (isNaN(indexToRemove) || indexToRemove < 0 || indexToRemove >= appdata.length) {
+    return res.status(400).send(JSON.stringify("Invalid index"));
+  }
+
 
   // Get data to remove from appdata array using index
-  const remove = appdata[0];
+  const remove = appdata[indexToRemove];
   console.log("appdata: ", appdata)
   console.log("item to remove: ", remove);
   
   // Use the attribute 'name' of the object to remove data from MongoDB
   const result = await collection.deleteOne({"name": remove.name, "item": remove.item, "_id": remove._id})
   
-  //console.log(result);
-  //res.send("Data removed successfully");
-  appdata.splice(req.body, 1); // Remove the entry from the array
-  //console.log("Removed item at index: ", req.body);
+  console.log(result);
+  appdata.splice(indexToRemove, 1); // Remove the entry from the array
   console.log("Updated appdata: ", appdata);
 
   res.send(appdata);
-
 });
 
 //Handle Refresh
@@ -242,9 +244,22 @@ app.post("/refresh", (req, res) => {
 
 
 //Handle Suggest
-app.post("/suggest", suggestPost, (req, res) => {
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(req.json);
+app.post("/suggest", express.json(), async (req, res) => {
+  console.log(req.body);
+  let data = req.body;
+  console.log(data);
+  var entry = {
+    //name: data.name,
+    Sitem: data.Sitem,
+    //price: data.price,
+    Sqty: data.Sqty, 
+    //cost: data.price * data.qty
+  };
+  suggestdata.push(entry);
+  console.log("req: ", entry);
+  const result = await collectionSuggest.insertOne(entry)
+  //res.json( result );  
+  res.send(JSON.stringify(suggestdata));
 });
 
 //Handle Bring
