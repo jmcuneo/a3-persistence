@@ -2,11 +2,23 @@
 
 let tableIndex = 0;
 
+const login = async function( event ) {
+
+  event.preventDefault()
+
+  console.log("test login button pressed")
+
+  const getAccount = await fetch("/docs",
+      {
+        method:"GET"
+      })
+      .then(response => response.json())
+      .then(console.log)
+
+}
+
 const submit = async function( event ) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
+
   event.preventDefault()
   
   const input = document.querySelector( "#userinput"),
@@ -25,17 +37,27 @@ const submit = async function( event ) {
       .then(console.log)
 
 
+
+
   //Reload page to show changes to the dataset
-  location.reload()
+   location.reload()
 
 }
 
+
+
+//ONLOAD Function:
+
 window.onload = async function() {
+
+  const loginButton = document.getElementById("loginButton")
+  loginButton.onclick = login;
+
   const button = document.getElementById("dataButton");
   button.onclick = submit;
 
 
-  //WORKS!
+
   const populateTable = await fetch("/get_appdata",
       {
         method:"GET"
@@ -43,8 +65,7 @@ window.onload = async function() {
 
   let data = await populateTable.json();
 
- // console.log(data)
-
+  //Insert Retrieved Data
   for(let i = 0; i < data.length; i++)
   {
     if(data[i] !== undefined)
@@ -55,6 +76,7 @@ window.onload = async function() {
   }
 
 }
+
 
 
 //CUSTOM CODE: Add this to the table

@@ -34,7 +34,6 @@ window.onload = async function() {
 
     const loginButton = document.getElementById("loginButton")
     loginButton.onclick = login;
-
     console.log("test login page")
 
 }
