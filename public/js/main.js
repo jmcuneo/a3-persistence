@@ -29,7 +29,7 @@ app.get("/getArray", async (req, res) => {
     res.json(result);
   } catch (err) {
     console.error("Error fetching data:", err);
-    res.status(500).send("Internal server error");
+    res.status(503).send("Internal server error");
   }
 });
 
@@ -41,7 +41,7 @@ app.post("/submit", async (req, res) => {
     res.send("Submitted!");
   } catch (err) {
     console.error("Error adding data:", err);
-    res.status(500).send("Internal server error");
+    res.status(503).send("Internal server error");
   }
 });
 
@@ -52,7 +52,7 @@ app.post("/add", async (req, res) => {
     res.send("Added!");
   } catch (err) {
     console.error("Error adding data:", err);
-    res.status(500).send("Internal server error");
+    res.status(503).send("Internal server error");
   }
 });
 
@@ -63,7 +63,7 @@ app.post("/delete", async (req, res) => {
     res.send("Deleted!");
   } catch (err) {
     console.error("Error deleting data:", err);
-    res.status(500).send("Internal server error");
+    res.status(503).send("Internal server error");
   }
 });
 
@@ -78,7 +78,7 @@ app.post("/edit", async (req, res) => {
     res.send("Edited!");
   } catch (err) {
     console.error("Error editing data:", err);
-    res.status(500).send("Internal server error");
+    res.status(503).send("Internal server error");
   }
 });
 

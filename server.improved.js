@@ -5,14 +5,28 @@ const dir = "public/";
 const port = 3000;
 
 const appdata = [];
-
 const app = express();
+app.use( express.static( 'public' ) );
+app.use( express.static( 'views'  ) ); 
+app.use(express.static("public") );
+app.use(express.json() );
 
-app.use(express.json());
-
-app.get("/", (req, res) => {
-  sendFile(res, "public/index.html");
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`;
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
 });
+
+let collection = null;
+
+
+/*app.get("/", (req, res) => {
+  sendFile(res, "public/index.html");
+});*/
 
 app.get("/getArray", (req, res) => {
   res.json(appdata);
@@ -37,4 +51,20 @@ app.post("/", (req, res) => {
   }
 });
 
-app.listen(3000)
+async function run() {
+  await client.connect()
+  collection = await client.db("JacobsA3Database").collection("A3Dataset")
+  await client.db("JacobsA3Database").command({ ping: 1 });
+  console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  // route to get all docs
+  app.get("/docs", async (req, res) => {
+    if (collection !== null) {
+      const docs = await collection.find({}).toArray()
+      res.json( docs )
+    }
+  })
+}
+
+run();
+
+app.listen(port)
