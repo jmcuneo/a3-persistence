@@ -13,7 +13,9 @@ Include a very brief summary of your project here. Images are encouraged, along 
 add a little more detail about what it does.
 
 ## Technical Achievements
-- **Tech Achievement 1**: - Hosting on alternative service: I decided to use Render as a hosting service. I’m using the free version and using web service hosting. Besides it taking me forever to figure out that I needed a web service and not a static site, it was very easy to set up. I just needed to add in my environment variables and the rest was all set up through my package.json file that was already there. Overall, Render is great with the auto-deployment when changes are pushed to main and works fairly well speed wise given the free version. Overall it seems better than Glitch given the auto-deployment and more functionality with changing settings and such. Although, you can’t edit things directly in Render unlike Glitch.
+- **Tech Achievement 1**: Hosting on alternative service: I decided to use Render as a hosting service. I’m using the free version and using web service hosting. Besides it taking me forever to figure out that I needed a web service and not a static site, it was very easy to set up. I just needed to add in my environment variables and the rest was all set up through my package.json file that was already there. Overall, Render is great with the auto-deployment when changes are pushed to main and works fairly well speed wise given the free version. Overall it seems better than Glitch given the auto-deployment and more functionality with changing settings and such. Although, you can’t edit things directly in Render unlike Glitch.
+- **Tech Achievement 2**: I got a 100% in all of the Lighthouse scores for desktop.
+- **Tech Achievement 3**: 
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: Implement 12 Tips from W3.org

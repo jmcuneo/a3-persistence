@@ -65,3 +65,9 @@ body {
   background-color: var(--accent2);
   border-color: var(--accent2);
 }
+
+.btn-primary:hover {
+  color: inherit;
+  background-color: #ffb32f;
+  border-color: #ffb32f;
+}
