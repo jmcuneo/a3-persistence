@@ -6,7 +6,6 @@ const 	app = require('express'),
 
 
 router.post("/add", async (req, res) => {
-	console.log(req.body);
 	const db = database();
 
 	if (req.body.id == "") {
@@ -47,18 +46,29 @@ router.post("/add", async (req, res) => {
 	res.render("index");
 })
 
-router.delete("/delete", (req, res) => {
-	course = req.body;
+router.delete("/delete", async (req, res) => {
+	const db = database();
+	const coll = db.collection("shifts");
+	const query = { user: req.user.username, id: req.body.id };
 
-	if (appData.some(data => data.cID === course.cID)) {
-		console.log("course exists. deleting");
-		const index = appData.findIndex(data => data.cID === course.cID);
-		appData.splice(index, 1)
+	const result = await coll.deleteOne(query);
+	if (result === 1) {
+		console.log("success")
 	} else {
-		console.log("course does not exist");
+		console.error("unsuccess");
 	}
 
-	res.json(appData);
+	const shifts = await db.collection("shifts").find({}).toArray();
+	shifts.forEach((shift) => {
+		delete shift._id;
+		delete shift.user;
+	})
+	console.log(shifts);
+
+	res.locals.user = req.user.username;
+	res.locals.shiftRecords = shifts;
+	res.render("index");
+	
 })
 
 module.exports = router;

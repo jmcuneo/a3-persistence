@@ -38,8 +38,8 @@ const deleteShift = async function (event) {
 	event.preventDefault()
 
 	// define fields to receive from removal, convert to json
-	const cID = document.querySelector("#removeCID"),
-		json = { cID: parseInt(cID.value) },
+	const shiftID = document.querySelector("#removeCID"),
+		json = { id: shiftID.value },
 		body = JSON.stringify(json)
 
 	// perform delete request using fields
@@ -49,6 +49,8 @@ const deleteShift = async function (event) {
 		body
 	})
 
+	const html = await response.text();
+	document.body.innerHTML = html;
 	// wait for server to respond, being an updated collection of data.
 	// const text = await response.json()
 	// renderCourses(text)
