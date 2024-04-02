@@ -5,6 +5,10 @@
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" 
+          content="A very bad calculator that allows you to input 2 values, an operator, and a guess. 
+                  The table shows mathematical results. 
+                  Entries can be deleted or modified">
     <script src="js/main.js"></script>
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css"> -->
     <link rel="stylesheet" href="css/main.css">
@@ -20,6 +24,7 @@
         <h1>The Worst Calculator</h1>
       </header>
       <div class="forms">
+        <h2>Add Entry Form</h2>
         <form>
           <label for="firstVal">1st Value: </label>
           <input type="number" id="firstVal">
@@ -28,7 +33,7 @@
           <input type="number" id="secVal">
           <br>
           <div class="opForm">
-            <h3>Choose an operator:</h3>
+            <p>Choose an operator:</p>
             <input type="radio" name="operator" id="opA" value="+" checked>
             <label for="opA">+</label>
             <br>
@@ -61,6 +66,8 @@
         </table>
       </div>
       <div id="modForm">
+        <h2>Entry Modification Form</h2>
+        <p>All inputs are optional</p>
         <form>
           <label for="newFirst">New 1st Value: </label>
           <input type="number" id="newFirst">

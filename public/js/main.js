@@ -43,12 +43,14 @@ const submit = async function( event ) {
 
 //Delete an item
 async function deleteItem( event ) {
-  const body = JSON.stringify(event.srcElement.dataset.serverInfo) //Send over the id (index) of the item to delete
+  const reqObj = {id: event.srcElement.dataset.serverInfo}
+  
+  const body = JSON.stringify(reqObj)
 
   const response = await fetch( "/remove", {
     method:'POST',
     headers: { 'Content-Type': 'application/json'},
-    body 
+    body: body
   })
 
   const resp = await response.json()

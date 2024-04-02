@@ -1,4 +1,5 @@
 const express    = require('express'),
+      cookie     = require('cookie-session')
       app        = express()
 
 require('dotenv').config({path: '.env'})
@@ -11,6 +12,11 @@ let collection = null
 app.use( express.static( 'public' ) )
 app.use( express.static( 'views'  ) )
 app.use( express.json() )
+app.use( cookie({
+  name: 'session',
+  keys: ['ihave', 'depression'],
+  login: false
+}))
 
 async function run() {
   await client.connect()
@@ -33,8 +39,19 @@ app.use( (req,res,next) => {
   }
 })
 
-app.post('/login', (req, res) => {
-  console.log(req.body)
+
+app.post( '/login', async (req,res)=> {
+  let data = req.body
+  let userCollection = await client.db("sample_mflix").collection("user-info")
+  let userCheck = userCollection.findOne({username: data.username})
+
+  if(userCheck) {
+    req.session.login = true
+    res.redirect( 'index.html' )
+  }else{
+    // password incorrect, redirect back to login page
+    res.sendFile( __dirname + '/public/index.html' )
+  }
 })
 
 
@@ -94,7 +111,7 @@ function deleteData (request, response) {
 }
 
 app.post( '/remove', async (req, res) => {
-  let data = req.body
+  let data = req.body.id
   let query = { _id: ObjectId.createFromHexString(data)}
   let deletion = await collection.deleteOne(query)
   const result = await collection.find({}).toArray()
