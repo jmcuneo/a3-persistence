@@ -42,17 +42,17 @@ const submit = async function( event ) {
 }
 
 //Delete an item
-function deleteItem( event ) {
+async function deleteItem( event ) {
   const body = JSON.stringify(event.srcElement.dataset.serverInfo) //Send over the id (index) of the item to delete
 
-  fetch( "/remove", {
+  const response = await fetch( "/remove", {
     method:'POST',
-    headers: { 'Content-Type': 'application/json',
-                'Accept': "application/json" },
+    headers: { 'Content-Type': 'application/json'},
     body 
-  }).then( response => response.json() )
-  .then( json => displayData(json) )
+  })
 
+  const resp = await response.json()
+  displayData(resp)
 }
 
 //Modify an item 

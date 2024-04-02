@@ -93,11 +93,11 @@ function deleteData (request, response) {
   } )
 }
 
-app.post( '/remove', (req, res) => {
+app.post( '/remove', async (req, res) => {
   let data = req.body
   let query = { _id: ObjectId.createFromHexString(data)}
-  collection.deleteOne(query)
-  const result = collection.find({}).toArray()
+  let deletion = await collection.deleteOne(query)
+  const result = await collection.find({}).toArray()
   res.json(result)
 })
 
