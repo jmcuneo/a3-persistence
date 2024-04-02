@@ -1,6 +1,6 @@
 ## Ad-Hoc Time Entry System
 
-Website Link: [https://ssgreene.tech/]()
+Website Link: [https://ssgreene.tech/](https://ssgreene.tech/)
 
 I was inspired to rewrite A2 to have a more practical application - a Time Entry system. Since my senior year in high school, I have interned with a medical firm, Sheard & Drugge. Over time, I got rather lazy manually logging my hours in an excel spreadsheet. This solution is a much more effective and efficient solution to create hour logging.
 
