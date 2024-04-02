@@ -10,7 +10,6 @@ router.post("/add", async (req, res) => {
 
 	if (req.body.id == "") {
 		let shiftID = await getNextID(req.user.username);
-		console.log(shiftID);
 		const startDate = dayjs(req.body.start);
 		const endDate = dayjs(req.body.end);
 		const duration = endDate.diff(startDate, 'hour', true);
@@ -74,5 +73,7 @@ router.post("/delete", async (req, res) => {
 	res.render("index");
 	
 })
+
+
 
 module.exports = router;

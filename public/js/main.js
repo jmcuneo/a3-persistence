@@ -44,7 +44,8 @@ const deleteShift = async function (event) {
 		json = { removeID: removeID.value },
 		body = JSON.stringify(json)
 
-	console.log(body);
+	form.reset();
+
 	// perform delete request using fields
 	const response = await fetch("/shifts/delete", {
 		method: "POST",
@@ -52,7 +53,6 @@ const deleteShift = async function (event) {
 		body
 	})
 
-	form.reset();
 
 	const html = await response.text();
 	document.body.innerHTML = html;
