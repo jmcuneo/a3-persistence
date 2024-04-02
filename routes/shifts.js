@@ -49,7 +49,7 @@ router.post("/add", async (req, res) => {
 router.delete("/delete", async (req, res) => {
 	const db = database();
 	const coll = db.collection("shifts");
-	const query = { user: req.user.username, id: req.body.id };
+	const query = { id: req.body.id.toString(), user: req.user.username, };
 
 	const result = await coll.deleteOne(query);
 	if (result === 1) {

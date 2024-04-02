@@ -62,39 +62,6 @@ const deleteShift = async function (event) {
 	// renderCourses(text)
 }
 
-const renderCourses = function (json) {
-	count = json.length;
-	
-	// go through all the courses, and render them to the tbody of the table.
-	// essentially, we create a new tbody, put the data in new tbody and replace
-	// the new tbody with the old tbody.
-	if (count >= 1) {
-		const courses = document.getElementById("courses");
-		let oldTbody = courses.querySelector("tbody");
-		const tbody = document.createElement('tbody');
-
-		json.forEach(element => {
-			let newRow = tbody.insertRow(-1);
-			let idCell = newRow.insertCell(0);
-			let nameCell = newRow.insertCell(1);
-			let profCell = newRow.insertCell(2);
-			let crnCell = newRow.insertCell(3);
-			
-			idCell.appendChild(document.createTextNode(element.cID));
-			nameCell.appendChild(document.createTextNode(element.cName));
-			profCell.appendChild(document.createTextNode(element.prof));
-			crnCell.appendChild(document.createTextNode(element.crn));
-
-		});
-
-		courses.replaceChild(tbody, oldTbody);
-	}
-	else {
-		const courses = document.getElementById("courses");
-		const tbody = courses.querySelector("tbody");
-		tbody.innerHTML = "";
-	}
-}
 
 // bind buttons to respective functions
 window.onload = function () {
