@@ -122,7 +122,8 @@ app.post( '/login', async (request,response)=> {
 
 
 app.get( '/', (req,res) => {
-  res.render( 'login', { msg:'', layout:false })
+  //res.render( 'login', { msg:'', layout:false })
+  res.send("Express on Vercel")
 })
 
 app.get( '/login.html', (req,res) => {
@@ -263,6 +264,7 @@ function determinePriority(data) {
 }
 
 const listener = app.listen( process.env.PORT || 3000 )
+module.exports = app;
 
 
 
