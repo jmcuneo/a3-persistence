@@ -1,6 +1,8 @@
 const express = require('express'),
+    { MongoClient, ObjectId } = require("mongodb"),
     app = express()
-    appdata = [
+
+appdata = [
   { "username": "Bashar", "score": 2000, "time": 100, "scoreOverTime": 20, "date": "1/10/2024", "ID": 1},
   { "username": "Tim", "score": 4000, "time": 90, "scoreOverTime": 44.4, "date": "9/8/2023", "ID": 2 },
   { "username": "Emma", "score": 3000, "time": 70, "scoreOverTime": 42.9, "date": "10/2/2022", "ID": 3}
@@ -15,6 +17,32 @@ app.use(logger)
 app.use( express.static( 'public' ) )
 app.use( express.static( 'views'  ) )
 app.use( express.json() )
+
+const uri = `mongodb+srv://docterbuster:WrAcuHkhqtPSf1OQ@a3-basharalqassar-clust.h6f3nj7.mongodb.net/`
+const client = new MongoClient( uri )
+
+
+let collection = null
+async function run() {
+  await client.connect()
+  collection = await client.db("a3-basharalqassar-db").collection("users")
+  // route to get all docs
+  app.get("/docs", async (req, res) => {
+    if (collection !== null) {
+
+      let loginInfo = req.body
+      console.log(loginInfo)
+
+      const docs = await collection.find(
+          {
+          }).toArray()
+      res.json( docs )
+    }
+  })
+}
+
+run()
+
 
 app.get('/index.html', (req, res) => res.send('Hello World!'))
 
@@ -70,6 +98,20 @@ app.post( '/post_to_appdata', (req, res) => {
 app.get('/get_appdata', (req, res) =>
 {
   res.send(JSON.stringify(appdata))
+})
+
+
+
+app.post('/post_account', (req, res) =>
+{
+  let loginInfo = req.body
+  console.log(loginInfo)
+
+  /*
+    username: loginInfo.username,
+    password: loginInfo.password
+  */
+
 })
 
 
