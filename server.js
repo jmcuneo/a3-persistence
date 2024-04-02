@@ -18,23 +18,25 @@ app.use(session({
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 const client = new MongoClient( uri )
 
-let collection = null
+let charCollection = null
+let loginCollection = null
 
 async function run() {
     await client.connect()
-    collection = await client.db("a3-aidanmacnevin").collection("characters")
+    charCollection = await client.db("a3-aidanmacnevin").collection("characters")
+    loginCollection = await client.db("a3-aidanmacnevin").collection("login")
 
     // route to get all docs
     app.get("/docs", async (req, res) => {
-        if (collection !== null) {
-            const docs = await collection.find({}).toArray()
+        if (charCollection !== null) {
+            const docs = await charCollection.find({}).toArray()
             res.json( docs )
         }
     })
 }
 
 app.use( (req,res,next) => {
-    if( collection !== null ) {
+    if( charCollection !== null ) {
         next()
     }else{
         res.status( 503 ).send()
@@ -51,13 +53,22 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
     // TODO: load from mongodb
-    const { username, password } = req.body;
-    const user = users.find(u => u.username === username && u.password === password);
+    const {username, password} = req.body;
 
-    if (user) {
-        req.session.userId = user.id;
+    const user = await loginCollection.findOne({username: username});
+
+    let validated = false;
+
+    if (!user) {
+        return false;
+    }
+
+    validated = user.password === password;
+
+    if (validated) {
+        req.session.userId = user.username;
         res.redirect('/main');
     } else {
         res.send('Invalid username or password');
@@ -84,13 +95,13 @@ app.post( '/submit', async (req,res) => {
 })
 
 app.post( '/delete', async (req,res) => {
-    const result = await collection.deleteOne({ _id: new ObjectId(req.body.deleteId) });
+    const result = await charCollection.deleteOne({ _id: new ObjectId(req.body.deleteId) });
     res.send("Data successfully deleted")
 })
 
 app.post( '/edit', async (req,res) => {
     console.log("Request Body: ", req.body);
-    const result = await collection.updateOne(
+    const result = await charCollection.updateOne(
         { _id: new ObjectId(req.body.id) },
         {$set: {
                 "name": req.body.name,
@@ -222,7 +233,7 @@ const saveData = async function (myDataJSON) {
     }
 
     // Add to mongodb
-    const result = await collection.insertOne({
+    const result = await charCollection.insertOne({
         "name": myDataJSON.charname,
         "race": myDataJSON.charrace,
         "class": myDataJSON.charclass,
