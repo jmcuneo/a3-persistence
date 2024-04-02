@@ -5,7 +5,15 @@ const submit = async function(event) {
   const input_teammates = document.querySelector("#teammates").value;
   const input_points = document.querySelector("#points").value;
 
-  const project = { name: input_name, teammates: input_teammates, points: input_points };
+  console.log("Name:", input_name);
+  console.log("Teammates:", input_teammates);
+  console.log("Points:", input_points);
+
+  const project = {
+    name: input_name,
+    teammates: input_teammates,
+    points: input_points
+  };
 
   try {
     const response = await fetch("/add", {
@@ -17,8 +25,9 @@ const submit = async function(event) {
     });
 
     if (response.ok) {
+      const data = await response.json();
       await refreshProjectList();
-      console.log("Project added successfully");
+      console.log("Project added:", data);
     } else {
       console.error("Error:", response.statusText);
     }
@@ -31,16 +40,15 @@ const submit = async function(event) {
 
 //Add project to html list
 function addToList(data) {
-  console.log("Adding to list");
-  const newList = document.createElement("ul");
+  const projectList = document.createElement("ul");
   data.forEach(project => {
     const listItem = document.createElement("li");
     listItem.textContent = `Name: ${project.name}, Teammates: ${project.teammates}, Points: ${project.points}, Points Per Teammate: ${project.pointsPerTeammate}`;
-    newList.appendChild(listItem);
+    projectList.appendChild(listItem);
   });
   const list = document.querySelector("#dataList");
-  list.innerHTML = ""; // Clear previous list
-  list.appendChild(newList);
+  list.innerHTML = "";
+  list.appendChild(projectList);
 }
 
 const removeProject = async function(event) {
@@ -68,7 +76,7 @@ const removeProject = async function(event) {
   }
 };
 
-// Remove project from HTML list
+//Remove project from HTML list
 function removeFromList(name) {
   const listItems = document.querySelectorAll("#dataList li");
   listItems.forEach(item => {
@@ -94,6 +102,12 @@ async function fetchProjects() {
   }
 }
 
+function getUsername(req) {
+  console.log()
+  return req.session.username;
+
+}
+
 //Refreshes display of projects
 async function refreshProjectList() {
   try {
@@ -108,6 +122,7 @@ async function refreshProjectList() {
     console.error("Error:", error);
   }
 }
+
 
 
 //

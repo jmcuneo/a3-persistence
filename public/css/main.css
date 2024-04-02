@@ -3,7 +3,7 @@
 body {
   font-family: 'Roboto', sans-serif;
   font-weight: 200;
-  background:#0092FA;
+  background:#182C3A;
   color:white;
 }
 label {
@@ -64,4 +64,8 @@ p {
   grid-row-end: 3;
   grid-column-start: 1;
   grid-column-end: 3;
+}
+
+form {
+  padding: 1%;
 }
