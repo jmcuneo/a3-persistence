@@ -191,7 +191,50 @@ async function handleEdit(index, items) {
   });
 }
 
+function displayUserInfo(username) {
+  console.log("username: " + username);
+  const userInfoDiv = document.getElementById('userInfo');
+  const usernameSpan = document.createElement('span');
+  usernameSpan.id = 'username';
+  usernameSpan.textContent = username;
+
+  const logoutButton = document.createElement('button');
+  logoutButton.textContent = 'Logout';
+  logoutButton.classList.add('logoutButton'); 
+
+  logoutButton.addEventListener('click', () => {
+    fetch('/logout')
+      .then(response => {
+        if (response.ok) {
+          window.location.href = 'index.html'; 
+        } else {
+          // Handle logout error
+        }
+      })
+      .catch(error => console.error('Logout error:', error)); 
+  });
+
+  userInfoDiv.appendChild(usernameSpan);
+  userInfoDiv.appendChild(logoutButton);
+}
+
+async function checkLoggedInStatus() {
+  try {
+    const response = await fetch('/check-auth'); 
+    if (!response.ok) {
+      window.location.href = 'index.html'; 
+    } else {
+      const data = await response.json(); // Parse the JSON response
+      displayUserInfo(data.username); 
+    }
+  } catch (error) {
+    console.error('Error checking logged in status:', error);
+  }
+}
+
+
 window.onload = function() {
+  checkLoggedInStatus(); // Call on page load
   fetchAllDocs();
   const addButton = document.getElementById("addButton");
   addButton.onclick = addEntry;

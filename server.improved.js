@@ -1,31 +1,148 @@
 const uri = "mongodb+srv://jackweinstein808:ieiVz7K19MdkPRQb@a3persistence.ilydjmx.mongodb.net/?retryWrites=true&w=majority&appName=a3Persistence";
 
 const express = require("express"),
-      { MongoClient, ObjectId } = require("mongodb"),
-      app = express()
+  { MongoClient, ObjectId } = require("mongodb"),
+  app = express(),
+  session = require('express-session'),
+  MongoStore = require('connect-mongo');
+  bodyParser = require('body-parser'),
+  passport = require('./public/js/passport'),
+  mongoose = require('mongoose'),
+  User = require('./public/js/user.model');
 
 app.use(express.static("public") )
 app.use(express.json() )
 
-const client = new MongoClient( uri )
+// Session Middleware 
+app.use(session({
+  secret: 'your secure secret here',
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    clientPromise: MongoClient.connect(uri)
+  })
+}));
 
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session()); 
+
+// Body Parser Middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+const bcrypt = require('bcryptjs'); // For password hashing
+
+// Example middleware for route protection
+function isLoggedIn(req, res, next) {
+  if (req.session.isLoggedIn) {
+    console.log("User logged in");
+    next(); // User is logged in, proceed to the route
+  } else {
+    res.redirect('/index'); // Redirect to the login page
+  }
+}
+
+// Protected authentication check route
+app.get('/check-auth', isLoggedIn, (req, res) => {
+  // Access the username from the user object in the session
+  console.log("Username: " + req.user)
+  const username = req.user ? req.user.username : null; 
+
+  res.json({ 
+    message: 'User is authenticated', 
+    username: username 
+  });
+});
+
+//login route
+app.post('/login', async (req, res) => {
+  try {
+    let userCollection = await client.db("foodLogData").collection("users");
+
+    // Check for existing username
+    const existingUser = await userCollection.findOne({ username: req.body.username });
+    if (existingUser) {
+      const isPasswordMatch = await bcrypt.compare(req.body.password, existingUser.password);
+      if(isPasswordMatch) {
+        // Set session variable to indicate user is logged in
+        req.session.isLoggedIn = true;
+
+        passport.authenticate('local')(req, res, function() {
+          res.json({ success: true, message: "Login successful" });
+        });
+      }
+      else { // Incorrect password
+        res.status(401).json({ success: false, message: 'Incorrect password' });
+      }
+    }
+    else { // Username not found
+      res.status(401).json({ success: false, message: 'Username not found' });
+    }
+
+  } catch (error) {
+    console.error("Login error:", error.message); // Detailed error 
+    res.status(500).json({ success: false, message: "Login error" });
+  }
+});
+
+// Register Route
+app.post('/register', async (req, res) => {
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10); 
+    const newUser = new User({
+      username: req.body.username,
+      password: hashedPassword
+    });
+    let userCollection = await client.db("foodLogData").collection("users");
+
+    // Check for existing username
+    const existingUser = await userCollection.findOne({ username: req.body.username });
+    if (existingUser) {
+      return res.status(409).json({ success: false, message: "Username already exists" });
+    }
+
+    // Create new user object ...
+    const result = await userCollection.insertOne(newUser);
+    res.json({ success: true, message: "Registration successful" });
+
+  } catch (error) {
+    console.error("Registration error:", error.message); // Detailed error 
+    res.status(500).json({ success: false, message: "Registration error" });
+  }
+});
+
+// Logout Route
+app.get('/logout', (req, res) => {
+  req.logout(); 
+  res.json({ success: true, message: "Logged out" });
+});
+
+const client = new MongoClient( uri )
 let collection = null
 
 async function run() {
-  await client.connect()
-  collection = await client.db("foodLogData").collection("collection1")
-  // route to get all docs
-  app.get("/docs", async (req, res) => {
-    if (collection !== null) {
-      try { // Wrap in try-catch for error handling      
-        const docs = await collection.find({}).toArray(); // Use 'await'
-        res.json(docs);
-      } catch (error) {
-        console.error("Error fetching docs:", error);
-        res.status(500).send("Error retrieving documents"); 
-      } 
-    }
-  });
+  try {
+    await client.connect();
+    collection = await client.db("foodLogData").collection("collection1")
+    // Route to get all docs
+    app.get("/docs", async (req, res) => {
+      if (collection !== null) {
+        try {
+          const docs = await collection.find({}).toArray();
+          res.json(docs);
+        } 
+        catch (error) { 
+          console.error("Error fetching docs:", error);
+          res.status(500).send("Error retrieving documents");
+        } 
+      }
+    });
+  }
+  catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+    res.status(503).send("Error connecting to database"); // Send error to client
+  }
 }
 
 app.use( (req,res,next) => {

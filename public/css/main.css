@@ -88,3 +88,28 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+#appHeader {
+  width: 100%; 
+  padding: 10px;
+  background-color: #f0f0f0; /* Example background color */
+  display: flex; /* Use flexbox for easy alignment */
+  justify-content: flex-end; /* Align items to the right */
+}
+
+#userInfo {
+  margin-right: 20px; /* Add right margin */
+}
+
+#username {
+  margin-right: 10px; /* Right margin for the username */
+}
+
+.logoutButton {  /* Common styles for the logout button */
+  background-color: #dc3545; /* Example red background */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
