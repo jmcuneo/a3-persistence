@@ -1,12 +1,14 @@
 const express    = require('express'),
       // cookie     = require('cookie-session'),
       // session    = require('express-session'),
-      // passport   = require('passport'),
+      passport   = require('passport'),
+      cors       = require('cors'),
       app        = express()
 
 require('dotenv').config({path: '.env'})
 
 const LocalStrategy = require('passport-local').Strategy;
+var GitHubStrategy = require('passport-github2').Strategy;
 const { MongoClient, ObjectId } = require('mongodb')
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 const client = new MongoClient( uri )
@@ -14,12 +16,37 @@ let collection = null
 
 app.use( express.static( 'public' ) )
 app.use( express.static( 'views'  ) )
+app.use(cors())
 app.use( express.json() )
+
 // app.use( cookie({
 //   name: 'session',
 //   keys: ['ihave', 'depression'],
 //   login: false
 // }))
+passport.use(new GitHubStrategy({
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/auth/github/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    console.log(profile.username)
+    done()
+  }
+));
+
+app.get('/login', cors(), function (req, res) {
+    res.redirect('/auth/github')
+  })
+
+app.get('/auth/github', cors(), passport.authenticate('github', { scope: [ 'user:email' ] }));
+
+app.get('/auth/github/callback', cors(),
+  passport.authenticate('github', { failureRedirect: '/' }),
+  function(req, res) {
+    console.log("Redirecting to home")
+    res.redirect('/main.html');
+  });
 
 async function run() {
   await client.connect()
@@ -73,12 +100,12 @@ app.use( (req,res,next) => {
 // }
 
 
-app.post( '/refresh', async (req, res) => {
+app.post( '/refresh', cors(), async (req, res) => {
   const result = await collection.find({}).toArray()
   res.json(result)
 })
 
-app.post( '/submit', async (req, res) => {
+app.post( '/submit',cors(), async (req, res) => {
   let data = req.body
   console.log(data)
 
@@ -96,24 +123,7 @@ app.post( '/submit', async (req, res) => {
   res.json(result)
 })
 
-//Delete an item from the table
-function deleteData (request, response) {
-  let dataString = ""
-
-  request.on( "data", function( data ) {
-      dataString += data 
-  })
-
-  request.on("end", function(){
-    data = JSON.parse(dataString) //Data is just the index of the entry to remove
-    console.log("Index for deletion: " + data)
-    let removed = appdata.splice(data, 1) //Remove from table
-    console.log(removed)
-    sendData(response) //Send data back to client
-  } )
-}
-
-app.post( '/remove', async (req, res) => {
+app.post( '/remove', cors(), async (req, res) => {
   let data = req.body.id
   let query = { _id: ObjectId.createFromHexString(data)}
   let deletion = await collection.deleteOne(query)
@@ -121,7 +131,7 @@ app.post( '/remove', async (req, res) => {
   res.json(result)
 })
 
-app.post( '/modify', async (req, res) => {
+app.post( '/modify', cors(), async (req, res) => {
   let data = req.body
   let query = {_id: ObjectId.createFromHexString(data.id)}
   let oldData = await collection.findOne(query) //Get currently stored data in server

@@ -1,0 +1,105 @@
+<!doctype html>
+
+<html lang="en" data-theme="dark">
+  <head>
+    <title>CS4241 Assignment 3</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" 
+          content="A very bad calculator that allows you to input 2 values, an operator, and a guess. 
+                  The table shows mathematical results. 
+                  Entries can be deleted or modified">
+    <script src="js/client.js"></script>
+    <link rel="stylesheet" href="css/bulma.css" media="screen">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css"> -->
+    <!-- <link rel="stylesheet" href="css/main.css"> -->
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap"> -->
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1 class="title is-1">The Worst Calculator</h1>
+      </header>
+      <div class="forms">
+        <h2 class="title is-3">Add Entry Form</h2>
+        <form>
+          <label for="firstVal">1st Value: </label>
+          <input type="number" id="firstVal">
+          <br>
+          <label for="secVal">2nd Value: </label>
+          <input type="number" id="secVal">
+          <br>
+          <div class="opForm">
+            <p>Choose an operator:</p>
+            <input type="radio" name="operator" id="opA" value="+" checked>
+            <label for="opA">+</label>
+            <br>
+            <input type="radio" name="operator" id="opS" value="-">
+            <label for="opS">-</label>
+            <br>
+            <input type="radio" name="operator" id="opD" value="/">
+            <label for="opD">/</label>
+            <br>
+            <input type="radio" name="operator" id="opM" value="*">
+            <label for="opM">*</label>
+          </div>
+          <label for="guess">Guess (Optional): </label>
+          <input type="number" id="guess">
+          <br>
+
+          <button id="submitButton" class="button is-primary is-medium">Submit</button>
+        </form>
+      </div>
+      <div id="sTable" class="table-container">
+        <table id="serverTable"
+              class="table is-bordered is-striped is-narrow is-hoverable">
+          <thead>
+            <tr class="tableLabels">
+              <th>ID</th>
+              <th>First Value</th>
+              <th>Second Value</th>
+              <th>Operator</th>
+              <th>Answer</th>
+              <th>Guess Correctness</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div id="modForm">
+        <h2 class="title is-3">Entry Modification Form</h2>
+        <p>All inputs are optional</p>
+        <form>
+          <label for="newFirst">New 1st Value: </label>
+          <input type="number" id="newFirst">
+          <br>
+          <label for="newSec">New 2nd Value: </label>
+          <input type="number" id="newSec">
+          <br>
+          <div class="opForm">
+            <h3>New Operator:</h3>
+            <input type="radio" name="newOP" id="newPlus" value="+">
+            <label for="newPlus">+</label>
+            <br>
+            <input type="radio" name="newOP" id="newMinus" value="-">
+            <label for="newMinus">-</label>
+            <br>
+            <input type="radio" name="newOP" id="newDiv" value="/">
+            <label for="newDiv">/</label>
+            <br>
+            <input type="radio" name="newOP" id="newMult" value="*">
+            <label for="newMult">*</label>
+          </div>
+          <label for="forceAnswer">Assign Correct Answer: </label>
+          <input type="number" id="forceAnswer">
+          <br>
+
+          <button class="saveButton">Save</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
