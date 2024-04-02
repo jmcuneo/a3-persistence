@@ -26,17 +26,19 @@ function addRow(id, model, year, mpg, fuelTank){ //adds row to table
   cell5.innerHTML = tillEmpty.toString();
 }
 
-function rowDelete(num){
-  let table = document.getElementById("table");
-  if(num > 0 && num < rowNumber){
-    table.deleteRow(num);
-    updateIDs();
-  }
 
+function updateDropDown(){
+let dropDown = document.getElementById("deleteID");
 
-  //document.getElementById("table").rowDelete(num);
+//delete all options first
+dropDown.innerHTML = "";
+
+for(let i = 1; i < rowNumber; i++) {
+  let option = document.createElement("option");
+  option.text = i.toString();
+  dropDown.add(option);
 }
-
+}
 function updateIDs(){
   let table = document.getElementById("table");
   for(let i = 1; i <table.rows.length; i++){
@@ -94,7 +96,7 @@ const remove = async function (event) {
   // remains to this day
   event.preventDefault()
 
-  const inputID = document.querySelector("#id"),
+  const inputID = document.querySelector("#deleteID"),
   json = {"id": inputID.value},
   body = JSON.stringify(json)
   const response = await fetch( "/remove", {
@@ -195,7 +197,13 @@ const getData = async function() {
     rowNumber++
   }
   console.log(rowNumber)
+  if(rowNumber > 1){
+    updateDropDown();
+  } else {
+let dropDown = document.getElementById("deleteID");
+    dropDown.innerHTML = "";
 
+  }
  // console.log(data[data.length-1].Id)
 
   //const text = await response.text()

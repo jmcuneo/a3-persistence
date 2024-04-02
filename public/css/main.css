@@ -2,7 +2,7 @@ body {
   background:white;
   color:white;
 }
-input{
+input, select{
   display: inline-block;
   text-align: center;
   align-items: center;
