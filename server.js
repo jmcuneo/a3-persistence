@@ -29,7 +29,7 @@ async function run() {
     // route to get all docs
     app.get("/docs", async (req, res) => {
         if (charCollection !== null) {
-            const docs = await charCollection.find({}).toArray()
+            const docs = await charCollection.find({ userID: req.session.userId }).toArray()
             res.json( docs )
         }
     })
@@ -68,7 +68,7 @@ app.post('/login', async (req, res) => {
     validated = user.password === password;
 
     if (validated) {
-        req.session.userId = user.username;
+        req.session.userId = user._id;
         res.redirect('/main');
     } else {
         res.send('Invalid username or password');
@@ -90,7 +90,8 @@ app.get('/main', requireLogin, (req, res) => {
 
 app.post( '/submit', async (req,res) => {
     console.log("Request Body: ", req.body);
-    await saveData(req.body)
+    let userId = req.session.userId
+    await saveData(req.body, userId)
     res.send("Data successfully added")
 })
 
@@ -114,7 +115,7 @@ app.post( '/edit', async (req,res) => {
     res.send("Data successfully edited")
 })
 
-const saveData = async function (myDataJSON) {
+const saveData = async function (myDataJSON, userID) {
     let charModifier = "unknown"
     let randAction = "Unarmed Strikes"
 
@@ -238,7 +239,8 @@ const saveData = async function (myDataJSON) {
         "race": myDataJSON.charrace,
         "class": myDataJSON.charclass,
         "modifier": charModifier,
-        "action": randAction
+        "action": randAction,
+        "userID":userID
     })
     console.log(result)
 }
