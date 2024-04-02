@@ -1,9 +1,12 @@
 const express    = require('express'),
-      cookie     = require('cookie-session')
+      // cookie     = require('cookie-session'),
+      // session    = require('express-session'),
+      // passport   = require('passport'),
       app        = express()
 
 require('dotenv').config({path: '.env'})
 
+const LocalStrategy = require('passport-local').Strategy;
 const { MongoClient, ObjectId } = require('mongodb')
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 const client = new MongoClient( uri )
@@ -12,11 +15,11 @@ let collection = null
 app.use( express.static( 'public' ) )
 app.use( express.static( 'views'  ) )
 app.use( express.json() )
-app.use( cookie({
-  name: 'session',
-  keys: ['ihave', 'depression'],
-  login: false
-}))
+// app.use( cookie({
+//   name: 'session',
+//   keys: ['ihave', 'depression'],
+//   login: false
+// }))
 
 async function run() {
   await client.connect()
@@ -40,19 +43,19 @@ app.use( (req,res,next) => {
 })
 
 
-app.post( '/login', async (req,res)=> {
-  let data = req.body
-  let userCollection = await client.db("sample_mflix").collection("user-info")
-  let userCheck = userCollection.findOne({username: data.username})
+// app.post( '/login', async (req,res)=> {
+//   let data = req.body
+//   let userCollection = await client.db("sample_mflix").collection("user-info")
+//   let userCheck = userCollection.findOne({username: data.username})
 
-  if(userCheck) {
-    req.session.login = true
-    res.redirect( 'index.html' )
-  }else{
-    // password incorrect, redirect back to login page
-    res.sendFile( __dirname + '/public/index.html' )
-  }
-})
+//   if(userCheck) {
+//     req.session.login = true
+//     res.redirect( 'index.html' )
+//   }else{
+//     // password incorrect, redirect back to login page
+//     res.sendFile( __dirname + '/public/index.html' )
+//   }
+// })
 
 
 // const handleGet = function( request, response ) {
