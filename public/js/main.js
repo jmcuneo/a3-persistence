@@ -47,7 +47,7 @@ const deleteShift = async function (event) {
 	console.log(body);
 	// perform delete request using fields
 	const response = await fetch("/shifts/delete", {
-		method: "DELETE",
+		method: "POST",
 		headers: { 'Content-Type': 'application/json' },
 		body
 	})
@@ -57,9 +57,7 @@ const deleteShift = async function (event) {
 
 	const html = await response.text();
 	document.body.innerHTML = html;
-	// wait for server to respond, being an updated collection of data.
-	// const text = await response.json()
-	// renderCourses(text)
+
 }
 
 

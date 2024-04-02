@@ -46,7 +46,7 @@ router.post("/add", async (req, res) => {
 	res.render("index");
 })
 
-router.delete("/delete", async (req, res) => {
+router.post("/delete", async (req, res) => {
 	const db = database();
 	const coll = db.collection("shifts");
 	console.log(req.body);
