@@ -85,13 +85,11 @@ Sample Readme (delete the above when you're ready to submit, and modify the belo
 
 Website Link: [https://ssgreene.tech/]()
 
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
+I was inspired to rewrite A2 to have a more practical application - a Time Entry system. Since my senior year in high school, I have interned with a medical firm, Sheard & Drugge. Over time, I got rather lazy manually logging my hours in an excel spreadsheet. This solution is a much more effective and efficient solution to create hour logging.
 
-- the goal of the application
+The CSS framework used is Bootstrap, with no custom CSS styling used. I used this framework because Ive previously worked with it and had the most familiarity with it. The authentication strategy used is Github OAuth2 - because I wanted to achieve the technical achievement.
+
 - challenges you faced in realizing the application
-- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why
-  - include any modifications to the CSS framework you made via custom CSS you authored
 - the five Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function for *one* (and one alone) middleware please
   add a little more detail about what it does.
 

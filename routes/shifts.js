@@ -33,7 +33,7 @@ router.post("/add", async (req, res) => {
 		await db.collection("shifts").updateOne(old, update)
 	}
 	
-	const shifts = await db.collection("shifts").find({}).toArray();
+	const shifts = await db.collection("shifts").find({user: req.user.username}).toArray();
 	shifts.forEach((shift) => {
 		delete shift._id;
 		delete shift.user;
@@ -61,7 +61,7 @@ router.post("/delete", async (req, res) => {
 		}
 	}
 	
-	const shifts = await db.collection("shifts").find({}).toArray();
+	const shifts = await db.collection("shifts").find({user: req.user.username}).toArray();
 	shifts.forEach((shift) => {
 		delete shift._id;
 		delete shift.user;

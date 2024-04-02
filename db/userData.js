@@ -8,9 +8,11 @@ const getNextID = async function(username) {
 
 	await userColl.findOne(userQuery).then(async (doc) => {
 		if (!doc) {
+			console.log("USER DOES NOT EXIST");
 			await userColl.insertOne({user: username, idLast: 0})
 			nextID = 0;
 		} else {
+			console.log("USER EXISTS");
 			nextID = (doc.idLast) + 1;
 			const original = {_id: doc._id};
 			const newVals = { $set: { idLast: nextID }};
