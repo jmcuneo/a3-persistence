@@ -46,7 +46,7 @@ const deleteShift = async function (event) {
 		body = JSON.stringify(json)
 
 	// perform delete request using fields
-	const response = await fetch("/courses/delete", {
+	const response = await fetch("/shifts/delete", {
 		method: "DELETE",
 		headers: { 'Content-Type': 'application/json' },
 		body
