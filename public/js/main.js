@@ -1,8 +1,8 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
 var taskData = [];
-editMode = false;
-editData = null;
+var editMode = false;
+var editData = null;
 
 // Getting data from the server
 const loadData = async function() {
