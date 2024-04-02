@@ -93,24 +93,39 @@ Write a paragraph of at least 125 words *for each of four principles* (four para
 Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
 ---
 
-# Your Web Application Title
+# Recipe Cookbook
 
-your glitch (or alternative server) link e.g. http://a3-joshua-cuneo.glitch.me
+Link: https://a3-EllysGorodisch.onrender.com
+*Note: May take long amount of time to load*
 
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
-
-- the goal of the application
-- challenges you faced in realizing the application
-- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why
-  - include any modifications to the CSS framework you made via custom CSS you authored
-- the five Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function for *one* (and one alone) middleware please 
-add a little more detail about what it does.
+- Goal
+    - Add, remove, and modify recipes in your cookbook
+    - Enter the recipe name, prep time, cook time, and meal that the recipe is for
+    - The total time is calculated automatically 
+- Challenges
+    - I had significant difficulties near the end of implementing OAuth GitHub due to my deserializeUser function being async, once I solved that things went smoothly
+- Authentication Strategy
+    - I used OAuth GitHub authentitcation because it was the only OAuth implementation I didn't need to make a dummy account for
+    - I used OAuth authentication for the technical achievement
+- CSS Framework
+    - I used Pico CSS Sand because it was minimalist and had an intuitive designing process for a color scheme I liked
+    - Modifications
+        - I used CSS for index.html to center the button in the middle of the screen and change the font size and focus color of the login button
+        - I used CSS for recipes.html to organize the page using Flexbox, add margins, shrink the size of the inputs, and change the focus color of the buttons
+- Express Middleware
+    1. express.static: Lets the server access files from the 'public' folder
+    2. Logger: Prints the URL of all requests to the server
+    3. express.json: Automatically parses JSON input
+    4. Cookie Session: Initialized a new cookie session
+    5. Regenerate Function: I was getting an error related to a missing function related to passport.session, found this middleware online that fixes it
+    6. passport.initialize: Initializes passport.js authentication
+    7. passport.session: Initializes the session authentication strategy for passport.js
+    8. Collection Checker: Checks if the MongoDB collection was successfully accessed
 
 ## Technical Achievements
 - **Implement OAuth Authentication**: I used OAuth authentication via the GitHub strategy for logging in to the site. User accounts are stored in MongoDB.
-- **Alternate Hosting**: 
-- **Lighthouse Tests**: Have a 100% in all four Lighthouse tests
+- **Alternate Hosting**: I used Render to host my site for this project, recommended by Milo Jacobs in the Slack. It was very convenient that it updates automatically from GitHub, but I agree with him that it is very slow to build and load. The setup was quite simple, but it is lacking features like an editor and preview window from Glitch.
+- **Lighthouse Tests**: I have a 100% in all four Lighthouse tests for both pages in my site
 
 ## Design/Evaluation Achievements
 ### W3C Web Accessibility Tips
@@ -135,7 +150,7 @@ add a little more detail about what it does.
 ### CRAP Principles
 **Contrast**: 
 
-**Repetition**: 
+**Repetition**: I used repetition heavily while creating my site. I used the same color scheme and font throughout the site, using the Pico Sand CSS framework. I also changed the button focus color for all buttons on the site. This created a sense of cohesion and unity throughout the site, removing any doubt that the two pages belong to the same site. The input forms on the recipes page are formatted in the same way with the same elements. A header followed by input fields and then a button. The repetition of this format helps make it clearer for users to know what is an action that they can take. I repeated the same top padding above each of the forms so that the groupings are more visually distinct.
 
 **Alignment**: I used alignment to organize information on the page in several ways. I made the entire page left aligned to create a sense of unity for the page. There is a strong line on the left of the page, which creates a visual connection between the input forms. I attempted to align the input elements to the right so that the strong line would align with the table but it ended up not feeling quite right. Since English speaking users read from left to right, having the inputs read from left to right as well helps users better follow the visual flow of the page. The left alignment of the input fields also adds contrast between the input fields and the table on the right.
 
