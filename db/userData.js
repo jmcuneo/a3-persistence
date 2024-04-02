@@ -6,13 +6,13 @@ const getNextID = async function(username) {
 	const userQuery = { user: username }
 	let nextID = -1;
 
-	const user = await userColl.findOne(userQuery).then(async (doc) => {
+	await userColl.findOne(userQuery).then(async (doc) => {
 		if (!doc) {
 			await userColl.insertOne({user: username, idLast: 0})
 			nextID = 0;
 		} else {
-			nextID = (user.idLast) + 1;
-			const original = {_id: user._id};
+			nextID = (doc.idLast) + 1;
+			const original = {_id: doc._id};
 			const newVals = { $set: { idLast: nextID }};
 		 	await userColl.updateOne(original, newVals);
 		}
