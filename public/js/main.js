@@ -125,14 +125,19 @@ const submit = async function (event) {
 }
 
 window.onload = async function() {
-  const form = document.querySelector( "#addForm" )
+  const form = document.querySelector("#addForm")
   form.onsubmit = submit
 
   await updateTasks()
 }
 
-const updateTasks = async function() {
+const updateTasks = async function () {
   const response = await fetch("/tasks")
   tasks = await response.json()
+
+  if (tasks.newUserCreated) {
+    alert("New user created!")
+    // delete tasks.newUserCreated
+  }
   renderTasks()
 }
