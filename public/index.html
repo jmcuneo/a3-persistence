@@ -1,44 +1,27 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap">
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  </head>
-  <body class="roboto-serif">
-    <div>
-      <h1>
-        Create or Update Student
-      </h1>
-      <div id="inputform">
-        <form>
-          <p class="inputfield">
-            <label for="yourname">Name</label><br>
-            <input type="text" id="yourname" required> <br>
-          </p>
-          <p class="inputfield">
-            <label for="yourcredits">Number of Credits</label><br>
-            <input type="text" id="yourcredits" required>
-          </p>
-          <button id="submit">Submit</button>
-        </form>
-        <div class="note">
-          *To create a student, enter their name and how many credits they currently have<br>
-          *To update a student, enter the name exactly as it is stored in the table and enter what the credits are to be changed to
-        </div>
-      </div>
-      <div>
-        <h1>
-          Student Database
-        </h1>
-        <table id="studentTable"></table>
-      </div>
-    </div>
-  </body>
+<head>
+  <title>Login Form</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A student database with add, update, delete capabilities">
+  <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
+  <script src="js/login.js" defer></script>
+</head>
+<body>
+<h1>Login</h1>
+<form>
+  <div>
+    <label for="name">Username</label>
+    <textarea id ="name" name="name" style="height: 30px; width:185px" required></textarea>
+  </div>
+  <div>
+    <label for="password">Password</label>
+    <input type="password" id ="password" name="password" required>
+  </div>
+  <button id="login-button" type="submit" style="font-size: 15px">Login</button>
+</form>
+<a href="/register.html" style="text-decoration: underline; font-size: 13px">Register</a>
+<div id ="login-message"></div>
+</body>
 </html>

@@ -69,7 +69,10 @@ const formatHeader = function(header){
 }
 const fetchStudentData = async function(){
   const response = await fetch("/studentData")
-  const studentData = await response.json()
+  const {studentData, currName }= await response.json()
+
+  const registerMessage = document.querySelector("#greeting")
+  registerMessage.textContent = `Hello ${currName}!`
 
   const studentTable = document.querySelector("#studentTable")
   studentTable.innerHTML = ""

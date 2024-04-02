@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Student Database</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A student database with add, update, delete capabilities">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body class="roboto-serif">
+<div>
+    <h1 id="greeting"></h1><br>
+    <h2>
+        Create or Update Student
+    </h2>
+    <div id="inputform">
+        <form>
+            <div class="inputfield">
+                <label for="yourname">Name</label>
+                <input type="text" id="yourname" name="yourname" required>
+            </div>
+            <div class="inputfield">
+                <label for="yourcredits">Number of Credits</label>
+                <input type="text" id="yourcredits" name="yourcredits" required>
+            </div>
+            <button id="submit" type="submit">Submit</button>
+        </form>
+        <p class="note" style="font-size: 12px">
+            *To create a student, enter their name and how many credits they currently have<br>
+            *To update a student, enter the name exactly as it is stored in the table and enter what the credits are to be changed to
+        </p>
+    </div>
+    <div>
+        <h2>
+            Student Database
+        </h2>
+        <table id="studentTable"></table>
+    </div>
+</div>
+</body>
+</html>

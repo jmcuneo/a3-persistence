@@ -1,58 +1,61 @@
-const //http = require( "http" ),
-      //fs   = require( "fs" ),
-      // IMPORTANT: you must run `npm install` in the directory for this assignment
-      // to install the mime library if you"re testing this on your local machine.
-      // However, Glitch will install it automatically by looking in your package.json
-      // file.
-      //mime = require( "mime" ),
-      //dir  = "public/",
-      port = 3000,
-      dotenv = require('dotenv').config(),
-      mongoose = require("mongoose"),
-      bodyParser = require("body-parser"),
-      session = require("express-session"),
-      Student = require("./people/Student"),
-      User = require("./people/User"),
-      passport = require("passport"),
-      LocalStrategy = require("passport-local").Strategy
+if (process.env.NODE_ENV !== 'production'){
+  require('dotenv').config()
+}
 
+const port = 3000
 const express = require("express")
 const {MongoClient, ObjectId} = require("mongodb")
+const passport = require("passport")
+const session = require("express-session")
+const RedisStore = require("connect-redis")
+const bcrypt = require("bcrypt")
+const flash = require("express-flash")
 
-const studentData = []
-
+const bodyParser = require("body-parser")
 const app = express();
+
+const initializePassport = require("./public/js/authentication")
 
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.static("public"))
 app.use(express.json())
-// app.use(require("express-session")({
-//   secret: "secret-key",
-//   resave: false,
-//   saveUninitialized: false
-// }))
-// app.use(passport.initialize())
-// app.use(passport.session())
+app.set("view-engine", "html")
+app.use(express.urlencoded({extended: false}))
+app.use(flash())
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 
-//passport.use(new LocalStrategy(User.authenticate()))
-//passport.serializeUser(User.serializeUser())
-//passport.deserializeUser(User.deserializeUser())
-
+initializePassport(
+    passport,
+    name => userdb.find(user => user.username === name),
+    id => userdb.find(user => user._id === id)
+)
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 const client = new MongoClient(uri)
 
 let studentdb = null
+let userdb = null
+let authorized = false
+let userdblocal = []
+let currName = ""
 
 async function run() {
   try{
     await client.connect()
     studentdb = client.db("studentdb").collection("students")
-    console.log("MongoDB connected successfully")
+    userdb = client.db("studentdb").collection("users")
+    console.log("MongoDB database connected successfully")
 
     app.listen(process.env.PORT || port, () => {
       console.log(`Server is running on port ${process.env.PORT || port}`)
     })
+
   }
   catch(error){
     console.error("Error connecting to MongoDB:", error)
@@ -61,27 +64,124 @@ async function run() {
 
 run().catch(console.error)
 
-app.get("/login", passport.authenticate("local"), (req, res) => {
-  res.redirect("/students")
+
+function isAuthenticated(req, res, next){
+  if (authorized){
+    return next()
+  }
+
+  res.redirect("/")
+}
+
+function isNotAuthenticated(req, res, next){
+  if (authorized){
+    res.redirect("/app.html")
+  }
+  next()
+}
+
+app.get("/", (req, res)=>{
+  if (authorized){
+    res.redirect("app.html")
+  }
+})
+
+app.get("/app", /*isAuthenticated,*/(req, res) =>{
+  if(authorized){
+    res.redirect("/app.html")
+  }
+  else{
+    res.redirect("/")
+  }
+
+})
+
+app.get("/login", /*isNotAuthenticated, */(req, res) => {
+  if (authorized){
+    res.redirect("/app.html")
+  }
+  else{
+    res.redirect("/")
+  }
+
+})
+
+app.post("/login", /*isNotAuthenticated, *//*passport.authenticate("local", */async (req, res) =>{
+  try{
+    const {name, password} = req.body
+
+    const existingUser = userdblocal.find(user=> user.name === name)
+    if(existingUser){
+      const isPasswordCorrect = await bcrypt.compare(password, existingUser.hashedPassword)
+      if (isPasswordCorrect){
+          authorized = true
+          req.session.isAuthenticated = true
+          currName = name
+
+          return res.redirect("/app.html")
+      }
+      else{
+        console.log("Invalid username or password1")
+        return res.status(400).json({message: "Error: Invalid username or password"})
+      }
+    }
+    else{
+      console.log("Invalid username or password2")
+      return res.status(400).json({message: "Error: Invalid username or password"})
+    }
+  }
+  catch(error){
+    console.error(error)
+    res.redirect("/")
+  }
+
+})//)
+
+app.get("/register", /*isNotAuthenticated,*/(req, res) => {
+  if(authorized){
+    res.redirect("/app.html")
+  }
+  else{
+    res.redirect("/register.html")
+  }
+
+})
+
+app.post("/register", /*isNotAuthenticated, */async(req, res) => {
+  try{
+    const {name, password} = req.body
+
+    const hashedPassword = await bcrypt.hash(password, 10)
+
+    //const existingUser = await userdb.findOne({username: req.body.name})
+    const existingUser = userdblocal.find(user=> user.name === name)
+    if (existingUser) {
+      console.log("Username already exists")
+      return res.status(400).json({message: "Error: Username already exists"})
+    }
+
+    //const result = await userdb.insertOne({username: req.body.name, hashPass: hashedPassword})
+    const result = userdblocal.push({name, hashedPassword})
+    console.log("User added")
+    res.json({message: "User added successfully", name: name})
+  }
+  catch{
+    res.redirect("/register.html")
+  }
 })
 
 app.get("/logout", (req, res) => {
-  req.logout()
+  //req.logout()
+  authorized = false
   res.redirect("/")
 })
 
-function isAuthenticated(req, res, next){
-  if(req.isAuthenticated()){
-    return next()
-  }
-  res.redirect("/")
-}
 
 app.get("/studentData", async (req, res) => {
   try {
     if (studentdb){
-      const students = await studentdb.find({}).toArray()
-      res.json(students)
+      const studentData = await studentdb.find({}).toArray()
+      res.json({studentData, currName})
     }
     else{
       res.status(503).json({message: "MongoDB connection not established"})

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Register Form</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="A student database with add, update, delete capabilities">
+        <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
+        <script src="js/register.js" defer></script>
+    </head>
+    <body>
+        <h1>Register</h1>
+        <form>
+            <div>
+                <label for="name">Username</label>
+                <textarea id ="name" name="name" style="height: 30px; width:185px" required></textarea>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id ="password" name="password" required>
+            </div>
+            <button id="register-button" type="submit" style="font-size: 15px">Register</button>
+        </form>
+        <a href="/" style="text-decoration: underline; font-size: 13px">Login</a>
+        <div id ="register-message"></div>
+    </body>
+</html>
