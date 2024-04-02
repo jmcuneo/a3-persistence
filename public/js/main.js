@@ -1,6 +1,7 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
 var taskData = [];
+var usernames = [];
 var editMode = false;
 var editData = null;
 
@@ -11,10 +12,24 @@ const loadData = async function() {
   }).then(async function(response) {
     taskData = JSON.parse(await response.text());
   })
-  displayResults();
+  displayResultsAndUsers();
+}
+
+
+// Get usernames
+const getUsernames = async function() {
+  const response = await fetch( "/usernames", {
+    method:"GET"
+  }).then(async function(response) {
+    usernames = JSON.parse(await response.text());
+    //location.reload();
+  })
+ // displayResults();
 }
 
 loadData();
+getUsernames();
+displayResultsAndUsers();
 
 // When submit button is hit to add or edit data
 const submit = async function( event ) {
@@ -39,6 +54,18 @@ const submit = async function( event ) {
       }
     });
 
+
+    let checkedUsers = [];
+    const userCheckboxes = document.getElementsByName("userCheckboxes");
+    userCheckboxes.forEach(user => {
+      if(user.checked) {
+        checkedUsers.push(user.value);
+      }
+    });
+
+
+
+
     let json = {};
     // Determine if this is an edit or an add
     if(editMode) {
@@ -54,9 +81,21 @@ const submit = async function( event ) {
       })
     // Add mode
     } else {
+
+      
+      console.log(checkedUsers);
+      let body = JSON.stringify( checkedUsers );
+      let response = await fetch( "/checkedUsers", {
+        method:"POST",
+        body
+      }).then(async function(response) {
+        checkedUsers = JSON.parse(await response.text());
+      })
+
+
       json = {_id: -1, username: "", task: task.value, class: classi.value, duedate: duedate, importance: importance, priority: 0};
-      const body = JSON.stringify( json );
-      const response = await fetch( "/submit", {
+      body = JSON.stringify( json );
+      response = await fetch( "/submit", {
         method:"POST",
         body
       }).then(async function(response) {
@@ -69,7 +108,8 @@ const submit = async function( event ) {
     document.getElementById("class").value = "";
     document.getElementById("duedate").value = "";
 
-    displayResults();
+    displayResultsAndUsers();
+    location.reload();
     editMode = false;
   }
 }
@@ -79,13 +119,62 @@ window.onload = function() {
   submitButton.onclick = submit;
 }
 
-displayResults();
 
-// Displays up to date results in the table
-function displayResults() {
+
+// Displays up to date results in the table and the users in the add form
+function displayResultsAndUsers() {
+
+  let usernameBody = document.querySelector("#username-body");
+
+  // Display usernames for input
+  usernames.forEach(element => {
+    var div = document.createElement('div');
+    div.classList.add('form-check', 'form-check-inline');
+
+
+    var input = document.createElement('input');
+    input.classList.add('form-check-input');
+    input.type = 'checkbox';
+    input.name = "userCheckboxes";
+    input.id = element;
+    input.value = element;
+
+    var label = document.createElement('label');
+    label.classList.add('form-check-label');
+    label.htmlFor = element;
+    label.textContent = element;
+
+
+    div.appendChild(input);
+    div.appendChild(label);
+
+    usernameBody.appendChild(div);
+  });
+
+
+  // Create the div element
+
+
+  // Create the input element
+
+
+  // Create the label element
+
+
+  // Append the input and label elements to the div
+
+  // Append the div to an existing element in your HTML (e.g., body)
+
+
+
+
+
+
+
   let tbody = document.querySelector("#data-table tbody");
   // Clear tbody by setting to an empty string
   tbody.innerHTML = "";
+
 
   // Iterate over the list of objects
   taskData.forEach(function(data) {
@@ -189,7 +278,7 @@ const deleteElement = async function(data) {
     taskData = JSON.parse(await response.text());
     location.reload();
   })
-  displayResults();
+  displayResultsAndUsers();
 }
 
 // Allows edits to the specified element
@@ -224,9 +313,20 @@ function editElement(data) {
     }
   });
 
+
+  const userCheckboxes = document.getElementsByName("userCheckboxes");
+  userCheckboxes.forEach(user => {
+    user.disabled = true;
+  });
+
   editData = data;
   editMode = true;
 }
+
+
+
+
+
 
 // Validates the format of the submission before submitting
 function validateForm() {
@@ -237,4 +337,17 @@ function validateForm() {
   } else {
     return true;
   }
+}
+
+
+function printTasks() {
+  taskData.forEach(element => {
+    console.log(element.task);    
+  });
+}
+
+function printUsernames() {
+  usernames.forEach(element => {
+    console.log(element);    
+  });
 }

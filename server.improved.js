@@ -4,8 +4,10 @@ const express = require("express"),
     hbs = require( 'express-handlebars' ).engine,
     { MongoClient, ObjectId } = require("mongodb"),
     app = express()
-var taskData = []
+var taskData = [];
 var username = "";
+var usernames = [];
+var checkedUsers = [];
 
 
 app.use(express.static("public") )
@@ -84,6 +86,7 @@ app.post( '/login', async (request,response)=> {
     let users = await userCollection.find({}).toArray();
     let foundUser = false;
     let foundUsername = false;
+    usernames = [];
 
     // Determine if username-password match in the database
     users.forEach(user => {
@@ -93,7 +96,9 @@ app.post( '/login', async (request,response)=> {
           foundUser = true;
           username = request.body.username;
         } 
-      } 
+      } else {
+        usernames.push(user.username);
+      }
     });
 
     // Found user
@@ -160,6 +165,23 @@ app.get( '/taskList.html', ( req, res) => {
 
 
 
+// Called when posting checked users
+app.post( '/checkedUsers', async (request,response) => {
+  let dataString = ""
+  request.on( "data", function( data ) {
+      dataString += data 
+  })
+  request.on( "end", function() {
+    // Parse data string
+    checkedUsers = JSON.parse( dataString );
+
+    console.log(checkedUsers);
+
+    response.writeHead( 200, { 'Content-Type': 'application/json'});
+    response.end(JSON.stringify(taskData));
+  })
+})
+
 
 
 
@@ -173,16 +195,36 @@ app.post( '/submit', async (request,response) => {
   request.on( "end", function() {
     // Parse data string
     let taskObject = JSON.parse( dataString );
+
     // Assign task an unique ID
     taskObject._id = new ObjectId();
     // Assign user
     taskObject.username = username;
+
     determinePriority(taskObject);
 
     // Push new object to taskData array
     taskData.push(taskObject);
     // Insert object into database
     taskCollection.insertOne(taskObject);
+
+
+
+    // Add task to each checked user
+    checkedUsers.forEach(user => {
+      let duplicateTask = Object.assign({}, taskObject);
+      // Assign task an unique ID
+      duplicateTask._id = new ObjectId();
+      // Assign user
+      duplicateTask.username = user;
+      // Push new object to taskData array
+      taskData.push(duplicateTask);
+      // Insert object into database
+      taskCollection.insertOne(duplicateTask);
+    });
+
+
+
     response.writeHead( 200, { 'Content-Type': 'application/json'});
     response.end(JSON.stringify(taskData));
   })
@@ -228,6 +270,23 @@ app.patch( "/patch", async (request, response) => {
     response.writeHead( 200, { 'Content-Type': 'application/json'});
     response.end(JSON.stringify(taskData));
     })
+})
+
+
+// Called when getting usernames
+app.get( "/usernames", async (request, response) => {
+  // let dataString = ""
+  // request.on( "data", function( data ) {
+  //     dataString += data 
+  // })
+
+  //console.log(usernames);
+
+  //request.on( "end", function() {
+    //console.log("HELLO");
+    response.writeHead( 200, { 'Content-Type': 'application/json'});
+    response.end(JSON.stringify(usernames));
+  //})
 })
 
 run()
