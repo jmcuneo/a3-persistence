@@ -1,6 +1,6 @@
 const express    = require('express'),
       // cookie     = require('cookie-session'),
-      // session    = require('express-session'),
+      session    = require('express-session'),
       passport   = require('passport'),
       cors       = require('cors'),
       app        = express()
@@ -16,14 +16,12 @@ let collection = null
 
 app.use( express.static( 'public' ) )
 app.use( express.static( 'views'  ) )
+app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+app.use(passport.session());
+app.use(passport.initialize());
 app.use(cors())
 app.use( express.json() )
 
-// app.use( cookie({
-//   name: 'session',
-//   keys: ['ihave', 'depression'],
-//   login: false
-// }))
 passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
@@ -31,15 +29,23 @@ passport.use(new GitHubStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     console.log(profile.username)
-    done()
+    done(null, profile)
   }
 ));
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
 
 app.get('/login', cors(), function (req, res) {
     res.redirect('/auth/github')
   })
 
-app.get('/auth/github', cors(), passport.authenticate('github', { scope: [ 'user:email' ] }));
+app.get('/auth/github', cors(), passport.authenticate('github', { session: false, scope: [ 'user:email' ] }));
 
 app.get('/auth/github/callback', cors(),
   passport.authenticate('github', { failureRedirect: '/' }),
@@ -172,6 +178,11 @@ function pickData (mod, old, valType) {
   } else { //Otherwise default to old data
     return old[valType]
   }
+}
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/')
 }
 
 run()
