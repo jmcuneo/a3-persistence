@@ -49,15 +49,17 @@ router.post("/add", async (req, res) => {
 router.delete("/delete", async (req, res) => {
 	const db = database();
 	const coll = db.collection("shifts");
-	const query = { id: req.body.id.toString(), user: req.user.username, };
-
-	const result = await coll.deleteOne(query);
-	if (result === 1) {
-		console.log("success")
-	} else {
-		console.error("unsuccess");
+	const query = { id: req.body.id.toString(), user: req.user.username };
+	const find = await coll.findOne(query);
+	if (find) {
+		const result = await coll.deleteOne({_id: find._id});
+		if (result === 1) {
+			console.log("success")
+		} else {
+			console.error("unsuccess");
+		}
 	}
-
+	
 	const shifts = await db.collection("shifts").find({}).toArray();
 	shifts.forEach((shift) => {
 		delete shift._id;
