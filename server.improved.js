@@ -81,7 +81,7 @@ app.use(express.static("public"));
 passport.use(new GitHubStrategy({
       clientID: process.env.CLIENTID,
       clientSecret: process.env.CLIENTSECRET,
-      callbackURL: "https://a3-klaudiofusha.glitch.me/auth/github/callback"
+      callbackURL: "https://a3-klaudiofusha.vercel.app/auth/github/callback"
     },
     function(accessToken, refreshToken, profile, done) {
       const user = {
