@@ -56,6 +56,7 @@ const deleteShift = async function (event) {
 
 	const html = await response.text();
 	document.body.innerHTML = html;
+	window.location.reload();
 }
 
 

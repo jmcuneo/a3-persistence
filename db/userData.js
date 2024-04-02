@@ -18,16 +18,6 @@ const getNextID = async function(username) {
 		}
 	});
 	
-	// if (user) {
-	// 	nextID = (user.idLast) + 1;
-	// 	const original = {_id: user._id};
-	// 	const newVals = { $set: { idLast: nextID }};
-	// 	const result = await userColl.updateOne(original, newVals);
-	// } else {
-	// 	await userColl.insertOne({user: username, idLast: 0})
-	// 	nextID = 0;
-	// }
-	
 	return nextID;
 }
 
