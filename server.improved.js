@@ -8,10 +8,8 @@ const appdata = [];
 
 const app = express();
 
-// Middleware to parse JSON bodies
 app.use(express.json());
 
-// Route for GET requests
 app.get("/", (req, res) => {
   sendFile(res, "public/index.html");
 });
@@ -20,7 +18,6 @@ app.get("/getArray", (req, res) => {
   res.json(appdata);
 });
 
-// Route for POST requests
 app.post("/", (req, res) => {
   const finalData = req.body;
   const method = finalData.method;
@@ -40,22 +37,4 @@ app.post("/", (req, res) => {
   }
 });
 
-// Middleware to serve static files
-app.use(express.static("public"));
-
-// Function to send files
-const sendFile = (res, filename) => {
-  const type = mime.getType(filename);
-  fs.readFile(filename, (err, content) => {
-    if (err === null) {
-      res.setHeader("Content-Type", type);
-      res.end(content);
-    } else {
-      res.status(404).send("404 Error: File Not Found");
-    }
-  });
-};
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+app.listen(3000)
