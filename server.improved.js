@@ -23,24 +23,51 @@ const client = new MongoClient( uri )
 
 
 let collection = null
+let userdata = null
+
 async function run() {
   await client.connect()
   collection = await client.db("a3-basharalqassar-db").collection("users")
+  userdata = await client.db("a3-basharalqassar-db").collection("user-appdata")
   // route to get all docs
 }
 
 run()
 
-app.get("/docs", async (req, res) => {
+app.post("/post_login", async (req, res) => {
   if (collection !== null) {
 
     let loginInfo = req.body
-    console.log(loginInfo)
 
+    //Query for this account
     const docs = await collection.find(
         {
-        }).toArray()
-    res.json( docs )
+          username: loginInfo.username,
+          password: loginInfo.password
+        }
+    ).toArray()
+    //res.json( docs )
+
+    //If we find an account
+    if(docs[0] !== undefined)
+    {
+      //Query userdata for this user and return all associated data
+      const selectedUserData = await userdata.find(
+          {
+            username: loginInfo.username
+          }
+      ).toArray()
+      res.json( selectedUserData )
+      console.log(selectedUserData)
+
+    }
+    //If no account is found
+    else
+    {
+      console.log("No Data found for " + loginInfo.username + "with password " + loginInfo.password)
+      res("NoDataFound")
+    }
+
   }
 })
 

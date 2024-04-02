@@ -8,12 +8,23 @@ const login = async function( event ) {
 
   console.log("test login button pressed")
 
-  const getAccount = await fetch("/docs",
+  const input = document.querySelector( "#userlogin"),
+      json = { username: input[0].value, password: input[1].value },
+      body = JSON.stringify( json )
+
+  console.log(json)
+
+
+  const getAccount = await fetch("/post_login",
       {
-        method:"GET"
+        method:"POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(json)
       })
-      .then(response => response.json())
-      .then(console.log)
+
+  const loginAttempt = await getAccount.json()
+
+  console.log(loginAttempt)
 
 }
 
@@ -35,7 +46,6 @@ const submit = async function( event ) {
   })
       .then(response => response.json())
       .then(console.log)
-
 
 
 
