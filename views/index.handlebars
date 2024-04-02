@@ -1,3 +1,6 @@
+<head>
+  <title>Time Entry - Enter Time</title>
+</head>
 <script src="/js/main.js"></script>
 <header>
   <div class="container-md text-center">
@@ -7,10 +10,10 @@
   </div>
 </header>
 
-<section id="log">
+<section id="log" aria-label="Submit Shift">
   <div class="container-md text-center">
     <h2>Log/Update Shift</h2>
-    <form id="logForm" action="">
+    <form id="logForm" action="" aria-describedby="Form to submit or update a shift.">
       <p>Enter all required fields to log a new shift. If you want to update a shift, you must enter the Shift ID of
         the shift you wish to update.</p>
       <div class="mb-3">
@@ -30,10 +33,10 @@
   </div>
 </section>
 
-<section id="removeShiftSection">
+<section id="removeShiftSection" aria-label="Remove Shift">
   <div class="container-md text-center mt-3">
     <h2>Remove Shift</h2>
-    <form id="removeForm" action="">
+    <form id="removeForm" action="" aria-describedby="Form to remove a shift.">
       <div class="mb-3">
         <label for="shiftID" class="form-label">Shift ID</label>
         <input type="integer" class="form-control" id="shiftID" placeholder="1" required>
@@ -43,7 +46,7 @@
   </div>
 </section>
 
-<section id="shifts">
+<section id="shifts" aria-describedby="A collection of all your shifts, if you have any">
   <div class="container-md text-center mt-3">
     <h2>Shift Record</h2>
     <table class="table">
