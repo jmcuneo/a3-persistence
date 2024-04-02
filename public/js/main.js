@@ -37,8 +37,11 @@ const deleteShift = async function (event) {
 	// remains to this day
 	event.preventDefault()
 
+	const form = document.getElementById("removeForm");
+
+
 	// define fields to receive from removal, convert to json
-	const shiftID = document.querySelector("#removeCID"),
+	const shiftID = document.querySelector("#shiftID"),
 		json = { id: shiftID.value },
 		body = JSON.stringify(json)
 
@@ -48,6 +51,9 @@ const deleteShift = async function (event) {
 		headers: { 'Content-Type': 'application/json' },
 		body
 	})
+
+	form.reset();
+
 
 	const html = await response.text();
 	document.body.innerHTML = html;
