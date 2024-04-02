@@ -20,7 +20,7 @@ My challenges came mostly from trying to connect to Mongo. I was initially aimin
 
 - **Tech Achievement 1**: Implemented OAuth2 authentication via Github. The user's username in the database with that shift record, so that when shifts are inserted/retrieved they are only inserted/retrieved for that user.
 - **Tech Achievement 2:** My website is hosted on a custom domain which points to a virtual machine provided by Oracle Cloud Infrastucture. Setting this up required me to manage the DNS records, create an NGINX reverse proxy on the VM, and update the firewall to allow the VM to act as a web server.
-- **Tech Achievement 3**: [Lighthouse Report](https://pagespeed.web.dev/analysis/https-ssgreene-tech/ogh4qsa45m?form_factor=desktop) with 100% on all sectors.
+- **Tech Achievement 3**: [Lighthouse Report](https://pagespeed.web.dev/analysis/https-ssgreene-tech/j0bujudmg8?form_factor=desktop) with 100% on all sectors.
 
 ### Design/Evaluation Achievements
 
@@ -31,9 +31,15 @@ My challenges came mostly from trying to connect to Mongo. I was initially aimin
   4. I have no alt-text, but this is primarily because I dont have any images :(
   5. My instruction for adding a shift I think is very intuitive - as tested by users.
   6. The page is not bloated with content.
-  7. The contrast is great and comes from a color panel (FlatUI)
+  7. The contrast is great and comes from a color panel (Bootstrap's dark theme automatically does a great job at this)
   8. Color is not used to convey information any where in the design
   9. Every form control in submission of a shift and removal of a shift has a label.
   10. The page has a set language.
   11. Page uses aria-label and aria-describedby to enhance accessibility on sections.
   12. Form fields validate to help users from preventing mistakes by entering improper data, or data that would otherwise mess up the system.
+
+* **Design Achievement 2:**
+  * **Contrast** - Designing with Bootstrap does a great job at ensuring contrast from the start. The design goal of contrast is to make elements stick out from one another. Bootstrap makes achieving a contrast design simple. I went for a dark/night mode design, which instantly forced the text to be a contrasting light/white text. Of course, I could have overriden this decision of the framework - but that would have violated the contrast principle. I suppose, the only stylistic choice the framework gave me in my use case was what color button I wanted to use. Of course, using a black button would not have looked good on the blackish background, and bootstrap's "blue" button being used as a primary button for submission looks great. 
+  * **R**
+  * **A**
+  * **P**

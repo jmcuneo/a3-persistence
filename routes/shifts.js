@@ -8,6 +8,8 @@ const 	app = require('express'),
 router.post("/add", async (req, res) => {
 	const db = database();
 
+	// if the request doesnt have an ID, user wants to add a new shift.
+	// create the new shift, and find the record for it.
 	if (req.body.id == "") {
 		let shiftID = await getNextID(req.user.username);
 		const startDate = dayjs(req.body.start);
@@ -22,6 +24,7 @@ router.post("/add", async (req, res) => {
 		};
 		await db.collection("shifts").insertOne(doc);
 	} else {
+		// use is requesting to update a shift
 		const old = { id: req.body.id }
 		const startDate = dayjs(req.body.start);
 		const endDate = dayjs(req.body.end);
@@ -33,6 +36,7 @@ router.post("/add", async (req, res) => {
 		await db.collection("shifts").updateOne(old, update)
 	}
 	
+	// render the new shifts!
 	const shifts = await db.collection("shifts").find({user: req.user.username}).toArray();
 	shifts.forEach((shift) => {
 		delete shift._id;
@@ -46,6 +50,7 @@ router.post("/add", async (req, res) => {
 })
 
 router.post("/delete", async (req, res) => {
+	// delete the requested shift !
 	const db = database();
 	const coll = db.collection("shifts");
 	console.log(req.body);
@@ -60,7 +65,7 @@ router.post("/delete", async (req, res) => {
 			console.error("unsuccess");
 		}
 	}
-	
+	// render the shifts after deleting the shift
 	const shifts = await db.collection("shifts").find({user: req.user.username}).toArray();
 	shifts.forEach((shift) => {
 		delete shift._id;

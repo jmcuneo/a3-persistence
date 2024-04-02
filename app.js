@@ -12,13 +12,7 @@ const cors = require("cors");
 const { database, connect } = require("./db/connection")
 
 
-// Passport session setup.
-//   To support persistent login sessions, Passport needs to be able to
-//   serialize users into and deserialize users out of the session.  Typically,
-//   this will be as simple as storing the user ID when serializing, and finding
-//   the user by ID when deserializing.  However, since this example does not
-//   have a database of user records, the complete GitHub profile is serialized
-//   and deserialized.
+// below passport serialization & setup functions, provided by example
 passport.serializeUser(function (user, done) {
 	done(null, user);
 });
@@ -45,7 +39,7 @@ passport.use(new GithubStrategy({
 	}
 ));
 
-
+// middleware setup & routing for express
 app.engine('handlebars', handlebars.engine());
 app.set("view engine", "handlebars");
 app.set("views", "./views");
@@ -84,6 +78,7 @@ app.get('/auth/github/callback',
 	});
 
 app.get("/", ensureAuthenticated, async (req, res) => {
+	// render users shifts on index page, if properly authenticated
 	const db = database();
 
 	const shifts = await db.collection("shifts").find({user: req.user.username}).toArray();
@@ -98,6 +93,7 @@ app.get("/", ensureAuthenticated, async (req, res) => {
 	res.render("index");
 })
 
+// connect to database first. then establish web server.
 connect().then(() => {
 	console.log("Connected to Mongo");
 	app.listen(port, () => {

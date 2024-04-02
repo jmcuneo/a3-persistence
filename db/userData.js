@@ -1,6 +1,7 @@
 const { connect, database } = require("../db/connection");
 
 const getNextID = async function(username) {
+	// get the next incremented shift id for the user.
 	const db = database();
 	const userColl = db.collection("user-data");
 	const userQuery = { user: username }

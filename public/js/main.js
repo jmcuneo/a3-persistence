@@ -23,7 +23,7 @@ const logShift = async function (event) {
 		body
 	})
 
-	// server responds with updated collection of appdata (all courses)
+	// server responds with updated website, put it on the page.
 	const html = await response.text();
 	document.body.innerHTML = html;
 	window.location.reload();
@@ -47,14 +47,15 @@ const deleteShift = async function (event) {
 
 	form.reset();
 
-	// perform delete request using fields
+	// perform delete request (we use post bcuz per rfc, delete shouldnt have body)
+	// 
 	const response = await fetch("/shifts/delete", {
 		method: "POST",
 		headers: { 'Content-Type': 'application/json' },
 		body
 	})
 
-
+	// await for response, render updated html
 	const html = await response.text();
 	document.body.innerHTML = html;
 	window.location.reload();
