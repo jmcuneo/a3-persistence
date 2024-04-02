@@ -37,11 +37,13 @@ app.set("views", __dirname + "/public");
 app.use(logger);
 app.use(express.json());
 
+// Cookie Session
 app.use(session({
     maxAge: 24 * 60 * 60 * 1000, // One day in milliseconds
     keys: [process.env.COOKIE_KEY]
 }));
 
+// Regenerate Function
 app.use(function(req, res, next) {
     if (req.session && !req.session.regenerate) {
         req.session.regenerate = (callback) => {
@@ -59,6 +61,7 @@ app.use(function(req, res, next) {
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Collection Checker
 app.use((req, res, next) => {
     if (collection !== null) {
         next();
