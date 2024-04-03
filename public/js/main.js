@@ -51,16 +51,21 @@ const addEntry = async function(event) {
 
 async function fetchAllDocs() {
   try {
-    const response = await fetch('http://localhost:3000/docs'); 
+    const response = await fetch('/docs', {
+      method: 'GET'
+    }); 
     if (!response.ok) {
       throw new Error(`Request failed with status: ${response.status}`);
     }
     const docsArray = await response.json();
     displayItems(docsArray);
   } catch (error) {
-    console.error("Error fetching documents:", error);
-    return []; // Return an empty array on error
-  }
+    console.error("Error fetching documents:", error); 
+    // Consider logging the following if available:
+    console.error("Error Message:", error.message);
+    console.error("Response Status:", response.status);
+    return []; 
+}
 }
 
 async function handleDelete(index, items) {
@@ -71,7 +76,7 @@ async function handleDelete(index, items) {
   console.log(items[index])
   try {
     const response = await fetch('/delete', {
-      method: 'DELETE', // Change method to DELETE
+      method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ itemId })
     });
@@ -225,17 +230,19 @@ async function checkLoggedInStatus() {
       window.location.href = 'index.html'; 
     } else {
       const data = await response.json(); // Parse the JSON response
-      displayUserInfo(data.username); 
+      const urlParams = new URLSearchParams(window.location.search);
+      const receivedText = urlParams.get('text');
+      displayUserInfo(receivedText);
     }
   } catch (error) {
     console.error('Error checking logged in status:', error);
   }
 }
 
-
 window.onload = function() {
   checkLoggedInStatus(); // Call on page load
   fetchAllDocs();
+
   const addButton = document.getElementById("addButton");
   addButton.onclick = addEntry;
 

@@ -28,7 +28,8 @@ loginButton.addEventListener('click', async () => {
         // If successful
         const data = await response.json();
         messageDiv.textContent = "Logging In ...";
-        window.location.href = "main.html";  
+        const newUrl = "main.html?text=" + encodeURIComponent(username);
+        window.location.href = newUrl;  
 
     } catch (error) {
         console.error('Login error:', error);
@@ -52,7 +53,7 @@ registerButton.addEventListener('click', async () => {
             // Registration successful
             messageDiv.textContent = 'Registration successful! You can now log in.'; 
         } else {
-            messageDiv.textContent = 'Registration failed. Please try again.';
+            messageDiv.textContent = 'Registration failed. Please try again: ' + data.message;
         }
     } catch (error) {
         console.error('Registration error:', error);

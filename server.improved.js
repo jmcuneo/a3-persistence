@@ -1,5 +1,7 @@
 const uri = "mongodb+srv://jackweinstein808:ieiVz7K19MdkPRQb@a3persistence.ilydjmx.mongodb.net/?retryWrites=true&w=majority&appName=a3Persistence";
 
+let activeUser = "";
+
 const express = require("express"),
   { MongoClient, ObjectId } = require("mongodb"),
   app = express(),
@@ -35,7 +37,6 @@ const bcrypt = require('bcryptjs'); // For password hashing
 
 // Example middleware for route protection
 function isLoggedIn(req, res, next) {
-  console.log('req.user inside isLoggedIn:', req.user); 
   if (req.session.isLoggedIn) {
     console.log("User logged in");
     next(); // User is logged in, proceed to the route
@@ -47,9 +48,7 @@ function isLoggedIn(req, res, next) {
 // Protected authentication check route
 app.get('/check-auth', isLoggedIn, (req, res) => {
   // Access the username from the user object in the session
-  console.log("Username: " + req.user)
-  const username = req.user ? req.user.username : null; 
-
+  const username = req.body.username; 
   res.json({ 
     message: 'User is authenticated', 
     username: username 
@@ -68,11 +67,10 @@ app.post('/login', async (req, res) => {
       if(isPasswordMatch) {
         // Set session variable to indicate user is logged in
         req.session.isLoggedIn = true;
-
+        activeUser = req.body.username;
         passport.authenticate('local')(req, res, function() {
           res.json({ success: true, message: "Login successful" });
         });
-        console.log('req.user inside login route:', req.user); 
 
       }
       else { // Incorrect password
@@ -107,6 +105,11 @@ app.post('/register', async (req, res) => {
 
     // Create new user object ...
     const result = await userCollection.insertOne(newUser);
+
+    // Create new collection for user
+    const userCollectionName = "foodLog_" + req.body.username // Unique name
+    await client.db("foodLogData").createCollection(userCollectionName);
+
     res.json({ success: true, message: "Registration successful" });
 
   } catch (error) {
@@ -120,30 +123,16 @@ app.get('/logout', (req, res) => {
     if (err) { 
       return next(err); // Pass errors to error handler 
     }
+    activeUser = "";
     res.json({ success: true, message: "Logged out" });
   }); 
 });
 
 const client = new MongoClient( uri )
-let collection = null
 
 async function run() {
   try {
     await client.connect();
-    collection = await client.db("foodLogData").collection("collection1")
-    // Route to get all docs
-    app.get("/docs", async (req, res) => {
-      if (collection !== null) {
-        try {
-          const docs = await collection.find({}).toArray();
-          res.json(docs);
-        } 
-        catch (error) { 
-          console.error("Error fetching docs:", error);
-          res.status(500).send("Error retrieving documents");
-        } 
-      }
-    });
   }
   catch (error) {
     console.error("Error connecting to MongoDB:", error);
@@ -151,15 +140,23 @@ async function run() {
   }
 }
 
-app.use( (req,res,next) => {
-  if( collection !== null ) {
-    next()
-  }else{
-    res.status( 503 ).send()
-  }
-})
+// Route to get all docs
+app.get('/docs', async (req, res) => {
+  const collectionName = "foodLog_" + activeUser;
+  const collection = client.db("foodLogData").collection(collectionName);
+  try {
+    const docs = await collection.find({}).toArray();
+    res.json(docs);
+  } 
+  catch (error) { 
+    console.error("Error fetching docs:", error);
+    res.status(500).send("Error retrieving documents");
+  } 
+});
 
-app.post( '/add', async (req,res) => {
+app.post('/add', async (req,res) => {
+  const collectionName = "foodLog_" + activeUser;
+  const collection = client.db("foodLogData").collection(collectionName);
   const newItem = req.body;
   const updatedItem = calculateItemProperties(newItem);
 
@@ -168,6 +165,8 @@ app.post( '/add', async (req,res) => {
 })
 
 app.delete('/delete', async (req, res) => {
+  const collectionName = "foodLog_" + activeUser;
+  const collection = client.db("foodLogData").collection(collectionName);
   const itemId = req.body.itemId;  
   try {
     // Directly create ObjectId from the string ID
@@ -186,6 +185,8 @@ app.delete('/delete', async (req, res) => {
 });
 
 app.post('/edit-item', async (req, res) => {
+  const collectionName = "foodLog_" + activeUser;
+  const collection = client.db("foodLogData").collection(collectionName);
   const itemId = req.body.itemId;
   const updatedData = req.body; 
   delete updatedData.itemId;  // Remove itemId from the update object
