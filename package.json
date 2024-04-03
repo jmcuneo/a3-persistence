@@ -1,11 +1,8 @@
 {
   "name": "coderunner",
-  "version": "",
-  "description": "",
-  "author": "",
-  "scripts": {
-    "start": "node --env-file=.env server.improved.js"
-  },
+  "version": "1.0.0",
+  "description": "run code",
+  "author": "nateguana <nateguana@gmail.com>",
   "dependencies": {
     "bourbon": "^7.3.0",
     "compression": "^1.7.4",
@@ -19,9 +16,7 @@
     "isolated-vm": "^4.7.2",
     "mongodb": "^6.5.0",
     "passport": "^0.7.0",
-    "passport-github2": "^0.1.12"
-  },
-  "devDependencies": {
+    "passport-github2": "^0.1.12",
     "sass": "^1.72.0"
   }
 }

@@ -11,7 +11,8 @@ const
   sass = require('./sass'),
   app = express(),
   port = 3000,
-  DEBUG = true;
+  DEBUG = false,
+  CALLBACK_DOMAIN = "game.gamestream.stream";
 
 // make css files
 sass
@@ -38,7 +39,7 @@ app.set('views', './hbs');
 passport.use(new passport_github.Strategy({
   clientID: process.env.GITHUB_CLIENT,
   clientSecret: process.env.GITHUB_SECRET,
-  callbackURL: "http://127.0.0.1:3000/auth/login/callback"
+  callbackURL: `http://${CALLBACK_DOMAIN}/auth/login/callback`
 },
   function (accessToken, refreshToken, profile, done) {
     database.DB.findOne({ user_id: profile.id }).then((user) => {

@@ -75,7 +75,7 @@ async function sendPost(name, code) {
     const obj = JSON.parse(text);
     if (obj.length == 0) {
       table.innerHTML = '';
-      error.innerHTML = "Add a varible Name and code to get started";
+      error.innerHTML = "Add a varible name and some code to get started";
       varibles = [];
     }
     else {
