@@ -1,4 +1,7 @@
 
+Glitch Link: https://a3-basharalqassar.glitch.me/ 
+
+
 Dummy Account Login Information:
 
 Username: BBAlqassar@wpi.edu   Password: Minecraft
@@ -27,6 +30,6 @@ Design Achievements for A3:
 - Buttons are added in the table for Dates: For convince, you may click on a date to make it
   autofill in the text input for date
 
-
+- 100 in all 4 lighthouse tests: Final commit of this project passed all 4 lighthouse tests at 100
 
 
