@@ -3,13 +3,52 @@
 // Triggers upon site load
 window.onload = function()
 {
-  getGpaData();
-  const submitButton = document.getElementById("submit");
-  submitButton.onclick = submit;
-  const adjustButton = document.getElementById("adjust");
-  adjustButton.onclick = updateEntry;
-  const deleteButton = document.getElementById("delete");
-  deleteButton.onclick = deleteEntry;
+  let page = window.location.pathname;
+  if (page === "/") {
+    // On login page (index)
+    const loginButton = document.getElementById("login");
+    loginButton.onclick = login;
+    const incorrectLabel = document.getElementById("incorrect");
+    incorrectLabel.innerHTML = ""
+  } else if (page === "/calculator.html") {
+    // On calculator page
+    getGpaData();
+    const submitButton = document.getElementById("submit");
+    submitButton.onclick = submit;
+    const adjustButton = document.getElementById("adjust");
+    adjustButton.onclick = updateEntry;
+    const deleteButton = document.getElementById("delete");
+    deleteButton.onclick = deleteEntry;
+  }
+}
+
+// Login to the user's account
+const login = async function(event)
+{
+  event.preventDefault(event);
+
+  const usernameInput = document.querySelector("#username");
+  const passwordInput = document.querySelector("#password");
+
+  const json = {username: usernameInput.value, password: passwordInput.value};
+  const body = JSON.stringify(json);
+  
+  const response = await fetch("/login",
+  {
+    method: "POST",
+    headers: {'Content-Type': 'application/json'},
+    body: body
+  });
+
+  const text = await response.text();
+  if (text === "true") {
+    // Login successful
+    window.location.href = "/calculator.html";
+  } else {
+    // Login unsuccessful
+    const incorrectLabel = document.getElementById("incorrect");
+    incorrectLabel.innerHTML = "The password you entered was incorrect."
+  }
 }
 
 // Submit a new entry to the GPA data
@@ -30,7 +69,7 @@ const submit = async function(event)
 
   const json = {class: classInput.value, grade: gradeInput.value, credits: creditsInput.value};
   const body = JSON.stringify(json);
-  const response = await fetch("/submit",
+  let response = await fetch("/submit",
   {
     method: "POST",
     headers: {'Content-Type': 'application/json'},
@@ -60,7 +99,7 @@ const updateEntry = async function(event)
   const json = {class: editInput.value, data: newInfo};
 
   const body = JSON.stringify(json);
-  const response = await fetch("/adjust",
+  let response = await fetch("/adjust",
   {
     method: "POST",
     headers: {'Content-Type': 'application/json'},
@@ -83,7 +122,7 @@ const deleteEntry = async function(event)
 
   const editInput = document.querySelector("#edit");
   const body = editInput.value;
-  const response = await fetch("/delete",
+  let response = await fetch("/delete",
   {
     method: "POST",
     body: body
@@ -111,6 +150,7 @@ const getGpa = async function()
   {
     method: "GET",
   });
+
   const text = await response.text();
   displayGpa(text);
 }

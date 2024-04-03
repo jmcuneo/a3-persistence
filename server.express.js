@@ -11,50 +11,38 @@ require('dotenv').config();
 const uri = `mongodb+srv://${process.env.USERNAME}:${process.env.PASSWORD}@${process.env.HOST}`
 const client = new MongoClient(uri)
 
-let username = "test";
-let password = "1234";
-let collection = null
+let collection = null;
 let data = null;
 var gpa = 0.0;
 
-app.use((req, res, next) => {
-  if(collection !== null) {
-    next();
-  } else {
-    res.status(503).send()
-  }
-});
-
 app.listen(process.env.PORT || 3000);
-checkLogin(username, password);
 
 //DATABASE FUNCITONS
-// Log into account
+// Log into account (true = succeeded, false = failed)
 async function checkLogin(usernameAttempt, passwordAttempt)
 {
-  collection = await client.db("userdb").collection("users");
+  collection = client.db("userdb").collection("users");
 
   if (collection !== null) {
     userData = await collection.findOne({username: usernameAttempt});
     if (userData !== null) {
       // User exists
-      if (userData.password === password) {
+      if (userData.password === passwordAttempt) {
         // Password correct
         console.log("Logging in")
-        await client.db("gpadb").createCollection(usernameAttempt);
-        collection = await client.db("gpadb").collection(usernameAttempt);
+        return "true";
       }
       else {
         // Password incorrect
         console.log("Incorrect password");
+        return "false";
       }
     }
     else {
       // User does not exist; create new user
       console.log("Creating new user");
       await collection.insertOne({username: usernameAttempt, password: passwordAttempt});
-      await client.db("gpadb").createCollection(usernameAttempt);
-      collection = await client.db("gpadb").collection(usernameAttempt);
+      return "true";
     }
   }
 }
@@ -93,6 +81,17 @@ async function updateDataEntry(className, newData)
 }
 
 // POST AND GET REQUESTS
+// Log into the user's account
+app.post('/login', express.json(), async (req, res) => {
+  const loginSuccessful = await checkLogin(req.body.username, req.body.password);
+
+  await client.db("gpadb").createCollection(req.body.username);
+  collection = client.db("gpadb").collection(req.body.username);
+
+  res.writeHead(200, {'Content-Type': 'application/json'});
+  res.end(loginSuccessful);
+});
+
 // Add new element to the table
 app.post('/submit', express.json(), async (req, res) => {
   await addToData(req.body);
