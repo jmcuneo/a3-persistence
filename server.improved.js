@@ -58,19 +58,89 @@ app.post("/post_login", async (req, res) => {
           }
       ).toArray()
       res.json( selectedUserData )
-      console.log(selectedUserData)
+      //console.log(selectedUserData)
 
     }
     //If no account is found
     else
     {
-      console.log("No Data found for " + loginInfo.username + "with password " + loginInfo.password)
+      //console.log("No Data found for " + loginInfo.username + "with password " + loginInfo.password)
       res("NoDataFound")
     }
 
   }
 })
 
+app.post("/add_userdata", async (req, res) => {
+  if (userdata !== null)
+  {
+    console.log("Adding/Updating User Data")
+
+    //User we are logged in for
+    let user = req.body.username;
+
+    console.log(req.body.password)
+
+    //Query for this account (before we add data)
+    const docs = await collection.find(
+        {
+          username: req.body.username,
+          password: req.body.password
+        }
+    ).toArray()
+
+    //If we find an account
+    if(docs[0] !== undefined)
+    {
+      console.log("User Found!")
+      //Query userdata for data with this user on a specific date
+
+      const query =
+      {
+        username: user,
+        date: req.body.date
+      };
+
+      const userScoreOnDate = await userdata.find(query).toArray()
+
+      //If we find data, update it
+      if(userScoreOnDate[0] !== undefined)
+      {
+        console.log("Replacing Data")
+
+        let newData =
+            {
+              _id: userScoreOnDate[0]._id,
+              score: req.body.score,
+              time: req.body.time,
+              scoreOverTime: Math.round((req.body.score / req.body.time) * 10) / 10,
+              date: req.body.date,
+              username: user
+            };
+
+        const updatedData = userdata.replaceOne(query, newData)
+
+        console.log(updatedData)
+        res.json(updatedData)
+
+      }
+      else //otherwise, add this information to the dataset
+      {
+
+      }
+
+      // console.log(userScoreOnDate)
+    }
+    else
+    {
+      //Don't add any data if we don't find an account
+    }
+
+
+
+    //Return updated user data with res
+  }
+})
 
 app.get('/login.html', (req, res) => res.send('Hello World!'))
 

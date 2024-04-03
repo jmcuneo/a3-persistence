@@ -1,6 +1,8 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
 let tableIndex = 0;
+let user = "";
+let userPassword = "";
 
 const login = async function( event ) {
 
@@ -14,6 +16,9 @@ const login = async function( event ) {
 
   console.log(json)
 
+  user = json.username
+  userPassword = json.password
+
 
   const getAccount = await fetch("/post_login",
       {
@@ -24,8 +29,6 @@ const login = async function( event ) {
 
   const loginAttempt = await getAccount.json()
 
-  console.log(loginAttempt)
-
   addUserData(loginAttempt)
 
 }
@@ -35,24 +38,35 @@ const submit = async function( event ) {
   event.preventDefault()
   
   const input = document.querySelector( "#userinput"),
-       json = { username: input[0].value, score: input[1].value, time: input[2].value },
+       json = { username: user, password: userPassword, score: input[0].value, time: input[1].value, date: input[2].value },
        body = JSON.stringify( json )
 
   //let newData = { "username": input[0].value, "score": input[1].value, "time": input[2].value }
 
-  const response = await fetch("/post_to_appdata", {
+  const response = await fetch("/add_userdata", {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(json)
-
   })
-      .then(response => response.json())
-      .then(console.log)
+
+  document.getElementById("loginButton").click()
+  console.log("Test")
+
+   //const updatedData = await response.json()
+   //console.log(updatedData)
+  //addUserData(updatedData)
 
 
 
   //Reload page to show changes to the dataset
-   location.reload()
+
+
+}
+
+const deleteData = async function( event ) {
+
+  event.preventDefault()
+  console.log("Deleting Data")
 
 }
 
@@ -66,6 +80,9 @@ window.onload = async function() {
 
   const button = document.getElementById("dataButton");
   button.onclick = submit;
+
+  const deleteButton = document.getElementById("deleteButton");
+  deleteButton.onclick = deleteData;
 
 
 }
