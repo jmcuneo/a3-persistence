@@ -12,7 +12,7 @@ The main challenge I faced was figuring out how to use the different hosting pro
 
 ## Authentication Strategy
 
-I originally was going to use passport.js, but while clicking around their site I ended up at the Auth0 website without realizing, so I just went ahead and used that instead.
+I originally was going to use passport.js, but while clicking around their site I ended up at the Auth0 website without realizing, so I just went ahead and used that instead because their website looked nicer. Authentication can be done either with Github login or username/password.
 
 ## CSS Framework
 
@@ -23,7 +23,7 @@ I used Bootstrap because I looked up "best css framework" and it was number 1. I
 I used a custom middleware for all GET and POST requests (app.get and app.post) to customize the responses. In addition, I used `express.static` to serve all my files and `express.json` to parse application/json headers that are sent to the server from the client. For authentication, I used middleware functions from `express-openid-connect` to deal with authentication and its related routing.
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication with Auth0. The user can use either Github or username  and password to log in.
+- **Tech Achievement 1**: I used OAuth authentication with Auth0. The user can use either Github or username/password to log in.
 - **Tech Achievement 2**: I used a service called Railway as the hosting service instead of Glitch
 - **Tech Achievement 3**: Lighthouse evaluation of both pages of my website shows 100%.
   - ![page 1 Lighthouse](/page1Lighthouse.png)
