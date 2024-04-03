@@ -10,7 +10,8 @@ const submit = async function( event ) {
   const name = document.querySelector( "#yourname" ),
         bday = document.querySelector( "#yourbday" ),
         cake = document.querySelector( "#yourcake" ),
-        json = { name: name.value, birthday: bday.value, preferredCake: cake.value},
+        gift = document.querySelector('input[name="yourgift"]:checked'),
+        json = { name: name.value, birthday: bday.value, preferredCake: cake.value, gift: gift.value},
         body = JSON.stringify( json )
 
   const response = await fetch( "/submit", {
@@ -51,23 +52,31 @@ async function loadData() {
 async function emptyForms() {
   const sname = document.querySelector( "#yourname" ),
         sbday = document.querySelector( "#yourbday" ),
-        scake = document.querySelector( "#yourcake" )
+        scake = document.querySelector( "#yourcake" ),
+        sgift = document.querySelector('input[name="yourgift"]:checked')
 
   sname.value = ''
   sbday.value = ''
   scake.value = ''
+  if(sgift) {
+    sgift.checked = false
+  }
 
   const _id = document.querySelector( "#_id" ),
         uname = document.querySelector( "#name" ),
         uage = document.querySelector( "#age" ),
         ubday = document.querySelector( "#bday" ),
-        ucake = document.querySelector( "#cake" )
+        ucake = document.querySelector( "#cake" ),
+        ugift = document.querySelector('input[name="gift"]:checked')
 
   _id.value = ''
   uname.value = ''
   uage.value = ''
   ubday.value = ''
   ucake.value = ''
+  if(ugift) {
+    ugift.checked = false
+  }
 }
 
 
@@ -99,6 +108,8 @@ async function fillTable(text) {
     bdaycell.id = "bdaycell";
     var cakecell = row.insertCell();
     cakecell.id = "cakecell";
+    var giftcell = row.insertCell();
+    giftcell.id = "giftcell";
 
     // for each entry add a delete button for that entry
     var del = document.createElement('button');
@@ -116,6 +127,7 @@ async function fillTable(text) {
     agecell.innerHTML = elt.age;
     bdaycell.innerHTML = elt.birthday;
     cakecell.innerHTML = elt.preferredCake;
+    giftcell.innerHTML = elt.gift;
 
     // set on click for each id cell to call fill entry function
     _idcell.onclick = (function(elt) {return function() {fillEntry(elt);}})(elt);
@@ -163,7 +175,8 @@ const fillEntry = async function(elt) {
         name = document.querySelector( "#name" ),
         age = document.querySelector( "#age" ),
         bday = document.querySelector( "#bday" ),
-        cake = document.querySelector( "#cake" )
+        cake = document.querySelector( "#cake" ),
+        gift = document.getElementsByName("gift")
 
   // update the element values to the selected entry values
   _id.value = elt._id
@@ -171,6 +184,11 @@ const fillEntry = async function(elt) {
   age.value = elt.age
   bday.value = elt.birthday
   cake.value = elt.preferredCake
+  for(let i = 0; i < gift.length; i++) {
+    if(gift[i].value == elt.gift) {
+      gift[i].checked = true
+    }
+  }
 }
 
 
@@ -189,7 +207,8 @@ const updateEntry = async function( event ) {
         name = document.querySelector( "#name" ),
         bday = document.querySelector( "#bday" ),
         cake = document.querySelector( "#cake" ),
-        json = { _id: _id.value, name: name.value, birthday: bday.value, preferredCake: cake.value},
+        gift = document.querySelector('input[name="gift"]:checked'),
+        json = { _id: _id.value, name: name.value, birthday: bday.value, preferredCake: cake.value, gift: gift.value},
         body = JSON.stringify( json )
 
   // send string as a PATCH request to server
@@ -206,6 +225,25 @@ const updateEntry = async function( event ) {
   console.log(text)
   emptyForms()
   loadData()
+}
+
+
+
+function handleEnter(e) {
+  if(e.keyCode) {
+    if(e.keyCode == '13') {
+      togglePopup();
+    }
+  }
+}
+
+
+
+function togglePopup() {
+  var popup = document.getElementById("pageinfo");
+  popup.classList.toggle("show");
+  var link = document.getElementById("popuplink");
+  link.classList.toggle("underline");
 }
 
 

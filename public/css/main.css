@@ -1,78 +1,74 @@
-body {
-  color:#2F2F2F;
-  background:#E8E8E8;
-  display: flex;
-  flex-direction: column;
-}
-
-form {
-  margin-top: 10px;
-  margin-bottom: 20px;
-  background: #B8B8B8;
-  padding: 10px 20px;
-}
-
-h1 {
-  font-family: 'Open Sans';
-  text-align: center;
-  color:#2F2F2F;
-}
-
-#datatable {
-  align-self: center;
-  border-collapse: collapse;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: auto;
-  margin-right: auto;
-  background: #B8B8B8;
-  padding: 10px 20px;
-}
-
-td {
-  font-family: 'Open Sans';
-  color:#2F2F2F;
-  margin: 0px 0px;
-  padding: 10px 20px;
-}
-
-td#idcell:hover {
-  border-left: solid 3px #08889B;
-}
-
-tr {
-  border-bottom: 1px solid #2F2F2F;
-  margin: 10px
-}
-
-input {
-  font-family: 'Open Sans';
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-label {
-  font-family: 'Open Sans';
-  display: inline-block;
-  color:#2F2F2F;
-  font-size: 15px;
-}
-
-.form-header {
-  font-family: 'Open Sans';
-  margin-left: 0px;
-  color:#2F2F2F;
-  font-size: 25px;
-}
-
-.flex-row {
+#all-forms-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
-.form-container {
-  text-align: left;
+body {
+  margin-left: 15%;
+  margin-right: 15%;
+  max-width: none;
+}
+
+.radio {
+  display: flex;
+  flex-direction: row;
+}
+
+.radio-option {
+  display: flex;
+  flex-direction: row;
+  margin-right: 2em;
+}
+
+input[type='radio'] {
+  accent-color: #982c61;
+}
+
+input[disabled] {
+  background-color: #c5c5c5;
+}
+
+a.underline {
+  border-bottom: 2px solid #4a4a4a;
+}
+
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.popup .popuptext {
+  visibility: hidden;
+  background-color: #f1f1f1;
   display: flex;
   flex-direction: column;
+  width: max-content;
+  max-width: 60em;
+  position: absolute;
+  z-index: 1;
+  top: 200%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn .5s;
+  animation: fadeIn .5s
+}
+
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
 }

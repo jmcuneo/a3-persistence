@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>A3 - Main - CS 4241</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+    <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
+    <link rel="stylesheet" href="css/main.css">
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+
+    <div class="popup">
+      <a id="popuplink" onkeydown="handleEnter(event)" onclick="togglePopup()" tabindex="1" aria-haspopup="true">Click to Toggle Info About This Page</a>
+      <div class="popuptext" id="pageinfo">
+        <h3>Data Table</h3>
+        <p>On this web page you can see a list of people's birthdays that you have saved. At the top of the page is the current full list which includes:</p>
+        <ul>
+          <li>a person's ID</li>
+          <li>their name</li>
+          <li>their age</li>
+          <li>their date of birth</li>
+          <li>their preferred cake flavor</li>
+          <li>and whether you have bought their gift yet or not</li>
+        </ul>
+        <p>The age and ID for each person are calculated for you. For each entry you can delete them using the delete button to the right of the entry</p>
+        <h3>Forms</h3>
+        <p>This page also includes 2 forms, a new entry form, and an update entry form. Use the new entry form to add a new birthday you wish to track. To add a new entry just fill out the name, dat of birth in MM/DD/YYYY format, their preferred cake flavor and whether or not you bought them a gift. Finally hit the submit button. </p>
+        <p>To use the update form, click on the ID of the entry that you wish to update in the table. Their information will automatically fill the update form. You can then change their name, date of birth, preferred cake flavor, and whether or not you boight them a gift. The ID field and Age field are not able to be edited as they are recalculates if necessary. Finally hit the update button to confirm your changes.</p>
+      </div>
+    </div>
+
+    <h1>Data Table</h1>
+    <table id="datatable">
+    </table>
+
+    <div id="all-forms-container" class="flex-row">
+
+      <div id="form-new-container" class="form-container">
+        <h3 class="form-header">Form for New Entry</h3>
+        <form id="form-new">
+          <label for="yourname">Name:</label>
+          <input type="text" id="yourname" placeholder="name here" required><br>
+          <label for="yourbday">Birthday in the form MM/DD/YYYY:</label>
+          <input type="text" id="yourbday" placeholder="bday here" required><br>
+          <label for="yourcake">Preferred Cake Flavor:</label>
+          <input type="text" id="yourcake" placeholder="preferred cake flavor here"><br>
+          <label>Bought Gift?</label>
+          <div id="yougift-radio" class="radio" required>
+            <div class="radio-option">
+              <input type="radio" id="yes" name="yourgift" value="yes">
+              <label for="yes">Yes</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="no" name="yourgift" value="no">
+              <label for="no">No</label>
+            </div>
+          </div>
+          <button id="submit">submit</button>
+        </form>
+      </div>
+
+      <div id="form-update-container" class="form-container">
+        <h3 class="form-header">Form for Updating Entry</h3>
+        <form id="form-update">
+          <label for="_id">ID (Click on ID in table to fill):</label>
+          <input type="text" id="_id" disabled><br>
+          <label for="name">Name:</label>
+          <input type="text" id="name" placeholder="name here" required><br>
+          <label for="age">Age:</label>
+          <input type="number" id="age" disabled><br>
+          <label for="bday">Birthday in the form MM/DD/YYYY:</label>
+          <input type="text" id="bday" placeholder="bday here" required><br>
+          <label for="cake">Preferred Cake Flavor:</label>
+          <input type="text" id="cake" placeholder="preferred cake flavor here"><br>
+          <label>Bought Gift?</label>
+          <div id="gift-radio" class="radio" required>
+            <div class="radio-option">
+              <input type="radio" id="yes" name="gift" value="yes">
+              <label for="yes">Yes</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="no" name="gift" value="no">
+              <label for="no">No</label>
+            </div>
+          </div>
+          <button id="update">update</button>
+        </form>
+      </div>
+
+    </div>
+
+  </body>
+</html>

@@ -1,58 +1,23 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  </head>
-  <body>
-
-    <h1>Data Table</h1>
-    <table id="datatable">
-    </table>
-
-    <div id="all-forms-container" class="flex-row">
-
-      <div id="form-new-container" class="form-container">
-        <h3 class="form-header">Form for New Entry</h3>
-        <form id="form-new" onkeydown="if(event.keyCode === 13) {
-          return false;
-        }">
-          <label>Name:</label>
-          <input type="text" id="yourname" placeholder="your name here"><br>
-          <label>Birthday (MM/DD/YYYY):</label>
-          <input type="text" id="yourbday" placeholder="your bday here"><br>
-          <label>Preferred Cake Flavor:</label>
-          <input type="text" id="yourcake" placeholder="your preferred cake flavor here"><br>
-          <button id="submit">submit</button>
+<html lang='en'>
+    <head>
+        <title>A3 - Login - CS 4241</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <script src="js/index.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
+        <link rel="stylesheet" href="css/index.css">
+        <!-- get rid of favicon error -->
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    </head>
+    <body>
+        <h1>Login</h1>
+        <form>
+            <label for="username">Username:</label>
+            <input type='text' name='username' id='username' required>
+            <label for="password">Password:</label>
+            <input type='password' name='password' id='password' required>
+            <input type='submit' id="submit">
         </form>
-      </div>
-
-      <div id="form-update-container" class="form-container">
-        <h3 class="form-header">Form for Updating Entry (Click on an ID in table)</h3>
-        <form id="form-update" onkeydown="if(event.keyCode === 13) {
-          return false;
-        }">
-          <label>ID:</label>
-          <input type="text" id="_id" disabled><br>
-          <label>Name:</label>
-          <input type="text" id="name" placeholder="name here"><br>
-          <label>Age:</label>
-          <input type="number" id="age" disabled><br>
-          <label>Birthday (MM/DD/YYYY):</label>
-          <input type="text" id="bday" placeholder="bday here"><br>
-          <label>Preferred Cake Flavor:</label>
-          <input type="text" id="cake" placeholder="preferred cake flavor here"><br>
-          <button id="update">update</button>
-        </form>
-      </div>
-
-    </div>
-
-  </body>
+    </body>
 </html>
