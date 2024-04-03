@@ -47,7 +47,7 @@ passport.use(new passport_github.Strategy({
         user = {
           user_id: profile.id,
           username: profile.username,
-          equations: []
+          equations: {}
         };
         database.DB.insertOne(user);
       }
