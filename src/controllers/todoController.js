@@ -34,7 +34,7 @@ const getTodos = (req, res) => {
     const timeSinceAdded = Math.floor((now - createdAt) / 1000 / 60); // in minutes
     return { ...todo, timeSinceAdded: `${timeSinceAdded} minutes ago` };
   });
-  res.json(todosWithTimeSinceAdded);
+  res.status(200).json(todosWithTimeSinceAdded);
 };
 
 const createTodo = (req, res) => {
@@ -45,7 +45,7 @@ const createTodo = (req, res) => {
     createdAt: new Date(),
   };
   todos.push(newTodo);
-  res.json(newTodo);
+  res.status(201).json(newTodo);
   //   console.log("New todo created: ", newTodo);
 };
 
@@ -66,7 +66,7 @@ const toggleTodo = (req, res) => {
   const todo = todos.find((t) => t.id === id);
   if (todo) {
     todo.completed = !todo.completed;
-    res.json(todo);
+    res.status(200).json(todo);
     // console.log("Todo status toggled: ", todo);
   } else {
     res.status(404).send("Todo not found");

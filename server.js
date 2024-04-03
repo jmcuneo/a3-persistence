@@ -14,6 +14,7 @@ app.use(morgan("dev"));
 
 /* routes */
 app.use("/todos", require("./src/routes/todoRoute"));
+app.use("/auth", require("./src/routes/userRoute"));
 app.use("/", require("./src/routes/viewRoute"));
 
 const port = 3000 || process.env.PORT;

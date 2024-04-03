@@ -19,12 +19,14 @@ const updateTodos = async () => {
     checkBox.type = "checkbox";
     checkBox.checked = todo.completed;
     checkBox.classList.add("form-check-input", "me-2");
+    checkBox.id = `todo-checkbox-${todo.id}`; // Add an id to associate with a label
     checkBox.addEventListener("change", () => toggleTodo(todo.id));
 
-    // Todo title
-    const titleSpan = document.createElement("span");
-    titleSpan.textContent = todo.title;
-    titleSpan.classList.add("flex-grow-1");
+    // Checkbox label
+    const checkBoxLabel = document.createElement("label");
+    checkBoxLabel.htmlFor = `todo-checkbox-${todo.id}`; // `htmlFor` associates the label with the checkbox id
+    checkBoxLabel.classList.add("form-check-label", "flex-grow-1");
+    checkBoxLabel.textContent = todo.title; // Optionally, use the todo's title as the label's text
 
     // Delete button
     const deleteBtn = document.createElement("button");
@@ -37,16 +39,16 @@ const updateTodos = async () => {
     createdAtSpan.textContent = `Created at: ${new Date(
       todo.createdAt
     ).toLocaleString()}`;
-    createdAtSpan.classList.add("badge", "bg-secondary", "ms-2");
+    createdAtSpan.classList.add("badge", "bg-success", "ms-2");
 
     // Time since added
     const timeSinceAddedSpan = document.createElement("span");
     // Assuming `todo.timeSinceAdded` exists and is calculated server-side
     timeSinceAddedSpan.textContent = `${todo.timeSinceAdded}`;
-    timeSinceAddedSpan.classList.add("badge", "bg-info", "ms-2");
+    timeSinceAddedSpan.classList.add("badge", "bg-secondary", "ms-2");
 
     todoItem.appendChild(checkBox);
-    todoItem.appendChild(titleSpan);
+    todoItem.appendChild(checkBoxLabel);
     todoItem.appendChild(createdAtSpan);
     todoItem.appendChild(timeSinceAddedSpan); // Now including this
     todoItem.appendChild(deleteBtn);
