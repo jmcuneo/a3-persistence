@@ -33,10 +33,12 @@ const login = async function( event ) {
   if(loginAttempt === "PasswordIncorrect")
   {
     alert("Account Password is incorrect")
+    clearTable()
   }
   else if(loginAttempt === "AccountCreated")
   {
     alert("Account Created! Please Add data!")
+    clearTable()
   }
   else
   {
