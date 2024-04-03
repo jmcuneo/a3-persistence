@@ -26,6 +26,8 @@ const login = async function( event ) {
 
   console.log(loginAttempt)
 
+  addUserData(loginAttempt)
+
 }
 
 const submit = async function( event ) {
@@ -130,6 +132,58 @@ async function insetElementToTable(element)
     }
 
   }
+
+
+
+}
+
+
+async function addUserData(userData)
+{
+  tableIndex = 0;
+  const table = document.getElementById("InformationTable")
+
+  for(let i = 0; i < userData.length; i++)
+  {
+    tableIndex++
+    let row = table.insertRow(tableIndex)
+
+    for(let j = 0; j <= 5; j++)
+    {
+      let cell = row.insertCell(j)
+
+      if(j == 0)
+      {
+        //This is the Object ID which we will skip for now
+      }
+      else if(j == 1)
+      {
+        cell.innerHTML = userData[i].score;
+      }
+      else if(j == 2)
+      {
+        cell.innerHTML = userData[i].time;
+      }
+      else if(j == 3)
+      {
+        cell.innerHTML = userData[i].scoreOverTime;
+        //cell.innerHTML =  Math.round((element.score / element.time) * 10) / 10;
+      }
+      else if(j == 4)
+      {
+        cell.innerHTML = userData[i].date;
+        //let curDate = new Date()
+        //cell.innerHTML = (curDate.getMonth() + 1) + "/" + curDate.getDate() + "/" + curDate.getFullYear()
+      }
+      else if(j == 5)
+      {
+
+
+      }
+    }
+
+  }
+
 
 
 
