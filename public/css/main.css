@@ -11,44 +11,35 @@ table
   outline-width: 1px;
 }
 
-th.openSans
+th
 {
   border: 1px solid black;
   background: #00e7e7;
 
   text-align: center;
-
-  font-variation-settings: "wdth" 100;
-  font-size: 20px;
+  font-size: 14px;
+  
 }
 
 td
 {
   border: 1px solid;
-
-  font-family: "Open Sans", sans-serif;
-  font-style: normal;
-  font-variation-settings: "wdth" 50;
-  font-size: 14px;
+  font-size: 12px;
 }
 
-input.openSans
+input
 {
   font-style: oblique;
   border: 2px solid;
 }
 
-h1.openSans
+h1
 {
-  font-variation-settings: "wdth" 50;
-  font-size: 30px;
-
   text-decoration: underline;
   text-decoration-color: #0080ff;;
-
 }
 
-button.openSans
+button
 {
   border-radius: 10px;
   border: 2px solid;

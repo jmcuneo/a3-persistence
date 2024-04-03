@@ -10,7 +10,8 @@
     "express": "^4.19.2",
     "mime": "^4.0.1",
     "mongodb": "^6.5.0",
-    "mongoose": "^8.2.4"
+    "mongoose": "^8.2.4",
+    "nes.css": "^2.3.0"
   },
   "engines": {
     "node": "16.14.2"

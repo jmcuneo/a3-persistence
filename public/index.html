@@ -4,44 +4,46 @@
     <title>CS4241 Assignment 3</title>
     <meta charset="utf-8">
     <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet">
     
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
 
-  <h1 class="openSans">Smalltown Arcade Login</h1>
+  <h1>Smalltown Arcade Login</h1>
 
   <form id ="userlogin">
-    <input class="openSans" type="text" id="email" placeholder="email">
-    <input class="openSans" type="text" id="password" placeholder="password">
-    <button id ="loginButton" class="openSans">Login</button>
+    <input  type="text" id="email" placeholder="email">
+    <input  type="text" id="password" placeholder="password">
+    <button id ="loginButton">Login</button>
   </form>
 
 
-  <h2 class="openSans">Your High Scores:</h2>
+  <h2>Your High Scores:</h2>
 
     <form id ="userinput">
 
-      <input class="openSans" type="text" id="score" placeholder="score">
+      <input type="text" id="score" placeholder="score">
 
-      <input class="openSans" type="text" id="playtime" placeholder="playtime">
+      <input type="text" id="playtime" placeholder="playtime">
 
-      <input class="openSans" type="text" id="date" placeholder="date (unique id)">
+      <input type="text" id="date" placeholder="date (unique id)">
 
-      <button id = "dataButton" class="openSans" style="background: green">Add/Update</button>
-      <button id = "deleteButton" class="openSans" style="background: red">Delete</button>
+      <button id = "dataButton" style="background: green">Add/Update</button>
+      <button id = "deleteButton" style="background: red">Delete</button>
 
 
     </form>
 
 <table id ="InformationTable">
     <tr>
-      <th class="openSans">Score</th>
-      <th class="openSans">Playtime</th>
-      <th class="openSans">Score / Time</th>
-      <th class="openSans" id ="idBlock">Date</th>
+      <th>Score</th>
+      <th>Playtime</th>
+      <th>Score / Time</th>
+      <th id ="idBlock">Date</th>
 
     </tr>
 
