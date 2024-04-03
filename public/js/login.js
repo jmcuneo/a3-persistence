@@ -14,8 +14,9 @@ const register = async function(event) {
     event.preventDefault();
 
     const username = document.querySelector("#username").value,
+        email = document.querySelector("#email").value,
         password = document.querySelector("#password").value,
-        json = { username: username, password: password },
+        json = { email: email, username: username, password: password, role: "regular" },
         body = JSON.stringify(json);
 
     const response = await fetch("/register", {
@@ -25,16 +26,22 @@ const register = async function(event) {
         },
         body: body
     })
-        .then(response => response.text())
-        .then(function(data) {
-            console.log(data);
-        }).catch(error => console.error('Error:', error));
+        .then(function (res) {
+            if (res.status === 201){
+                window.alert('register successful')
+                switch_visible();
+            }
+            else{
+                window.alert('User already exist')
+            }
+        } )
+        .catch(error => console.error('Error:', error));
 
 }
 
 const login = async function(event) {
-    event.preventDefault();
 
+    event.preventDefault();
     const username = document.querySelector("#username_login").value,
         password = document.querySelector("#password_login").value,
         json = { username: username, password: password },
@@ -46,13 +53,9 @@ const login = async function(event) {
             'Content-Type': 'application/json'
         },
         body: body
+    }).then(function (res){
+        window.location.href = res.url;
     })
-        .then(response => response.text())
-        .then(function(data) {
-            console.log(data);
-        }).catch(error => console.error('Error:', error));
-
-
 }
 
 window.onload = function() {
