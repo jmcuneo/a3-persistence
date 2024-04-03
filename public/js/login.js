@@ -19,7 +19,9 @@ const login = async function(event){
         body
     })
 
-    console.log(response)
+    if(response.status === 201) {
+        alert("New Account Created")
+    }
 
     if(response.ok) {
         window.location.href = '/main';

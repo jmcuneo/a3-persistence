@@ -58,7 +58,7 @@ app.post('/login', async (req, res) => {
 
     if (!user) {
         try {
-            const result = await loginCollection.insertOne({ username: username, password: password });
+            await loginCollection.insertOne({ username: username, password: password });
             console.log("Creating Account with username: ", username)
             user = await loginCollection.findOne({username: username});
             isNewAccount = true;
@@ -73,7 +73,10 @@ app.post('/login', async (req, res) => {
 
     if (validated) {
         req.session.userId = user._id;
-        res.redirect('/main');
+        if(isNewAccount) {
+            res.status(201).send('new account created');
+        }
+        else res.redirect('/main');
     } else {
         res.send('Invalid username or password');
     }
