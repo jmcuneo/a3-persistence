@@ -1,4 +1,4 @@
-const uri = "mongodb+srv://jackweinstein808:ieiVz7K19MdkPRQb@a3persistence.ilydjmx.mongodb.net/?retryWrites=true&w=majority&appName=a3Persistence";
+
 
 let activeUser = "";
 
