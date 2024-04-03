@@ -1,4 +1,5 @@
-const uri = "mongodb+srv://jackweinstein808:ieiVz7K19MdkPRQb@a3persistence.ilydjmx.mongodb.net/?retryWrites=true&w=majority&appName=a3Persistence";
+require('dotenv').config();
+const uri = process.env.MONGODB_URI;
 
 let activeUser = "";
 const express = require("express"),
