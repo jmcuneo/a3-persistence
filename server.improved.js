@@ -11,18 +11,17 @@ const http = require( "http" ),
   dir  = "public/",
   port = 3000,
   express = require('express'),
-  { MongoClient, ObjectId } = require("mongodb"), 
   app = express(),
   previousResults = []
 
+require("dotenv").config();
+
 app.use( express.static( 'public' ) )
 app.use( express.json() )
-app.use( middleware_post )
 
 //Database Code
-//Connection String: mongodb+srv://<username>:<password>@cs4241.xgtmlzl.mongodb.net/
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://<username>:<password>@cs4241.xgtmlzl.mongodb.net/?retryWrites=true&w=majority&appName=CS4241";
+const uri = `mongodb+srv://${process.env.USERNAME}:${process.env.PASS}@${process.env.HOST}`;
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
@@ -36,7 +35,7 @@ let collection = null
 
 async function run() {
   await client.connect()
-  collection = await client.db("datatest").collection("test")
+  collection = await client.db("CS4241").collection("Calculator")
 
   // route to get all docs
   app.get("/docs", async (req, res) => {
@@ -72,6 +71,8 @@ const middleware_post = (req, res, next) => {
     next()
   })
 }
+
+app.use( middleware_post )
 
 app.post('/addition', (req, res) => {
   const { num1, num2 } = req.clientData;
@@ -146,7 +147,6 @@ const sendFile = function( response, filename ) {
      }
    })
 }
-
 
 //function to add a given result to the previous results array
 const addPreviousResults = function (result) {        //pass the result
