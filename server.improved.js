@@ -51,7 +51,7 @@ passport.use(new passport_github.Strategy({
         };
         database.DB.insertOne(user);
       }
-      done(null, profile.id);
+      done(null, { id: profile.id, new: true });
 
     }).catch((err) => {
       console.log(err);
@@ -64,9 +64,9 @@ passport.use(new passport_github.Strategy({
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser((id, cb) => cb(null, id));
+passport.serializeUser((user, cb) => cb(null, user.id));
 
-passport.deserializeUser((id, cb) => cb(null, id));
+passport.deserializeUser((id, cb) => cb(null, { id }));
 
 app.use(express.json());
 
@@ -109,7 +109,7 @@ app.post('/', (req, res) => {
     res.status(401).send()
   } else {
     try {
-      isolation.evaluate(req.user, req.body.name ?? "", req.body.code ?? "").then((equations) => {
+      isolation.evaluate(req.user.id, req.body.name ?? "", req.body.code ?? "").then((equations) => {
         res.writeHead(200, "OK", { "Content-Type": "application/json" });
         let json = Object.entries(equations).map(e => ({ name: e[0], code: e[1].code, result: e[1].result }))
         res.end(JSON.stringify(json));
