@@ -28,8 +28,20 @@ const login = async function( event ) {
       })
 
   const loginAttempt = await getAccount.json()
+  console.log(loginAttempt)
 
-  addUserData(loginAttempt)
+  if(loginAttempt === "PasswordIncorrect")
+  {
+    alert("Account Password is incorrect")
+  }
+  else if(loginAttempt === "AccountCreated")
+  {
+    alert("Account Created! Please Add data!")
+  }
+  else
+  {
+    addUserData(loginAttempt)
+  }
 
 }
 

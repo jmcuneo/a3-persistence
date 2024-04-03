@@ -39,34 +39,54 @@ app.post("/post_login", async (req, res) => {
 
     let loginInfo = req.body
 
-    //Query for this account
-    const docs = await collection.find(
-        {
-          username: loginInfo.username,
-          password: loginInfo.password
-        }
-    ).toArray()
-    //res.json( docs )
 
-    //If we find an account
-    if(docs[0] !== undefined)
+    const accountExists = await collection.countDocuments(
+        {
+          username: loginInfo.username
+        }
+    )
+    console.log(accountExists)
+
+    if(accountExists !== 0)
     {
-      //Query userdata for this user and return all associated data
-      const selectedUserData = await userdata.find(
+      //Query for this account to find an exact match
+      const docs = await collection.find(
           {
-            username: loginInfo.username
+            username: loginInfo.username,
+            password: loginInfo.password
           }
       ).toArray()
-      res.json( selectedUserData )
-      //console.log(selectedUserData)
+      //res.json( docs )
 
+      //If we find an account
+      if(docs[0] !== undefined)
+      {
+        //Query userdata for this user and return all associated data
+        const selectedUserData = await userdata.find(
+            {
+              username: loginInfo.username
+            }
+        ).toArray()
+        res.json( selectedUserData )
+        //console.log(selectedUserData)
+
+      }
+      //If no account is found, that means the password is wrong
+      else
+      {
+        //console.log("No Data found for " + loginInfo.username + "with password " + loginInfo.password)
+        res.json("PasswordIncorrect")
+      }
     }
-    //If no account is found
     else
     {
-      //console.log("No Data found for " + loginInfo.username + "with password " + loginInfo.password)
-      res.json("NoDataFound")
+      let newUser = {username: loginInfo.username, password: loginInfo.password}
+      const updatedData = collection.insertOne(newUser)
+      console.log("Created New user: " + loginInfo.username)
+      res.json("AccountCreated")
     }
+
+
 
   }
 })
@@ -148,7 +168,7 @@ app.post("/add_userdata", async (req, res) => {
     else
     {
       //Don't add any data if we don't find an account
-      res("Account Not Logged in")
+      res.json("Account Not Logged in")
     }
 
 
