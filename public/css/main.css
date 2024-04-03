@@ -1,12 +1,13 @@
 body {
   background-color: #2FF5AD;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
 }
 
 h1 {
   font-family: "Audiowide", sans-serif;
   background-color: #23E0E0;
-  font-size: 40px;
-  font-weight: bold;
   text-align: center;
 }
 
@@ -31,7 +32,7 @@ br {
 
 label { 
   display: block;
-  width: 250px;
+  width: 500px;
 }
 
 ul {
@@ -39,7 +40,7 @@ ul {
 }
 
 input {
-  width: 10%;
+  width: 50%;
 }
 
 button {
@@ -47,4 +48,13 @@ button {
   border: 3px dotted;
   font-family: "Fugaz One", sans-serif;
   font-size: 15px;
+}
+
+.box {
+  width: 600px;
+  align-self: center;
+}
+
+.notice {
+  padding-top: 5%;
 }
