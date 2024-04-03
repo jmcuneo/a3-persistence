@@ -68,6 +68,22 @@ const deleteData = async function( event ) {
   event.preventDefault()
   console.log("Deleting Data")
 
+  const input = document.querySelector( "#userinput"),
+      json = { username: user, password: userPassword, score: input[0].value, time: input[1].value, date: input[2].value },
+      body = JSON.stringify( json )
+
+  //let newData = { "username": input[0].value, "score": input[1].value, "time": input[2].value }
+
+  const response = await fetch("/delete_userdata", {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(json)
+  })
+
+  document.getElementById("loginButton").click()
+  console.log("Test")
+
+
 }
 
 

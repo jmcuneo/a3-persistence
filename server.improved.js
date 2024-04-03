@@ -65,7 +65,7 @@ app.post("/post_login", async (req, res) => {
     else
     {
       //console.log("No Data found for " + loginInfo.username + "with password " + loginInfo.password)
-      res("NoDataFound")
+      res.json("NoDataFound")
     }
 
   }
@@ -148,6 +148,7 @@ app.post("/add_userdata", async (req, res) => {
     else
     {
       //Don't add any data if we don't find an account
+      res("Account Not Logged in")
     }
 
 
@@ -155,6 +156,54 @@ app.post("/add_userdata", async (req, res) => {
     //Return updated user data with res
   }
 })
+
+app.post("/delete_userdata", async (req, res) => {
+  if (userdata !== null)
+  {
+    console.log("Deleting Userdata")
+
+    //User we are logged in for
+    let user = req.body.username;
+
+    console.log(req.body.password)
+
+    //Query for this account (before we delete data)
+    const docs = await collection.find(
+        {
+          username: req.body.username,
+          password: req.body.password
+        }
+    ).toArray()
+
+    //If we find an account
+    if(docs[0] !== undefined)
+    {
+      console.log("User Found!")
+      //Query userdata for data with this user on a specific date
+
+      const query =
+          {
+            username: user,
+            date: req.body.date
+          };
+
+      const deletedData = await userdata.deleteOne(query)
+      res.json(deletedData)
+
+    }
+    else
+    {
+      //Don't delete any data if we don't have a valid account
+      res.json("Account Not Logged in")
+
+    }
+
+
+
+    //Return updated user data with res
+  }
+})
+
 
 app.get('/login.html', (req, res) => res.send('Hello World!'))
 
