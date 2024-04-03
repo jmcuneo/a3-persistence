@@ -3,6 +3,7 @@ const User = require("../models/userModel");
 
 // Register User
 async function register(req, res) {
+  console.log(req.body);
   try {
     const { username, password } = req.body;
     const userExists = await User.findOne({ username });
@@ -11,13 +12,8 @@ async function register(req, res) {
     }
 
     const user = await User.create({ username, password });
-    res.status(201).json({
-      message: "User created successfully",
-      user: {
-        id: user._id,
-        username: user.username,
-      },
-    });
+
+    res.status(201).redirect("/");
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -26,6 +22,7 @@ async function register(req, res) {
 // Login User
 async function login(req, res) {
   try {
+    console.log(req.body);
     const { username, password } = req.body;
     const user = await User.findOne({ username });
     if (!user) {
@@ -41,14 +38,7 @@ async function login(req, res) {
       expiresIn: "1d",
     });
 
-    res.json({
-      message: "Login successful",
-      token,
-      user: {
-        id: user._id,
-        username: user.username,
-      },
-    });
+    res.redirect("/");
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

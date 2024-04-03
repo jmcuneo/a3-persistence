@@ -7,6 +7,7 @@ const morgan = require("morgan");
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 require("./src/config/database");
 
