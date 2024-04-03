@@ -9,11 +9,11 @@
 }
 
 .green {
-  border: #47A62D 10px solid;
+  border: #47a62d 10px solid;
 }
 
 .blue {
-  border: #0378A6 10px solid;
+  border: #0378a6 10px solid;
 }
 
 footer {
@@ -24,7 +24,7 @@ footer {
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #0378A6;
+  background-color: #0378a6;
   z-index: 1000;
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -44,7 +44,8 @@ a {
   color: #ffffff;
 }
 
-.footerP, a {
+.footerP,
+a {
   display: inline;
 }
 
@@ -117,7 +118,7 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #0378A6;
+  background-color: #0378a6;
   z-index: 1000;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
