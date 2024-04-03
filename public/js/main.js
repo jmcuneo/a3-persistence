@@ -158,13 +158,13 @@ const loadTable = function(entries){
 
 window.onload = function() {
   get();
-
+  
   const submitButton = document.querySelector(".submitButton");
   submitButton.onclick = submit;
-
+  
   const updateButton = document.querySelector(".updateButton");
   updateButton.onclick = update;
-
+  
   const deleteButton = document.querySelector(".deleteButton");
   deleteButton.onclick = deleteEntry;
 }
