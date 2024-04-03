@@ -35,6 +35,7 @@ const bcrypt = require('bcryptjs'); // For password hashing
 
 // Example middleware for route protection
 function isLoggedIn(req, res, next) {
+  console.log('req.user inside isLoggedIn:', req.user); 
   if (req.session.isLoggedIn) {
     console.log("User logged in");
     next(); // User is logged in, proceed to the route
@@ -71,6 +72,8 @@ app.post('/login', async (req, res) => {
         passport.authenticate('local')(req, res, function() {
           res.json({ success: true, message: "Login successful" });
         });
+        console.log('req.user inside login route:', req.user); 
+
       }
       else { // Incorrect password
         res.status(401).json({ success: false, message: 'Incorrect password' });
@@ -112,10 +115,13 @@ app.post('/register', async (req, res) => {
   }
 });
 
-// Logout Route
 app.get('/logout', (req, res) => {
-  req.logout(); 
-  res.json({ success: true, message: "Logged out" });
+  req.logout(function(err) { // Add the callback function
+    if (err) { 
+      return next(err); // Pass errors to error handler 
+    }
+    res.json({ success: true, message: "Logged out" });
+  }); 
 });
 
 const client = new MongoClient( uri )
