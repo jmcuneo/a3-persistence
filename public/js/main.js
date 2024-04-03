@@ -1,7 +1,7 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
-var taskData = [];
-var usernames = [];
+var taskData = []; // stores task data from the database
+var usernames = []; // stores all other users from the database
 var editMode = false;
 var editData = null;
 
@@ -22,9 +22,7 @@ const getUsernames = async function() {
     method:"GET"
   }).then(async function(response) {
     usernames = JSON.parse(await response.text());
-    //location.reload();
   })
- // displayResults();
 }
 
 loadData();
@@ -54,7 +52,7 @@ const submit = async function( event ) {
       }
     });
 
-
+    // Get the user that are checked off
     let checkedUsers = [];
     const userCheckboxes = document.getElementsByName("userCheckboxes");
     userCheckboxes.forEach(user => {
@@ -62,8 +60,6 @@ const submit = async function( event ) {
         checkedUsers.push(user.value);
       }
     });
-
-
 
 
     let json = {};
@@ -82,7 +78,7 @@ const submit = async function( event ) {
     // Add mode
     } else {
 
-      
+      // Send checked users to server
       console.log(checkedUsers);
       let body = JSON.stringify( checkedUsers );
       let response = await fetch( "/checkedUsers", {
@@ -92,7 +88,7 @@ const submit = async function( event ) {
         checkedUsers = JSON.parse(await response.text());
       })
 
-
+      // Send task data to server
       json = {_id: -1, username: "", task: task.value, class: classi.value, duedate: duedate, importance: importance, priority: 0};
       body = JSON.stringify( json );
       response = await fetch( "/submit", {
@@ -124,23 +120,21 @@ window.onload = function() {
 // Displays up to date results in the table and the users in the add form
 function displayResultsAndUsers() {
 
-  let usernameBody = document.querySelector("#username-body");
-
   // Display usernames for input
+  let usernameBody = document.querySelector("#username-body");
   usernames.forEach(element => {
-    var div = document.createElement('div');
-    div.classList.add('form-check', 'form-check-inline');
+    let div = document.createElement("div");
+    div.classList.add("form-check", "form-check-inline");
 
-
-    var input = document.createElement('input');
-    input.classList.add('form-check-input');
-    input.type = 'checkbox';
+    let input = document.createElement("input");
+    input.classList.add("form-check-input");
+    input.type = "checkbox";
     input.name = "userCheckboxes";
     input.id = element;
     input.value = element;
 
-    var label = document.createElement('label');
-    label.classList.add('form-check-label');
+    let label = document.createElement("label");
+    label.classList.add("form-check-label");
     label.htmlFor = element;
     label.textContent = element;
 
@@ -152,30 +146,11 @@ function displayResultsAndUsers() {
   });
 
 
-  // Create the div element
-
-
-  // Create the input element
-
-
-  // Create the label element
-
-
-  // Append the input and label elements to the div
-
-  // Append the div to an existing element in your HTML (e.g., body)
-
-
-
-
-
-
+  // Display the table
 
   let tbody = document.querySelector("#data-table tbody");
   // Clear tbody by setting to an empty string
   tbody.innerHTML = "";
-
-
   // Iterate over the list of objects
   taskData.forEach(function(data) {
     if(typeof data === 'string') {
@@ -313,7 +288,6 @@ function editElement(data) {
     }
   });
 
-
   const userCheckboxes = document.getElementsByName("userCheckboxes");
   userCheckboxes.forEach(user => {
     user.disabled = true;
@@ -322,10 +296,6 @@ function editElement(data) {
   editData = data;
   editMode = true;
 }
-
-
-
-
 
 
 // Validates the format of the submission before submitting
@@ -337,17 +307,4 @@ function validateForm() {
   } else {
     return true;
   }
-}
-
-
-function printTasks() {
-  taskData.forEach(element => {
-    console.log(element.task);    
-  });
-}
-
-function printUsernames() {
-  usernames.forEach(element => {
-    console.log(element);    
-  });
 }

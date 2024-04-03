@@ -51,7 +51,3 @@ h1 {
 .table-striped tbody > tr:nth-of-type(odd) {
     background-color: var(--accent6);
 }
-
-
-
-

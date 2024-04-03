@@ -4,10 +4,10 @@ const express = require("express"),
     hbs = require( 'express-handlebars' ).engine,
     { MongoClient, ObjectId } = require("mongodb"),
     app = express()
-var taskData = [];
-var username = "";
-var usernames = [];
-var checkedUsers = [];
+var taskData = []; // stores task data from database
+var username = ""; // stores current username
+var usernames = []; // stores all other usernames
+var checkedUsers = []; // stores the users that are checked off on the form
 
 
 app.use(express.static("public") )
@@ -56,9 +56,7 @@ async function run() {
           len--;
         }
       }
-
       taskData.push(username);
-      
       response.writeHead( 200, { 'Content-Type': 'application/json'});
       response.end(JSON.stringify(taskData));
     }
@@ -77,9 +75,6 @@ app.use( (request,response,next) => {
 
 // Called when loging in
 app.post( '/login', async (request,response)=> {
-  debugger
-  console.log( request.body )
-  
   // Get user collection to check users
   let userCollection = await client.db("taskDatabase").collection("usersCollection");
   if (userCollection !== null) {
@@ -97,6 +92,7 @@ app.post( '/login', async (request,response)=> {
           username = request.body.username;
         } 
       } else {
+        // Add all other usernames to the usernames array
         usernames.push(user.username);
       }
     });
@@ -109,21 +105,15 @@ app.post( '/login', async (request,response)=> {
     // No username, create account
     } else if(!foundUsername) {
       request.session.login = false
-
       userObject = {_id: new ObjectId(), username : request.body.username, password : request.body.password}
       userCollection.insertOne(userObject);
-
       response.render('login', { msg:'New account created under username and password', layout:false })
-
-      
-      
     } else {
       request.session.login = false
       response.render('login', { msg:'Login failed, please try again', layout:false })
     }
   }
 })
-
 
 
 app.get( '/', (req,res) => {
@@ -148,23 +138,6 @@ app.get( '/taskList.html', ( req, res) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Called when posting checked users
 app.post( '/checkedUsers', async (request,response) => {
   let dataString = ""
@@ -174,9 +147,6 @@ app.post( '/checkedUsers', async (request,response) => {
   request.on( "end", function() {
     // Parse data string
     checkedUsers = JSON.parse( dataString );
-
-    console.log(checkedUsers);
-
     response.writeHead( 200, { 'Content-Type': 'application/json'});
     response.end(JSON.stringify(taskData));
   })
@@ -209,7 +179,6 @@ app.post( '/submit', async (request,response) => {
     taskCollection.insertOne(taskObject);
 
 
-
     // Add task to each checked user
     checkedUsers.forEach(user => {
       let duplicateTask = Object.assign({}, taskObject);
@@ -222,9 +191,6 @@ app.post( '/submit', async (request,response) => {
       // Insert object into database
       taskCollection.insertOne(duplicateTask);
     });
-
-
-
     response.writeHead( 200, { 'Content-Type': 'application/json'});
     response.end(JSON.stringify(taskData));
   })
@@ -275,18 +241,8 @@ app.patch( "/patch", async (request, response) => {
 
 // Called when getting usernames
 app.get( "/usernames", async (request, response) => {
-  // let dataString = ""
-  // request.on( "data", function( data ) {
-  //     dataString += data 
-  // })
-
-  //console.log(usernames);
-
-  //request.on( "end", function() {
-    //console.log("HELLO");
-    response.writeHead( 200, { 'Content-Type': 'application/json'});
-    response.end(JSON.stringify(usernames));
-  //})
+  response.writeHead( 200, { 'Content-Type': 'application/json'});
+  response.end(JSON.stringify(usernames));
 })
 
 run()
@@ -323,133 +279,3 @@ function determinePriority(data) {
 
 const listener = app.listen( process.env.PORT || 3000 )
 module.exports = app;
-
-
-
-
-      
-function printTasks() {
-  taskData.forEach(element => {
-    console.log(element.task);    
-  });
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // Get mode
-// const handleGet = function() {
-//   app.get("/taskData/", async (request, response) => {
-//     if (collection !== null) {
-//       taskData = await collection.find({}).toArray()
-//       //response.json( docs )
-//       response.writeHead( 200, { 'Content-Type': 'application/json'});
-//       response.end(JSON.stringify(taskData));
-//     }
-//   })
-// }
-
-// // Add mode
-// const handlePost = function( request, response ) {
-//   let dataString = ""
-//   request.on( "data", function( data ) {
-//       dataString += data 
-//   })
-//   request.on( "end", function() {
-//     let taskObject = JSON.parse( dataString );
-//     taskObject._id = new ObjectId();
-//     determinePriority(taskObject);
-
-//     // Push new object to taskData array
-//     taskData.push(taskObject);
-//     collection.insertOne(taskObject);
-//     response.writeHead( 200, { 'Content-Type': 'application/json'});
-//     response.end(JSON.stringify(taskData));
-//   })
-// }
-
-// // Delete mode
-// const handleDelete = function( request, response ) {
-//   let dataString = ""
-//   request.on( "data", function( data ) {
-//       dataString += data 
-//   })
-
-//   request.on( "end", function() {
-//     let taskObject = JSON.parse( dataString );
-//     taskData.splice(determineTaskIndex(taskObject), 1);
-//     response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
-//     response.end(JSON.stringify(taskData));
-//   })
-// }
-
-// // Edit mode
-// const handlePatch = function( request, response ) {
-//   let dataString = ""
-//   request.on( "data", function( data ) {
-//       dataString += data 
-//   })
-//   request.on( "end", function() {
-//     let taskObject = JSON.parse( dataString );
-//     determinePriority(taskObject);
-//     // Update object
-//     taskData[determineTaskIndex(taskObject)] = taskObject;
-//     response.writeHead( 200, "OK", {"Content-Type": "text/plain" });
-//     response.end(JSON.stringify(taskData));
-//   })
-// }
-
-// const sendFile = function( response, filename ) {
-//    const type = mime.getType( filename ) 
-
-//    fs.readFile( filename, function( err, content ) {
-
-//      // if the error = null, then we"ve loaded the file successfully
-//      if( err === null ) {
-
-//        // status code: https://httpstatuses.com
-//        response.writeHeader( 200, { "Content-Type": type })
-//        response.end( content )
-
-//      }else{
-
-//        // file not found, error code 404
-//        response.writeHeader( 404 )
-//        response.end( "404 Error: File Not Found" )
-
-//      }
-//    })
-// }
-
-// // Determine the index of the task in the array
-// function determineTaskIndex(taskObject) {
-//   let foundTask = false;
-//   let i = 0;
-//   while(foundTask === false && i < taskData.length) {
-//     if(taskData[i]._id === taskObject._id) {
-//       foundTask = true;
-//       i--;
-//     }
-//     i++;
-//   }
-//   return i;
-// }
-
