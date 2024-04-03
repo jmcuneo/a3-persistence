@@ -44,7 +44,7 @@ html,
   -moz-tab-size: 4;
   /* 3 */
   -o-tab-size: 4;
-     tab-size: 4;
+  tab-size: 4;
   /* 3 */
   font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   /* 4 */
@@ -89,7 +89,7 @@ Add the correct text decoration in Chrome, Edge, and Safari.
 
 abbr:where([title]) {
   -webkit-text-decoration: underline dotted;
-          text-decoration: underline dotted;
+  text-decoration: underline dotted;
 }
 
 /*
@@ -568,47 +568,68 @@ body {
 
 h1{
   display: inline;
-  font-family: "Abel", sans-serif;
   font-size: 48px;
-  width: 70%;
   height: auto;
   margin: auto;
 }
 
+h2{
+  display: inline;
+  font-size: 36px;
+  height: auto;
+  margin: auto;
+}
+
+.title{
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
 .item{
-  font-family: "Abel", sans-serif;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  grid-auto-rows: minmax(50px, auto);
-  align-items: center;
+  display: flex;
+  flex-direction: column;
   font-size: 22px;
-  width: 70%;
+  width: 50%;
   height: auto;
   margin: auto;
   padding-top: 5%;
 }
 
+.output{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 22px;
+  width: auto;
+  height: auto;
+  margin: auto;
+  padding-top: 5%;
+}
+
+span{
+}
+
+textarea{
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 23px;
+  font-size: 23px;
+}
+
 label{
-  font-family: "Abel", sans-serif;
-  grid-column: 1 ;
   font-size: 20px;
 }
 
 input{
-  font-family: "Abel", sans-serif;
-  grid-column: 1 ;
   font-size: 20px;
 }
 
 #game{
-  font-family: "Abel", sans-serif;
-  grid-column: 1 ;
   font-size: 20px;
 }
 
 button{
-  font-family: "Abel", sans-serif;
-  grid-column: 1;
+  width: auto;
   font-size: 20px;
 }
