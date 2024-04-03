@@ -1,67 +1,83 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>CS4241 Assignment 3</title>
-    <meta charset="utf-8">
-    <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
-    
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  </head>
-  <body>
-    <header id="appHeader"> <div id="userInfo">  </div>
-    </header>
-    <table style="margin-left: 20px;">
-      <thead>
-        <tr>
-            <th id="thTitle" style="padding-left: 20px;">Service</th> 
-            <th id="thTitle" style="padding-left: 50px;">Date</th>
-            <th id="thTitle" style="padding-left: 45px;">Wages</th>
-            <th id="thTitle" style="padding-left: 33px;">Tips</th>
-            <th id="thTitle" style="padding-left: 40px;">Miles</th>
-            <th id="thTitle" style="padding-left: 20px;">Time (m)</th>
-            <th id="thTitle" style="padding-left: 15px;">MPG</th>
-            <th id="thTitle" style="padding-left: 20px;">Gas Price</th>
-            </tr>
-      </thead>
-    </table>
-    <form id="addItemForm" style="margin-left: 20px;">
-      <input type="text" id="service" style= "width: 100px" value="Uber">
-      <input type="date" id="date">
-      <input type="number" id="wages" style="width: 75px;">
-      <input type="number" id="tips" style="width: 75px;">
-      <input type="number" id="miles" style="width: 75px;">
-      <input type="number" id="time" style="width: 75px;">
-      <input type="number" id="mpg" style="width: 75px;">
-      <input type="number" id="gasPrice" style="width: 75px;">
-      <button id="addButton">Add Entry</button>
-      <button id="clearButton" type="button">Clear Entries</button>
+<head>
+  <title>CS4241 Assignment 3</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="container"> 
+    <div id="userInfo" class="right-align"> </div> 
+  </header>
+  <div class="container"> 
+    <form id="addItemForm">
+      <div class="row"> 
+        <div class="input-field col s2"> 
+          <label style="font-size: 20px;" for="service">Uber/Dash</label>
+          <input type="text" id="service">
+        </div>
+        <div class="input-field col s2">
+          <input type="date" id="date">
+        </div>
+        <div class="input-field col s1"> 
+          <label style="font-size: 20px;" for="wages">Wages</label>
+          <input type="number" id="wages">
+        </div>
+        <div class="input-field col s1"> 
+          <label style="font-size: 20px;" for="tips">Tips</label>
+          <input type="number" id="tips">
+        </div>
+        <div class="input-field col s1"> 
+          <label style="font-size: 20px;" for="miles">Miles</label>
+          <input type="number" id="miles">
+        </div>
+        <div class="input-field col s1"> 
+          <label style="font-size: 20px;" for="time">Time</label>
+          <input type="number" id="time">
+        </div>
+        <div class="input-field col s1"> 
+          <label style="font-size: 20px;" for="mpg">MPG</label>
+          <input type="number" id="mpg">
+        </div>
+        <div class="input-field col s1"> 
+          <label style="font-size: 20px;" for="gasPrice">Gas Price</label>
+          <input type="number" id="gasPrice">
+        </div>
+        <div class="input-field col s1"> 
+          <button id="addButton" class="btn waves-effect waves-light" style="margin-top: 10px;">Add&nbsp;Entry</button>
+        </div>
+        <div class="input-field col s1"> 
+          <button id="clearButton" class="btn waves-effect waves-light red" style="margin-top: 10px; margin-left: 40px;">Clear&nbsp;All&nbsp;Entries</button>
+        </div>
+      </div>
     </form>
-    <header id="listTitle">Food Delivery Log</header>
-    <table id="dataTable">
+
+    <h2 class="header">Food Delivery Log</h2> 
+    <table id="dataTable" class="stripped bordered">
       <thead>
         <tr>
-            <th id="thMain">Service</th> 
-            <th id="thMain">Date</th>
-            <th id="thMain">Wages</th>
-            <th id="thMain">Tips</th>
-            <th id="thMain">Miles Driven</th>
-            <th id="thMain">Time Driven</th>
-            <th id="thMain">MPG</th>
-            <th id="thMain">Gas Price</th>
-            <th id="thDerived">Total</th>
-            <th id="thDerived">Gas Used</th>
-            <th id="thDerived">Gas Cost</th>
-            <th id="thDerived">Income</th>
-            <th id="thDerived">Hourly Pay</th>
-            </tr>
+          <th>Service</th> 
+          <th>Date</th>
+          <th>Wages</th>
+          <th>Tips</th>
+          <th>Miles Driven</th>
+          <th>Time Driven</th>
+          <th>MPG</th>
+          <th>Gas Price</th>
+          <th>Total</th>
+          <th>Gas Used</th>
+          <th>Gas Cost</th>
+          <th>Income</th>
+          <th>Hourly Pay</th>
+        </tr>
       </thead>
       <tbody id="itemsList">
       </tbody>
-    </table> 
-  </body>
+    </table>
+  </div>
+
+  <script src="js/main.js"></script> 
+</body>
 </html>

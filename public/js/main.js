@@ -197,15 +197,17 @@ async function handleEdit(index, items) {
 }
 
 function displayUserInfo(username) {
-  console.log("username: " + username);
   const userInfoDiv = document.getElementById('userInfo');
   const usernameSpan = document.createElement('span');
   usernameSpan.id = 'username';
   usernameSpan.textContent = username;
+  usernameSpan.style="font-size: 20px;"
 
   const logoutButton = document.createElement('button');
   logoutButton.textContent = 'Logout';
   logoutButton.classList.add('logoutButton'); 
+  logoutButton.className = "btn waves-effect waves-light purple"; 
+  logoutButton.style="margin-left: 20px";
 
   logoutButton.addEventListener('click', () => {
     fetch('/logout')
@@ -267,16 +269,14 @@ function displayItems(items) {
   const itemsList = document.getElementById('itemsList');
   itemsList.innerHTML = ''; 
 
-  function createCell(text, isCellGreen) {
+  function createCell(text, cellColor) {
     const cell = document.createElement('td');
     cell.textContent = text;
-    if (isCellGreen) cell.style="background-color: rgb(200, 241, 162);";
+    if (cellColor != "") cell.style=cellColor;
     return cell;
   }
-
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
-
     // Find existing row, or create a new one
     let row = document.querySelector(`#dataTable tr[data-item-id="${item._id}"]`);
     if (!row) {
@@ -288,30 +288,38 @@ function displayItems(items) {
 
     const properties = ['service', 'date', 'wages', 'tips', 'miles', 'time', 'mpg', 'gasPrice', 'total', 'gasUsed', 'gasCost', 'income', 'hourlyPay'];
 
+    let cellColor = ""
+    if(i % 2 === 1) cellColor = "background-color: rgb(251, 235, 216)";
+    else cellColor = "background-color: rgb(255, 228, 196)"
     for (const property of properties) {
         let cellText = items[i][property];
         if (['wages', 'tips', 'gasPrice', 'total', 'gasCost', 'income', 'hourlyPay'].includes(property)) cellText = '$' + cellText; 
         else if (['gasUsed'].includes(property)) cellText = cellText + " gal";
         else if (['time'].includes(property)) cellText = cellText + " mins";
 
-        let greenCell = false;
-        if (['total', 'gasUsed', 'gasCost', 'income', 'hourlyPay'].includes(property)) greenCell = true;
-        row.appendChild(createCell(cellText, greenCell)); 
+        if (['total', 'gasUsed', 'gasCost', 'income', 'hourlyPay'].includes(property)) {
+          if(i % 2 === 1) cellColor = "background-color: rgb(224, 247, 203);";
+          else cellColor = "background-color: rgb(200, 241, 162);"
+        }
+        row.appendChild(createCell(cellText, cellColor)); 
     }
     itemsList.appendChild(row);
 
     // Add buttons cell
-    const deleteCell = document.createElement('td');
-    const editCell = document.createElement('td');
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-    deleteButton.dataset.index = i; // Store the index in a 'data-' attribute
-    deleteButton.style="background: rgb(243, 95, 27); border-radius: 10px; width:fit-content; height: fit-content; font-size: 20px;";
+    const deleteCell = createCell("", cellColor);
+    const editCell = createCell("", cellColor);
 
+    // Delete Button
+    const deleteButton = document.createElement('button');
+    deleteButton.className = "btn waves-effect waves-light red"; // Materialize button classes
+    deleteButton.textContent = 'Delete';
+    deleteButton.dataset.index = i; 
+
+    // Edit Button
     const editButton = document.createElement('button');
+    editButton.className = "btn waves-effect waves-light orange"; 
     editButton.textContent = 'Edit';
-    editButton.dataset.index = i; 
-    editButton.style="background: rgb(237, 152, 16); border-radius: 10px;   width:fit-content; height: fit-content; font-size: 20px;";
+    editButton.dataset.index = i;  
 
     //and event handlers for buttons
     deleteButton.addEventListener('click', (event) => {

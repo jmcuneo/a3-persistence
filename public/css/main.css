@@ -48,7 +48,7 @@ body {
   border-collapse: collapse;
   font-size: 20px;
   color: black;
-  background-color: bisque;
+  background-color: rgb(251, 235, 216);
 }
 
 #thDerived, #tdDerived {

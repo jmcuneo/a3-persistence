@@ -4,22 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="main.css"> </head> <body>
-    <div class="login-container">
-        <h1>Login</h1> 
-        <form id="loginForm">
-            <div>
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </head> <body>
+    <div class="row" style="margin-left: 20px;">
+        <h1 style="margin-left: 30px;">Food Delivery Log Sign-In</h1> 
+        <form class="col s12" id="loginForm">
+            <div class="col">
+                <div class="input-field col s6">
+                    <label style="font-size: 20px;" for="username">Username</label>
+                    <input class="validate" type="text" id="username" name="username" data-length="10" required>
+                </div>
+                <div class="input-field col s6">
+                    <label style="font-size: 20px;" for="password">Password</label>
+                    <input class="validate" type="password" id="password" name="password" required>
+                </div>
+                <button style="margin-left: 10px;" class="btn waves-effect waves-light" type="submit" id="loginButton">Login</button>
+                <button style="background-color: blueviolet;" class="btn waves-effect waves-light" type="button" id="registerButton">Register</button>
             </div>
-            <div>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit" id="loginButton">Login</button>
-            <button type="button" id="registerButton">Register</button>
         </form>
-        <div id="message"></div> 
+        <div style="font-size: 20px; margin-left: 30px; margin-top: 10px;" id="message"></div> 
     </div>
 
     <script src="./js/login.js"></script>
