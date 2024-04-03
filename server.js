@@ -43,26 +43,30 @@ app.use( (req,res,next) => {
     }
 })
 
-const users = [
-    { id: 1, username: 'user1', password: 'password1' },
-    { id: 2, username: 'user2', password: 'password2' }
-];
-
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 
 app.post('/login', async (req, res) => {
-    // TODO: load from mongodb
     const {username, password} = req.body;
 
-    const user = await loginCollection.findOne({username: username});
+    let user = await loginCollection.findOne({username: username});
 
     let validated = false;
+    let isNewAccount = false;
 
     if (!user) {
-        return false;
+        try {
+            const result = await loginCollection.insertOne({ username: username, password: password });
+            console.log("Creating Account with username: ", username)
+            user = await loginCollection.findOne({username: username});
+            isNewAccount = true;
+        } catch (error) {
+            console.error("Error creating new user:", error);
+            res.status(500).send("Error creating new user");
+            return;
+        }
     }
 
     validated = user.password === password;
