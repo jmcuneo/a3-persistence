@@ -150,16 +150,29 @@ async function addUserData(userData)
       }
       else if(j == 3)
       {
-        cell.innerHTML = userData[i].date;
+        let dateButton = document.createElement("button")
+        dateButton.textContent = userData[i].date;
+        dateButton.onclick = dateButtonClick
+
+        cell.appendChild(dateButton)
+
       }
     }
 
   }
 
-
-
-
 }
+
+
+//What happens when a date button is clicked
+const dateButtonClick = async function( event ) {
+  event.preventDefault()
+
+  let dateBox = document.getElementById("date")
+  dateBox.value = event.target.firstChild.data
+}
+
+
 
 function clearTable()
 {
