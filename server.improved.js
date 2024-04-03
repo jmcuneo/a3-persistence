@@ -149,7 +149,8 @@ async function createTable(res, userID) {
     let table = "<tr><th>Recipe Name</th><th>Meal</th><th>Prep Time</th><th>Cook Time</th><th>Total Time</th></tr>";
     collection.find({}).toArray().then((data) => {
         data = data.filter((a) => a.userID === userID);
-        data.sort((a, b) => a.type > b.type ? 1 : (a.type < b.type ? -1 : 0));
+        let sort = {"Breakfast": 0, "Lunch": 1, "Dinner": 2};
+        data.sort((a, b) => sort[a.type] - sort[b.type]);
         for (let d of data)
             table += `<tr><td>${d.name}</td>
                           <td>${d.type}</td>
