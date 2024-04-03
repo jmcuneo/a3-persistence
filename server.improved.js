@@ -60,7 +60,7 @@ passport.use(
     {
       clientID: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
-      callbackURL: '/auth/github/callback',
+      callbackURL: 'https://a3-gabrielshiu.onrender.com/auth/github/callback',
     },
     function (accessToken, refreshToken, profile, cb) {
       cb(null, profile);
