@@ -4,11 +4,24 @@
   "description": "",
   "author": "",
   "scripts": {
-    "start": "node server.js"
+    "start": "node --env-file=.env server.improved.js"
   },
   "dependencies": {
+    "bourbon": "^7.3.0",
+    "compression": "^1.7.4",
+    "connect-mongodb-session": "^2.2.0",
+    "express": "^4.19.2",
+    "express-handlebars": "^7.1.2",
+    "express-minify": "^1.0.0",
+    "express-session": "^1.18.0",
+    "greenlock-express": "^4.0.3",
     "is-var-name": "^2.0.0",
     "isolated-vm": "^4.7.2",
-    "mime": "^2.6.0"
+    "mongodb": "^6.5.0",
+    "passport": "^0.7.0",
+    "passport-github2": "^0.1.12"
+  },
+  "devDependencies": {
+    "sass": "^1.72.0"
   }
 }

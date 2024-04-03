@@ -1,136 +1,137 @@
-const http = require("http"),
-  fs = require("fs"),
-  mime = require('mime'),
-  ivm = require('isolated-vm'),
-  dir = "public/",
+const
+  express = require('express'),
+  greenlock = require('greenlock-express'),
+  passport = require('passport'),
+  passport_github = require('passport-github2'),
+  handlebars = require('express-handlebars'),
+  compression = require('compression'),
+  minify = require('express-minify'),
+  isolation = require('./isolation'),
+  database = require('./database'),
+  sass = require('./sass'),
+  app = express(),
   port = 3000,
-  VarName = require('is-var-name');
+  DEBUG = true;
 
-const equations = []
+// make css files
+sass
 
-function removeNameFromEquations(name) {
-  var i = equations.length;
-  while (i--) {
-    if (equations[i].name == name) {
-      equations.splice(i, 1);
-    }
+// compress
+
+app.use(compression());
+app.use(minify());
+
+// setup database and sesions
+
+database.set_up_db_store(app)
+
+// setup Handlebars
+
+const hbs = handlebars.create();
+
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
+app.set('views', './hbs');
+
+// setup Passport
+
+passport.use(new passport_github.Strategy({
+  clientID: process.env.GITHUB_CLIENT,
+  clientSecret: process.env.GITHUB_SECRET,
+  callbackURL: "http://127.0.0.1:3000/auth/login/callback"
+},
+  function (accessToken, refreshToken, profile, done) {
+    database.DB.findOne({ user_id: profile.id }).then((user) => {
+      if (user == null) {
+        user = {
+          user_id: profile.id,
+          username: profile.username,
+          equations: []
+        };
+        database.DB.insertOne(user);
+      }
+      done(null, profile.id);
+
+    }).catch((err) => {
+      console.log(err);
+      done(null, null);
+    });
   }
-}
+));
 
-// make sure avrible name is good
-// returns noname# if not
-function ensureVarName(name) {
-  const bad = Array.from("=; \n\r");
-  if (!bad.some(c=>name.includes(c))&&VarName(name)) {
-    removeNameFromEquations(name)
-    return name
-  }
-  var index = 1;
-  while (true) {
-    name = 'noname' + index
-    if (equations.some(e => e.name == name)) {
-      index++;
-    } else {
-      return name
-    }
-  }
-}
 
-var setupCode = "Object.keys($0).map(key=>this[key]=$0[key]);var ret = eval($1); return [ret,ret.toString()];";
+app.use(passport.initialize());
+app.use(passport.session());
 
-// evalute and store varible
-function evaluate(name, code) {
-  return new Promise((resolve, reject) => {
+passport.serializeUser((id, cb) => cb(null, id));
 
-    // delete varible
-    if (code == "") {
-      if (name != "")
-        removeNameFromEquations(name)
-      resolve()
-    } else {
+passport.deserializeUser((id, cb) => cb(null, id));
 
-      var iso = new ivm.Isolate()
-      name = ensureVarName(name);
+app.use(express.json());
 
-      let vars = equations.reduce((a, e) => (a[e.name] = e.result, a), {});
+// setup passport urls
 
-      // run code in isolation *hopefully*
-      iso.createContextSync().evalClosure(setupCode, [vars, code],
-        { timeout: 5000, arguments: { copy: true }, result: { copy: true } }).then(result => {
-          equations.push({ name, code, result: result[0], str: result[1] })
-          resolve()
-        }).catch((err) => {
-          // probably can escape be throwing error with custom tostring - TODO
-          equations.push({ name, code, result: err, str: err.toString() })
-          resolve()
-        })
-    }
+app.post('/auth/login',
+  passport.authenticate('github', { scope: ['user:email'] }));
+
+app.get('/auth/login/callback',
+  passport.authenticate('github', { failureRedirect: '/failed' }),
+  function (req, res) {
+    res.redirect('/success');
   });
+
+app.post("/auth/logout", (req, res) => {
+  req.logout(function (err) {
+    res.redirect('/logout');
+  });
+});
+
+// setup login
+
+function login_page(smallMess, message) {
+  return (req, res) => {
+    res.render('login', { message, smallMess, layout: false });
+  }
 }
 
-const server = http.createServer(function (request, response) {
-  if (request.method === "GET") {
-    handleGet(request, response)
-  } else if (request.method === "POST") {
-    handlePost(request, response)
-  }
-})
+app.get("/created", login_page("Account Success", "A new account has been made. Redirecting..."));
+app.get("/success", login_page("Login Success", "You have been logged in. Redirecting..."));
+app.get("/failed", login_page("Login Failed", "Login failed. Redirecting..."));
+app.get("/logout", login_page("Logged Out", "You have been logged out. Redirecting..."));
 
-const handleGet = function (request, response) {
-  const filename = dir + request.url.slice(1)
+app.use(express.static('public'));
 
-  if (request.url === "/") {
-    sendFile(response, "public/index.html")
+// setup posts
+
+app.post('/', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.status(401).send()
   } else {
-    sendFile(response, filename)
-  }
-}
-
-const handlePost = function (request, response) {
-  let dataString = ""
-
-  request.on("data", function (data) {
-    dataString += data
-  })
-
-  request.on("end", function () {
     try {
-      data = JSON.parse(dataString);
-
-      evaluate(data.name ?? "", data.code ?? "").then(() => {
-        response.writeHead(200, "OK", { "Content-Type": "application/json" });
-        response.end(JSON.stringify(equations.map(e => ({ name: e.name, code: e.code, str: e.str }))));
+      isolation.evaluate(req.user, req.body.name ?? "", req.body.code ?? "").then((equations) => {
+        res.writeHead(200, "OK", { "Content-Type": "application/json" });
+        let json = Object.entries(equations).map(e => ({ name: e[0], code: e[1].code, result: e[1].result }))
+        res.end(JSON.stringify(json));
       }).catch(e => {
-        response.writeHeader(404);
-        response.end("script failed to run");
+        res.writeHead(404);
+        res.end("script failed to run");
       });
     } catch (e) {
-      response.writeHeader(404);
-      response.end("oh noes");
+      res.writeHead(404);
+      res.end("oh noes");
     }
-  });
+  }
+});
+
+// Run
+
+if (DEBUG) {
+  app.listen(process.env.PORT || port)
+} else {
+  greenlock.init({
+    packageRoot: __dirname,
+    configDir: './greenlock.d',
+    maintainerEmail: "nateguana@gmail.com",
+    cluster: false
+  }).serve(app);
 }
-
-const sendFile = function (response, filename) {
-  const type = mime.getType(filename)
-
-  fs.readFile(filename, function (err, content) {
-
-    // if the error = null, then we"ve loaded the file successfully
-    if (err === null) {
-
-      // status code: https://httpstatuses.com
-      response.writeHeader(200, { "Content-Type": type })
-      response.end(content)
-
-    } else {
-
-      // file not found, error code 404
-      response.writeHeader(404)
-      response.end("404 Error: File Not Found")
-
-    }
-  })
-}
-
-server.listen(process.env.PORT || port)

@@ -2,53 +2,68 @@
 <html lang="en">
 
 <head>
-  <title>CS4241 Assignment 2</title>
+  <title>CS4241 Assignment 3</title>
   <meta charset="utf-8">
-  <script src="js/main.js" defer></script>
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="preload" href="css/main.css" as="style" />
+  <link rel="preload" href="https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.woff2" crossorigin="anonymous" as="font" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
 
-  <!-- get rid of favicon error -->
+  <meta name="description" content="Free Code Runner">
+  <meta name="keywords" content="HTML, CSS, JavaScript, Eval">
+  <meta name="author" content="Nateguana">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="js/main.js" defer></script>
   <link rel="icon" href="color_wheel.png">
+  <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
-  <readme><refresh onclick="location.href='/readme.html'">Read Me</refresh></readme>
-      <form>
-        <table>
-          <thead>
-            <tr>
-              <th><label for="name">Name</label></th>
-              <th><label for="value">Code</label></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><input type="text" class="name" id="name" value="name"></td>
-              <td><textarea id="value"></textarea></td>
-              <td>
-                <modify id="submit" class="add"></modify>
-              </td>
-              <td>
-                <refresh id="refresh">Refresh</refresh>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </form>
+  <div class="readme">
+    <form action="javascript:void(0);" method="post">
+      <input class="refresh" type="submit" id="login" value="loading">
+    </form>
+    <span class="refresh" tabindex="0" onclick="location.href='/readme.html'">Read Me</span>
+  </div>
+  <div class="base">
+    <form inert id="input">
       <table>
         <thead>
           <tr>
-            <th>Recalculate</th>
-            <th>Modify</th>
-            <th>Delete</th>
-            <th>Name</th>
-            <th>Equation</th>
-            <th>Result</th>
+            <th><label for="name">Varible Name</label></th>
+            <th><label for="value">Varible Code</label></th>
           </tr>
         </thead>
-        <tbody id="table">
+        <tbody>
+          <tr>
+            <td><input type="text" class="name" id="name" placeholder="myVaribleName"></td>
+            <td><textarea placeholder="let intermediate = 11+12;&#10;intermediate*3" id="value"></textarea></td>
+            <td>
+              <span id="submit" tabindex="0" class="add"></span>
+            </td>
+            <td>
+              <span class="refresh" tabindex="0" id="refresh">Refresh</refresh>
+            </td>
+          </tr>
         </tbody>
       </table>
+    </form>
+    <table hidden>
+      <thead>
+        <tr>
+          <th>Recalculate</th>
+          <th>Modify</th>
+          <th>Delete</th>
+          <th>Name</th>
+          <th>Equation</th>
+          <th>Result</th>
+        </tr>
+      </thead>
+      <tbody id="table">
+      </tbody>
+    </table>
+    <h2 id="error"></h2>
+  </div>
 </body>
 
 </html>

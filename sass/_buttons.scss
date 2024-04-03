@@ -1,0 +1,49 @@
+@mixin button($front: black, $back: white) {
+  padding: 1vw;
+  border-style: solid;
+  background-color: $back;
+  color: $front;
+  display: inline-block;
+
+  &:hover {
+    background-color: $front;
+    color: $back;
+  }
+}
+
+.add {
+  @include button(green, lime);
+}
+
+.recalc {
+  @include button(blue, aqua);
+}
+
+.modify {
+  @include button(orangered, yellow);
+}
+
+.delete {
+  @include button(darkred, red);
+}
+
+.refresh {
+  all: unset;
+  @include button(dimgray, whitesmoke);
+}
+
+.add::before {
+  content: "Add";
+}
+
+.recalc::before {
+  content: "Recalculate";
+}
+
+.modify::before {
+  content: "Modify";
+}
+
+.delete::before {
+  content: "Delete";
+}

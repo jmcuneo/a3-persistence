@@ -2,25 +2,38 @@
 <html lang="en">
 
 <head>
-  <title>CS4241 Assignment 2 Readme</title>
+  <title>CS4241 Assignment 3 • Readme</title>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="preload" href="css/main.css" as="style" />
+  <link rel="preload" href="https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.woff2" crossorigin="anonymous"
+    as="font" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
 
-  <!-- get rid of favicon error -->
+  <meta name="description" content="Free Code Runner">
+  <meta name="keywords" content="HTML, CSS, JavaScript, Eval">
+  <meta name="author" content="Nateguana">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="color_wheel.png">
+  <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body>
+<body class="base">
   <h1>Code Runner</h1>
   <p>This project runs user sumbited code in a isolated javascript instance and then shows that result to the user.
     Simply put your varible name and code in the form and press add. If the varible already exists, the button will
-    change to modify. You can also hit the buttons to recalculate, modify, or delete varibles. You can also refreh the
-    data with the refresh button. When a varible name is not allowed, it is replaced with noname# where # starts at 1
-    and increases as to not override other nonames. Varibles are cloned when passed to other calculations so varibles
-    can't be modified, though their clones can be returned. The code entered is run in eval, so code can be interpreted
-    weirdly. Most notably objects are interpreted as a block with labels inside, so: {name:value} => {name: return
-    value;} This can be fixed by putting the object in parentheses: ({name:value})</p>
-    <refresh onclick="location.href='/'">Back</refresh>
+    change to modify. You can also hit the buttons to recalculate, modify, or delete varibles. You can also refresh the
+    data with the refresh button.<br>
+    <br>
+    ONLY NUMBERS ARE ALLLOWED IN VARIBLES DUE TO TIME CONTRAINTS<br>
+    <br>
+    When a varible name is not allowed, it is replaced with noname# where # starts at 1 and increases as to not override
+    other nonames. Varibles are cloned when passed to other calculations so varibles can't be modified, though their
+    clones can be returned. The code entered is run in eval, so code can be interpreted weirdly. Most notably objects
+    are interpreted as a block with labels inside, so: {name:value} => {name: return value;} This can be fixed by
+    putting the object in parentheses: ({name:value})
+  </p>
+  <span tabindex="0" class="refresh" onclick="location.href='/'">Back</span>
 </body>
 
 </html>
