@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 3</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A webpage for small town arcade's user highs-cores! Keep track of your best scores for our games here!">
+    <script src="js/main.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+
+  <h1>Smalltown Arcade Login</h1>
+
+  <form id ="userlogin">
+    <input  type="text" id="email" placeholder="email">
+    <input  type="text" id="password" placeholder="password">
+    <button id ="loginButton">Login</button>
+  </form>
+
+
+  <h2>Your High Scores:</h2>
+
+    <form id ="userinput">
+
+      <input type="text" id="score" placeholder="score">
+
+      <input type="text" id="playtime" placeholder="playtime">
+
+      <input type="text" id="date" placeholder="date (unique id)">
+
+      <button id = "dataButton" style="background: limegreen">Add/Update</button>
+      <button id = "deleteButton" style="background: red">Delete</button>
+
+
+    </form>
+
+<table id ="InformationTable">
+    <tr>
+      <th>Score</th>
+      <th>Playtime</th>
+      <th>Score / Time</th>
+      <th id ="idBlock">Date</th>
+
+    </tr>
+
+</table>
+
+  </body>
+</html>
