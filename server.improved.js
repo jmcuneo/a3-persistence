@@ -29,7 +29,7 @@ app.set(    'views',       './public' )
 // changed
 app.use( cookie({
   name: 'session',
-  keys: ['key1', 'key2']
+  keys: ['taskListKey1', 'taskListKey2']
 }))
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
