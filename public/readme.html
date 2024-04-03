@@ -20,18 +20,18 @@
 
 <body class="base">
   <h1>Code Runner</h1>
-  <p>This project runs user sumbited code in a isolated javascript instance and then shows that result to the user.
-    Simply put your varible name and code in the form and press add. If the varible already exists, the button will
-    change to modify. You can also hit the buttons to recalculate, modify, or delete varibles. You can also refresh the
+  <p>This project runs user submitted code in a isolated JavaScript instance and then shows that result to the user.
+    Simply put your variable name and code in the form and press add. If the variable already exists, the button will
+    change to modify. You can also hit the buttons to recalculate, modify, or delete variables. You can also refresh the
     data with the refresh button.<br>
     <br>
     ONLY NUMBERS ARE ALLLOWED IN VARIBLES DUE TO TIME CONTRAINTS<br>
     <br>
-    When a varible name is not allowed, it is replaced with noname# where # starts at 1 and increases as to not override
-    other nonames. Varibles are cloned when passed to other calculations so varibles can't be modified, though their
-    clones can be returned. The code entered is run in eval, so code can be interpreted weirdly. Most notably objects
-    are interpreted as a block with labels inside, so: {name:value} => {name: return value;} This can be fixed by
-    putting the object in parentheses: ({name:value})
+    When a variable name is not allowed, it is replaced with noname# where # starts at 1 and increases as to not
+    override other nonames. Variables are cloned when passed to other calculations so variables can't be modified,
+    though their clones can be returned. The code entered is run in eval, so code can be interpreted weirdly. Most
+    notably objects are interpreted as a block with labels inside, so: {name:value} => {name: return value;} This can be
+    fixed by putting the object in parentheses: ({name:value}) putting the object in parentheses: ({name:value})
   </p>
   <span tabindex="0" class="refresh" onclick="location.href='/'">Back</span>
 </body>
