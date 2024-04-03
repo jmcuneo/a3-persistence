@@ -1,3 +1,7 @@
+html, body {
+  background-color: #2FF5AD;
+}
+
 body {
   background-color: #2FF5AD;
   /* display: flex; */
@@ -18,8 +22,12 @@ p {
   text-align: center;
 }
 
+table {
+  margin: auto;
+}
+
 table, th, td {
-  width: 50%;
+  width: 60%;
   border: 2px solid;
   background-color: #93DEDB;
   text-align: center;
@@ -27,7 +35,7 @@ table, th, td {
 
 br {
   display: block;
-  margin: 5px 0;
+  margin: 5px;
 }
 
 label { 
@@ -53,6 +61,7 @@ button {
 .box {
   width: 600px;
   align-self: center;
+  margin: 0 auto;
 }
 
 .notice {

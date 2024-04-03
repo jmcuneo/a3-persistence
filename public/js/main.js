@@ -30,6 +30,10 @@ const login = async function(event)
   const usernameInput = document.querySelector("#username");
   const passwordInput = document.querySelector("#password");
 
+  if (usernameInput.value === "" || passwordInput.value === "")
+  {
+    return;
+  }
   const json = {username: usernameInput.value, password: passwordInput.value};
   const body = JSON.stringify(json);
   

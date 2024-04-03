@@ -6,16 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
-  <h1 class="title is-size-1">
-    GPA Calculator
-  </h1>
-  <body class="body is-fullheight">
+  <body>
+    <h1 class="title is-size-1">
+      GPA Calculator
+    </h1>
     <section class="hero is-fullheight">
       <div class="box">
         <label><b>Username</b></label>
@@ -23,7 +22,7 @@
         <label><b>Password</b></label>
         <input class="input is-info" type="text" id="password"><br>
         <div class="grid">
-          <button id="login" class="button is-rounded is-primary">Login</button>
+          <button class="button is-rounded is-primary" id="login">Login</button>
           <label class="notice" id="incorrect"></label>
           <label></label>
         </div>

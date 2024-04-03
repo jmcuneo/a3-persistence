@@ -5,38 +5,41 @@
     <meta charset="utf-8">
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
-    <link rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap">
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
-  <h1>
-    GPA Calculator
-  </h1>
+
   <body>
-    <form>
-      <label><b>Class:</b></label>
-      <input type="text" id="class"><br>
-      <label><b>Grade</b> (A, B, C, F):</label>
-      <input type="text" id="grade"><br>
-      <label><b>Credits</b> (whole numbers only):</label>
-      <input type="text" id="credits"><br>
-      <button id="submit">Submit Entry</button><br>
-      <label><b>Class To Edit</b> (enter class name):</label>
-      <input type="text" id="edit"><br>
-      <button id="adjust">Adjust Entry</button>
-      <button id="delete">Delete Entry</button>
-    </form>
-    <p id="gpa">
-      GPA: 
-    </p>
-    <h2>Class List</h2>
-    <table id="table">
-      <tr>
-        <th>Class</th>
-        <th>Grade</th>
-        <th>Credits</th>
-      </tr>
-    </table>
+    <h1 class="title is-size-1">
+      GPA Calculator
+    </h1>
+    <section>
+      <div class="box">
+        <label><b>Class</b></label>
+        <input class="input is-info" type="text" id="class"><br>
+        <label><b>Grade</b> (A, B, C, F)</label>
+        <input class="input is-info" type="text" id="grade"><br>
+        <label><b>Credits</b> (whole numbers only)</label>
+        <input class="input is-info" type="text" id="credits"><br>
+        <button class="button is-rounded is-info" id="submit">Submit Entry</button><br>
+        <label><b>Class To Edit</b> (enter class name)</label>
+        <input class="input is-warning" type="text" id="edit"><br>
+        <button class="button is-rounded is-warning" id="adjust">Adjust Entry</button>
+        <button class="button is-rounded is-danger" id="delete">Delete Entry</button><br>
+        <button class="button is-small is-link is-inverted">Log Out</button>
+      </div>
+      <p class="title is-size-3" id="gpa">
+        GPA:
+      </p>
+      <table class="table is-bordered is-striped" id="table">
+        <tr>
+          <th>Class</th>
+          <th>Grade</th>
+          <th>Credits</th>
+        </tr>
+      </table><br>
+    </section>
   </body>
 </html>
