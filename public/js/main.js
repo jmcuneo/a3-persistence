@@ -59,7 +59,6 @@ const submit = async function( event ) {
 
 
 //ONLOAD Function:
-
 window.onload = async function() {
 
   const loginButton = document.getElementById("loginButton")
@@ -69,77 +68,15 @@ window.onload = async function() {
   button.onclick = submit;
 
 
-
-  const populateTable = await fetch("/get_appdata",
-      {
-        method:"GET"
-      })
-
-  let data = await populateTable.json();
-
-  //Insert Retrieved Data
-  for(let i = 0; i < data.length; i++)
-  {
-    if(data[i] !== undefined)
-    {
-      insetElementToTable(data[i])
-    }
-
-  }
-
 }
 
 
 
-//CUSTOM CODE: Add this to the table
-async function insetElementToTable(element)
-{
-  tableIndex++;
-  const table = document.getElementById("InformationTable")
-  let row = table.insertRow(tableIndex)
 
-  for(let i = 0; i <= 5; i++)
-  {
-    let cell = row.insertCell(i)
-
-    if(i == 0)
-    {
-      cell.innerHTML = element.username;
-    }
-    else if(i == 1)
-    {
-      cell.innerHTML = element.score;
-    }
-    else if(i == 2)
-    {
-      cell.innerHTML = element.time;
-    }
-    else if(i == 3)
-    {
-      cell.innerHTML = element.scoreOverTime;
-      //cell.innerHTML =  Math.round((element.score / element.time) * 10) / 10;
-    }
-    else if(i == 4)
-    {
-      cell.innerHTML = element.date;
-      //let curDate = new Date()
-      //cell.innerHTML = (curDate.getMonth() + 1) + "/" + curDate.getDate() + "/" + curDate.getFullYear()
-    }
-    else if(i == 5)
-    {
-      //cell.innerHTML = tableIndex;
-      cell.innerHTML = element.ID;
-    }
-
-  }
-
-
-
-}
-
-
+//Add all the User Data
 async function addUserData(userData)
 {
+  clearTable()
   tableIndex = 0;
   const table = document.getElementById("InformationTable")
 
@@ -148,37 +85,25 @@ async function addUserData(userData)
     tableIndex++
     let row = table.insertRow(tableIndex)
 
-    for(let j = 0; j <= 5; j++)
+    for(let j = 0; j <= 3; j++)
     {
       let cell = row.insertCell(j)
 
       if(j == 0)
       {
-        //This is the Object ID which we will skip for now
+        cell.innerHTML = userData[i].score;
       }
       else if(j == 1)
       {
-        cell.innerHTML = userData[i].score;
+        cell.innerHTML = userData[i].time;
       }
       else if(j == 2)
       {
-        cell.innerHTML = userData[i].time;
+        cell.innerHTML = userData[i].scoreOverTime;
       }
       else if(j == 3)
       {
-        cell.innerHTML = userData[i].scoreOverTime;
-        //cell.innerHTML =  Math.round((element.score / element.time) * 10) / 10;
-      }
-      else if(j == 4)
-      {
         cell.innerHTML = userData[i].date;
-        //let curDate = new Date()
-        //cell.innerHTML = (curDate.getMonth() + 1) + "/" + curDate.getDate() + "/" + curDate.getFullYear()
-      }
-      else if(j == 5)
-      {
-
-
       }
     }
 
@@ -186,5 +111,22 @@ async function addUserData(userData)
 
 
 
+
+}
+
+function clearTable()
+{
+  const table = document.getElementById("InformationTable")
+
+  console.log(table.rows.length)
+  console.log(table.rows)
+
+  if(table.rows.length !== 1)
+  {
+    for(let i = table.rows.length - 1; i > 0; i--)
+    {
+      table.rows[i].remove();
+    }
+  }
 
 }
