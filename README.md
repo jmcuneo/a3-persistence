@@ -93,9 +93,14 @@ Write a paragraph of at least 125 words *for each of four principles* (four para
 Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
 ---
 
-## Your Web Application Title
+## Your Personal Library
 
-your glitch (or alternative server) link e.g. http://a3-joshua-cuneo.glitch.me
+Glitch: http://a3-jolenepern.glitch.me
+
+This personal library application allows users to log their books and their reading progress within an account. Users are able to add, delete, and modify responses. 
+
+When creating this application, I found it very challenging to connect my database to MongoDB, especially adding the capability to modify and delete data.  
+
 
 Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
 
@@ -112,3 +117,34 @@ add a little more detail about what it does.
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+- **Design Achievement 2**: I uses the CRAP principles in the Non-Designer's Design Book readings. 
+
+
+
+
+
+
+Design (10)
+1. Provide informative, unique page titles
+2. Use heading sto convey meaning and structure
+3. Make link text meaningful
+4. Write meaningful text alternatives for images
+5. Provide clear instructions
+6. Keep content clear and concise
+7. Provide sufficient constrast between foreground and background
+
+Design(5)
+- (5 points) Describe how your site uses the CRAP principles in the Non-Designer's Design Book readings. 
+Which element received the most emphasis (contrast) on each page? 
+How did you use proximity to organize the visual information on your page? 
+What design elements (colors, fonts, layouts, etc.) did you use repeatedly throughout your site? 
+How did you use alignment to organize information and/or increase contrast for particular elements. 
+Write a paragraph of at least 125 words *for each of four principles* (four paragraphs, 500 words in total). 
+
+  The element that received the most emphasis on my page was the "Add a Book" form on the main page. This form allows users to add a book to the database called their "library" via a form that takes in a title, author, total pages, and current page number. I created contrast on the page by encapsulating this form in a rounded box on the page. By making the rounded box a different color than the site's background color and adding a box outline, the user can identify this box as the form that is provides a different feature than the rest of the site. This is important because I want users to immediately be drawn to the form, which is one of the main components of the website. 
+
+  I used proximity to organize the visual information on the page because 
+
+  hat design elements (colors, fonts, layouts, etc.) did you use repeatedly throughout your site
+
+  I used multiple design elements repeatedly throughout my website to create a consistent look and feel to it. This allows the user to foxus on the application features such as adding a book and managing the database. 
