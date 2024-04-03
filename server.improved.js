@@ -126,7 +126,21 @@ app.post("/add_userdata", async (req, res) => {
       }
       else //otherwise, add this information to the dataset
       {
+        console.log("Adding Data")
 
+        let newData =
+            {
+              score: req.body.score,
+              time: req.body.time,
+              scoreOverTime: Math.round((req.body.score / req.body.time) * 10) / 10,
+              date: req.body.date,
+              username: user
+            };
+
+        const updatedData = userdata.insertOne(newData)
+
+        console.log(updatedData)
+        res.json(updatedData)
       }
 
       // console.log(userScoreOnDate)
