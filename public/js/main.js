@@ -11,7 +11,7 @@ const submit = async function( event ) {
         json = { name: input.value },
         body = JSON.stringify( json )
 
-  const response = await fetch( "/submit", {
+  const response = await fetch( "/api/add", {
     method:"POST",
     body 
   })
