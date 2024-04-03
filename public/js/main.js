@@ -153,7 +153,7 @@ async function getUserProfile(event) {
     method: "GET"
   });
   const text = await response.text();
-  console.log(text);
+  //console.log(text);
   currentUser = JSON.parse(text);
   }
   catch (error) {
