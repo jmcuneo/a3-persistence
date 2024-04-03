@@ -131,7 +131,7 @@ const config = {
   authRequired: false,
   auth0Logout: true,
   secret: 'a long, randomly-generated string stored in env',
-  baseURL: 'https://a3-darrenni-production.up.railway.app/',
+  baseURL: 'https://a3-darrenni-production.up.railway.app',
   clientID: 'PlctauhHUByyDyxgsk3RTrNuKKCZXxvA',
   issuerBaseURL: 'https://dev-jcndioe3acrswo5m.us.auth0.com'
 };
