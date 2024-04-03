@@ -71,7 +71,7 @@ const deleteRecipe = asyncHandler(async (req,res)=>{
         res.status(403);
         throw new Error("Forbidden");
     }
-    await Recipe.remove();
+    await Recipe.deleteOne({id: req.params.id});
     res.status(200).json(recipe);
 });
 

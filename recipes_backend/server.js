@@ -6,6 +6,7 @@ connectDb();
 const app = express();
 const port = process.env.PORT;
 app.use(express.json());
+app.get("/", (req,res) => res.sendFile("../templates/index.html"))
 app.use("/recipes", require("./routes/recipesRoutes"));
 app.use("/users", require("./routes/userRoutes"));
 app.use(errorHandler);

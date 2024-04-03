@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Ronak_Wani_CS4241_Assignment_2</title>
+    <meta charset="utf-8">
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <!-- These links have been incoporated for the usage of google fonts, symbols, and icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Outfit:wght@600&display=swap" rel="stylesheet">
+    <!-- This link has been incoporated for the usage of css -->
+    <link rel="stylesheet" href="static/styles.css">
+
+</head>
+<!-- This is the body of the html page. It uses Google font: libre-franklin-->
+<body class="libre-franklin-body-text">
+<!-- This is the header of the html page. It uses Google font: outfit-->
+<h1 class="outfit-header-font">Ticket Reservation System</h1>
+<!-- This is the form to take the input from the user.
+It has the following fields: First Name, Middle Name, Last Name, Email,
+Start Location, Destination, and Transportation mode. -->
+<form>
+    <label for="FirstName">First Name: </label>
+    <input type="text" id="FirstName" placeholder="First Name" required="required">
+    <label for="MiddleName">Middle Name: </label>
+    <input type="text" id="MiddleName" placeholder="Middle Name">
+    <label for="LastName">Last Name: </label>
+    <input type="text" id="LastName" placeholder="Last Name"> <br>
+    <label for="Email">Email: </label>
+    <input type="email" id="Email" placeholder="Email" required="required">
+    <label for="StartLocation">Start Location: </label>
+    <input type="text" id="StartLocation" placeholder="USA Start Location" required="required">
+    <label for="Destination">Destination: </label>
+    <input type="text" id="Destination" placeholder="USA destination" required="required">
+</form>
+<!-- This is the dropdown menu for the transportation mode.-->
+<label for="transport-mode" >Choose your transportation mode:</label>
+<select name="Transportation mode" id="transport-mode">
+    <option value="Choose">Choose</option>
+    <option value="Lyft">Lyft</option>
+    <option value="Uber">Uber</option>
+    <option value="PeterPan Bus">PeterPan Bus</option>
+    <option value="Greyhound Bus">Greyhound Bus</option>
+    <option value="Our Bus">Our Bus</option>
+    <option value="Subway">Subway</option>
+    <option value="Commuter Rail">Commuter Rail</option>
+</select><br>
+<!-- This is the submit button for the form -->
+<button class="outfit-inside-buttons-font submit" type="Submit" id="Submit">Submit</button>
+<!-- This is the button to confirm. The button is hidden until the user clicks on update the data field. -->
+<button onclick="NewData()" type="button" id="Confirm">Confirm</button>
+<div id="booking_details">
+    <!-- This is the table to display the data entered by the user to book a ticker -->
+    <table> <tr> <th> Unique ID </th><th> First Name </th> <th> Middle Name </th>
+        <th> Last Name</th><th> Email </th> <th>Start Location</th> <th> Destination </th>
+        <th>Mode of Transportation</th> <th>Cost</th> </tr><tbody id="data_body"></tbody>
+    </table>
+</div>
+<!-- This is the footer of the html page. -->
+<footer>
+    <p>Copyright &copy; Ronak Wani. All rights reserved.</p>
+</footer>
+<!-- This is the script to include the main.js file. -->
+<script src="server.js"></script>
+</body>
+</html>
