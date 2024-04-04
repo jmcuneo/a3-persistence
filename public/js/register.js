@@ -1,13 +1,13 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
-
+import {redirect} from './main.js'
 
 /* let appdata = [
 
 ]
 let averageData ={
   
-}
-function generateTable(data, flag){
+} */
+/* function generateTable(data, flag){
   let table = "";
   table = '<table>';
   if(!flag){
@@ -22,8 +22,8 @@ function generateTable(data, flag){
   
   table += '</table>';
   return table;
-}
-const parseData = {
+} */
+/* const parseData = {
   toFloat: function(data){
     let ret = {
 
@@ -34,31 +34,33 @@ const parseData = {
     return ret; 
   }
 }
-
+ */
 const submit = async function( event, endpoint) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
   // this was the original browser behavior and still
   // remains to this day
   event.preventDefault();
-  const input = new FormData(document.querySelector("#carFacts"));
+  const input = new FormData(document.querySelector("#register"));
   console.log(input);
   let values = Object.fromEntries(input.entries());
-  values = parseData.toFloat(values);
+  /* values = parseData.toFloat(values); */
   console.log(values);
-  if(!isNaN(values.make)||typeof values.make !== "string" || typeof values.model !== "string" ){
-    return;
-  }
-  body = JSON.stringify(values);
+  const body = JSON.stringify(values);
+  console.log(body)
   const response = await fetch( endpoint, {
     method:"POST",
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body 
   })
 
   const text = await response.text()
 
   console.log( "text:", text )
-} */
+}
 
 /* const getData = async function(event){
   
@@ -85,19 +87,14 @@ const submit = async function( event, endpoint) {
     })
 
 } */
-export async function redirect( event, endpoint) {
-  event.preventDefault();
-  const response = await fetch(endpoint, {
-    method:"GET"
-  })
-  console.log(response);
-  window.location.href = response.url;
-}
 
-/* window.onload = function() {
-  getData(null)
-  const submitButton = document.querySelector("#submit");
-  submitButton.onclick = () => submit(event, "/submit").finally(getData);
-  const deleteButton = document.querySelector("#delete");
-  deleteButton.onclick = () => submit(event, "/delete").finally(getData);
-} */
+
+window.onload = function() {
+  /* getData(null) */
+  const loginRedirectButton = document.querySelector("#login");
+  loginRedirectButton.onclick = () => redirect(event, "/login");
+  const registerButton = document.querySelector('#submit');
+  registerButton.onclick = () => submit(event, "/register/new-user")
+  /* const deleteButton = document.querySelector("#delete");
+  deleteButton.onclick = () => submit(event, "/delete"); */
+}

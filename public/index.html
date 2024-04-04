@@ -3,7 +3,8 @@
   <head>
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
-    <script src="js/main.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/login.js"></script>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/sakura.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,23 +28,14 @@
   </head>
   <body>
     <div class="flexbox">
-      <h1>CAR INFORMATION WEBSITE.NET.COM.ORG</h1>
-      <form id="carFacts">
-        <input type="text" name="make" placeholder="car make"><br>
-        <input type="text" name="model" placeholder="model"><br>
-        <input type="number" name="year" placeholder="year"><br>
-        <input type="number" name="mpg" placeholder="mpg"><br>
-        <input type="number" name="lateralGs" placeholder="lateral g force"><br>
-        <input type="number" name="accel" placeholder="zero to sixty"><br>
+      <h1>Cat-abase Login</h1>
+      <form id="login">
+        <input type="text" name="make" placeholder="user name"><br>
+        <input type="password" name="model" placeholder="password"><br>
   
       </form>
-      <button id="submit">submit</button>
-      <button id="delete">delete</button>
-      <div>
-        <div id="data"></div>
-        <div id="avgData"></div>
-      </div>
-      
+      <button id="submit">login</button>
+      <button id="register">register</button>  
     </div>
   </body>
 </html>
