@@ -27,6 +27,7 @@ const submit = async function (event) {
     body
   })
   alert("Successfully submitted!")
+  location.reload()
 
 }
 
@@ -41,7 +42,8 @@ const erase = async function () {
   let returnedArray = JSON.parse(text);
   console.log("text:", returnedArray);
 
-  alert("Successfully deleted! Please refresh to see changes")
+  alert("Successfully deleted!")
+  location.reload()
 }
 
 const view = async function () {
@@ -74,8 +76,8 @@ const update = async function () {
     body
   })
 
-  alert("Successfully updated! Please refresh to see changes")
-
+  alert("Successfully updated!")
+  location.reload()
 }
 
 
@@ -150,10 +152,11 @@ const createTable = function (array) {
 
 window.onload = function () {
   const button_submit = document.getElementById("submit");
-  const button_view = document.getElementById("view")
+  //const button_view = document.getElementById("view")
   
   button_submit.onclick = submit;
-  button_view.onclick = view;
+  view()
+  //button_view.onclick = view;
   
   
 
