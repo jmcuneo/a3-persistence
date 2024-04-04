@@ -8,7 +8,8 @@ async function register(req, res) {
     const { username, password } = req.body;
     const userExists = await User.findOne({ username });
     if (userExists) {
-      return res.status(400).json({ message: "User already exists" });
+      // return res.status(400).json({ message: "User already exists" });
+      return res.status(400).redirect("/register?message=User already exists");
     }
 
     const user = await User.create({ username, password });
@@ -27,7 +28,8 @@ async function register(req, res) {
 
     res.status(201).redirect("/");
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    // res.status(500).json({ message: error.message });
+    res.status(500).redirect("/register?message=Internal Server Error");
   }
 }
 
@@ -37,12 +39,14 @@ async function login(req, res) {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(401).json({ message: "Username does not exist" });
+      // return res.status(401).json({ message: "Username does not exist" });
+      return res.status(401).redirect("/login?message=Username does not exist");
     }
 
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
-      return res.status(401).json({ message: "Incorrect Password" });
+      // return res.status(401).json({ message: "Incorrect Password" });
+      return res.status(401).redirect("/login?message=Incorrect Password");
     }
 
     const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
@@ -59,7 +63,8 @@ async function login(req, res) {
 
     res.redirect("/");
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    // res.status(500).json({ message: error.message });
+    res.status(500).redirect("/login?message=Internal Server Error");
   }
 }
 
