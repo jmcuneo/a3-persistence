@@ -4,6 +4,7 @@ const Data = require('../models/Data')
 const User = require("../models/User");
 const { cache } = require("express/lib/application");
 
+//authenticate user
 const isAuth = (req, res, next) => {
     if (req.user) {
         next()
@@ -13,6 +14,7 @@ const isAuth = (req, res, next) => {
     }
 }
 
+//check if user already logged-in
 const isGuest = (req, res, next) => {
     if (req.user) {
         res.redirect('/dashboard')
@@ -21,6 +23,7 @@ const isGuest = (req, res, next) => {
     }
 }
 
+//function containing logic to calculate final price, after discount price
 function calculatePrice(bilingObj) {
     //DERIVED FIELDS
     let totalPrice = 0
@@ -70,7 +73,7 @@ router.get('/billingsystem', isAuth, async (req, res) => {
         let total = 0
         const billingdata = await Data.find({ githubId: req.user.githubId }).lean()
         for(const item of billingdata){
-            total = total + (await item).afterDiscount
+            total = total + (await item).afterDiscount //calculate total price
         }
         res.render('billingsystem', { username: req.user.displayName, billingdata: billingdata, id: req.user.githubId, total:total })
     } catch (err) {
@@ -85,7 +88,7 @@ router.get('/instructions', isAuth, (req, res) => {
 router.get('/user_info', isAuth, async (req, res) => {
     try {
         const userdata = await User.find({ githubId: req.user.githubId }).lean()
-        res.render('user', { userdata: userdata })
+        res.render('user', { userdata: userdata }) //find data based in GitHub ID and render with this page
     } catch (err) {
         res.render('error')
     }
@@ -102,7 +105,7 @@ router.post('/add-data', isAuth, async (req, res) => {
         req.body.totalPrice = billingData.totalprice
         req.body.discount = billingData.discount
         req.body.afterDiscount = billingData.afterdiscount
-        await Data.create(req.body)
+        await Data.create(req.body) //add data to database
         res.redirect('/billingsystem')
     } catch (err) {
         res.render('error')
@@ -119,7 +122,7 @@ router.put('/update_data', isAuth, async (req, res) => {
         req.body.totalPrice = billingData.totalprice
         req.body.discount = billingData.discount
         req.body.afterDiscount = billingData.afterdiscount
-
+        //find entry based on object id and update with values from the form
         let data = await Data.findOneAndUpdate({ _id: req.body._id }, req.body, {
             runValidators: true
         })
@@ -131,7 +134,7 @@ router.put('/update_data', isAuth, async (req, res) => {
 
 router.delete('/delete_data', isAuth, async (req, res) => {
     try {
-        await Data.deleteOne({ _id: req.body._id })
+        await Data.deleteOne({ _id: req.body._id }) //delete from database based on object id
         res.redirect('/billingsystem')
     } catch (err) {
         res.render('error')

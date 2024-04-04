@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const passport = require('passport')
 
-
+//routes for GitHub strategy
 router.get('/github', passport.authenticate('github', {scope: ['profile']}))
 
 

@@ -16,7 +16,7 @@ passport.deserializeUser(async (id, done) => {
 });
 
 passport.use(
-    new GitHubStrategy(
+    new GitHubStrategy( //GitHub strategy implementation
         {
             clientID: GITHUB_CLIENT_ID,
             clientSecret: GITHUB_CLIENT_SECRET,
@@ -31,7 +31,7 @@ passport.use(
             let user = await User.findOne({githubId: profile.id});
             if (user) return done(null, user);
             else {
-                user = await User.create(newUser);
+                user = await User.create(newUser); //create user if not exists
                 return done(null, user);
             }
 

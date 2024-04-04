@@ -1,4 +1,5 @@
 
+//function to delete row
 async function deleteRow(r) {
     //saving the object containing the index to remove
     let payload = JSON.stringify({_id:r.getAttribute('data-index')})

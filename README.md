@@ -5,7 +5,7 @@ Assignment 3 - Persistence: Two-tier Web Application with Database, Express serv
 
 Glitch link: http://a3-joshua-cuneo.glitch.me
 
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
+
 The web application is a billing system that can add, view, update, and delete purchase data. Tha data is stored in the database(MonogDB), which ensures persistency. 
 The web application consists of multiple pages for different purposes:
 1. The login page contains button to login using GitHub. The login page is simple with only login area containing a icon and button. The user is redirected to GitHub login page when button clicked and then redirected to the dashboard on success.
@@ -26,7 +26,7 @@ The web application uses GitHub OAuth for logging the user. The GitHub strategy 
 **Technologies**:  
 -*HTML*:
 - The HTML pages use template engine called handlebars which consist the frontend code.
-- The main.handlebars is the base layout that is imported into all other handlebar files using template engine to avoid repetition os base layout and html syntax. 
+- The main.handlebars is the base layout that is imported into all other handlebar files using template engine to avoid repetition of base layout and html syntax. 
 - The HTML form to add purchase data in billingsystem.handlebars uses different input tags like text, number, data and also select tag for dropdown.
 - The HTML table in billingsystem.handlebars shows the purchase records specific to the authenticated user using their GitHub ID.
   - The HTML table consists of delete and update buttons for the user to delete or update corresponding records.
@@ -49,7 +49,7 @@ The web application uses GitHub OAuth for logging the user. The GitHub strategy 
 -*NodeJS*:
 - Used Express framework for backend, frontend, and database connections
 
--*Google Lighthouse*:
+-*Google Lighthouse*:  
 ![img.png](img.png)
 
 **the goal of the application**:
