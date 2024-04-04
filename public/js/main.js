@@ -44,7 +44,7 @@ const submit = async function( event ) {
     return;
   }
 
-  const anEntry = {name: reqInputs[0].value, bodyWeight: reqInputs[1].value, squat: reqInputs[2].value, benchPress: reqInputs[3].value, deadLift: reqInputs[4].value};
+  const anEntry = {bodyWeight: reqInputs[0].value, squat: reqInputs[1].value, benchPress: reqInputs[2].value, deadLift: reqInputs[3].value};
   const body = JSON.stringify(anEntry);
 
   const response = await fetch( "/submit", {
