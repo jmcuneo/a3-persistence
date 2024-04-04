@@ -1,5 +1,5 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
-let isEditFormOpen = false; 
+//let isEditFormOpen = false; 
 const addEntry = async function(event) {
   event.preventDefault();
 
@@ -93,9 +93,9 @@ async function handleDelete(index, items) {
 
 function createEditForm(itemData) {
   const form = document.createElement('form');
-  form.classList.add('edit-form'); // Add a class for styling
+  form.classList.add('edit-form', 'container'); // For form styling and layout
 
-  // Input fields for each property
+  // Input fields with Materialize structure
   const serviceInput = createInputField('service', 'text', itemData.service);
   const dateInput = createInputField('date', 'date', itemData.date);
   const wagesInput = createInputField('wages', 'number', itemData.wages);
@@ -108,6 +108,14 @@ function createEditForm(itemData) {
   const submitButton = document.createElement('button');
   submitButton.type = 'submit';
   submitButton.textContent = 'Save Changes';
+  submitButton.classList.add('btn', 'waves-effect', 'waves-light'); // Materialize button styles
+
+  const cancelButton = document.createElement('button');
+  cancelButton.type = 'button';
+  cancelButton.textContent = 'Cancel';
+  cancelButton.style="margin-left: 20px;";
+  cancelButton.classList.add('btn', 'waves-effect', 'waves-light', 'grey', 'lighten-1'); // Materialize button styles
+  cancelButton.addEventListener('click', hideEditForm);
 
   form.appendChild(serviceInput);
   form.appendChild(dateInput);
@@ -118,55 +126,73 @@ function createEditForm(itemData) {
   form.appendChild(mpgInput);
   form.appendChild(gasPriceInput);
   form.appendChild(submitButton);
+  form.appendChild(cancelButton);
 
   return form;
 }
 
 function createInputField(name, type, value) {
-  const label = document.createElement('label');
-  label.htmlFor = name; 
-  label.textContent = name.charAt(0).toUpperCase() + name.slice(1) + ':'; // Capitalize
+  const div = document.createElement('div');
+  div.classList.add('input-field', 'col', 's12'); // Materialize classes
+
+  const label = document.createElement('text');
+  label.textContent = name;
 
   const input = document.createElement('input');
   input.type = type;
   input.id = name;
-  input.name = name;
   input.value = value;
 
   if (type === 'number') {
     input.step = "0.01"; // Allow two decimal places
   }
 
-  const container = document.createElement('div'); // For layout
-  container.appendChild(label);
-  container.appendChild(input);
+  div.appendChild(label);
+  div.appendChild(input);
 
-  return container;
+  return div;
 }
 
 function displayEditForm(formElement) {
   const modal = document.createElement('div');
+  modal.id = 'modal1'; // Assign an ID for initialization
   modal.classList.add('modal');
   modal.appendChild(formElement);
   document.body.appendChild(modal);
+
+  // Initialize Materialize modal
+  M.Modal.init(document.getElementById('modal1')); 
+  M.Modal.getInstance(document.getElementById('modal1')).open(); 
 }
 
 function extractDataFromForm(formElement) {
-  const formData = new FormData(formElement); 
+  const allInputs = formElement.querySelectorAll('input');
   const updatedData = {};
-  for (const [key, value] of formData.entries()) {
-      updatedData[key] = value;
-  }
+  allInputs.forEach(input => {
+    if (input.type !== 'submit') { // Exclude submit button
+      updatedData[input.id] = input.value;
+    }
+  });
   return updatedData;
 }
 
+
+
 function hideEditForm() {
   const modal = document.querySelector('.modal');
-  modal.remove();
-  isEditFormOpen = false;
+  const modalInstance = M.Modal.getInstance(modal); // Get the Modal instance
+  modalInstance.close(); // Close the Modal
+  modal.remove(); // Remove the modal element from the DOM
+  // Remove modal overlay if exists
+  const overlay = document.querySelector('.modal-overlay');
+  if (overlay) {
+    overlay.remove();
+  }
 }
 
+
 async function handleEdit(index, items) {
+  console.log("Handling Edit");
   // Create and display the form
   const editForm = createEditForm(items[index]); 
   displayEditForm(editForm);
@@ -247,21 +273,6 @@ window.onload = function() {
 
   const addButton = document.getElementById("addButton");
   addButton.onclick = addEntry;
-
-  const clearButton = document.getElementById("clearButton");
-  clearButton.addEventListener('click', () => {
-    const itemsList = document.getElementById('itemsList');
-    itemsList.innerHTML = ''; // Clear the list on the page
-
-    //clear the list on the server side
-    try {
-      const response = fetch('/clear-items', { method: 'POST' }); 
-      // You'll need a '/clear-items' route set up on your server to handle this
-    } 
-    catch (error) {
-      console.error('Error clearing server data:', error);
-    }
-  });
 }
 
 function displayItems(items) {
@@ -328,11 +339,8 @@ function displayItems(items) {
     });
 
     editButton.addEventListener('click', (event) => {
-      if (!isEditFormOpen) { 
-         isEditFormOpen = true; 
-         const index = i; // Pass the index
-         handleEdit(index, items); // Pass the items array 
-      }
+      const index = i; // Pass the index
+      handleEdit(index, items); // Pass the items array 
    });
 
     deleteCell.appendChild(deleteButton);
