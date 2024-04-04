@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // Register User
 async function register(req, res) {
-  console.log(req.body);
   try {
     const { username, password } = req.body;
     const userExists = await User.findOne({ username });
@@ -12,6 +12,18 @@ async function register(req, res) {
     }
 
     const user = await User.create({ username, password });
+
+    // Create a token
+    const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
+      expiresIn: "1d",
+    });
+
+    // save the token in a cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+    });
 
     res.status(201).redirect("/");
   } catch (error) {
@@ -22,7 +34,6 @@ async function register(req, res) {
 // Login User
 async function login(req, res) {
   try {
-    console.log(req.body);
     const { username, password } = req.body;
     const user = await User.findOne({ username });
     if (!user) {
@@ -34,8 +45,16 @@ async function login(req, res) {
       return res.status(401).json({ message: "Incorrect Password" });
     }
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: user._id }, JWT_SECRET, {
       expiresIn: "1d",
+    });
+    console.log("token after login: ", token);
+
+    // save the token in a cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
     });
 
     res.redirect("/");
@@ -44,7 +63,14 @@ async function login(req, res) {
   }
 }
 
+// logout User
+async function logout(req, res) {
+  res.cookie("token", "", { httpOnly: true, expires: new Date(0) });
+  res.redirect("/login");
+}
+
 module.exports = {
   register,
   login,
+  logout,
 };

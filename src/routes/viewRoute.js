@@ -1,13 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const {
-  serveHomePage,
-  serveLoginPage,
-  serveRegisterPage,
-} = require("../controllers/viewController");
+const viewCtrl = require("../controllers/viewController");
 
-router.get("/", serveHomePage);
-router.get("/login", serveLoginPage);
-router.get("/register", serveRegisterPage);
+router.get("/", viewCtrl.serveHomePage);
+router.get("/login", viewCtrl.serveLoginPage);
+router.get("/register", viewCtrl.serveRegisterPage);
 
 module.exports = router;
