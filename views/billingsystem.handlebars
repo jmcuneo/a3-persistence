@@ -37,21 +37,22 @@
 <div class="apply-translation">
     <div class="flex-container">
         <div class="flex-item inside-form">
+            <h2>Add Purchase Data</h2>
             <form action="/add-data" method="POST"> <!-- form for user to enter purchase data -->
-                <label>Product Name</label>
+                <label for="productname">Product Name</label>
                 <br>
                 <input autofocus autocomplete="off" type="text" name="productName" id="productname" placeholder="Enter product name" required>
                 <br>
-                <label>Date Of Purchase</label>
+                <label for="purchasedate">Date Of Purchase</label>
                 <input autocomplete="off" type="date" id="purchasedate" name="purchaseDate" required>
                 <br>
-                <label>Product Cost</label>
+                <label for="cost">Product Cost</label>
                 <input autocomplete="off" type="number" id="cost" name="cost" placeholder="Enter cost for single" required>
                 <br>
-                <label>Product Quantity</label>
+                <label for="quantity">Product Quantity</label>
                 <input autocomplete="off" type="number" id="quantity" name="quantity" placeholder="Enter quantity" required>
                 <br>
-                <label>Product Category</label>
+                <label for="category">Product Category</label>
                 <br>
                 <select id="category" name="category">
                     <option disabled selected>Choose Category</option>
@@ -64,13 +65,13 @@
                     <option value="other">Other</option>
                 </select>
                 <br>
-                <label>Product Description</label>
+                <label for="description">Product Description</label>
                 <br>
                 <input autocomplete="off" type="text" id="description" name="description" placeholder="Enter any product description" required>
                 <input type="hidden" value="{{id}}" name="githubId">
                 <br>
-                <button type="submit" id="submit" class="btn btn-outline-primary submit-btn">SUBMIT</button>
-                <button type="reset" class="btn btn-outline-primary submit-btn">RESET</button>
+                <button type="submit" id="submit" class="btn btn-primary submit-btn">SUBMIT</button>
+                <button type="reset" class="btn btn-primary submit-btn">RESET</button>
             </form>
         </div>
         <div class="flex-item display-results">
@@ -110,13 +111,23 @@
                                     </ul>
                                 </td>
                                 <td>
-                                    <button onClick="deleteRow(this)" data-index = "{{_id}}" id="deleteData" class="submit-btn btn btn-outline-danger">DELETE</button>
-                                    <button type="button" data-toggle="modal" data-target="#exampleModal" onclick="displayRow(this)" class="show-popup submit-btn btn btn-outline-primary"  data-updindex = "{{_id}}" data-updname = "{{productName}}"
+                                    <button aria-labelledby="deleteData" onClick="deleteRow(this)" data-index = "{{_id}}" id="deleteData" class="submit-btn btn btn-outline-danger">DELETE</button>
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="displayRow(this)" class="show-popup submit-btn btn btn-outline-primary"  data-updindex = "{{_id}}" data-updname = "{{productName}}"
                                             data-dop = "{{purchaseDate}}" data-cost = "{{cost}}" data-quantity = "{{quantity}}"
                                             data-category = "{{category}}" data-desc = "{{description}}" data-github = "{{githubId}}">UPDATE</button>
                                 </td>
                             </tr>
                         {{/each}}
+                    <tr>
+                        <td>
+                            -
+                        </td>
+                        <td>
+                            Total Price: ${{total}}
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                     </tbody>
                 </table>
             {{else}}
@@ -136,13 +147,8 @@
         </div>
     </div>
 
-    <!-- Modal -->
-
-<!--    <div class="popup" id="popup">-->
-<!--        <h2>Form Update</h2>-->
-<!--        -->
-<!--    </div>-->
 </div>
+
 <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -153,20 +159,20 @@
                 <div class="modal-body-form" >
                     <form action="/update_data", method="POST"> <!-- form for user to update purchase data -->
                         <input type="hidden" name="_method" value="PUT">
-                        <label>Product Name</label>
+                        <label for="updproductname">Product Name</label>
                         <br>
                         <input autocomplete="off" type="text" id="updproductname" name="productName" placeholder="Enter product name" required>
                         <br>
-                        <label>Date Of Purchase</label>
+                        <label for="updpurchasedate">Date Of Purchase</label>
                         <input aria-label="purchase-date" autocomplete="off" type="date" id="updpurchasedate" name="purchaseDate" required>
                         <br>
-                        <label>Product Cost</label>
+                        <label for="updcost">Product Cost</label>
                         <input autocomplete="off" type="number" id="updcost" name="cost" placeholder="Enter cost for single" required>
                         <br>
-                        <label>Product Quantity</label>
+                        <label for="updquantity">Product Quantity</label>
                         <input autocomplete="off" type="number" id="updquantity" name="quantity" placeholder="Enter quantity" required>
                         <br>
-                        <label>Product Category</label>
+                        <label for="updcategory">Product Category</label>
                         <br>
                         <select id="updcategory" name="category" aria-label="category">
                             <option disabled selected>Choose Category</option>
@@ -179,7 +185,7 @@
                             <option value="other">Other</option>
                         </select>
                         <br>
-                        <label>Product Description</label>
+                        <label for="upddescription">Product Description</label>
                         <br>
                         <input autocomplete="off" type="text" id="upddescription" name="description" placeholder="Enter any product description" required>
                         <br>
@@ -188,15 +194,15 @@
                         <!--        <button type="submit" id="updsubmit" class="submit-btn" onclick="updateRow(); closePopup()">UPDATE</button>-->
 
                         <!--        <button id="reset" type="reset" class="submit-btn">RESET</button>-->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">CANCEL</button>
+                            <button type="submit" class="btn btn-success btn-sm" id="updsubmit">UPDATE</button>
+                            <button type="reset" class="btn btn-primary btn-sm" id="reset">RESET</button>
+                        </div>
                     </form>
-
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="closePopup()">Close</button>
-                <button type="submit" class="btn btn-success btn-sm" id="updsubmit">UPDATE</button>
-                <button type="reset" class="btn btn-primary btn-sm" id="reset">RESET</button>
-            </div>
+
         </div>
     </div>
 </div>

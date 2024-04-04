@@ -4,7 +4,7 @@
   "description": " A simple web application for Billing System created using Node JS built on Express and with MongoDB, HTML,",
   "main": "server.js",
   "scripts": {
-    "test": "node server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",

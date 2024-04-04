@@ -2,12 +2,10 @@ const express = require('express')
 const dotenv = require('dotenv') //for .env file
 const connectDb = require('./db')
 const exphbs = require('express-handlebars')
-// const passport = require('passport')
 const session = require('express-session')
 const path = require('path')
 const methodOverride = require('method-override')
 const bodyParser = require('body-parser');
-//const {Strategy: GitHubStrategy} = require("passport-github");
 const GitHubStrategy = require('passport-github').Strategy;
 
 //load the .env file in config, which contains personal information for connections
@@ -23,7 +21,7 @@ const app = express()
 
 //body parser for middleware to handle form data
 app.use(express.urlencoded({extended:false}))
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.json())
 
 //method override for PUT and DELETE

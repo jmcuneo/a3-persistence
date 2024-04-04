@@ -11,8 +11,6 @@ async function deleteRow(r) {
         body: payload, //sending the object to server with delete request
     })
 
-    //const text = await response.text()
-    alert("Deleted Successfully!!")
     location.reload()
 
 }
@@ -30,23 +28,8 @@ async function displayRow(row) {
     const year = dt.getFullYear()
     const formattedDate =`${year}-${month.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`
     document.getElementById("updpurchasedate").setAttribute('value', formattedDate)
-    console.log(formattedDate)
     document.getElementById("updcost").setAttribute('value', row.getAttribute('data-cost'))
     document.getElementById("updquantity").setAttribute('value', row.getAttribute('data-quantity'))
     document.getElementById("updcategory").value = row.getAttribute('data-category')
     document.getElementById("upddescription").setAttribute('value', row.getAttribute('data-desc'))
-}
-
-//function to show the popup
-function openPopup(){
-    let popup = document.getElementById('popup')
-    popup.classList.add('open-popup')
-}
-
-//function to close the popup
-function closePopup(){
-    document.getElementById("reset").click() //reset form
-    let popup = document.getElementById('popup')
-    popup.classList.remove('open-popup')
-
 }

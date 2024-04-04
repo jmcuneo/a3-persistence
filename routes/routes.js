@@ -67,8 +67,12 @@ router.get('/dashboard', isAuth, async (req, res) => {
 
 router.get('/billingsystem', isAuth, async (req, res) => {
     try {
+        let total = 0
         const billingdata = await Data.find({ githubId: req.user.githubId }).lean()
-        res.render('billingsystem', { username: req.user.displayName, billingdata: billingdata, id: req.user.githubId })
+        for(const item of billingdata){
+            total = total + (await item).afterDiscount
+        }
+        res.render('billingsystem', { username: req.user.displayName, billingdata: billingdata, id: req.user.githubId, total:total })
     } catch (err) {
         res.render('error')
     }
