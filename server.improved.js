@@ -11,8 +11,7 @@ const http = require( "http" ),
   dir  = "public/",
   port = 3000,
   express = require('express'),
-  app = express(),
-  previousResults = []
+  app = express()
 
 require("dotenv").config();
 
@@ -38,12 +37,56 @@ async function run() {
   collection = await client.db("CS4241").collection("Calculator")
 
   // route to get all docs
-  app.get("/docs", async (req, res) => {
-    if (collection !== null) {
-      const docs = await collection.find({}).toArray()
-      res.json( docs )
-    }
+  app.get("/getPreviousResults", async (req, res) => {
+    const docs = await collection.find({}).toArray()
+    res.json( docs )
   })
+
+  app.post('/addition', async (req, res) => {
+    const { num1, num2 } = req.clientData;
+    const result = (num1 + num2).toFixed(2);      //add the two imputted numbers together + truncates
+    const count = await collection.countDocuments();
+    collection.insertOne({ count: count + 1, result: result });       //add this result to the array of previous results
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ result: result }));        //send the result to the client
+  });
+  
+  app.post('/subtract', async (req, res) => {
+    const { num1, num2 } = req.clientData;
+    const result = (num1 - num2).toFixed(2);          //subtract the two imputted numbers together + truncates
+    const count = await collection.countDocuments();
+    collection.insertOne({ count: count + 1, result: result });           //add this result to the array of previous results
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ result: result }));        //send the result to the client
+  });
+  
+  app.post('/multiply', async (req, res) => {
+    const { num1, num2 } = req.clientData;
+    const result = (num1 * num2).toFixed(2);          //multiply the two imputted numbers together + truncates
+    const count = await collection.countDocuments();
+    collection.insertOne({ count: count + 1, result: result });           //add this result to the array of previous results
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ result: result }));        //send the result to the client
+  });
+  
+  app.post('/divide', async (req, res) => {
+    const { num1, num2 } = req.clientData;
+    const result = (num1 / num2).toFixed(2);          //divide the two imputted numbers together + truncates
+    const count = await collection.countDocuments();
+    collection.insertOne({ count: count + 1, result: result });           //add this result to the array of previous results
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ result: result }));        //send the result to the client
+  });
+  
+  app.post('/deleteResult', async (req, res) => {
+    const index = req.clientData.index
+    const result = await collection.deleteOne({  count: index });
+    if (result.deletedCount === 1) {
+      res.status(200).send("Result deleted.");
+    } else {
+      res.status(404).send("Result not found.");
+    }
+  });
 }
 
 run()
@@ -74,84 +117,4 @@ const middleware_post = (req, res, next) => {
 
 app.use( middleware_post )
 
-app.post('/addition', (req, res) => {
-  const { num1, num2 } = req.clientData;
-  const result = (num1 + num2).toFixed(2);      //add the two imputted numbers together + truncates
-  addPreviousResults({ result: result });       //add this result to the array of previous results
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify({ result: result }));        //send the result to the client
-});
-
-app.post('/subtract', (req, res) => {
-  const { num1, num2 } = req.clientData;
-  const result = (num1 - num2).toFixed(2);          //subtract the two imputted numbers together + truncates
-  addPreviousResults({ result: result });           //add this result to the array of previous results
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify({ result: result }));      //send the result to the client
-});
-
-app.post('/multiply', (req, res) => {
-  const { num1, num2 } = req.clientData;
-  const result = (num1 * num2).toFixed(2);          //multiply the two imputted numbers together + truncates
-  addPreviousResults({ result: result });           //add this result to the array of previous results
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify({ result: result }));      //send the result to the client
-});
-
-app.post('/divide', (req, res) => {
-  const { num1, num2 } = req.clientData;
-  const result = (num1 / num2).toFixed(2);          //divide the two imputted numbers together + truncates
-  addPreviousResults({ result: result });           //add this result to the array of previous results
-  res.writeHead(200, { 'Content-Type': 'application/json' });
-  res.end(JSON.stringify({ result: result }));      //send the result to the client
-});
-
-app.post('/deleteResult', (req, res) => {
-  const { index } = req.clientData;
-  previousResults.splice(index, 1);
-  res.writeHead(200, { "Content-Type": "text/plain" });        
-  res.end("Result deleted.");
-});
-
-app.post( '/addResult', (req, res) => {
-  const result = clientData.result;           //define the result and set it to the passed result
-  addPreviousResults({ result: result });     //add the result to the server side array
-  response.writeHead(200, { "Content-Type": "text/plain" });
-  response.end("Result added.");              //send a message back that it worked 
-})
-
-app.get( '/', ( req, res ) => res.send( sendFile( response, "public/index.html" ) ) )
-
-app.get( '/getPreviousResults', ( req, res ) => res.send( JSON.stringify(previousResults) ))
-
 app.listen( process.env.port || 3000 )
-
-const sendFile = function( response, filename ) {
-   const type = mime.getType( filename ) 
-
-   fs.readFile( filename, function( err, content ) {
-
-     // if the error = null, then we"ve loaded the file successfully
-     if( err === null ) {
-
-       // status code: https://httpstatuses.com
-       response.writeHeader( 200, { "Content-Type": type })
-       response.end( content )
-
-     }else{
-
-       // file not found, error code 404
-       response.writeHeader( 404 )
-       response.end( "404 Error: File Not Found" )
-
-     }
-   })
-}
-
-//function to add a given result to the previous results array
-const addPreviousResults = function (result) {        //pass the result
-  previousResults.push(result);                       //add result to the array
-  if (previousResults.length > 50) {                  //limit array length to 50 previous entries   
-      previousResults.pop();                          //if over 50, pop the oldest entry
-  }
-};

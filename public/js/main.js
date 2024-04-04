@@ -2,11 +2,10 @@
 //client-side code
 
 //function to delete a given entry in the server array with the previous results
-const deleteResult = async function (index) {
-  const operation = 'deleteResult'              //define the operation that is referenced on the server side
+const deleteResult = async function (index) {            
   const response = await fetch("/deleteResult", {           //fetch on the server side
       method: "POST",
-      body: JSON.stringify({ operation: operation, index: index }),       //pass through, the defined operation and the index in the array that needs to be deleted
+      body: JSON.stringify({ index: index }),       //pass through, the defined operation and the index in the array that needs to be deleted
       headers: { "Content-Type": "application/json" }
   });
   updateTable(); // update the table 
@@ -43,19 +42,6 @@ const updateTable = async function() {
   }
 }
 
-/*
-//function to add result to the previous results table
-const addResultToPrevious = async function(result) {    
-  const operation = 'addResult'     //define the operation
-  const response = await fetch("/addResult", {      //fetch to send the operation and the result to be added to the server-side array
-    method: "POST",
-    body: JSON.stringify({ operation: operation, result: result }),       //operation: defined above, result: passed to the function
-    headers: { "Content-Type": "application/json" }
-  });
-  updateTable(); //update the table 
-};
-*/
-
 //addition function
 const addition = async function( event ) { 
   event.preventDefault()
@@ -71,10 +57,10 @@ const addition = async function( event ) {
   })
 
   const responseData = await response.json()  // Get the response
-  const resultElement = document.querySelector('#result');        //define the result element on the screen
-  resultElement.textContent = "Result: " + JSON.stringify(responseData.result);     //assign the client side element to the result from the response
+  const resultElement = document.querySelector('#result')        //define the result element on the screen
+  resultElement.textContent = "Result: " + JSON.stringify(responseData.result)     //assign the client side element to the result from the response
 
-  updateTable();        //update the table
+  updateTable()
 }
 
 //subtraction function
@@ -95,7 +81,7 @@ const subtract = async function( event ) {
   const resultElement = document.querySelector('#result')
   resultElement.textContent = "Result: " + JSON.stringify(responseData.result) 
 
-  updateTable();          //update the table
+  updateTable()
 }
 
 //multiplication function
@@ -116,7 +102,7 @@ const multiply = async function( event ) {
   const resultElement = document.querySelector('#result')
   resultElement.textContent = "Result: " + JSON.stringify(responseData.result) // Use the plain text response
 
-  updateTable();          //update the table
+  updateTable()
 }
 
 //division function
@@ -137,7 +123,7 @@ const divide = async function( event ) {
   const resultElement = document.querySelector('#result')
   resultElement.textContent = "Result: " + JSON.stringify(responseData.result) // Use the plain text response
 
-  updateTable();          //update the table
+  updateTable()
 }
 
 window.onload = function() {      //on page load
