@@ -1,29 +1,19 @@
 //main.js
 //client-side code
 
-/*
 //function to delete a given entry in the server array with the previous results
 const deleteResult = async function(id) {
-  try {
+  const body = JSON.stringify({_id: id})
     const response = await fetch('/deleteResult', {
       method: "POST",
-      body: JSON.stringify({ _id: id }),
+      body: body,
       headers: {
         'Content-Type': 'application/json'
       }
     });
-
-    if (response.ok) {
-      await response.json();
-      updateTable();
-    } else {
-      console.error('Error deleting result:', response.statusText);
-    }
-  } catch (error) {
-    console.error('Error deleting result:', error.message);
-  }
+    updateTable();
 };
-*/
+
 //function to update the table to reflect the fetch from the server side array
 const updateTable = async function() {          
   const response = await fetch("/getPreviousResults");    //fetch the array
@@ -43,11 +33,9 @@ const updateTable = async function() {
           const cellDelete = document.createElement('td');            //define the cell for delete button
           const deleteButton = document.createElement('button');      // create the delete button
           deleteButton.textContent = 'Delete';                        //"delete" text inside of the button
-          /*
           deleteButton.addEventListener('click', async function() {         //create an event handler for when the button is clicked that links to the deleteResult() function above
             deleteResult(result._id);
           });
-          */
           cellDelete.appendChild(deleteButton);                       //add the delete button to the cell for delete button
 
           row.appendChild(cellIndex);     //add the of the index cell to the row
@@ -73,7 +61,7 @@ const addition = async function( event ) {
   })
 
   const responseData = await response.json()  // Get the response
-  
+
   const resultElement = document.querySelector('#result')        //define the result element on the screen
   resultElement.textContent = "Result: " + JSON.stringify(responseData.result)     //assign the client side element to the result from the response
 
@@ -146,7 +134,11 @@ const divide = async function( event ) {
   updateTable()
 }
 
-window.onload = function() {      //on page load
+window.onload = async function() {      //on page load
+
+  //await fetch("/getLogin", {
+  //  method: "GET"
+  //})
 
   updateTable();      //update table
 

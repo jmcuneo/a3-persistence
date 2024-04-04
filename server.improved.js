@@ -11,12 +11,25 @@ const http = require( "http" ),
   dir  = "public/",
   port = 3000,
   express = require('express'),
+  session = require('express-session'),
   app = express()
 
 require("dotenv").config();
+const bodyParser = require('body-parser');
 
 app.use( express.static( 'public' ) )
 app.use( express.json() )
+app.use(session({
+  secret: 'your_secret_key',
+  resave: false,
+  saveUninitialized: true
+}));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+const users = {
+  'user1': 'password1'
+}
 
 //Database Code
 const { MongoClient, ServerApiVersion } = require('mongodb');
@@ -32,6 +45,28 @@ const client = new MongoClient(uri, {
 });
 
 let collection = null
+
+const sendFile = function( response, filename ) {
+  const type = mime.getType( filename ) 
+
+  fs.readFile( filename, function( err, content ) {
+
+    // if the error = null, then we"ve loaded the file successfully
+    if( err === null ) {
+
+      // status code: https://httpstatuses.com
+      response.writeHeader( 200, { "Content-Type": type })
+      response.end( content )
+
+    }else{
+
+      // file not found, error code 404
+      response.writeHeader( 404 )
+      response.end( "404 Error: File Not Found" )
+
+    }
+  })
+}
 
 const middleware_post = (req, res, next) => {
   let dataString = ''
@@ -58,6 +93,36 @@ const middleware_post = (req, res, next) => {
 }
 
 app.use( middleware_post )
+
+/*
+
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+  if (users[username] && users[username] === password) {
+      // Authentication successful, store user session
+      req.session.authenticated = true;
+      req.session.username = username;
+      res.redirect('public/index.html'); // Redirect to main application page
+  } else {
+      // Authentication failed, redirect back to login page
+      res.redirect('/login?error=1');
+  }
+});
+
+// Main application route
+app.get('/index', (req, res) => {
+  if (req.session.authenticated) {
+      res.sendFile('public/index.html'); // Serve the main application page
+  } else {
+      res.redirect('/login'); // Redirect to login if not authenticated
+  }
+});
+
+app.get('/getLogin', (req, res) => {
+  res.render( 'login', { msg:'', layout:false }); // Serve the login page
+});
+
+*/
 
 async function run() {
   await client.connect()
@@ -102,23 +167,14 @@ async function run() {
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ result: result }));        //send the result to the client
   });
-
-  /*
+  
   app.post('/deleteResult', async (req, res) => {
-    const id = req.clientData._id;
-    console.log(id)
 
-    if (!ObjectId.isValid(id)) {
-      res.status(400).json({ error: 'Invalid ObjectId format' });
-      return;
-    }
-
-    const objectId = new ObjectId(id);
-    const result = await collection.deleteOne({ _id: objectId });
+    const result = await collection.deleteOne({ id:new ObjectId(req.body._id) });
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.status(200).json({ result: result });
   });
-  */
+
   
 }
 
