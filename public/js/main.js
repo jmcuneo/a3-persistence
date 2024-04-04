@@ -43,24 +43,24 @@ const submit = async function (event) {
   });
   console.log(response.body);
   const text = await response.json();
-  //const appdata = text.appdata;
-  //const suggestdata = text.suggestdata;
-  //const justAdded = appdata[appdata.length - 1];
+  const appdata = text.appdata;
+  const suggestdata = text.suggestdata;
+  const justAdded = appdata[appdata.length - 1];
 
-  /*for (let i = 0; i < suggestdata.length; i++) {
+  for (let i = 0; i < suggestdata.length; i++) {
     if (suggestdata[i].Sitem == justAdded.item && suggestdata[i].Sqty == justAdded.qty) {
       bring(i);
       remove(appdata.length);
       console.log("item removed from bring and added to appdata: ", suggestdata[i]);
     }
-  };*/
+  };
 
-  //makeGuestList(appdata);
-  console.log("type of text submit: ", typeof(text))
-  addToTable(text);
+  makeGuestList(appdata);
+  console.log("type of text submit: ", typeof(justAdded))
+  addToTable(justAdded);
   
   resetTextBoxes();
-  console.log("submit: ", text);
+  console.log("submit: ", justAdded);
 };
 
 /**
@@ -77,6 +77,7 @@ const makeGuestList = function (array) {
       uniqueNamesSet.add(obj.name); // Add the name to the set
       const li = document.createElement("li");
       li.innerHTML = obj.name; // Use the name property of the object
+      li.classList.add("list-group-item");
       list.appendChild(li);
     }
   });
@@ -120,7 +121,7 @@ const makeTable = function (array) {
     const entry = array[j];
     //console.log("suggest row: ", JSON.stringify(entry.Sitem));
     const table = document.getElementById("tableSuggest");
-    const row = `<tr id="suggestRow">
+    const row = `<tr id="suggestRow" role= "newrow">
               <td>${entry.Sitem}</td>
               <td>${entry.Sqty}</td>
               <td><button class="bring">Bring</button></td>
@@ -232,8 +233,17 @@ const suggest = async function (event) {
   const qtySuggest = document.querySelector("#suggestQty");
 
   //make sure all fields complete
+  if (
+    isEmpty(itemSuggest.value) ||
+    isEmpty(qtySuggest.value) ) {
+    alert(
+      "Please fill out all fields. If the quantity is unknown, you may leave it blank."
+    );
+    return;
+  }
 
   const newSuggest = createSuggest(itemSuggest.value, qtySuggest.value);
+
 
   const response = await fetch("/suggest", {
     method: "POST",
@@ -251,10 +261,12 @@ const suggest = async function (event) {
   resetTextBoxes();
 };
 
-const bring = async function (entryIndex) {
+const bring = async function (suggestIndex) {
+  const reqObj = {suggestIndex: suggestIndex}
   const response = await fetch("/bring", {
     method: "POST",
-    body: JSON.stringify(entryIndex),
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(reqObj),
   });
   const text = await response.json();
   const appdata = text.appdata;
@@ -270,6 +282,7 @@ const bring = async function (entryIndex) {
   makeTable(suggestdata);
   console.log("Bring this item: ", text);
 };
+
 
 window.onload = function () {
   refreshPage();
