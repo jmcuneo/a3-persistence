@@ -3,8 +3,12 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const path = require("path");
-const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
+
+// if development, use custom logger
+if (process.env.NODE_ENV === "development") {
+  app.use(require("./src/utils/logger"));
+}
 
 app.use(express.static(path.join(__dirname, "public/assets")));
 app.use(express.json());
@@ -12,8 +16,6 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 require("./src/config/database");
-
-app.use(morgan("dev"));
 
 app.use(require("./src/config/auth")); // for req.user all over the app
 
