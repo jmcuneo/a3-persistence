@@ -62,7 +62,7 @@ function modItem ( event ) {
   event.preventDefault() 
 
   //Hide the new item table
-  let form = document.getElementsByClassName("forms")[0]
+  let form = document.getElementById("entryForm")
   form.style.display = "none"
 
   //Display the modification table
@@ -70,7 +70,7 @@ function modItem ( event ) {
   modform.style.display = "block"
 
   //Connect the save button to this item id
-  let saveButton = document.getElementsByClassName("saveButton")[0]
+  let saveButton = document.getElementById("saveButton")
   saveButton.dataset.serverInfo = event.srcElement.dataset.serverInfo
   saveButton.onclick = modSave
 }
@@ -123,7 +123,7 @@ function displayData(data) {
   modForm.style.display = "none"
 
   //Make sure to display the new item form
-  let form = document.getElementsByClassName("forms")[0]
+  let form = document.getElementById("entryForm")
   form.style.display = "block"
 
   let table = document.getElementById("serverTable") //Get the table

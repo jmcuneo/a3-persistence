@@ -20,39 +20,56 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
-    <div class="container">
+    <div class="container content">
       <header>
-        <h1 class="title is-1">The Worst Calculator</h1>
+        <h1 class="title is-1 has-text-centered">The Worst Calculator</h1>
       </header>
-      <div class="forms">
-        <h2 class="title is-3">Add Entry Form</h2>
-        <form>
-          <label for="firstVal">1st Value: </label>
-          <input type="number" id="firstVal">
-          <br>
-          <label for="secVal">2nd Value: </label>
-          <input type="number" id="secVal">
-          <br>
-          <div class="opForm">
-            <p>Choose an operator:</p>
-            <input type="radio" name="operator" id="opA" value="+" checked>
-            <label for="opA">+</label>
-            <br>
-            <input type="radio" name="operator" id="opS" value="-">
-            <label for="opS">-</label>
-            <br>
-            <input type="radio" name="operator" id="opD" value="/">
-            <label for="opD">/</label>
-            <br>
-            <input type="radio" name="operator" id="opM" value="*">
-            <label for="opM">*</label>
-          </div>
-          <label for="guess">Guess (Optional): </label>
-          <input type="number" id="guess">
-          <br>
+      <div class="block" id="entryForm">
+        <div class="block">
+          <h2 class="title is-3">Add Entry Form</h2>
+        </div>
+        <div style="width: 50%" class="block">
+          <form class="field">
+            <div class="field is-horizontal">
+              <div class="field-label">
+                <label class="label" for="firstVal">1st Value:</label>
+              </div>
+              <div class="field-body" style="width: 20px">
+                <input style="width: 75px" class="input is-small" type="number" id="firstVal">
+              </div>
+            </div>
+            <div class="field is-horizontal">
+              <div class="field-label">
+                <label class="label" for="secVal">2nd Value:</label>
+              </div>
+              <div  class="field-body">
+                <input style="width: 75px" class="input is-small" type="number" id="secVal">
+              </div>
+            </div>
 
-          <button id="submitButton" class="button is-primary is-medium">Submit</button>
-        </form>
+            <div class="opForm">
+              <p>Choose an operator:</p>
+              <input type="radio" name="operator" id="opA" value="+" checked>
+              <label for="opA">+</label>
+              <br>
+              <input type="radio" name="operator" id="opS" value="-">
+              <label for="opS">-</label>
+              <br>
+              <input type="radio" name="operator" id="opD" value="/">
+              <label for="opD">/</label>
+              <br>
+              <input type="radio" name="operator" id="opM" value="*">
+              <label for="opM">*</label>
+            </div>
+            <label for="guess">Guess (Optional): </label>
+            <input type="number" id="guess">
+            <br>
+
+            <button id="submitButton" class="button is-primary is-medium">Submit</button>
+          </form>
+        </div>
+
+
       </div>
       <div id="sTable" class="table-container">
         <table id="serverTable"
@@ -97,7 +114,7 @@
           <input type="number" id="forceAnswer">
           <br>
 
-          <button class="saveButton">Save</button>
+          <button id="saveButton" class="button is-primary is-medium">Save</button>
         </form>
       </div>
     </div>
