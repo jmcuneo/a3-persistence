@@ -31,7 +31,7 @@ const addEntry = async function(event) {
   };
 
   if (service !== "") { // Basic validation
-    fetch('http://localhost:3000/add', {
+    fetch('/add', {
     method: 'POST',
     headers: {
     'Content-Type': 'application/json'
