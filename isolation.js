@@ -53,7 +53,11 @@ function get_equations(user_id) {
 // evalute and store varible
 async function evaluate(user_id, name, code) {
   try {
-    let equations = (await get_equations(user_id)).equations ?? {};
+    let user = await get_equations(user_id);
+    if (user == null) {
+      return null
+    }
+    let equations = user.equations ?? {};
     // delete varible
     if (code == "") {
       if (name != "") {

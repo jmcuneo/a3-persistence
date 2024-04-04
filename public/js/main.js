@@ -24,7 +24,7 @@ const checkVarName = async function (event) {
 var_name.oninput = checkVarName;
 code_str.oninput = checkVarName;
 
-const defaultName = "myVaribleName";
+const defaultName = "myVariableName";
 const defaultCode = "let intermediate = 11+12;\nintermediate*3";
 
 const addCode = async function (event) {

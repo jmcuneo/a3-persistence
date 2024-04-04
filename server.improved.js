@@ -43,6 +43,7 @@ passport.use(new passport_github.Strategy({
 },
   function (accessToken, refreshToken, profile, done) {
     database.DB.findOne({ user_id: profile.id }).then((user) => {
+      let is_new = false;
       if (user == null) {
         user = {
           user_id: profile.id,
@@ -50,8 +51,9 @@ passport.use(new passport_github.Strategy({
           equations: {}
         };
         database.DB.insertOne(user);
+        is_new=true;
       }
-      done(null, { id: profile.id, new: true });
+      done(null, { id: profile.id, is_new });
 
     }).catch((err) => {
       console.log(err);
@@ -78,13 +80,19 @@ app.post('/auth/login',
 app.get('/auth/login/callback',
   passport.authenticate('github', { failureRedirect: '/failed' }),
   function (req, res) {
-    res.redirect('/success');
+    if (req.user.is_new) {
+      res.redirect('/created');
+    } else {
+      res.redirect('/success');
+    }
   });
+
+
 
 app.post("/auth/logout", (req, res) => {
   req.logout(function (err) {
     res.redirect('/logout');
-  });
+  })
 });
 
 // setup login
@@ -100,7 +108,6 @@ app.get("/success", login_page("Login Success", "You have been logged in. Redire
 app.get("/failed", login_page("Login Failed", "Login failed. Redirecting..."));
 app.get("/logout", login_page("Logged Out", "You have been logged out. Redirecting..."));
 
-app.use(express.static('public'));
 
 // setup posts
 
@@ -110,6 +117,10 @@ app.post('/', (req, res) => {
   } else {
     try {
       isolation.evaluate(req.user.id, req.body.name ?? "", req.body.code ?? "").then((equations) => {
+        if (equations == null) {
+          req.logout(()=> res.status(401).send());
+          return;
+        }
         res.writeHead(200, "OK", { "Content-Type": "application/json" });
         let json = Object.entries(equations).map(e => ({ name: e[0], code: e[1].code, result: e[1].result }))
         res.end(JSON.stringify(json));
@@ -123,6 +134,8 @@ app.post('/', (req, res) => {
     }
   }
 });
+
+app.use(express.static('public'));
 
 // Run
 
