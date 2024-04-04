@@ -47,7 +47,6 @@ const erase = async function () {
 }
 
 const view = async function () {
-  document.getElementById("view").style.display = "none"
   const response = await fetch("/docs", { method: "GET" })
 
   const text = await response.text()
@@ -84,7 +83,9 @@ const update = async function () {
 
 function generateTableHead(table, data) {
   let thead = table.createTHead();
+  thead.className = "thead"
   let row = thead.insertRow();
+  row.className = "tr"
   let test = ""
  
   for (let key of data) {
@@ -93,7 +94,7 @@ function generateTableHead(table, data) {
         test = key
       }
       let text = document.createTextNode(test);
-     
+      th.className = "th"
       th.appendChild(text);
       row.appendChild(th);
     
@@ -104,23 +105,25 @@ function generateTable(data) {
   let table = document.createElement("table")
   let insertHere = document.getElementById("insertTable")
   
-  table.className = "lobster-regular"
+  table.className = "table"
 
   for (let element of data) {
     let row = table.insertRow();
+    row.className = "tr"
     let currRoundID;
     for (key in element) {
       let cell = row.insertCell();
+      cell.className = "td"
       if (key === "_id") {
         let del = document.createElement("button")
         currRoundID = element[key]
         del.id = currRoundID
-        del.class = "delete"
+        del.className = "button is-danger"
         del.onclick = function(){
           currID = del.id
           erase()
         }
-        del.appendChild(document.createTextNode("delete"))
+        del.appendChild(document.createTextNode("Delete"))
         cell.appendChild(del)
       } else {
         let text = document.createTextNode(element[key]);
@@ -128,15 +131,16 @@ function generateTable(data) {
       }
     }
     cell = row.insertCell()
+    cell.className = "td"
     let upd = document.createElement("button")
     upd.id = currRoundID
-    upd.class = "update"
+    upd.className = "button is-info"
     upd.onclick = function () {
       currID = upd.id
       console.log(currID)
       update()
     }
-    upd.appendChild(document.createTextNode("update"))
+    upd.appendChild(document.createTextNode("Update"))
     cell.appendChild(upd)
   }
   insertHere.appendChild(table)
@@ -151,6 +155,9 @@ const createTable = function (array) {
 
 
 window.onload = function () {
+  if(document.cookie === ""){
+    location.replace("login.html")
+  }
   const button_submit = document.getElementById("submit");
   //const button_view = document.getElementById("view")
   

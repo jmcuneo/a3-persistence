@@ -1,15 +1,40 @@
 const express = require('express'),
   app = express()
+  session = require('express-session');
+  path = require('path');
 
 require('dotenv').config()
-const appdata = [
-  { "model": "toyota", "year": 1999, "mpg": 23, "EOL": 2077 },
-  { "model": "honda", "year": 2004, "mpg": 30, "EOL": 2060 },
-  { "model": "ford", "year": 1987, "mpg": 14, "EOL": 2049 }
-]
 
-app.use(express.static('public'))
+app.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
+
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json())
+
+//LOGIN START
+let guest_username = null
+let guest_password = null
+//LOGIN END
+
+app.get('/', function(req, res) {
+	// Render login template
+	res.sendFile(path.join(__dirname + '/public/login.html'));
+});
+
+app.get('/main.html', (req, res) => {
+  // If the user is loggedin
+	if (req.session.loggedin) {
+		// Output username
+		res.send('Welcome back, ' + req.session.username + '!');
+	} else {
+		// Not logged in
+		res.send('Please login to view this page!');
+	}
+	res.end();
+})
 
 //DATABASE CONNECTION START
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
@@ -78,6 +103,36 @@ app.post('/update', async (req, res) => {
 })
 //DATABASE CONNECTION END
 
+app.post('/login', async (req, res) => {
+  const login_data = req.body
+
+  if(guest_username === null){
+    guest_username = login_data.uname
+    guest_password = login_data.psw
+    console.log(`Successful sign in: ${login_data.uname}`)
+    //sign them in...
+    req.session.loggedin = true
+    req.session.username = guest_username
+    //res.redirect("/main.html")
+    res.end()
+  } else { //not a new user
+
+    if(guest_username === login_data.uname && guest_password === login_data.psw){
+      //success!
+      req.session.loggedin = true
+      req.session.username = guest_username
+      console.log(`Successful sign in: ${login_data.uname}`)
+      //res.redirect("/main.html")
+      res.end()
+    } else {
+      //failed
+      res.status(401).send("Incorrect Username or password!")
+      res.end()
+    }
+
+  }
+
+})
 
 const calculateEOL = (year, mpg) => {
   let new_val = year + mpg;
@@ -86,23 +141,5 @@ const calculateEOL = (year, mpg) => {
   return new_val;
 }
 
-app.post('/submit', (req, res) => {
-  req.body.EOL = calculateEOL(req.body.year, req.body.mpg)
-  appdata.push(req.body)
-  res.writeHead(200, { 'Content-Type': 'application/json' })
-  res.end(JSON.stringify(appdata))
-})
-
-app.delete('/submit', (req, res) => {
-  let index = Number(req.body.number)
-  if (index > -1) {
-    appdata.splice(index, 1)
-    res.writeHead(200, { 'Content-Type': 'application/json' })
-    res.end(JSON.stringify(appdata))
-  } else {
-    res.writeHead(410, { 'Content-Type': 'text/plain' })
-    res.end("There was nothing to delete!")
-  }
-})
 
 app.listen(3000)

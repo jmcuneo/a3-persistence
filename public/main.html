@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>CS4241 Assignment 2</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="js/main.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&family=Lobster&family=Workbench&display=swap"
+    rel="stylesheet">
+  <!-- get rid of favicon error -->
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <!-- credit to: https://www.valentinog.com/blog/html-table/-->
+</head>
+
+<body class="has-background-black">
+  <div class="container">
+    <header>
+      <h1 class="title has-text-danger">
+        MY SUPER SECRET CAR COLLECTION WEBSITE
+      </h1>
+    </header>
+    <div class="block">
+      <form>
+        <label for="model" class="label">Insert Model Name</label>
+        <input type="text" class="input" id="model">
+      </form>
+      <form>
+        <label for="year" class="label">Insert Model Year</label>
+        <input type="number" class="input" id="year" value="Insert Model Year">
+      </form>
+      <form>
+        <label for="mpg" class="label">Insert Average MPG</label>
+        <input type="number" class="input" id="mpg" value="Insert Average MPG">
+      </form>
+    </div>
+    <div class="block">
+      <button id="submit" class="button is-primary">Submit*</button>
+    </div>
+    <div id="insertTable" class="block has-background-danger has-text-centered">
+      <!-- table here-->
+    </div>
+    <div class="image is-3by2">
+      <img src="classiccar.jpg">
+    </div>
+</body>
+</div>
+<footer class="container">
+  <p>*Upon submission, you agree to being looked at</p>
+</footer>
+
+</html>

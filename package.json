@@ -7,9 +7,12 @@
     "start": "node server.improved.js"
   },
   "dependencies": {
+    "bulma": "^1.0.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "mime": "^2.6.0",
-    "mongodb": "^6.5.0"
+    "mongodb": "^6.5.0",
+    "path": "^0.12.7"
   }
 }
