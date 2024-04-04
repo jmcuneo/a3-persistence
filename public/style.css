@@ -1,0 +1,68 @@
+body {
+  margin-top:10px;
+}
+p{
+  font-size:10px
+}
+h1 {
+  font-size: clamp(10px, 3vw, 40px); 
+  height: 100px
+}
+#item-pool {
+  min-height:150px
+}
+input, label, a {
+  font-size: clamp(10px, 1vw, 15px); 
+}
+button {
+  font-size: clamp(10px, 1.6vw, 20px); 
+}
+i {
+  display: inline-block;
+  color: #333FFF; 
+  font-size: 24px; 
+  margin-right: 10px; 
+}
+i:hover {
+  color: #007bff;
+  cursor: pointer;
+}
+i:before {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nes-container.with-title.is-centered {
+  border: 2px solid white;
+}
+body,
+.nes-container.with-title.is-centered .title {
+  color: white;
+  background-color:black;
+}
+.icon-grid {
+  display: grid;
+  margin-top:20px;
+  margin-bottom:20px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-gap: 20px;
+}
+#inventory {
+  display: grid;
+  background-color: #121212;
+  margin-top:20px;
+  margin-bottom:20px;
+  height:110px;
+  grid-template-columns: repeat(auto-fill, minmax(10px, 1fr));
+  grid-gap: 90px;
+}
+.inventory-slot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px; 
+  height: 100px; 
+  background-color: #aaaaaa; 
+  border: 5px solid #dddddd;
+  margin: 5px; 
+}
