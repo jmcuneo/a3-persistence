@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Inventory Manager</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Inventory manager where users can create resources with values and weights and move them in and out of an inventory">
+    <link rel="preconnect" href="fonts.googleapis.com">
+    <link rel="preconnect" href="fonts.unpkg.com.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" media="none" onload="if(media!=='all')media='all'" >
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/style.css">
+    <script async src="/client.js"></script>
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body style="margin-left: 10px; margin-right: 10px">
+    <h1 class="nes-container with-title is-centered" id="username">{{USERNAME}}'s Inventory Manager</h1>
+    <form>
+      <label for="item-name">Type the name of an tem to add/mod/delete: </label>
+      <input type="text" id="item-name" name="itemName">
+      <label id = "lbl-result"></label>
+      <br>
+      <button type="submit" id="add-item">Add/Mod from Resource Pool</button>
+      <button type="submit" id="del-item">Delete from Resource Pool</button>
+      <br>
+      <div id="number-of-inventory-slots" style="margin-top: 12px;" class="nes-container with-title is-centered">
+        <h2 class="title">Number of Inventory Slots</h2>
+        <label>
+          <input type="radio" class="nes-radio is-dark" name="inventory-slots"/>
+          <span>2</span>
+        </label>
+        <label>
+          <input type="radio" class="nes-radio is-dark" name="inventory-slots"/>
+          <span>3</span>
+        </label>
+        <label>
+          <input type="radio" class="nes-radio is-dark" name="inventory-slots"/>
+          <span>4</span>
+        </label>
+      </div>
+    </form>
+    <br>
+    <div class="nes-container with-title is-centered">
+      <h2 class="title">Resource Pool</h2>
+      <p>Click an item to move it into the inventory</p>
+      <div class="icon-grid" id="item-pool"></div>
+    </div>
+    <br>
+    <div class="nes-container with-title is-centered">
+      <h2 class="title">Inventory</h2>
+      <p>Click an item to move it out of the inventory</p>
+      <div class="icon-grid" id="inventory"></div>
+      <button id = "calculate-value">Calculate Current Value</button>
+      <h3 id = "inventory-value"  style="display: none">Inventory Value: {{INVENTORY_VALUE}}</h3>
+      <h3 id = "inventory-weight" style="display: none">Inventory Weight: {{INVENTORY_WEIGHT}}</h3>
+    </div>
+      <div id = "results" style="display: none">
+      <h1 id = "backend-data">{{USERNAME}}'s Database Data</h1>
+      <p id="results-text"></p>
+    </div>
+    <a href="/logout">Logout of Current Session</a>
+  </body>
+</html>
