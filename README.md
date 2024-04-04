@@ -2,6 +2,8 @@
 
 https://a3-shimingde-a12f6f109f25.herokuapp.com/
 
+use "admin" "admin" as admin account
+
 Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
 
 This application is for helping player manage their account in diffrerent game in hoyoverse. During the development phase, the most challenging problem I meet is the connection between client and server, espacially athe manage of logged in user and their role. For password, I choose to retrieve the information from database and compare the password word in server side this can prevent injection from client. I use "Tailwind" as my css framework because it has a lot of documentation and suport.
