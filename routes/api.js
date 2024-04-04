@@ -4,14 +4,6 @@ const router = express.Router();
 const dir = 'public/';
 
 
-// let appdata = [
-//   { name: 'John', id: '1', addedDate: new Date(), count: 1 },
-//   { name: 'Paul', id: '2', addedDate: new Date(), count: 1 },
-//   { name: 'George', id: '3', addedDate: new Date(), count: 1 },
-//   { name: 'Paul', id: '4', addedDate: new Date(), count: 2 },
-// ];
-
-//implement mongoose with mongodb instead of appdata
 const mongoose = require('mongoose');
 const uri = process.env.MONGODB_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -23,6 +15,45 @@ const dataSchema = new Schema({
   count: Number
 });
 const Data = mongoose.model('Data', dataSchema);
+
+//create a user model
+const userSchema = new Schema({
+  username: String,
+  password: String
+});
+const User = mongoose.model('User', userSchema);
+
+const app = express();
+const session = require('express-session');
+
+app.use(session({
+  secret: 'your secret key',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false } // set to true if your app is on https
+}));
+
+router.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    let user = await User.findOne({ username });
+    if (!user) {
+      user = new User({ username, password });
+      await user.save();
+      req.session.userId = user._id;
+      res.json({ success: true, message: 'User created successfully' });
+    } else {
+      if (user.password === password) {
+        req.session.userId = user._id;
+        res.json({ success: true, message: 'Login successful' });
+      } else {
+        res.json({ success: false, message: 'Invalid password' });
+      }
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to login' });
+  }
+});
 
 router.get('/getdata', async (req, res) => {
   try {
@@ -36,7 +67,7 @@ router.get('/getdata', async (req, res) => {
 router.post('/delete', async (req, res) => {
   const { row } = req.body;
   try {
-    const result = await Data.deleteOne({ id: row.id });
+    const result = await Data.deleteOne({ _id: row._id });
     res.json({ success: result.deletedCount > 0 });
   } catch (error) {
     res.status(500).json({ error: 'Failed to delete data' });
@@ -45,7 +76,7 @@ router.post('/delete', async (req, res) => {
 router.post('/edit', async (req, res) => {
   const { row } = req.body;
   try {
-    const result = await Data.updateOne({ id: row.id }, { name: row.newName });
+    const result = await Data.updateOne({ _id: row._id }, { name: row.newName });
     res.json({ success: result.nModified > 0 });
   } catch (error) {
     res.status(500).json({ error: 'Failed to edit data' });
@@ -58,7 +89,6 @@ router.post('/add', async (req, res) => {
     const count = await Data.countDocuments({ name: { $regex: new RegExp(`^${name}$`, 'i') } });
     const data = new Data({
       name: name,
-      id: Math.random().toString(36).substring(2, 11),
       addedDate: new Date(),
       count: count + 1
     });

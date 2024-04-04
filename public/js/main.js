@@ -31,8 +31,14 @@ const submit = async function( event ) {
 window.onload = function() {
    const button = document.querySelector("button");
   button.onclick = submit;
+
+  const logout = document.getElementById('logout');
+  logout.onclick = function() {
+    event.preventDefault()
+  window.location.href = '/logout';
+  }
 }
-const addRow = function(row) {
+const addRow = function(row, results) {
   let tr = document.createElement('tr');
   let td = document.createElement('td');
   td.textContent = row.name;
@@ -90,6 +96,9 @@ const addRow = function(row) {
     .then(data => {
       if (data.success) {
         td.textContent = newName;
+      } else {
+        //reload
+        location.reload();
       }
     });
   };
@@ -97,13 +106,16 @@ const addRow = function(row) {
 
   results.appendChild(tr);
 }
+document.addEventListener('DOMContentLoaded', (event) => {
+  let results = document.getElementById('results');
 
- //get data from /api/getdata
- fetch('/api/getdata')
- .then(response => response.json())
- .then(data => {
-   let results = document.getElementById('results');
-   data.forEach(row => {
-    addRow(row);
+   //get data from /api/getdata
+   fetch('/api/getdata')
+   .then(response => response.json())
+   .then(data => {
+     data.forEach(row => {
+      addRow(row, results);
+     });
    });
- });
+});
+
