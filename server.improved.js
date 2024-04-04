@@ -189,6 +189,7 @@ app.post('/edit-item', async (req, res) => {
   const itemId = req.body.itemId;
   const updatedData = req.body; 
   delete updatedData.itemId;  // Remove itemId from the update object
+
   const finalData = calculateItemProperties(updatedData);
 
   try {
