@@ -14,6 +14,18 @@ const deleteResult = async function(id) {
     updateTable();
 };
 
+const editResult = async function(id, content) {
+  const body = JSON.stringify({_id: id, content: content})
+    const response = await fetch('/editResult', {
+      method: "POST",
+      body: body,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    updateTable();
+};
+
 //function to update the table to reflect the fetch from the server side array
 const updateTable = async function() {          
   const response = await fetch("/getPreviousResults");    //fetch the array
@@ -38,10 +50,20 @@ const updateTable = async function() {
           });
           cellDelete.appendChild(deleteButton);                       //add the delete button to the cell for delete button
 
-          row.appendChild(cellIndex);     //add the of the index cell to the row
-          row.appendChild(cellResult);    //add the of the result cell to the row
-          row.appendChild(cellDelete);    //add the of the delete cell to the row
-          tbody.appendChild(row);         //add the row to the defined table
+          const cellEdit = document.createElement('td')
+          const editButton = document.createElement('button')
+          editButton.textContent = 'Edit'
+          editButton.addEventListener('click', function () {
+          const newInput = prompt('Enter new value: ')
+            editResult(result._id, newInput)
+          });
+          cellEdit.appendChild(editButton)
+
+          row.appendChild(cellIndex)     //add the of the index cell to the row
+          row.appendChild(cellResult)    //add the of the result cell to the row
+          row.appendChild(cellDelete)    //add the of the delete cell to the row
+          row.appendChild(cellEdit)
+          tbody.appendChild(row)         //add the row to the defined table
       });
   }
 }
