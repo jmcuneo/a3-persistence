@@ -155,9 +155,6 @@ const createTable = function (array) {
 
 
 window.onload = function () {
-  if(document.cookie === ""){
-    location.replace("login.html")
-  }
   const button_submit = document.getElementById("submit");
   //const button_view = document.getElementById("view")
   

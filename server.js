@@ -24,16 +24,14 @@ app.get('/', function(req, res) {
 	res.sendFile(path.join(__dirname + '/public/login.html'));
 });
 
-app.get('/main.html', (req, res) => {
+app.get('/main', (req, res) => {
   // If the user is loggedin
 	if (req.session.loggedin) {
-		// Output username
-		res.send('Welcome back, ' + req.session.username + '!');
+		res.sendFile(path.join(__dirname + '/public/main.html'));
 	} else {
 		// Not logged in
-		res.send('Please login to view this page!');
+		res.status(401).send()
 	}
-	res.end();
 })
 
 //DATABASE CONNECTION START
@@ -113,7 +111,7 @@ app.post('/login', async (req, res) => {
     //sign them in...
     req.session.loggedin = true
     req.session.username = guest_username
-    //res.redirect("/main.html")
+    res.redirect("/main")
     res.end()
   } else { //not a new user
 
@@ -122,7 +120,7 @@ app.post('/login', async (req, res) => {
       req.session.loggedin = true
       req.session.username = guest_username
       console.log(`Successful sign in: ${login_data.uname}`)
-      //res.redirect("/main.html")
+      res.redirect("/main")
       res.end()
     } else {
       //failed
