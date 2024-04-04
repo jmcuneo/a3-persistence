@@ -10,7 +10,7 @@ This application is a basic GPA calculator, where the user can input classes, th
 - **Tech Achievement 1**: I hosted the website on Railway instead of Glitch. Railway automatically updates pages after changes are made to the linked GitHub repo, maing it much easier to stay up to date while testing, especially when I was trying to get the Google Lighthouse score up. (5pts)
 - **Technical Achievement 2**: The website allows the user to easily log out of their account and return to the home screen, making it easy for users to have multiple accounts if needed. (5pts)
 
-### Design/Evaluation Achievements
+## Design/Evaluation Achievements
 - **Design Achievement 1**: Elements on the website change depending on the user's color settings. If the user is in light mode or dark mode, website elements will adjust accordingly to ensure everything is legible and not overly straining on the eyes. (10pts)
 ![alt text](images/light_mode.png)
 ![alt text](images/dark_mode.png)
