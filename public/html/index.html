@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark" />
+    <link rel="stylesheet" href="/css/main.css">
+    <title>Hello world!</title>
+  </head>
+  <body>
+    <main class="container">
+      <form id="loginform" class="login"">
+        <h2>Welcome!</h2>
+        <label for="user">Username</label>
+        <input required="true" id="user" type="text" onchange="pingUser(event)"/>
+        <label for="pwd">Password</label>
+        <input required="true" id="pwd" type="text" onchange="pingUser(event)"/>
+        <label for="agreement">Do you promise not to add, delete, or paint any boxes that do not belong to you?</label>
+        <input required="true" id="agreement" type="checkbox" />
+        <input onclick="login()" id="submit" type="button" value="Login"/>
+      </form>
+    </main>
+  </body>
+  <script src="../scripts/login.js"></script>
+</html>

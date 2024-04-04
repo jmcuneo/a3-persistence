@@ -1,0 +1,149 @@
+@use "../../node_modules/@picocss/pico/scss/pico";
+body {
+    margin: 0px;
+    padding: 0px;
+}
+.login {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 20em;
+    height: 27em;
+    margin-left: -10em;
+    margin-top: -13em;
+    background-color: whitesmoke;
+    padding: 1em;
+    border-radius: 0.5em;
+}
+
+.tool_sel {
+    border-color: orange;
+}
+
+.login h2, label {
+    color: #13171f
+}
+
+.login input {
+    border-radius: 5em;
+}
+
+#submit {
+    width: max-content;
+    align-self: flex-end;
+}
+
+.toolbar {
+    display:flex;
+    gap: .5em;
+    background-color: #33263d;
+    outline: 0.1em solid #9372ac;
+    border-radius: 3em;
+    padding: 0.6em;
+    width: 40%;
+    left: 30%;
+    position: relative;
+    justify-content: flex-start;
+}
+
+.box_area {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1em;
+    // background-color: crimson;
+}
+
+.box {
+    width: 4em;
+    height: 4em;
+    border: none;
+    border-radius: 0.5em;
+    text-align: center;
+    align-content: center;
+}
+
+.add_box {
+    border: 0.3em dotted #9372ac;
+    background-color: transparent;
+}
+
+#color_pick {
+    position: relative;
+    display: inline-block;
+    align-self: center;
+    background-color: pink;
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 1em;
+}
+
+button {
+    background-color: transparent;
+    border: 0.1em solid #9372ac;
+    padding: 0.2em;
+}
+
+button img {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.glayout {
+    display: flex;
+    flex-direction: row;
+    //flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.main_content{
+    flex-grow: 2fr;
+    width: 100%;
+}
+
+.leaderboard {
+    flex-grow: 1fr;
+}
+
+th, td {
+    text-align: center;
+}
+
+.colors {
+    display: none;
+    position: absolute;
+    top: 1em;
+    background-color: #33263d;
+    outline: 0.3em solid #9372ac;
+    padding: 0.5em;
+    border-radius: 0.3em;
+    width: 7.5em;
+    //box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    flex-direction: row;
+    flex-wrap:wrap;
+    gap: 1em;
+}
+
+.color {
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 1em;
+}
+
+.spacer {
+    flex-grow: 4;
+}
+
+.spacetaker {
+    height: 1.5em;
+}
+
+#logout {
+    background-color: #9372ac;
+    color: #33263d;
+}
+
+#color_pick:hover .colors {display: flex;}

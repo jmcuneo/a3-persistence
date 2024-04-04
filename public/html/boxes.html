@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark" />
+    <link rel="stylesheet" href="/css/main.css">
+    <title>Hello world!</title>
+  </head>
+  <body>
+    <main class="container">
+      <div class="glayout">
+        <div class="main_content">
+          <div class="toolbar">
+            <button id="Hammer" onclick="use_tool(1, this, document.getElementById('Paint'))">
+              <img src="/images/f7--hammer.svg" />
+            </button>
+            <button id="Paint" onclick="use_tool(2, this, document.getElementById('Hammer'))">
+              <img src="/images/oui--brush.svg" />
+            </button>
+            <div id="color_pick" value="Color">
+              <div id="color_holder" class="colors">
+              </div>
+            </div>
+            <div class="spacer"></div>
+            <button id="logout" value="Logout" onclick="logout()">Logout</button>
+          </div>
+          <div class="spacetaker"></div>
+          <div id="box_area" class="box_area">
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+            <button class="box add_box">+</button>
+          </div>
+        </div>
+        <div class="leaderboard">
+          <table>
+            <tbody id="leaderboard">
+              <tr>
+                <th>User</th>
+                <th>Total</th>
+              </tr>
+              <tr>
+                <td>a32b4de887</td>
+                <td>12</td>
+              </tr>
+              <tr>
+                <td>Demi "Fat" Lovato</td>
+                <td>108</td>
+              </tr>
+              <tr>
+                <td>ethel cain</td>
+                <td>12405</td>
+              </tr>
+          </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </body>
+  <script src="../scripts/boxes.js"></script>
+</html>
