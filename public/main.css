@@ -1,57 +1,57 @@
 /*fonts*/
 .noto-sans soyombo-regular {
-    font-family: "Noto Sans Soyombo", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+  font-family: "Noto Sans Soyombo", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 .mandali-regular {
-    font-family: "Mandali", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+  font-family: "Mandali", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 header,
 ul {
-    margin-left: 10px;
-    color: white;
+  margin-left: 10px;
+  color: white;
 }
 
 h3 {
-    color: #183b63;
-    font-family: "Mandali", sans-serif;
+  color: #183b63;
+  font-family: "Mandali", sans-serif;
 }
 
 body {
-    font-family: "Noto Sans Soyombo", sans-serif;
-    background: #1C74D9;
-    color: #0b1a2d;
+  font-family: "Noto Sans Soyombo", sans-serif;
+  background: #1C74D9;
+  color: #0b1a2d;
 }
 
 form {
-    max-width: 800px;
-    margin-left: 10px;
-    margin-right: auto;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background: #f5f7f3;
+  max-width: 800px;
+  margin-left: 10px;
+  margin-right: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: #f5f7f3;
 }
 
 div {
-    padding-left: 10px;
-    padding-right: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 button {
-    color:black;
-    font-weight: bold;
-    margin-left: 10px;
-    width: 100px;
-    height: 40px;
+  color:black;
+  font-weight: bold;
+  margin-left: 10px;
+  width: 100px;
+  height: 40px;
 }
 
 #submitBtn {
-    /*button goes on bottom right*/
-    display: block;
-    margin-left: auto;
-    margin-right: 10px;
+  /*button goes on bottom right*/
+  display: block;
+  margin-left: auto;
+  margin-right: 10px;
 }

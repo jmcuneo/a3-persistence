@@ -4,10 +4,10 @@ let dataCollection, userCollection, currentUser;
 
 // set up database
 const express = require("express"),
-    { MongoClient, ObjectId } = require("mongodb"),
-    session = require("express-session"),
-    app = express(),
-    path = require("path");
+  { MongoClient, ObjectId } = require("mongodb"),
+  session = require("express-session"),
+  app = express(),
+  path = require("path");
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri);
@@ -28,11 +28,11 @@ run().catch(console.error);
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(
-    session({
-      secret: process.env.SECRET,
-      resave: false,
-      saveUninitialized: true,
-    })
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
 );
 
 
@@ -54,7 +54,7 @@ app.get("/app", (req, res) => {
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;
   let user = await userCollection.findOne({ username });
-
+  
 
   if (user) {
     if (password === user.password) {
@@ -82,22 +82,22 @@ app.get('/logout', (req, res) => {
 
 // handle POST
 app.post("/submit", async (req, res) => {
-  await dataCollection.insertOne(req.body);
-  const data = await dataCollection.find().toArray();
-  res.json(data);
+    await dataCollection.insertOne(req.body);
+    const data = await dataCollection.find().toArray();
+    res.json(data);
 });
 
 // handle GET
 app.get("/get", async (req, res) => {
-  const data = await dataCollection.find().toArray();
-  res.json(data);
+    const data = await dataCollection.find().toArray();
+    res.json(data);
 });
 
 // handle DELETE
 app.post("/delete", async (req, res) => {
-  await dataCollection.deleteOne({ _id: new ObjectId(req.body._id) });
-  const data = await dataCollection.find().toArray();
-  res.json(data);
+    await dataCollection.deleteOne({ _id: new ObjectId(req.body._id) });
+    const data = await dataCollection.find().toArray();
+    res.json(data);
 });
 
 //handle UPDATE in app.js

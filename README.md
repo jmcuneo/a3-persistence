@@ -1,5 +1,4 @@
-- Olivia Perez: https://a3-olivia-perez.glitch.me
-- Code edited directly on Glitch, here you can view the files if needed: https://glitch.com/edit/#!/a3-olivia-perez
+Olivia Perez: https://a3-olivia-perez.glitch.me
 
 For me the most difficult part of what I got working was figuring out how to properly implement modifying data since I didn't try to do it for the last assignment. I wanted to also attempt using passport.js and the github authentication but I didn't allot enough time to properly figure it out. The most interesting and fun part was using Picnic for CSS since I haven't used it before and using the flex classes instead of a grid was very cool to me.
 
