@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 2</title>
+    <meta charset="utf-8">
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    <div class = "grid-layout">
+      <div class = "grid-cell">
+        <h1>
+          To-Do List
+        </h1>
+      </div>
+      <div class="grid-cell">
+        <form>
+          <input type="text" id="class" value="class">
+          <input type="text" id="task" value="task">
+          <input type="text" id="time" value="time">
+          <button>submit</button>
+        </form>
+      </div>
+      <div class="grid-cell">
+        <table id="dataTable">
+          <thead id = "dataHead"></thead>
+          <tbody id = "dataBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

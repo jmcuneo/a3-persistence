@@ -1,0 +1,12 @@
+{
+  "name": "a2-StephenFanning",
+  "version": "1.0",
+  "description": "A Simple To-Do List",
+  "author": "Stephen Fanning",
+  "scripts": {
+    "start": "node server.improved.js"
+  },
+  "dependencies": {
+    "mime": "^2.6.0"
+  }
+}
