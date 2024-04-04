@@ -99,41 +99,39 @@ Glitch: http://a3-jolenepern.glitch.me
 
 This personal library application allows users to log their books and their reading progress within an account. Users are able to add, delete, and modify responses. 
 
+## Challenges
 When creating this application, I found it very challenging to connect my database to MongoDB, especially adding the capability to modify and delete data.  
 
+## Authentication Strategy
+I chose to use passport-local and lowdb, since they were the easiest to implement.
 
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
-
-- the goal of the application
-- challenges you faced in realizing the application
-- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why
-  - include any modifications to the CSS framework you made via custom CSS you authored
-- the five Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function for *one* (and one alone) middleware please 
-add a little more detail about what it does.
+## CSS Framework
+I chose to use the Bootstrap CSS framework, as I have heard that it is a very popular and widely-used CSS framework. 
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
+- **Tech Achievement 1**: I got 100% in all four lighthouse tests required for this assignment.
 
-### Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+![Lighthouse Tech Avhievement](images/lighthouse.png)
+
+## Design/Evaluation Achievements
+- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative.
+1. Provide informative, unique page titles: I ensured that the title was unique yet informative. 
+2. Use headings to convey meaning and structure: I used clear heading to indicate primary features such as adding a book and managing the database. 
+3. Make link text meaningful: I included a link to the top books of the cnetury according to GoodReads and embedded the link in the words rather than "link"
+goodreads.com/list/show/6.Best_Books_of_the_20th_Century
+4. Write meaningful text alternatives for images: I included images for popular books, and wrote text alternatives that included the book title and author name. 
+5. Provide clear instructions: I provided instructions for how to add a book, manage the database, and gave recommendations for books that users might find interest in reading. 
+6. Keep content clear and concise: I used minimal words to convey my information and relied more on formatting to direct users to navigate the page. 
+7. Provide sufficient constrast between foreground and background: I utilized tools such as Lighthouse to ensure that all elements of the site had enough contrast, including the foreground and background. 
+8. Ensure that form elements include clearly associated labels: I checked that the form was clearly labeled and intuitive. 
+9. Provide easily identifieable feedback: When an error occurs in form input, a message pops up with clear instructions to fix the error. 
+10. Help users avoid and correct mistakes: An alert pops up if the form is missing input, which is very visible to users.
+11. Reflect the reading order in the code order: I ensured that the HTML structure utilized divs to create sections that reflect the reading order of the site. 
+12. Identify page language and language changes: I indicated the primary language of each page in the code. 
+
 - **Design Achievement 2**: I uses the CRAP principles in the Non-Designer's Design Book readings. 
 
 
-
-
-
-
-Design (10)
-1. Provide informative, unique page titles
-2. Use heading sto convey meaning and structure
-3. Make link text meaningful
-4. Write meaningful text alternatives for images
-5. Provide clear instructions
-6. Keep content clear and concise
-7. Provide sufficient constrast between foreground and background
-
-Design(5)
 - (5 points) Describe how your site uses the CRAP principles in the Non-Designer's Design Book readings. 
 Which element received the most emphasis (contrast) on each page? 
 How did you use proximity to organize the visual information on your page? 
@@ -143,7 +141,9 @@ Write a paragraph of at least 125 words *for each of four principles* (four para
 
   The element that received the most emphasis on my page was the "Add a Book" form on the main page. This form allows users to add a book to the database called their "library" via a form that takes in a title, author, total pages, and current page number. I created contrast on the page by encapsulating this form in a rounded box on the page. By making the rounded box a different color than the site's background color and adding a box outline, the user can identify this box as the form that is provides a different feature than the rest of the site. This is important because I want users to immediately be drawn to the form, which is one of the main components of the website. 
 
-  I used proximity to organize the visual information on the page because 
+  I used proximity to organize the visual information on the page by creating essentially 2 sections to my main page - the form and the results. I 
+
+  I
 
   hat design elements (colors, fonts, layouts, etc.) did you use repeatedly throughout your site
 

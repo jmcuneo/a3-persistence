@@ -1,13 +1,7 @@
+
 body {
   background:#c8d5b9;
   color:black;
-  font-family: "Outfit", sans-serif;
-  font-weight: 400;
-}
-
-h1 {
-  display: flex;
-  align-items: center;
 }
 
 table {
@@ -20,6 +14,7 @@ th {
   border: 1px solid;
   text-align: left;
   background: #4a7c59;
+  color: white;
 }
 
 td {
@@ -37,17 +32,17 @@ td {
   background: #faf3dd;
 }
 
+.deleteButton {
+  font-size: 12px;
+  background: #8fc0a9;
+  font-family: "Outfit", sans-serif;
+  padding: 5px;
+}
+
 #submitButton {
   font-size: 14px;
   background: #8fc0a9;
   font-family: "Outfit", sans-serif;
   font-weight: 500;
-  padding: 5px;
-}
-
-#deleteButton {
-  font-size: 12px;
-  background: #8fc0a9;
-  font-family: "Outfit", sans-serif;
   padding: 5px;
 }

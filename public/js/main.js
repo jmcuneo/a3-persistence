@@ -73,7 +73,7 @@ function addRow(){
         totalPages.innerHTML = response.totalPages
         currentPage.innerHTML = response.currentPage
         pagesLeft.innerHTML = response.pagesLeft
-        deleteButton.innerHTML = `<button id='deleteButton' class="rounded-box" onclick=deleteRow(${index})>Delete</button>`
+        deleteButton.innerHTML = `<button class="rounded-box deleteButton" onclick=deleteRow(${index})>Delete</button>`
 
         index++;
       }})

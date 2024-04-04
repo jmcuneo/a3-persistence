@@ -1,16 +1,19 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>CS4241 Assignment 2</title>
+    <title>Personal Library Homepage - CS4241 A3</title>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Personal Library Home Page">
+    <meta name="keywords" content="HTML, CSS, JavaScript, Library">
+    <meta name="author" content="Jolene Pern">
+
     <script src="js/main.js"></script>
+    
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="css/main.css">
 
-    <!-- Google font-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-    
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
@@ -21,38 +24,45 @@
     <h1>Your Personal Library</h1>
     </div>
 
-    <p>
+    <p >
       Keep track of your books and your reading progress! Simply add your book title, author, total page count, and your current page number. 
     </p>
 
-    <div id="addBook" class="rounded-box">
+    <div id="addBook" >
       <h2>Add a Book:</h2>
       <form id="book-form">
-        <label for="title">Title:</label>
-        <input type="text" id="title">
-        <br>
+        <div class="form-group">
+          <label for="title">Title:</label>
+          <input type="text" id="title">
+        </div>
 
-        <label for="author">Author:</label>
-        <input type="text" id="author">
-        <br>
+        <div class="form-group">
+          <label for="author">Author:</label>
+          <input type="text" id="author">
+        </div>
 
-        <label for="totalPages">Total Pages:</label>
-        <input type="text" id="totalPages">
-        <br>
+        <div class="form-group">
+          <label for="totalPages">Total Pages:</label>
+          <input type="text" id="totalPages">
+        </div>
 
-        <label for="currentPage">Current Page #:</label>
-        <input type="text" id="currentPage">
-        <br>
-        <br>
+        <div class="form-group">
+          <label for="currentPage">Current Page #:</label>
+          <input type="text" id="currentPage">
+        </div>
 
         <button id="submitButton" type="submit" class="rounded-box">Submit</button>
       </form>
     </div>
+
+    <br>
+    <br>
+    <br>
     
-    <div id="resultsTable">
+    <div id="resultsTable" >
       <h2>Your Books:</h2>
       <p>Here are the books in your library! Add books using the form above, or remove books by using the 'Delete' button corresponding the the book row. </p>
-      <table id="bookTable">
+      <table id="bookTable" class="table table-bordered">
       </table>
     </div>
   </body>
