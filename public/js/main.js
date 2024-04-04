@@ -1,16 +1,29 @@
 //main.js
 //client-side code
 
+/*
 //function to delete a given entry in the server array with the previous results
-const deleteResult = async function (index) {            
-  const response = await fetch("/deleteResult", {           //fetch on the server side
+const deleteResult = async function(id) {
+  try {
+    const response = await fetch('/deleteResult', {
       method: "POST",
-      body: JSON.stringify({ index: index }),       //pass through, the defined operation and the index in the array that needs to be deleted
-      headers: { "Content-Type": "application/json" }
-  });
-  updateTable(); // update the table 
-};
+      body: JSON.stringify({ _id: id }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
 
+    if (response.ok) {
+      await response.json();
+      updateTable();
+    } else {
+      console.error('Error deleting result:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Error deleting result:', error.message);
+  }
+};
+*/
 //function to update the table to reflect the fetch from the server side array
 const updateTable = async function() {          
   const response = await fetch("/getPreviousResults");    //fetch the array
@@ -18,7 +31,8 @@ const updateTable = async function() {
       const previousResults = await response.json();      // array of previous results
       const previousResultsTable = document.getElementById('previousResults');        //define table
       const tbody = previousResultsTable.querySelector('tbody');                      //define table body
-      tbody.innerHTML = '';         //clear the content in the body              
+      tbody.innerHTML = '';         //clear the content in the body
+                    
       previousResults.forEach((result, index) => {        //loop through the fetched array
           const row = document.createElement('tr');       //define row
           const cellIndex = document.createElement('td'); //define index
@@ -29,9 +43,11 @@ const updateTable = async function() {
           const cellDelete = document.createElement('td');            //define the cell for delete button
           const deleteButton = document.createElement('button');      // create the delete button
           deleteButton.textContent = 'Delete';                        //"delete" text inside of the button
-          deleteButton.addEventListener('click', function() {         //create an event handler for when the button is clicked that links to the deleteResult() function above
-              deleteResult(index);
+          /*
+          deleteButton.addEventListener('click', async function() {         //create an event handler for when the button is clicked that links to the deleteResult() function above
+            deleteResult(result._id);
           });
+          */
           cellDelete.appendChild(deleteButton);                       //add the delete button to the cell for delete button
 
           row.appendChild(cellIndex);     //add the of the index cell to the row
@@ -57,6 +73,7 @@ const addition = async function( event ) {
   })
 
   const responseData = await response.json()  // Get the response
+  
   const resultElement = document.querySelector('#result')        //define the result element on the screen
   resultElement.textContent = "Result: " + JSON.stringify(responseData.result)     //assign the client side element to the result from the response
 
@@ -78,6 +95,7 @@ const subtract = async function( event ) {
   })
 
   const responseData = await response.json()
+
   const resultElement = document.querySelector('#result')
   resultElement.textContent = "Result: " + JSON.stringify(responseData.result) 
 
@@ -98,7 +116,8 @@ const multiply = async function( event ) {
     body: body 
   })
 
-  const responseData = await response.json() // Get the response
+  const responseData = await response.json()
+
   const resultElement = document.querySelector('#result')
   resultElement.textContent = "Result: " + JSON.stringify(responseData.result) // Use the plain text response
 
@@ -119,7 +138,8 @@ const divide = async function( event ) {
     body: body 
   })
 
-  const responseData = await response.json() // Get the response
+  const responseData = await response.json()
+
   const resultElement = document.querySelector('#result')
   resultElement.textContent = "Result: " + JSON.stringify(responseData.result) // Use the plain text response
 
