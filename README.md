@@ -120,6 +120,8 @@ I mostly used application-level middleware. I used the following Express middlew
 - app.delete() - This function is used to delete data from the database. I used in my server code this to look for if the ID exists and then delete data from the database.
 - app.put() - This function is used to modify data in the database. I used this in my server code to look for the correct ID then modify data in the database.
 
+![alt text](https://github.com/atnguyen01/a3-AndrewNguyen/blob/main/img/Screenshot%202024-04-04%20192417.png)
+
 
 ## Technical Achievements
 - **Tech Achievement 1**: I used Render to create my webpage rather than Glitch. I found that Render was easier to use than Glitch as it was more user-friendly and had a better interface. I also found that Render was better than Glitch in terms of loading the page and updating the page. Here is the message I sent earlier in the Slack:
