@@ -25,7 +25,7 @@ app.use( express.json() )
 passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "https://a3-avachadbourne.onrender.com/auth/github/callback"
+    callbackURL: "https://a3-avachadbourne.glitch.me/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
     let username = profile.username
@@ -75,36 +75,6 @@ app.use( (req,res,next) => {
     res.status(503).send()
   }
 })
-
-
-// app.post( '/login', async (req,res)=> {
-//   let data = req.body
-//   let userCollection = await client.db("sample_mflix").collection("user-info")
-//   let userCheck = userCollection.findOne({username: data.username})
-
-//   if(userCheck) {
-//     req.session.login = true
-//     res.redirect( 'index.html' )
-//   }else{
-//     // password incorrect, redirect back to login page
-//     res.sendFile( __dirname + '/public/index.html' )
-//   }
-// })
-
-
-// const handleGet = function( request, response ) {
-//   const filename = dir + request.url.slice( 1 ) 
-
-//   if( request.url === "/" || request.url.includes("?")) {
-//     //Weird bug was popping up here with extra GET requests being sent after data was modified
-//     //No idea where the requests were coming from or why (I tried a lot of debugging on both client and server sides)
-//     //To get any modification to work I had to hardcode in the "?" check
-//     //Found this sunday night so I couldn't ask professor or TAs about it
-//     sendFile( response, "public/index.html" )
-//   }else{
-//     sendFile( response, filename )
-//   }
-// }
 
 
 app.post( '/refresh', cors(), async (req, res) => {
