@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 
 <head>
   <title>CS4241 Assignment 2</title>
@@ -19,6 +19,7 @@
     }
   </style>
   <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css">
 
   <!-- get rid of favicon error -->
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
@@ -37,7 +38,7 @@
     </div>
     <div class="row justify-content-center align-items-center g-2">
       <div class="col">
-        <form id="input-form">
+        <form id="input-form" class="rounded border border-light-subtle p-2">
           <div class="mb-3">
             <label for="task-input" class="form-label">Input the name of your task:</label>
             <input type="text" class="form-control" id="task-input" placeholder="Add a task" required>

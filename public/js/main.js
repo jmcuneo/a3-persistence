@@ -18,8 +18,10 @@ const submit = async function (event) {
     const json = { "task": input, "creationDate": new Date().toISOString().split("T")[0], "dueDate": dueDate }
     const body = JSON.stringify(json)
 
-    const response = await fetch("/submit", {
+    console.log(`body: ${body}`)
+    const response = await fetch("/add-task", {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body
     })
 
@@ -48,7 +50,7 @@ const tableDeleteButton = async function (buttonTarget) {
     body: JSON.stringify({ "task": taskText }),
   };
 
-  const response = await fetch("/delete", options)
+  const response = await fetch("/delete-task", options)
 
   if (response.ok) {
     const dataJson = await response.json()
