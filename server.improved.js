@@ -1,40 +1,48 @@
 const express = require("express");
 //const { MongoClient } = require('mongodb');
-const app = express(),
-  path = require("path"),
-  authRoutes = require('./routes/auth-routes');
+const app = express();
+const path = require("path");
+const authRoutes = require('./routes/auth-routes');
+const profileRoutes = require('./routes/profile-routes');
+
 const passportSetup = require('./configs/passport-setup');
 const keys = require('./configs/keys');
 const { run } = require('./mongo.js');
 const { client } = require('./mongo.js');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
-//const session = require('express-session');
-app.use(express.json()); //middleware for json
-//encrypt with array
-
-app.use(require('express-session')({ 
-  secret: 'u',
-  resave: true,
-  saveUninitialized: true
-}));
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'login.html'));
-});
-
-// Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/auth', authRoutes);
+//var session = require('express-session');
 
 app.use(cookieSession({
-  maxAge: 24 * 60 * 60 * 1000, //one day milisecs
+  maxAge: 24 * 60 * 60 * 1000,
   keys: [keys.session.cookieKey]
 }));
 
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/auth', authRoutes);
+app.use('/profile', profileRoutes);
+
+app.use(session({
+  secret: 'paperscissorsrock',
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: true }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+app.use(express.json()); //middleware for json
+
+
+// Serve static files from the 'public' directory
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 let collection = null

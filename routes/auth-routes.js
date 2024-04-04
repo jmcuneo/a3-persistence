@@ -12,14 +12,9 @@ router.get('/github', passport.authenticate('github', {
 
 //callback route for github -> tell passport to give us the profile info from the code
 router.get('/github/redirect', passport.authenticate('github'), (req, res) => {
-    res.send(req.user);
-})
-
-/*(req, res) => {
-    //passport
-    res.send('logging in with github');
-    console.log("github");
+    //res.send(req.user);
+    res.redirect('/profile/');
 });
-*/
+
 
 module.exports = router;
