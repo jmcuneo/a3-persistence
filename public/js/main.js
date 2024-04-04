@@ -28,15 +28,20 @@ function addRow(id, model, year, mpg, fuelTank){ //adds row to table
 
 
 function updateDropDown(){
-let dropDown = document.getElementById("deleteID");
+let dropDownDelete = document.getElementById("deleteID");
+let dropDownModify = document.getElementById("modifyID");
 
 //delete all options first
-dropDown.innerHTML = "";
+dropDownDelete.innerHTML = "";
+dropDownModify.innerHTML = "";
 
 for(let i = 1; i < rowNumber; i++) {
-  let option = document.createElement("option");
-  option.text = i.toString();
-  dropDown.add(option);
+  let optionDelete = document.createElement("option");
+  let optionModify = document.createElement("option");
+  optionDelete.text = i.toString();
+  optionModify.text = i.toString();
+  dropDownDelete.add(optionDelete);
+  dropDownModify.add(optionModify);
 }
 }
 function updateIDs(){
@@ -125,7 +130,7 @@ const modify = async function(event){
 
   isModified = true;
 
-  const input0 = document.querySelector("#id2"),
+  const input0 = document.querySelector("#modifyID"),
       input1 = document.querySelector( "#model2" ),
       input2 = document.querySelector("#year2"),
       input3 = document.querySelector("#mpg2"),

@@ -119,8 +119,8 @@ app.get('/data', (request, response) => {
         //console.log(appdata)
 
         //console.log(users.find({_id: currentUser}));
-        console.log(currentUserDataCount);
-        console.log(typeof currentUserDataCount);
+       // console.log(currentUserDataCount);
+       // console.log(typeof currentUserDataCount);
         let currentData = await userData.find({user: currentUser}).toArray();
         var jsonArray = JSON.stringify(currentData)
         response.writeHead(200, "OK", {"Content-Type": "text/plain"})

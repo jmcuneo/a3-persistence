@@ -2,20 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CS4241 Assignment 3- Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>CS4241 Assignment 3 Car Database Login • Andrew Nguyen</title>
 </head>
 <script src="js/login.js"></script>
 <body>
+<header style="text-align: center; font-size: 48px">Car Database Login</header>
+
 <div>
-  <label for="username">Username:</label>
-  <input type="text" id="username" name="username" />
+    <h2>Please enter your username and password</h2>
 </div>
 
 <div>
-  <label for="pass">Password:</label>
-  <input type="password" id="pass" name="password" required />
+    <h2>If you do not have an account please enter a username and password and you will be registered</h2>
 </div>
 
-<input  id="login" type="submit" value="Sign in" />
+<div>
+  <label style="padding: 8px" for="username">Username:</label>
+  <input class="form-control"  type="text" id="username" name="username" />
+</div>
+
+<div>
+  <label style="padding: 8px" for="pass">Password:</label>
+  <input class="form-control" type="password" id="pass" name="password" required />
+</div>
+
+<input class="btn btn-primary btn-lg" id="login" type="submit" value="Sign in" />
+
+
+
 </body>
 </html>

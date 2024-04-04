@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <title>CS4241 Assignment 3</title>
+  <title>CS4241 Assignment 3 Car Database • Andrew Nguyen</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Author: Andrew Nguyen,
@@ -9,9 +9,8 @@
   <script src="js/main.js"></script>
 
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-  <!-- get rid of favicon error -->
-  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
 <body>
 <header>Car Database</header>
@@ -19,34 +18,40 @@
   <div id="formDiv">
     <h2> Use the form below to add to the table</h2>
     <form>
-      <input type="text" id="model" placeholder="Car Model">
-      <input type="text" id="year" placeholder="Year">
-      <input type="text" id="mpg" placeholder="Miles per Gallon (MPG)">
-      <input type="text" id="fuelLoad" placeholder="Fuel Tank Size in Gallons">
-      <button id="submit">submit</button>
+      <input class="form-control" type="text" id="model" placeholder="Car Model">
+      <input class="form-control" type="text" id="year" placeholder="Year">
+      <input class="form-control" type="text" id="mpg" placeholder="Miles per Gallon (MPG)">
+      <input class="form-control" type="text" id="fuelLoad" placeholder="Fuel Tank Size in Gallons">
+      <button class="btn btn-danger" id="submit">submit</button>
 
     </form>
-
+  <p>For example, input Toyota, 2003, 20, 25</p>
   </div>
   <div>
-    <h2> Use the form below to delete from the table</h2>
+    <h2> Use the forms below to delete from the table</h2>
     <form>
       <label for="deleteID"></label>
-      <select id="deleteID">
-     </select>
-      <input type="submit" id="delete" class="delete" value="Delete">
+      <select class="btn btn-secondary dropdown-toggle" id="deleteID">
+      </select>
+      <input class="btn btn-danger" type="submit" id="delete" class="delete" value="Delete">
     </form>
+    <p>For example, select 2 when there is a object in the database with the id# 2</p>
   </div>
   <div>
-    <h2> Use the form below to modify values from the table</h2>
+    <h2> Use the forms below to modify values from the table</h2>
     <form>
-      <input type="text" id="id2" placeholder="Modify ID#">
-      <input type="text" id="model2" placeholder="Car Model">
-      <input type="text" id="year2" placeholder="Year">
-      <input type="text" id="mpg2" placeholder="Miles per Gallon (MPG)">
-      <input type="text" id="fuelLoad2" placeholder="Fuel Tank Size in Gallons">
-      <button id="modify">modify</button>
+      <label for="modifyID"></label>
+      <select class="btn btn-secondary dropdown-toggle" id="modifyID">
+
+      </select>
+      <input class="form-control" type="text" id="model2" placeholder="Car Model">
+      <input class="form-control" type="text" id="year2" placeholder="Year">
+      <input class="form-control" type="text" id="mpg2" placeholder="Miles per Gallon (MPG)">
+      <input class="form-control" type="text" id="fuelLoad2" placeholder="Fuel Tank Size in Gallons">
+      <button class="btn btn-danger" id="modify">modify</button>
     </form>
+    <p>For example, select 2 when there is a object in the database with the id# 2</p>
+    <p>Then, input a car model, year, mpg and/or fuel load</p>
   </div>
   <div></div>
   <div class="grid-table">
