@@ -3,7 +3,7 @@ Assignment 3 - Persistence: Two-tier Web Application with Database, Express serv
 
 ## Billing System
 
-Glitch link: http://a3-joshua-cuneo.glitch.me
+Glitch link: https://a3-saitejasunku.glitch.me/
 
 
 The web application is a billing system that can add, view, update, and delete purchase data. Tha data is stored in the database(MonogDB), which ensures persistency. 
