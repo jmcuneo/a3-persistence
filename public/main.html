@@ -3,6 +3,8 @@
 <head>
   <title>Food Delivery Log</title>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Food delivery log website">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <link rel="stylesheet" href="css/style.css">
@@ -15,38 +17,39 @@
     <form id="addItemForm">
       <div class="row"> 
         <div class="input-field col s2"> 
-          <label style="font-size: 20px;" for="service">Uber/Dash</label>
+        <div><label style="font-size: 20px; color:black;" for="service">Uber/Dash</label></div>
           <input type="text" id="service">
         </div>
         <div class="input-field col s2">
+          <div><label style="font-size: 20px; color:black;" for="date">Date</label></div>
           <input type="date" id="date">
         </div>
         <div class="input-field col s1"> 
-          <label style="font-size: 20px;" for="wages">Wages</label>
+          <div><label style="font-size: 20px; color:black;" for="wages">Wages</label></div>
           <input type="number" id="wages">
         </div>
         <div class="input-field col s1"> 
-          <label style="font-size: 20px;" for="tips">Tips</label>
+        <div><label style="font-size: 20px; color:black;" for="tips">Tips</label></div>
           <input type="number" id="tips">
         </div>
         <div class="input-field col s1"> 
-          <label style="font-size: 20px;" for="miles">Miles</label>
+        <div><label style="font-size: 20px; color:black;" for="miles">Miles</label></div>
           <input type="number" id="miles">
         </div>
         <div class="input-field col s1"> 
-          <label style="font-size: 20px;" for="time">Time</label>
+        <div><label style="font-size: 20px; color:black;" for="time">Time</label></div>
           <input type="number" id="time">
         </div>
         <div class="input-field col s1"> 
-          <label style="font-size: 20px;" for="mpg">MPG</label>
+        <div><label style="font-size: 20px; color:black;" for="mpg">MPG</label></div>
           <input type="number" id="mpg">
         </div>
         <div class="input-field col s1"> 
-          <label style="font-size: 20px;" for="gasPrice">Gas Price</label>
-          <input type="number" id="gasPrice">
+        <div><label style="font-size: 20px; color:black;" class="no-space-break col-md-5 required" for="gasPrice">Gas Price</label></div>
+          <input type="number" id="gasPrice" style="width: 100px;">
         </div>
         <div class="input-field col s1"> 
-          <button id="addButton" class="btn waves-effect waves-light" style="margin-top: 10px;">Add&nbsp;Entry</button>
+          <button id="addButton" class="btn waves-effect waves-light" style="margin-top: 35px; margin-left: 40px; color:black;">Add&nbsp;Entry</button>
         </div>
       </div>
     </form>

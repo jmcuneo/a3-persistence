@@ -232,8 +232,8 @@ function displayUserInfo(username) {
   const logoutButton = document.createElement('button');
   logoutButton.textContent = 'Logout';
   logoutButton.classList.add('logoutButton'); 
-  logoutButton.className = "btn waves-effect waves-light purple"; 
-  logoutButton.style="margin-left: 20px";
+  logoutButton.className = "btn waves-effect waves-light"; 
+  logoutButton.style="margin-left: 20px; color:black; background-color: rgb(178, 114, 238);";
 
   logoutButton.addEventListener('click', () => {
     fetch('/logout')
@@ -323,12 +323,14 @@ function displayItems(items) {
     // Delete Button
     const deleteButton = document.createElement('button');
     deleteButton.className = "btn waves-effect waves-light red"; // Materialize button classes
+    deleteButton.style="color:black;";
     deleteButton.textContent = 'Delete';
     deleteButton.dataset.index = i; 
 
     // Edit Button
     const editButton = document.createElement('button');
     editButton.className = "btn waves-effect waves-light orange"; 
+    editButton.style="color:black;";
     editButton.textContent = 'Edit';
     editButton.dataset.index = i;  
 
