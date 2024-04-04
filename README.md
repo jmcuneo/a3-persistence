@@ -135,6 +135,7 @@ I mostly used application-level middleware. I used the following Express middlew
   Cons:
   - Deployment for free version is slow (I had to cancel and restart the automatic deployment to get it to work)
   - Loading the page itself sometimes is slow as well
+  - Sometimes the server breaks (it doesn't do that me when i run locally)
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative.
@@ -151,3 +152,4 @@ I mostly used application-level middleware. I used the following Express middlew
   - Tip 11: Use headings and spacing to group related content. I used headers for my forms to signify what the form is for and separate spaces.
   - Tip 12: Reflect the reading order in the code order. I used the order of the code to signify the order of the page. The title is first, then the login form, then the footer. Same with the main page having title, forms, and table.
 - **Design Achievement 2**: I used the CRAP principles in my design. 
+  

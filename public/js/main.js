@@ -79,7 +79,7 @@ const submit = async function( event ) {
       isNaN(parseInt(json.mpg)) ||
     isNaN(parseInt(json.fuelLoad))
   ) {
-
+    alert("Invalid input");
   } else{
     //addRow(json.Id, json.model, json.year, json.mpg, json.fuelLoad );
     data.push(json);
@@ -114,7 +114,7 @@ const remove = async function (event) {
   console.log( "text:", text )
 
   if(isNaN(inputID.value)|| inputID.value === "" || parseInt(inputID.value) <= 0 || parseInt(inputID.value) > rowNumber){
-
+  alert("Invalid ID");
   } else{
 
     //rowDelete(inputID.value)
@@ -150,8 +150,8 @@ const modify = async function(event){
   if( isNaN(parseInt(json.Id)) ||
       parseInt(json.Id) <= 0 ||
       parseInt(json.Id) > rowNumber
-
   ) {
+    alert("Invalid ID");
   } else{
     await getData().then(r => console.log("done"));
   }
