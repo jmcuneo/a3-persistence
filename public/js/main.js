@@ -3,11 +3,8 @@ let tasks = [];
 let editIndex = -1;
 
 const renderTasks = function () {
-  const table = document.querySelector("#tasks");
-  table.innerHTML = "";
-  const headerRow = document.createElement("tr");
-  headerRow.innerHTML = `<th>Done</th><th>Task Name</th><th>Priority</th><th>Creation Date</th><th>Days Not Done</th>`;
-  table.appendChild(headerRow);
+  const tbody = document.querySelector("tbody");
+  tbody.innerHTML = "";
 
   for (let i = 0; i < tasks.length; i++) {
     const task = tasks[i];
@@ -39,53 +36,49 @@ const renderTasks = function () {
         await updateTasks();
       };
       // table.appendChild(editForm)
-      row.innerHTML = `<input type="checkbox" class="trollCheckbox"/><td><input name="taskName" type="text" form="editForm" value="${task.taskName}" required></td><td><input name="priority" type="number" form="editForm" value="${task.priority}" required></td><td><input name="creation_date" type="date" form="editForm" value="${task.creation_date}" required></td><td></td><input id="edit" type="submit" form="editForm" value="Submit"/>`;
+      row.innerHTML = `
+        <td><input type="checkbox" class="trollCheckbox form-check-input"/></td>
+        <td><input name="taskName" type="text" class="form-control" form="editForm" value="${task.taskName}" required></td>
+        <td><input name="priority" type="number" class="form-control" form="editForm" value="${task.priority}" required></td>
+        <td><input name="creation_date" type="date" class="form-control" form="editForm" value="${task.creation_date}" required></td>
+        <td></td>
+        <td>
+            <button type="submit" form="editForm" class="btn btn-primary">Submit</button>
+            <button class="btn btn-outline-primary" onclick="cancel()">Cancel</button>
+        </td>
+      `;
       row.appendChild(editForm);
-
-      const cancelButton = document.createElement("button");
-      cancelButton.innerHTML = "Cancel";
-      cancelButton.onclick = function () {
-        editIndex = -1;
-        renderTasks();
-      };
-      row.appendChild(cancelButton);
     } else {
-      row.innerHTML = `<input type="checkbox" class="trollCheckbox"/><td>${task.taskName}</td><td>${task.priority}</td><td>${task.creation_date}</td><td>${task.days_not_done}</td>`;
-
-      const editButton = document.createElement("button");
-      editButton.innerHTML = "Edit";
-      editButton.onclick = function () {
-        editIndex = i;
-        renderTasks();
-      };
-      row.appendChild(editButton);
-
-      const deleteButton = document.createElement("button");
-      deleteButton.innerHTML = "Delete";
-      deleteButton.onclick = async function () {
-        // event.preventDefault()
-        const response = await fetch("/tasks", {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ _id: tasks[i]._id }),
-        });
-
-        // console.log( response.json() )
-        await updateTasks();
-      };
-      row.appendChild(deleteButton);
+      const editCB = `edit(${i})`;
+      const delCB = `deleteTask(${i})`;
+      row.innerHTML = `
+        <td><input type="checkbox" class="trollCheckbox form-check-input"/></td>
+        <td>${task.taskName}</td>
+        <td>${task.priority}</td>
+        <td>${task.creation_date}</td>
+        <td>${task.days_not_done}</td>
+        <td>
+          <button class="btn btn-outline-primary" onclick="${editCB}">Edit</button>
+          <button class="btn btn-outline-primary" onclick="${delCB}">Delete</button>
+        </td>
+      `;
     }
 
-    table.appendChild(row);
+    tbody.appendChild(row);
   }
 
   const row = document.createElement("tr");
   const today = new Date().toISOString().split("T")[0];
 
-  row.innerHTML = `<td></td><td><input name="taskName" type="text" form="addForm" placeholder="Task Name" required></td><td><input name="priority" type="number" form="addForm" placeholder="Priority" value="1" required></td><td><input name="creation_date" type="date" form="addForm" value="${today}" required></td><td></td><td><input id="add" type="submit" form="addForm" value="Add Task"/></td>`;
-  table.appendChild(row);
+  row.innerHTML = `
+    <td></td>
+    <td><input name="taskName" type="text" class="form-control" form="addForm" placeholder="Task Name" required></td>
+    <td><input name="priority" type="number" class="form-control" form="addForm" placeholder="Priority" value="1" required></td>
+    <td><input name="creation_date" type="date" class="form-control" form="addForm" value="${today}" required></td>
+    <td></td>
+    <td><button type="submit" form="addForm" class="btn btn-primary">Add Task</button></td>
+  `;
+  tbody.appendChild(row);
 
   const checkboxes = document.querySelectorAll(".trollCheckbox");
   checkboxes.forEach(function (checkbox) {
@@ -98,7 +91,7 @@ const renderTasks = function () {
   });
 };
 
-const submit = async function (event) {
+const addTask = async function (event) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
   // this was the original browser behavior and still
@@ -125,9 +118,33 @@ const submit = async function (event) {
   await updateTasks();
 };
 
+function cancel() {
+  editIndex = -1;
+  renderTasks();
+}
+
+function edit(i) {
+  editIndex = i;
+  renderTasks();
+}
+
+async function deleteTask(i) {
+  // event.preventDefault()
+  const response = await fetch("/tasks", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ _id: tasks[i]._id }),
+  });
+
+  // console.log( response.json() )
+  await updateTasks();
+}
+
 window.onload = async function () {
   const form = document.querySelector("#addForm");
-  form.onsubmit = submit;
+  form.onsubmit = addTask;
 
   await updateTasks();
 };
