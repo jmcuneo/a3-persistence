@@ -1,12 +1,26 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
+  "name": "a3-persistence",
+  "description": "Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template ===",
   "author": "",
   "scripts": {
-    "start": "node server.improved.js"
+    "start": "node ./bin/www"
   },
   "dependencies": {
-    "mime": "^2.4.4"
-  }
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mime": "^2.4.4",
+    "mongoose": "^8.3.0"
+  },
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bmlui/a3-persistence.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bmlui/a3-persistence/issues"
+  },
+  "homepage": "https://github.com/bmlui/a3-persistence#readme",
+  "devDependencies": {}
 }

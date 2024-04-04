@@ -11,10 +11,11 @@ const submit = async function( event ) {
         json = { name: input.value },
         body = JSON.stringify( json )
 
-  const response = await fetch( "/api/add", {
-    method:"POST",
-    body 
-  })
+        const response = await fetch( "/api/add", {
+          method:"POST",
+          headers: { 'Content-Type': 'application/json' }, 
+          body 
+        })
 
   const text = await response.text()
 
