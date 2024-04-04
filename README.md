@@ -7,11 +7,11 @@ https://game.gamestream.stream and http://game.gamestream.stream
 
 ONLY NUMBERS ARE ALLLOWED IN VARIBLES DUE TO TIME CONTRAINTS
 
-- Oauth was hard to get working. I spent a long while wrestling with passport stuff. I also had a hard time with mongo db queries as they are just so different from SQL. Also many online resources are old and dont work.
+- Oauth was hard to get working. I spent a long while wrestling with passport stuff. I also had a hard time with mongo db queries as they are just so different from SQL. Also many online resources for mongo were old and didn't work.
 - I used Github Oauth as it was a technical achievement. 
 - I used Bourbon/Sass as I have used Sass slightly in the past. I made all of the buttons use a mixin.
 - The middleware packages I used were:
-  1. a custom function to check to my database is connected
+  1. a custom function to check that the database is connected
   2. express-session: it deals with session stuff with cookies
   3. passport: it deals with oauth
   4. express.json(): it deals with converting to json
@@ -22,7 +22,7 @@ ONLY NUMBERS ARE ALLLOWED IN VARIBLES DUE TO TIME CONTRAINTS
 I dont know how many points each indiviudual achievement should get but I think all of them combined plus the ones I half completed should be enough to get full points.
 
 ## Technical Achievements
-- **GitHub OAuth**: I used OAuth authentication via the GitHub strategy for logins. This uses `passport` and `express-sessions`.
+- **GitHub OAuth**: I used OAuth authentication via the GitHub strategy for logins. This uses `passport` and `express-sessions`. This was incredibly hard to get working. 
 - **Self Hosting**: I am hosting the project on my second computer at my apartment. I like this better than Glitch due to having complete control over the server. Also the `isolated-vm` package I used did not compile on Glitch, so I couldn't use Glitch for A2 either. I had many issues using Glitch and none when selfhosting. This is probably because I selfhost my own website as well at gamestream.stream. 
 - **Sass**: I am using sass for the css. I am compiling the css everytime the server starts using it's javascript api.
 - **399 Lighthouse Score**: I achieved 399 on lighthouse for both the main page and the readme page. I lost a point from performance due to my server taking too long to send data. I spent a lot of time on attepting to get the last point but I dont think there is anyway to fix it.
@@ -32,7 +32,7 @@ I dont know how many points each indiviudual achievement should get but I think 
 - **Https**: I am using the `greenlock` package to allow for https connections. It gets the certificate from Lets Encrypt.
 - **Used >5 middleware**: see the middleware used above
 - **Default Values**: added default values for the form using the placeholder atribute and changed the code so that it would use those if no other code was entered
-- **Isolation**: I am still running user submitted code in isolation to prevent the infection of my device. I am pretty sure there is no way to escape.
+- **Isolation**: I am still running user submitted code in isolation to prevent the infection of my device. I am pretty sure there is no way to escape. I tested it extensively, but there could be things I didn't try.
 
 ## Design/Evaluation Achievements
 - **Accessibility Tips**:
