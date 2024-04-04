@@ -4,26 +4,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Use an RPE calculator to help approximate the desired weight for certain rpe. Want to figure out your one rep max? Use an RPE calculator. We also track entries to help track progress. Made a mistake? You can delete or edit your entries.">
   <link rel="stylesheet" href="css/main.css" />
   <title>RPE Calculator</title>
 </head>
 
 <body>
 
-  <div class="container2">
-    <div class="column" id="left-column">
+  <div class="container2" id="Two-Column Set Up">
+    <div class="column" id="RPE-Calculator">
       <!-- Content for the left column goes here -->
-      <div class="container">
+      <div class="container" id="calculator-inputs">
         <h2>RPE Calculator</h2>
-        <form class="form-group">
+        <form class="form-group" id="weightform">
           <label for="weight">Weight:</label>
           <input type="number" id="weight" placeholder="Enter weight">
         </form>
-        <form class="form-group">
+        <form class="form-group" id="repform">
           <label for="reps">Reps:</label>
           <input type="number" id="reps" placeholder="Enter reps" min="1" max="12">
         </form>
-        <form class="form-group">
+        <form class="form-group" id="rpeform">
           <label for="rpe">RPE:</label>
           <select id="rpe">
             <option value="6">6</option>
@@ -40,7 +41,7 @@
         <button id="calculate">Calculate</button>
 
       </div>
-      <div class="centered-container">
+      <div class="centered-container" id="TableHolder">
         <div class="row" id="buttonRow">Rep
           <button id="rep1" value="1">1</button>
           <button id="rep2" value="2">2</button>
@@ -58,27 +59,34 @@
         <div id="tablesContainer"></div>
       </div>
       <div class="container">
+        <h2>
+          Information
+        </h2>
+        <div>
         Rate of perceived exertion (RPE) is used to measure how hard your body works during physical activity. It runs from 0 – 10, using numbers to rate how much effort an activity takes. The RPE scale can help you manage exercise intensity and improve cardio training and endurance. Some healthcare providers use RPE to evaluate heart and lung health.
       </div>
+      </div>
     </div>
-    <div class="column" id="right-column">
+
+
+    <div class="column" id="entry-column">
       <h1>Entries Table</h1>
       <!-- Content for the right column goes here -->
       <div class="centered-container" id="editform" style="display: none;">
         <h2>Edit</h2>
-        <form class="form-group">
+        <form class="form-group" id="nameEditform">
           <label for="name">Name:</label>
           <input type="string" id="editname" placeholder="Enter name">
         </form>
-        <form class="form-group">
+        <form class="form-group" id="weightEditForm">
           <label for="weight">Weight:</label>
           <input type="number" id="editweight" placeholder="Enter weight">
         </form>
-        <form class="form-group">
+        <form class="form-group" id="repsEditForm">
           <label for="reps">Reps:</label>
           <input type="number" id="editreps" placeholder="Enter reps" min="1" max="12">
         </form>
-        <form class="form-group">
+        <form class="form-group" id="rpeEditForm">
           <label for="rpe">RPE:</label>
           <select id="editrpe">
             <option value="6">6</option>
@@ -92,7 +100,7 @@
             <option value="10">10</option>
           </select>
         </form>
-        <form class="form-group">
+        <form class="form-group" id="dateEditForm">
           <label for="date">date:</label>
           <input type="date" id="editdate" placeholder="Enter date">
         </form>
@@ -100,8 +108,11 @@
         <button id="cancelbutton">cancel</button>
 
       </div>
+      
       <div class="centered-container">
+
         <table id="entries-table">
+
           <thead>
             <tr>
               <th>Name</th>
@@ -112,12 +123,14 @@
               <th>Date</th>
             </tr>
           </thead>
+
           <tbody id="entries-body">
             <!-- Entries will be inserted here dynamically -->
           </tbody>
-        </table>
-      </div>
 
+        </table>
+
+      </div>
     </div>
   </div>
 
