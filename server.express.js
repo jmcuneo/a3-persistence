@@ -74,6 +74,9 @@ async function deleteDataEntry(className)
 // Update entry in the database
 async function updateDataEntry(className, newData)
 {
+  if (newData.class === "" || newData.grade === "" || newData.credits === "")
+    return;
+  
   const result = await collection.updateOne(
     {class: className},
     {$set: {class: newData.class, grade: newData.grade, credits: newData.credits}}

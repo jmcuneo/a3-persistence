@@ -19,6 +19,8 @@ window.onload = function()
     adjustButton.onclick = updateEntry;
     const deleteButton = document.getElementById("delete");
     deleteButton.onclick = deleteEntry;
+    const logOutButton = document.getElementById("logOut");
+    logOutButton.onclick = logOut;
   }
 }
 
@@ -30,10 +32,8 @@ const login = async function(event)
   const usernameInput = document.querySelector("#username");
   const passwordInput = document.querySelector("#password");
 
-  if (usernameInput.value === "" || passwordInput.value === "")
-  {
-    return;
-  }
+  if (usernameInput.value === "" || passwordInput.value === "") return;
+  
   const json = {username: usernameInput.value, password: passwordInput.value};
   const body = JSON.stringify(json);
   
@@ -55,6 +55,13 @@ const login = async function(event)
   }
 }
 
+// Login out of the user's account
+const logOut = async function(event)
+{
+  event.preventDefault(event);
+  window.location.href = "/";
+}
+
 // Submit a new entry to the GPA data
 const submit = async function(event) 
 {
@@ -67,9 +74,7 @@ const submit = async function(event)
   // Ensure a correct value
   if (classInput.value === "" || gradeInput.value === "" || 
     creditsInput.value === "" || isNaN(Number(creditsInput.value)))
-  {
     return;
-  }
 
   const json = {class: classInput.value, grade: gradeInput.value, credits: creditsInput.value};
   const body = JSON.stringify(json);
@@ -89,10 +94,7 @@ const updateEntry = async function(event)
   event.preventDefault(event);
 
   const rowCount = document.getElementsByClassName("row").length;
-  if (rowCount <= 0)
-  {
-    return;
-  }
+  if (rowCount <= 0) return;
 
   const classInput = document.querySelector("#class");
   const gradeInput = document.querySelector("#grade");
@@ -119,10 +121,7 @@ const deleteEntry = async function(event)
   event.preventDefault(event);
 
   const rowCount = document.getElementsByClassName("row").length;
-  if (rowCount <= 0)
-  {
-    return;
-  }
+  if (rowCount <= 0) return;
 
   const editInput = document.querySelector("#edit");
   const body = editInput.value;
