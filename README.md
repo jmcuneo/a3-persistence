@@ -111,4 +111,5 @@ add a little more detail about what it does.
 - **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative.
+  - Tip 1: I added labels for all my form fields.
