@@ -118,11 +118,15 @@ Note that implementing some of the technical achievements may override this requ
 Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
 ---
 
-## Your Web Application Title
+## Dungeons and Dragons Character Storage
 
 your glitch (or alternative server) link e.g. http://a3-joshua-cuneo.glitch.me
 
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
+This web application serves as a storage point for Dungeons and Dragons Characters, as well as a starting point for newer players. Users are able to submit a character name, race, class, and select a primary type of action. On submission, the character will be added to the table, the primary modifier of the class will be displayed, and a random action will be assigned.
+You can delete entries or modify them with the buttons on the right of the table. With the edit button, you can adjust the modifier or action if the derived value is not as expected.
+
+You can sign in with any username and password, the characters stored in will be unique to the user. Account will be created if it does not already exist. For examples of stored data, use the login: **username:** admin **password:** admin. 
+
 
 - the goal of the application
 - challenges you faced in realizing the application
@@ -133,7 +137,9 @@ Include a very brief summary of your project here. Images are encouraged, along 
 add a little more detail about what it does.
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
+- **Lighthouse Tests**: I got 100 on all 4 lighthouse tests for both my login page and main app page.  
+  - ![img.png](img.png)
+  - ![img_1.png](img_1.png)
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...

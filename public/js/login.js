@@ -22,6 +22,9 @@ const login = async function(event){
     if(response.status === 201) {
         alert("New Account Created")
     }
+    if(response.status === 504) {
+        alert("Invalid Password")
+    }
 
     if(response.ok) {
         window.location.href = '/main';

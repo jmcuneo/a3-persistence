@@ -3,21 +3,25 @@
   <head>
     <title>CS4241 Assignment 2</title>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DnD Character Storage for CS4241">
     <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    
+<!--    <link rel="stylesheet" href="css/main.css">-->
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
   <div class="container">
-    <header> Dungeons and Dragons Character Storage </header>
+    <h1> Dungeons and Dragons Character Storage </h1>
 
     <div class="infotext">
       This application allows a user to store different DnD 5e characters they've created. Input the name, race, class, and select a primary action.
       The combination of class and type of action will provide you with a random action.
       You can edit or delete entries using the buttons on the right of the table.
     </div>
+
+    <br>
 
     <div class="formContainer">
       <form id="characterForm">
@@ -40,7 +44,7 @@
           <option value="Wizard">
         </datalist>
 
-        <button id="submitbutton">submit</button>
+
         <br>
 
         <div id="radio-select">
@@ -51,6 +55,8 @@
             <input type="radio" name="action" value="spell"> Spell
           </label>
         </div>
+
+        <button id="submitbutton">submit</button>
 
       </form>
     </div>
@@ -71,11 +77,11 @@
 
     <div class="formContainer" >
       <form id="editForm" style="display: none;">
-        <input type="text" id="editname">
-        <input type="text" id="editrace">
-        <input type="text" id="editclass">
-        <input type="text" id="editmodifier" >
-        <input type="text" id="editaction" >
+        <label for="editname">Character Name</label><input type="text" id="editname">
+        <label for="editrace">Character Race</label><input type="text" id="editrace">
+        <label for="editclass">Class</label><input type="text" id="editclass">
+        <label for="editmodifier">Primary Modifier</label><input type="text" id="editmodifier" >
+        <label for="editaction">Action</label><input type="text" id="editaction" >
         <button id="savebutton">save</button>
         <button id="cancelbutton">cancel</button>
       </form>

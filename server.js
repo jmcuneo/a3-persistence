@@ -78,7 +78,7 @@ app.post('/login', async (req, res) => {
         }
         else res.redirect('/main');
     } else {
-        res.send('Invalid username or password');
+        res.status(504).send('Invalid username or password');
     }
 });
 
