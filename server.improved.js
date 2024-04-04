@@ -31,6 +31,7 @@ app.use(
 );
 
 let collection = null;
+let user = null;
 
 async function run() {
   
@@ -39,7 +40,6 @@ async function run() {
   collection = await client.db("datatest").collection("test");
 
   app.get("/github/login", (req, res) => {
-    console.log("Log in page");
     res.redirect(
       `https://github.com/login/oauth/authorize?client_id=${clientID}`
     );
@@ -47,7 +47,6 @@ async function run() {
 
   app.get("/github/callback", async (req, res) => {
     const requestToken = req.query.code;
-    console.log("Callback");
     const response = await axios.post(
       `https://github.com/login/oauth/access_token?client_id=${clientID}&client_secret=${clientSecret}&code=${requestToken}`,
       {},
@@ -67,7 +66,7 @@ async function run() {
 
   app.get("/success", async (req, res) => {
     if (!req.session.accessToken) {
-    console.log("Not logged in");
+
     res.redirect("/github/login");
     return;
   }
@@ -77,7 +76,9 @@ async function run() {
       Authorization: `token ${req.session.accessToken}`,
     },
   });
-  console.log("Successful load!");
+  const userData = response.data;
+  user = userData.name;
+    
   res.sendFile(path.join(__dirname, 'public', 'db.html'));
   });
 
@@ -90,9 +91,8 @@ async function run() {
   });
 
   app.get("/entries", async (req, res) => {
-    console.log("GET ENTRIES");
     if (collection !== null) {
-      const docs = await collection.find({}).toArray();
+      const docs = await collection.find({name: user}).toArray();
       res.json(docs);
     }
   });
@@ -106,6 +106,7 @@ async function run() {
 
     req.on("end", async function () {
       const json = JSON.parse(dataString);
+      json.name = user;
       json.total =
         Number(json.squat) + Number(json.benchPress) + Number(json.deadLift);
 
