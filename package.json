@@ -1,0 +1,15 @@
+{
+  "name": "a3-carlosmedina",
+  "version": "0.0.1",
+  "description": "",
+  "author": "Carlos Medina",
+  "scripts": {
+    "start": "node server.improved.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "body-parser": "^1.20.0",
+    "mongoose": "^8.2.3"
+  }
+}
