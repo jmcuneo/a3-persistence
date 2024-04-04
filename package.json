@@ -1,12 +1,14 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "taskwave",
+  "version": "1.0.0",
+  "description": "A fast and efficient todo list application built with Bun.",
+  "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "bun run server.js",
+    "dev": "bun run --watch server.js"
   },
+  "author": "William Huang",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
@@ -16,7 +18,6 @@
     "mime": "^2.4.4",
     "mongoose": "^8.3.0",
     "morgan": "^1.10.0",
-    "nodemon": "^3.1.0",
     "uuid": "^9.0.1"
   }
 }
