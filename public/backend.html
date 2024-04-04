@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/main.css" />
+  <title>RPE Calculator</title>
+</head>
+
+<body>
+
+  <div class="container2">
+    <div class="column" id="left-column">
+      <!-- Content for the left column goes here -->
+      <div class="container">
+        <h2>RPE Calculator</h2>
+        <form class="form-group">
+          <label for="weight">Weight:</label>
+          <input type="number" id="weight" placeholder="Enter weight">
+        </form>
+        <form class="form-group">
+          <label for="reps">Reps:</label>
+          <input type="number" id="reps" placeholder="Enter reps" min="1" max="12">
+        </form>
+        <form class="form-group">
+          <label for="rpe">RPE:</label>
+          <select id="rpe">
+            <option value="6">6</option>
+            <option value="6.5">6.5</option>
+            <option value="7">7</option>
+            <option value="7.5">7.5</option>
+            <option value="8">8</option>
+            <option value="8.5">8.5</option>
+            <option value="9">9</option>
+            <option value="9.5">9.5</option>
+            <option value="10">10</option>
+          </select>
+        </form>
+        <button id="calculate">Calculate</button>
+
+      </div>
+      <div class="centered-container">
+        <div class="row" id="buttonRow">Rep
+          <button id="rep1" value="1">1</button>
+          <button id="rep2" value="2">2</button>
+          <button id="rep3" value="3">3</button>
+          <button id="rep4" value="4">4</button>
+          <button id="rep5" value="5">5</button>
+          <button id="rep6" value="6">6</button>
+          <button id="rep7" value="7">7</button>
+          <button id="rep8" value="8">8</button>
+          <button id="rep9" value="9">9</button>
+          <button id="rep10" value="10">10</button>
+          <button id="rep11" value="11">11</button>
+          <button id="rep12" value="12">12</button>
+        </div>
+        <div id="tablesContainer"></div>
+      </div>
+      <div class="container">
+        Rate of perceived exertion (RPE) is used to measure how hard your body works during physical activity. It runs from 0 – 10, using numbers to rate how much effort an activity takes. The RPE scale can help you manage exercise intensity and improve cardio training and endurance. Some healthcare providers use RPE to evaluate heart and lung health.
+      </div>
+    </div>
+    <div class="column" id="right-column">
+      <h1>Entries Table</h1>
+      <!-- Content for the right column goes here -->
+      <div class="centered-container" id="editform" style="display: none;">
+        <h2>Edit</h2>
+        <form class="form-group">
+          <label for="name">Name:</label>
+          <input type="string" id="editname" placeholder="Enter name">
+        </form>
+        <form class="form-group">
+          <label for="weight">Weight:</label>
+          <input type="number" id="editweight" placeholder="Enter weight">
+        </form>
+        <form class="form-group">
+          <label for="reps">Reps:</label>
+          <input type="number" id="editreps" placeholder="Enter reps" min="1" max="12">
+        </form>
+        <form class="form-group">
+          <label for="rpe">RPE:</label>
+          <select id="editrpe">
+            <option value="6">6</option>
+            <option value="6.5">6.5</option>
+            <option value="7">7</option>
+            <option value="7.5">7.5</option>
+            <option value="8">8</option>
+            <option value="8.5">8.5</option>
+            <option value="9">9</option>
+            <option value="9.5">9.5</option>
+            <option value="10">10</option>
+          </select>
+        </form>
+        <form class="form-group">
+          <label for="date">date:</label>
+          <input type="date" id="editdate" placeholder="Enter date">
+        </form>
+        <button id="savebutton">save</button>
+        <button id="cancelbutton">cancel</button>
+
+      </div>
+      <div class="centered-container">
+        <table id="entries-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Weight</th>
+              <th>Reps</th>
+              <th>RPE</th>
+              <th>1RM</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="entries-body">
+            <!-- Entries will be inserted here dynamically -->
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>
