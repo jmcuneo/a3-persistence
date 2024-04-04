@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Patient Application - Very Real Medical Center</title>
+    <meta charset="utf-8" />
+    <meta
+            name="description"
+            content="Patient Application form for Very Real Medical Center."
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic" />
+
+    <link rel="stylesheet" href="main.css" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+</head>
+<body>
+<button class="error" id="logoutBtn">Logout</button>
+<header>
+    <h1>Patient Application Form</h1>
+    <h2>Very Real Medical Center, Worcester Massachusetts</h2>
+</header>
+<form id="applicationForm">
+    <div class="flex one two-600">
+        <h3 class="full one fifth-700">Logged In:</h3>
+        <input
+                class="full one four-fifth-700"
+                id="username"
+                placeholder="null"
+                disabled
+        />
+        <h3 class="full">Patient's Basic Information</h3>
+        <label class="full fifth-600" for="firstName">First Name:</label>
+        <input
+                class="full four-fifth-600"
+                type="text"
+                id="firstName"
+                placeholder="First Name"
+                required="required"
+                aria-describedby="first-name-input"
+        />
+        <label class="full fifth-600" for="lastName">Last Name:</label>
+        <input
+                class="full four-fifth-600"
+                type="text"
+                id="lastName"
+                placeholder="Last Name"
+                required="required"
+                aria-describedby="last-name-input"
+        />
+
+        <label class="full fifth-600" for="dob">Date of birth:</label>
+        <input
+                class="full four-fifth-600"
+                type="date"
+                id="dob"
+                required="required"
+                aria-describedby="date-of-birth-input"
+        />
+        <label class="full fifth-600" for="sex">Sex on Record:</label>
+        <select
+                class="full four-fifth-600"
+                id="sex"
+                required="required"
+                aria-describedby="sex-marker-selection"
+        >
+            <option>U</option>
+            <option>F</option>
+            <option>M</option>
+            <option>X</option>
+        </select>
+
+        <h3 class="full">Patient Contact Information</h3>
+        <label class="full fifth-600" for="email">Email:</label>
+        <input
+                class="full four-fifth-600"
+                type="email"
+                id="email"
+                placeholder="vrmc@mail.com"
+                required="required"
+                aria-describedby="email-input"
+        />
+        <label class="full fifth-600" for="phone">Phone Number:</label>
+        <input
+                class="full four-fifth-600"
+                type="tel"
+                pattern="[0-9]{10}"
+                id="phone"
+                placeholder="1112224321 (numbers only)"
+                required="required"
+                aria-describedby="phone-number-input"
+        />
+    </div>
+
+    <button type="submit" id="submitBtn">Submit</button>
+</form>
+
+<ul id="results"></ul>
+<table id="applicationTable "></table>
+
+<script src="app.js"></script>
+</body>
+</html>
