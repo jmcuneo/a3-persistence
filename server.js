@@ -4,8 +4,12 @@ const express = require("express"),
     path = require('path'),
     session = require('express-session');
 
+
 const axios = require("axios");
 require('dotenv').config();
+
+app.set("view engine", "ejs");
+var access_token = "";
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 
