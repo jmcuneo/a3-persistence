@@ -2,6 +2,7 @@
 body {
     margin: 0px;
     padding: 0px;
+    background-color: #13171f;
 }
 .login {
     display: flex;
@@ -38,8 +39,8 @@ body {
 .toolbar {
     display:flex;
     gap: .5em;
-    background-color: #33263d;
-    outline: 0.1em solid #9372ac;
+    background-color: #513566;
+    outline: 0.1em solid #c7a7df;
     border-radius: 3em;
     padding: 0.6em;
     width: 40%;
@@ -66,7 +67,7 @@ body {
 }
 
 .add_box {
-    border: 0.3em dotted #9372ac;
+    border: 0.3em dotted #c7a7df;
     background-color: transparent;
 }
 
@@ -82,7 +83,7 @@ body {
 
 button {
     background-color: transparent;
-    border: 0.1em solid #9372ac;
+    border: 0.1em solid #c7a7df;
     padding: 0.2em;
 }
 
@@ -115,8 +116,8 @@ th, td {
     display: none;
     position: absolute;
     top: 1em;
-    background-color: #33263d;
-    outline: 0.3em solid #9372ac;
+    background-color: #513566;
+    outline: 0.3em solid #c7a7df;
     padding: 0.5em;
     border-radius: 0.3em;
     width: 7.5em;
@@ -142,8 +143,8 @@ th, td {
 }
 
 #logout {
-    background-color: #9372ac;
-    color: #33263d;
+    background-color: #c7a7df;
+    color: #513566;
 }
 
 #color_pick:hover .colors {display: flex;}
