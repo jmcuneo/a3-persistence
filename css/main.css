@@ -1,0 +1,139 @@
+body {
+  background: #000000;
+  color: #FFFFFF;
+  padding: 0;
+  margin: 0;
+  font-family: "Lora", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  padding: 20px;
+}
+
+input {
+  font-family: "Lora", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16pt;
+}
+input[type="submit"] {
+  border-color: #000000;
+  border-style: solid;
+  transition: 0.3s linear filter;
+}
+input[type="submit"]:hover {
+  filter: invert(20%);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  margin-top: 30px;
+}
+
+h1 {
+  font-size: 48pt;
+  margin-top: 0;
+}
+
+#color-selector {
+  width: 40px;
+  height: 40px;
+}
+#color-selector::-webkit-color-swatch {
+  border: none;
+}
+#color-selector::-moz-color-swatch {
+  border: none;
+}
+
+.center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+label {
+  margin-right: 20px;
+}
+
+#draw-plane {
+  display: grid;
+  width: 30%;
+  margin-left: auto;
+  margin-right: auto;
+  aspect-ratio: 1/1;
+  grid-template-columns: repeat(10, 10%);
+  grid-template-rows: repeat(10, 10%);
+}
+
+#status-msg {
+  user-select: none;
+  opacity: 0;
+  transition: 3s ease-in opacity;
+}
+
+#status-msg.editing {
+  transition: none;
+  opacity: 1;
+}
+
+#sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 15%;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+}
+
+hr {
+  width: 100%;
+  height: 4px;
+  background-color: #FFFFFF;
+  border-radius: 5px 0 0 5px;
+}
+
+#change-list {
+  overflow-y: auto;
+  padding-top: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.change {
+  width: 80%;
+  background-color: #0b0b12;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.change h4 {
+  padding: 0;
+  padding-bottom: 10px;
+  margin: 0;
+}
+
+.change-color {
+  width: 80%;
+  height: 30px;
+  font-size: 20pt;
+  text-shadow: 0 0 4px #000000;
+  border: 2px solid #000000;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.change-time {
+  margin-top: 0;
+  padding-top: 0;
+}
+.change p {
+  margin-bottom: 5px;
+}
+
