@@ -1,5 +1,6 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
-import {redirect} from './main.js'
+import {redirect, submit} from './main.js'
+
 
 /* let appdata = [
 
@@ -34,33 +35,7 @@ let averageData ={
     return ret; 
   }
 }
- */
-const submit = async function( event, endpoint) {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
-  event.preventDefault();
-  const input = new FormData(document.querySelector("#register"));
-  console.log(input);
-  let values = Object.fromEntries(input.entries());
-  /* values = parseData.toFloat(values); */
-  console.log(values);
-  const body = JSON.stringify(values);
-  console.log(body)
-  const response = await fetch( endpoint, {
-    method:"POST",
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body 
-  })
-
-  const text = await response.text()
-
-  console.log( "text:", text )
-}
+*/
 
 /* const getData = async function(event){
   
@@ -94,7 +69,8 @@ window.onload = function() {
   const loginRedirectButton = document.querySelector("#login");
   loginRedirectButton.onclick = () => redirect(event, "/login");
   const registerButton = document.querySelector('#submit');
-  registerButton.onclick = () => submit(event, "/register/new-user")
+  registerButton.onclick = () => submit(event, "/register/new-user", "#register");
+  /* registerButton.onclick = () => submit(event, "/register/new-user", "#register"); */
   /* const deleteButton = document.querySelector("#delete");
   deleteButton.onclick = () => submit(event, "/delete"); */
 }

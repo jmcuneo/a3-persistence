@@ -1,5 +1,5 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const env = require('dotenv').config()
+const { MongoClient, ServerApiVersion } = require("mongodb");
+const env = require("dotenv").config();
 const uri = `mongodb+srv://ibixler:${process.env.DB_PW}@webware-a3-ibixler.fj4jqxh.mongodb.net/?retryWrites=true&w=majority&appName=webware-a3-ibixler`;
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -7,43 +7,65 @@ const client = new MongoClient(uri, {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
-  }
+  },
 });
 
-exports.userExists = async function(data){
+exports.userExists = async function (data) {
+  try {
     await client.connect();
-    let ret = 0;
-    const database = client.db('Catabase');
-    const collection = database.collection('Login');
-    const query = {username: data.username};
-    collection.find(query).toArray()
-    .then(
-      items => {
-        if(items.length == 0){
-          ret = 1;
-          return collection.insertOne(data);
-        }
-      }
-    )
-    .then(item =>{
-      console.log(item);
-    }).finally(i => client.close());
-    return ret;
-}
-exports.createUser = async function(data, collection){
-  try{
-    await collection.insertOne(data).toArray(function(err, result){
+
+    const database = client.db("Catabase");
+    const collection = database.collection("Login");
+    const query = { username: data.username };
+    const items = await collection.find(query).toArray();
+
+    if (items.length == 0) {
+      await collection.insertOne(data);
+      return 1; 
+    } else {
+      return 0; 
+    }
+  } catch (error) {
+    console.error("Error in userExists:", error);
+    return 0; 
+  } finally {
+    client.close();
+  }
+};
+exports.createUser = async function (data, collection) {
+  try {
+    await collection.insertOne(data).toArray(function (err, result) {
       if (err) throw err;
       console.log(result);
-    })
-    
-  } finally{
+    });
+  } finally {
     await client.close();
   }
-}
-exports.attemptLogin = async function(data){
+};
+exports.attemptLogin = async function (data) {
+  try {
+    await client.connect();
 
-}
+    const database = client.db("Catabase");
+    const collection = database.collection("Login");
+    const query = { username: data.username };
+    const items = await collection.find(query).toArray();
+
+    if (items.length == 0) {
+      console.log("hey no users");
+      return 0; 
+    } else {
+      console.log(items);
+      if(items[0].password === data.password) return 1;
+      return 0; 
+    }
+  } catch (error) {
+    console.error("Error in userExists:", error);
+    return 0; 
+  } finally {
+    client.close();
+  }
+};
 /* 
 async function run() {
   try {

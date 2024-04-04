@@ -11,16 +11,8 @@ var bodyParser = require("body-parser");
 var methodOverride = require("method-override");
 var partials = require("express-partials");
 var db = require("./database")
+var auth = require("./jwt")
 
-app.set("trust proxy", 0); // trust first proxy
-app.use(
-  session({
-    secret: "keyboard cat",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true },
-  })
-);
 app.use(partials());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -57,18 +49,45 @@ app.get(
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
+app.post("/login/auth", (req, res) => {
+  let rsp = db.attemptLogin(req.body);
+  rsp.then(result => {
+    if(result){
+      const token = auth.generateAccessToken({ username: req.body.username })
+      res.status(200).json(token);
+    } else{
+      res.status(400).send("bad login");
+    }
+  })
+});
+app.get('/auth/user-data', auth.authenticateToken, (req, res) => {
+  console.log("success????")
+  // executes after authenticateToken
+  // ...
+})
+
 app.get("/register", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "register.html"))
 });
+app.get("/user-data", (req,res) => {
+  res.sendFile(path.join(__dirname, "public", "user-data.html"))
 
+})
 app.post("/register/new-user", (req, res) => {
   let rsp = db.userExists(req.body);
   rsp.then(result => {
-    if(result){
-      res.sendStatus(200);
+    console.log("reslu",result);
+    if(result!=0){
+      const token = auth.generateAccessToken({ username: req.body.username })
+      res.status(200).json(token);
     } else{
       res.status(400).send("User Exists");
     }
+  })
+  .catch(err => {
+    console.log("res",err);
+    res.status(500).send("internal server error")
+    
   });
 })
 app.get(

@@ -85,8 +85,44 @@ const submit = async function( event, endpoint) {
     })
 
 } */
+
+
+export async function submit(event, endpoint, querySelector) {
+  // stop form submission from trying to load
+  // a new .html page for displaying results...
+  // this was the original browser behavior and still
+  // remains to this day
+  if(event) event.preventDefault();
+  const input = new FormData(document.querySelector(querySelector));
+  console.log(input);
+  let values = Object.fromEntries(input.entries());
+  /* values = parseData.toFloat(values); */
+  console.log(values);
+  const body = JSON.stringify(values);
+  console.log(body);
+  const response = await fetch(endpoint, {
+    method: "POST",
+    credentials: "same-origin",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body,
+  });
+
+  const text = await response.json();
+  console.log(response.status);
+  if (response.status == 200) {
+    console.log("setting cookie");
+    document.cookie = `token=${text}`;
+    redirect(null, "/user-data")
+  }
+  console.log("token:", text);
+  return;
+};
+
+
 export async function redirect( event, endpoint) {
-  event.preventDefault();
+  if(event) event.preventDefault();
   const response = await fetch(endpoint, {
     method:"GET"
   })
