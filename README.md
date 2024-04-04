@@ -95,7 +95,7 @@ Sample Readme (delete the above when you're ready to submit, and modify the belo
 
 ## Your Web Application Title
 
-your glitch (or alternative server) link e.g. http://a3-joshua-cuneo.glitch.me
+https://a3-andrewnguyen.onrender.com/
 
 Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
 
@@ -107,10 +107,32 @@ Include a very brief summary of your project here. Images are encouraged, along 
 - the five Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function for *one* (and one alone) middleware please 
 add a little more detail about what it does.
 
-https://a3-andrewnguyen.onrender.com/
+My  application is a continuation of my previous assignment: The Cars Database. The goal of my application was to connect my application from the client to the server then to the mongo database where the client can sender data to the server which sends to the database to be stored. 
+I faced challenges in adapting to Express specifically in app.use() as the middleware functions were new to me. I also faced challenges in the directories as my middleware functions had been confused with files being sent to the server.
+I chose to use an authentication system similar to when2meet where the user inputs a username and password to access the database and if they have an account with the username it'll check the password and if not the user is created. I chose this because it was the easiest to implement.
+I used Express to create a server and MongoDB to store data. My middleware packages would send the data from the client to the server and then to the database. The data would then be added, modified or deleted and then sent back to the client to be displayed. 
+I used the Bootstrap CSS framework because it is easy to use and has a lot of pre-made components. 
+I mostly used application-level middleware. I used the following Express middleware packages:
+- app.use(express.json()) - This middleware function parses incoming requests with JSON payloads.
+- app.use(express.static( __dirname + '/public')) - This middleware function serves static files so that the other functions know where to look in the directory.
+- app.get() - This function is used to send data to the client. I used this to send files and data to the client.
+- app.post() - This function is used to receive data from the client. I used this in my server code to receive data from the client, check if the inputs are valid and then sent to the database.
+- app.delete() - This function is used to delete data from the database. I used in my server code this to look for if the ID exists and then delete data from the database.
+- app.put() - This function is used to modify data in the database. I used this in my server code to look for the correct ID then modify data in the database.
+
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
+- **Tech Achievement 1**: I used Render to create my webpage rather than Glitch. I found that Render was easier to use than Glitch as it was more user-friendly and had a better interface. I also found that Render was better than Glitch in terms of loading the page and updating the page. Here is the message I sent earlier in the Slack:
+  Pros:
+  - Free 
+  - Can use automatic redeployment for a new version on Github 
+  - Can revert to a previous commits 
+  - No extra setup in your project directory 
+  - can insert env variables by inserting them when creating the page 
+  - Different options for deployment (I used web service so that the site can be ready and running immediately when someone visits the site)
+  Cons:
+  - Deployment for free version is slow (I had to cancel and restart the automatic deployment to get it to work)
+  - Loading the page itself sometimes is slow as well
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative.
@@ -126,3 +148,4 @@ https://a3-andrewnguyen.onrender.com/
   - Tip 10: Provide easily identifiable feedback. I used an alert to signify that the login was incorrect.
   - Tip 11: Use headings and spacing to group related content. I used headers for my forms to signify what the form is for and separate spaces.
   - Tip 12: Reflect the reading order in the code order. I used the order of the code to signify the order of the page. The title is first, then the login form, then the footer. Same with the main page having title, forms, and table.
+- **Design Achievement 2**: I used the CRAP principles in my design. 
