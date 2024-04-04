@@ -227,13 +227,13 @@ function displayUserInfo(username) {
   const usernameSpan = document.createElement('span');
   usernameSpan.id = 'username';
   usernameSpan.textContent = username;
-  usernameSpan.style="font-size: 20px;"
+  usernameSpan.style="font-size: 20px; font-weight: bold;"
 
   const logoutButton = document.createElement('button');
   logoutButton.textContent = 'Logout';
   logoutButton.classList.add('logoutButton'); 
   logoutButton.className = "btn waves-effect waves-light"; 
-  logoutButton.style="margin-left: 20px; color:black; background-color: rgb(178, 114, 238);";
+  logoutButton.style="margin-left: 20px; color:black; background-color: rgb(178, 114, 238); font-weight: bold;";
 
   logoutButton.addEventListener('click', () => {
     fetch('/logout')
@@ -266,6 +266,16 @@ async function checkLoggedInStatus() {
     console.error('Error checking logged in status:', error);
   }
 }
+
+window.addEventListener( "pageshow", function ( event ) {
+  var historyTraversal = event.persisted || 
+                         ( typeof window.performance != "undefined" && 
+                              window.performance.navigation.type === 2 );
+  if ( historyTraversal ) {
+    // Handle page restore.
+    window.location.reload();
+  }
+});
 
 window.onload = function() {
   checkLoggedInStatus(); // Call on page load
@@ -323,14 +333,14 @@ function displayItems(items) {
     // Delete Button
     const deleteButton = document.createElement('button');
     deleteButton.className = "btn waves-effect waves-light red"; // Materialize button classes
-    deleteButton.style="color:black;";
+    deleteButton.style="color:black; font-weight: bold";
     deleteButton.textContent = 'Delete';
     deleteButton.dataset.index = i; 
 
     // Edit Button
     const editButton = document.createElement('button');
     editButton.className = "btn waves-effect waves-light orange"; 
-    editButton.style="color:black;";
+    editButton.style="color:black; font-weight: bold";
     editButton.textContent = 'Edit';
     editButton.dataset.index = i;  
 
