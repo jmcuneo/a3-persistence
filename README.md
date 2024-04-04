@@ -9,6 +9,9 @@ Szymon Mamro
 
 https://a3-szymonmamro.glitch.me
 
+*NOTE Unless the server got reset, there should be a user with username: admin and password: admin
+If not then, simply go to register to create your own account
+
 - the goal of the application was to create a register and login page in order to access a student database that adding, updating, and deleting capabilities
 - I tried to implement passport-local as it seemed like it would be the easiest but after following many different tutorials none of them seemed to work,
 but ended up making a pseudo authentication - explained in my technical achievements
