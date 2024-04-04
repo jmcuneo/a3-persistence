@@ -1,18 +1,74 @@
 const express = require("express");
-const { MongoClient } = require('mongodb');
-const app = express();
-const path = require("path");
-
-app.use(express.static("public")); //public
-//app.use(express.static("views")); //views
-//app.use(express.urlencoded({ extended: false })); //middleware for form data?? changed to true
+//const { MongoClient } = require('mongodb');
+const app = express(),
+  path = require("path"),
+  authRoutes = require('./routes/auth-routes');
+const passportSetup = require('./configs/passport-setup');
+const keys = require('./configs/keys');
+const { run } = require('./mongo.js');
+const { client } = require('./mongo.js');
+const cookieSession = require('cookie-session');
+const passport = require('passport');
+//const session = require('express-session');
 app.use(express.json()); //middleware for json
+//encrypt with array
 
-//mongodb
+app.use(require('express-session')({ 
+  secret: 'u',
+  resave: true,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
-//const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://ngcleary:45Richfield@cluster0.yywwl2c.mongodb.net/?retryWrites=true&w=majority";
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/auth', authRoutes);
+
+app.use(cookieSession({
+  maxAge: 24 * 60 * 60 * 1000, //one day milisecs
+  keys: [keys.session.cookieKey]
+}));
+
+
+
+
+let collection = null
+
+async function startServer() {
+  const db = await run(); // Get database connection
+  // Your server setup code here
+  collection = db.collection("a3Collection")
+  const collectionSuggest = db.collection("a3Suggest")
+
+  app.get("/docs", async (req, res) => {
+    if (collection !== null) {
+      const docs = await collection.find({}).toArray()
+      res.json( docs )
+    }
+  })
+  app.get("/docsSuggest", async (req, res) => {
+    if (collectionSuggest !== null) {
+      const docsSuggest = await collectionSuggest.find({}).toArray()
+      res.json( docsSuggest )
+    }
+  })
+  return client.db('a3-db');
+};
+
+
+startServer();
+
+module.exports = { app };
+/*
+//const uri = "mongodb+srv://ngcleary:45Richfield@cluster0.yywwl2c.mongodb.net/?retryWrites=true&w=majority";
+const uri = keys.mongodb.uri;
 const client = new MongoClient( uri )
+module.exports = client;
 
 let collection = null
 
@@ -20,24 +76,25 @@ async function run() {
   await client.connect()
   collection = await client.db("a3-db").collection("a3Collection")
   collectionSuggest = client.db("a3-db").collection("a3Suggest")
+  //collectionAuth = client.db("a3-db").collection("a3Auth");
 
-  //return collection;
-  //const result = await collection.find().toArray()
-  //return result;
-  
   // route to get all docs
   app.get("/docs", async (req, res) => {
     if (collection !== null) {
       const docs = await collection.find({}).toArray()
       res.json( docs )
     }
+  })
+  app.get("/docsSuggest", async (req, res) => {
     if (collectionSuggest !== null) {
       const docsSuggest = await collectionSuggest.find({}).toArray()
       res.json( docsSuggest )
     }
   })
-};
-run();
+  //return client.db('a3-db');
+};*/
+//run();
+
 
 
 
@@ -46,19 +103,6 @@ run();
 const appdata = [];
 const suggestdata = [];
 
-
-app.get("/", (req, res) => {
-  console.log("here");
-  res.sendFile(path.join(__dirname, "/index.html"));
-});
-
-/*
-app.get("/submit", async (req, res) => {
-  const result = await run();
-  res.send(result);
-});*/
-
-//CUSTOM MIDDLEWARE
 //check mongo connection
 app.use( (req,res,next) => {
   if( collection !== null ) {
@@ -68,121 +112,7 @@ app.use( (req,res,next) => {
   }
 });
 
-//submit post middleware
-const submitPost = (req, res, next) => {
-  let dataString = "";
-
-  req.on("data", function (data) {
-    dataString += data;
-  });
-
-  req.on("end", function () {
-    const dataObject = JSON.parse(dataString);
-    //const updatedObject = calculateDerived(dataObject);
-    appdata.push(dataObject);
-    /*
-    let bothArrays = {
-      appdata: appdata,
-      suggestdata: suggestdata,
-    };*/
-    //req.json = JSON.stringify(bothArrays);
-    //req.json = JSON.stringify(appdata);
-    req.json = dataString;
-
-    next();
-  });
-};
-const calculateDerived = function (object) {
-  if (object.price === "" || object.qty === "") {
-    object.cost = "Cannot calculate total cost";
-  } else {
-    let totalCost = object.price * object.qty;
-    object.cost = totalCost;
-  }
-  return object;
-};
-
-//remove post middleware
-const removePost = (req, res, next) => {
-  let dataString = "";
-
-  req.on("data", function (data) {
-    dataString += data;
-  });
-
-  req.on("end", function () {
-    appdata.splice(dataString, 1); // Remove the entry from the array
-    console.log("Removed item at index: ", dataString);
-    console.log("Updated appdata: ", appdata);
-    req.json = JSON.stringify(appdata);
-    next();
-  });
-};
-
-//suggest post middleware
-const suggestPost = (req, res, next) => {
-  let dataString = "";
-
-  req.on("data", function (data) {
-    dataString += data;
-  });
-
-  req.on("end", function () {
-    const suggestObject = JSON.parse(dataString);
-    //check if suggestion is already being brought
-    let repeat = 0;
-    let alreadySuggested = 0;
-    for (let i = 0; i < appdata.length; i++) {
-      if (appdata[i].item == suggestObject.Sitem) {
-        console.log("repeat", repeat);
-        repeat++;
-      }
-    }
-    for (let j = 0; j < suggestdata.length; j++){
-      if (suggestdata[j].Sitem == suggestObject.Sitem) {
-        alreadySuggested++;
-      }
-    }
-    if (repeat > 0 || alreadySuggested > 0) {
-      console.log("cannot add suggestion");
-      return;
-    } else {
-      suggestdata.push(suggestObject);
-    }
-    console.log("suggestdata after suggest: ", suggestdata);
-    req.json = JSON.stringify(suggestdata);
-    next();
-  });
-};
-
-//bringPost middleware
-const bringPost = (req, res, next) => {
-  let dataString = "";
-
-  req.on("data", function (data) {
-    dataString += data;
-  });
-
-  req.on("end", function () {
-    const newData = {name:"", item: suggestdata[dataString].Sitem, price: "",qty: suggestdata[dataString].Sqty};
-    suggestdata.splice(dataString, 1); // Remove the entry from the array
-    appdata.push(newData);
-    console.log("index: ", dataString);
-    console.log("Updated suggestdata: ", suggestdata);
-    console.log("after bring, updated appdata: ", appdata);
-
-    //send client both arrays -> make a new object, with both objects array inside (better way to do this??)
-    let bothArrays = {
-      appdata: appdata,
-      suggestdata: suggestdata
-    };
-    req.json = JSON.stringify(bothArrays);
-    next();
-  });
-}
-
 //Handle Submit
-
 app.post("/submit", express.json(), async (req, res) => {
   console.log(req.body);
   let data = req.body;
@@ -197,8 +127,12 @@ app.post("/submit", express.json(), async (req, res) => {
   appdata.push(entry);
   console.log("req: ", entry);
   const result = await collection.insertOne(entry)
-  //res.json( result );  
-  res.send(entry);
+  let bothArrays = {
+    appdata: appdata,
+    suggestdata: suggestdata
+  };
+  req.json = JSON.stringify(bothArrays);
+  res.send(req.json);
 });
 
 //Handle Remove
@@ -241,32 +175,50 @@ app.post("/refresh", (req, res) => {
   res.end(JSON.stringify(bothArrays));
 });
 
-
-
 //Handle Suggest
 app.post("/suggest", express.json(), async (req, res) => {
   console.log(req.body);
   let data = req.body;
   console.log(data);
   var entry = {
-    //name: data.name,
     Sitem: data.Sitem,
-    //price: data.price,
     Sqty: data.Sqty, 
-    //cost: data.price * data.qty
   };
   suggestdata.push(entry);
   console.log("req: ", entry);
   const result = await collectionSuggest.insertOne(entry)
-  //res.json( result );  
   res.send(JSON.stringify(suggestdata));
 });
 
 //Handle Bring
-app.post("/bring", bringPost, (req, res) => {
-  res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(req.json);
+app.post("/bring", express.json(), async (req, res) => {
+  const indexToRemove = req.body.suggestIndex;
+  //console.log("index to remove NaN: ", isNaN(indexToRemove))
+  //console.log("index to remove: ", indexToRemove)
+  
+  // Check if indexToRemove is valid/
+  
+  if (isNaN(indexToRemove) || indexToRemove < 0 || indexToRemove >= suggestdata.length) {
+    return res.status(400).send(JSON.stringify("Invalid index"));
+  }
+  const remove = suggestdata[indexToRemove];
+  const newData = {name:"", item: suggestdata[indexToRemove].Sitem, price: "",qty: suggestdata[indexToRemove].Sqty};
+  suggestdata.splice(indexToRemove, 1); // Remove the entry from the array
+  appdata.push(newData);
+  console.log("index: ", indexToRemove);
+  console.log("Updated suggestdata: ", suggestdata);
+  console.log("after bring, updated appdata: ", appdata);
+
+  const moveSuggest = await collectionSuggest.deleteOne({"Sitem": remove.Sitem, "Sqty": remove.Sqty, "_id": remove._id});
+  const addToAppdata = collection.insertOne(newData);
+    //send client both arrays -> make a new object, with both objects array inside (better way to do this??)
+    let bothArrays = {
+      appdata: appdata,
+      suggestdata: suggestdata
+    };
+    req.json = JSON.stringify(bothArrays);
+    res.send(req.json);
 });
 
-//run();
+
 app.listen(process.env.PORT || 3000);
