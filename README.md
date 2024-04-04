@@ -112,7 +112,7 @@ add a little more detail about what it does.
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative.
-  - Tip 1: I added labels for all my form fields.
+  - Tip 1: Associate a label with every form control. I added labels for all my form fields.
   - Tip 2: Help users avoid and correct mistakes by including example inputs through text.
   - Tip 3: Don't use color alone to convey information. I used an alert to convey login is incorrect.
   - Tip 4: Ensure that interactive elements are easy to identify. I used a buttons, text boxes and dropdowns that changes the mouse to signify interactive.
@@ -120,3 +120,7 @@ add a little more detail about what it does.
   - Tip 6: Use headings to convey meaning and structure. I used h1 for the title of the page and h2 for the login form. I used headers for my forms to signify what the form is for.
   - Tip 7: Provide clear instructions. I used a placeholder for the username and password fields to signify what the user should input. I used an alert to signify that the login was incorrect.
   - Tip 8: Keep content clear and concise. I used a simple login form with only two fields and a submit button. And made simple instructions.
+  - Tip 9: Use mark-up to convey meaning through structure. I used a form tag to signify that the fields are for inputting data and use div and grid for page structure.
+  - Tip 10: Provide easily identifiable feedback. I used an alert to signify that the login was incorrect.
+  - Tip 11: Use headings and spacing to group related content. I used headers for my forms to signify what the form is for and separate spaces.
+  - Tip 12: Reflect the reading order in the code order. I used the order of the code to signify the order of the page. The title is first, then the login form, then the footer. Same with the main page having title, forms, and table.
