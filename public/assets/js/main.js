@@ -2,6 +2,7 @@
 const updateTodos = async () => {
   const response = await fetch("/todos");
   const todosFromServer = await response.json();
+  console.log(todosFromServer);
   const todosList = document.getElementById("todos-list");
   todosList.innerHTML = "";
 
@@ -19,12 +20,12 @@ const updateTodos = async () => {
     checkBox.type = "checkbox";
     checkBox.checked = todo.completed;
     checkBox.classList.add("form-check-input", "me-2");
-    checkBox.id = `todo-checkbox-${todo.id}`; // Add an id to associate with a label
-    checkBox.addEventListener("change", () => toggleTodo(todo.id));
+    checkBox.id = `todo-checkbox-${todo._id}`; // Add an id to associate with a label
+    checkBox.addEventListener("change", () => toggleTodo(todo._id));
 
     // Checkbox label
     const checkBoxLabel = document.createElement("label");
-    checkBoxLabel.htmlFor = `todo-checkbox-${todo.id}`; // `htmlFor` associates the label with the checkbox id
+    checkBoxLabel.htmlFor = `todo-checkbox-${todo._id}`; // `htmlFor` associates the label with the checkbox id
     checkBoxLabel.classList.add("form-check-label", "flex-grow-1");
     checkBoxLabel.textContent = todo.title; // Optionally, use the todo's title as the label's text
 
@@ -32,7 +33,7 @@ const updateTodos = async () => {
     const deleteBtn = document.createElement("button");
     deleteBtn.innerHTML = "&times;";
     deleteBtn.classList.add("btn", "btn-danger", "btn-sm", "ms-2");
-    deleteBtn.onclick = () => deleteTodo(todo.id);
+    deleteBtn.onclick = () => deleteTodo(todo._id);
 
     // Creation date
     const createdAtSpan = document.createElement("span");

@@ -1,75 +1,70 @@
-const { v4: uuidv4 } = require("uuid");
-// dummy database
-let todos = [
-  {
-    id: uuidv4(),
-    title: "Learn React",
-    completed: true,
-    createdAt: new Date(),
-  },
-  {
-    id: uuidv4(),
-    title: "Learn Node",
-    completed: false,
-    createdAt: new Date(),
-  },
-  {
-    id: uuidv4(),
-    title: "Learn Express",
-    completed: false,
-    createdAt: new Date(),
-  },
-  {
-    id: uuidv4(),
-    title: "Learn MongoDB",
-    completed: false,
-    createdAt: new Date(),
-  },
-];
+const Todo = require("../models/todoModel");
 
-const getTodos = (req, res) => {
-  const todosWithTimeSinceAdded = todos.map((todo) => {
-    const now = new Date();
-    const createdAt = new Date(todo.createdAt);
-    const timeSinceAdded = Math.floor((now - createdAt) / 1000 / 60); // in minutes
-    return { ...todo, timeSinceAdded: `${timeSinceAdded} minutes ago` };
-  });
-  res.status(200).json(todosWithTimeSinceAdded);
-};
-
-const createTodo = (req, res) => {
-  const newTodo = {
-    id: uuidv4(),
-    title: req.body.title,
-    completed: req.body.completed || false,
-    createdAt: new Date(),
-  };
-  todos.push(newTodo);
-  res.status(201).json(newTodo);
-  //   console.log("New todo created: ", newTodo);
-};
-
-const deleteTodo = (req, res) => {
-  const id = req.params.id;
-  const todoIndex = todos.findIndex((todo) => todo.id === id);
-  if (todoIndex > -1) {
-    const [deletedTodo] = todos.splice(todoIndex, 1);
-    res.status(200).json({ message: "Todo deleted successfully" });
-    // console.log("Todo deleted: ", deletedTodo);
-  } else {
-    res.status(404).json({ message: "Todo not found" });
+const getTodos = async (req, res) => {
+  try {
+    // Fetch todos specific to the user
+    const todos = await Todo.find({ user: req.user });
+    const todosWithTimeSinceAdded = todos.map((todo) => {
+      const now = new Date();
+      const createdAt = new Date(todo.createdAt);
+      const timeSinceAdded = Math.floor((now - createdAt) / 1000 / 60); // in minutes
+      return {
+        ...todo.toObject(),
+        timeSinceAdded: `${timeSinceAdded} minutes ago`,
+      };
+    });
+    res.status(200).json(todosWithTimeSinceAdded);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching todos", error: error });
   }
 };
 
-const toggleTodo = (req, res) => {
-  const id = req.params.id;
-  const todo = todos.find((t) => t.id === id);
-  if (todo) {
-    todo.completed = !todo.completed;
-    res.status(200).json(todo);
-    // console.log("Todo status toggled: ", todo);
-  } else {
-    res.status(404).send("Todo not found");
+const createTodo = async (req, res) => {
+  try {
+    const { title, completed } = req.body;
+    const newTodo = new Todo({
+      title,
+      completed,
+      user: req.user, // Set the user ID for the new todo
+    });
+    const savedTodo = await newTodo.save();
+    res.status(201).json(savedTodo);
+  } catch (error) {
+    res.status(400).json({ message: "Error creating todo", error: error });
+  }
+};
+
+const deleteTodo = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedTodo = await Todo.findOneAndDelete({
+      _id: id,
+      user: req.user,
+    });
+    if (deletedTodo) {
+      res.status(200).json({ message: "Todo deleted successfully" });
+    } else {
+      res.status(404).json({ message: "Todo not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting todo", error: error });
+  }
+};
+
+const toggleTodo = async (req, res) => {
+  try {
+    const { id } = req.params;
+    // Ensure that only the todo belonging to the user is toggled
+    const todo = await Todo.findOne({ _id: id, user: req.user });
+    if (todo) {
+      todo.completed = !todo.completed;
+      await todo.save();
+      res.status(200).json(todo);
+    } else {
+      res.status(404).send("Todo not found");
+    }
+  } catch (error) {
+    res.status(500).send("Error toggling todo status");
   }
 };
 
