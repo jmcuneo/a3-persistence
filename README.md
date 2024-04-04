@@ -1,114 +1,61 @@
 Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
 ===
 
-Check out the [CS 4241 Guides](https://github.com/jmcuneo/cs4241-guides) for help with the technologies discussed in this assignment.
+Jack Lafond 
 
-This assignnment continues where we left off, extending it to use the most popular Node.js server framework (express), 
-a database (mongodb), and a CSS application framework / template of your choice (Boostrap, Material Design, Semantic UI, Pure etc.)
+http://a3-jacklafond.glitch.me
 
-Baseline Requirements
----
+## Bday Tracker with MongoDB
+- The goal of this project was to implement my bday tracker app from A2 in a way that it persists past the life of the server. I also aimed to improve my design and accessibility on the web page.
+- Some challenges I faced in this project was implementing the express and mongodb server functions correctly. When trying to update an entry it took me a little bit of time to understand how to use the updateOne() method that comes with the mongodb collection object.
+- For authentication I just used one dummy account to login as this didn't take to long to set up and I was more focused on making a better design.
+- The CSS framework I used is Sakura.CSS. I chose this framework as it was a lightweight, clean looking framework. For my app I wanted to design to be simple and intuitive so that the forms were easily understood and navigable. I also like their simple use of colors to add jsut a little bit of flare to the design. https://github.com/oxalorg/sakura
+- For middleware I included the following:
+  - urlencoded: an express middle ware that encodes incoming url requests as to not show sensitive information
+  - static: an express middle ware that allows express to serve static files from a specified directory
+  - json: an express middle ware that parses any json in incoming http requests
+  - a function provided in the example files to ensure that the database was connected properly before continuing with any other server requests
 
-Your application is required to implement the following functionalities:
+## Lighthouse Scores
+![Lighthouse Scores](img/CS4241_A3_Lighthouse.JPG)
+  
+## Directions
+To access the main page you need to log in with the following credentials:
+- Username: admin
+- Password: admin
 
-- a `Server`, created using Express (no alternatives will be accepted for this assignment)
-- a `Results` functionality which shows all data associated with a logged in user (except passwords)
-- a `Form/Entry` functionality which allows users to add, modify, and delete data items (must be all three!) associated with their user name / account. 
-- Persistent data storage in between server sessions using [mongodb](https://www.mongodb.com/cloud/atlas) (you *must* use mongodb for this assignment). You can use either the [official mongodb node.js library](https://www.npmjs.com/package/mongodb) or use the [Mongoose library](https://www.npmjs.com/package/mongoose), which enables you to define formal schemas for your database. Please be aware that the course staff cannot provide in-depth support for use of Mongoose.  
-- Use of a [CSS framework or template](https://github.com/troxler/awesome-css-frameworks). 
-This should do the bulk of your styling/CSS for you and be appropriate to your application. 
-For example, don't use [NES.css](https://nostalgic-css.github.io/NES.css/) (which is awesome!) unless you're creating a game or some type of retro 80s site.
-
-Your application is required to demonstrate the use of the following concepts:  
-
-HTML:  
-- HTML input tags and form fields of various flavors (`<textarea>`, `<input>`, checkboxes, radio buttons etc.)
-- HTML that can display all data *for a particular authenticated user*. Note that this is different from the last assignnment, which required the display of all data in memory on the server.
-
-Note that it might make sense to have two pages for this assignment, one that handles login / authentication and one that contains the rest of your application.
-For example, when visiting the home page for the assignment, users could be presented with a login form. After submitting the login form, if the login is 
-successful, they are taken to the main application. If they fail, they are sent back to the login to try again. For this assignment, it is acceptable to simply create 
-new user accounts upon login if none exist; however, you must alert your users to this fact.  
-
-CSS:  
-- CSS styling should primarily be provided by your chosen template/framework. 
-Oftentimes a great deal of care has been put into designing CSS templates; 
-don't override their stylesheets unless you are extremely confident in your graphic design capabilities. 
-The idea is to use CSS templates that give you a professional looking design aesthetic without requiring you to be a graphic designer yourself.
-
-JavaScript:  
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server. 
-See the [previous assignment](https://github.com/cs-4241-23/shortstack) for reference.
-
-Node.js:  
-- A server using Express and a persistent database (mongodb).
-
-General:  
-- Your site should achieve at least 90% on the `Performance`, `Best Practices`, `Accessibility`, and `SEO` tests 
-using Google [Lighthouse](https://developers.google.com/web/tools/lighthouse) (don't worry about the PWA test, and don't worry about scores for mobile devices).
-Test early and often so that fixing problems doesn't lead to suffering at the end of the assignment. 
-
-Deliverables
----
-
-Do the following to complete this assignment:
-
-1. Implement your project with the above requirements. I'd begin by converting your A2 assignment. First, change the server to use express. Then, modify the server to use mongodb instead of storing data locally. Last but not least, implement user accounts and login. User accounts and login is often the hardest part of this assignment, so budget your time accordingly.
-2. If you developed your project locally, deploy your project to Glitch (unless completing the alternative server technical acheivement described below), and fill in the appropriate fields in your package.json file.
-3. Test your project to make sure that when someone goes to your main page on Glitch (or an alternative server), it displays correctly.
-4. Ensure that your project has the proper naming scheme `a3-FirstnameLastname` so we can find it.
-5. Fork this repository and modify the README to the specifications below.
-6. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a3-FirstnameLastname`.
-
-Acheivements
----
-
-Below are suggested technical and design achievements. You can use these to help boost your grade up to an A and customize the 
-assignment to your personal interests, for a maximum twenty additional points and a maximum grade of a 100%. 
-These are recommended acheivements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README, 
-why it was challenging, and how many points you think the achievement should be worth. 
-ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THEM.
-
-*Technical*
-- (10 points) Implement OAuth authentication, perhaps with a library like [passport.js](http://www.passportjs.org/). 
-*You must either use Github authenticaion or provide a username/password to access a dummy account*. 
-Course staff cannot be expected, for example, to have a personal Facebook, Google, or Twitter account to use when grading this assignment. 
-Please contact the course staff if you have any questions about this. THIS IS THE HARDEST ACHEIVEMENT OFFERED IN WEBWARE. You have been warned!  
-- (5 points) Instead of Glitch, host your site on a different service. Find a service that is reputable and has a free tier. Post your findings on Slack in the #assignment3 channel. DO NOT feel compelled to purchase a paid tier from any service, although if you already have one, you are welcome to use it. Make sure to describe this a bit in your README. What was better about using the service you chose as compared to Glitch? What (if anything) was worse? 
-- (5 points) Get 100% (not 98%, not 99%, but 100%) in all four lighthouse tests required for this assignment.  
-
-*Design/UX*
-- (10 points) Make your site accessible using the [resources and hints available from the W3C](https://www.w3.org/WAI/), Implement/follow twelve tips from their [tips for writing](https://www.w3.org/WAI/tips/writing/), [tips for designing](https://www.w3.org/WAI/tips/designing/), and [tips for development](https://www.w3.org/WAI/tips/developing/). *Note that all twelve must require active work on your part*. 
-For example, even though your page will most likely not have a captcha, you don't get this as one of your twelve tips to follow because you're effectively 
-getting it "for free" without having to actively change anything about your site. 
-Contact the course staff if you have any questions about what qualifies and doesn't qualify in this regard. 
-List each tip that you followed and describe what you did to follow it in your site.
-- (5 points) Describe how your site uses the CRAP principles in the Non-Designer's Design Book readings. 
-Which element received the most emphasis (contrast) on each page? 
-How did you use proximity to organize the visual information on your page? 
-What design elements (colors, fonts, layouts, etc.) did you use repeatedly throughout your site? 
-How did you use alignment to organize information and/or increase contrast for particular elements. 
-Write a paragraph of at least 125 words *for each of four principles* (four paragraphs, 500 words in total). 
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-
-your glitch (or alternative server) link e.g. http://a3-joshua-cuneo.glitch.me
-
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
-
-- the goal of the application
-- challenges you faced in realizing the application
-- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why
-  - include any modifications to the CSS framework you made via custom CSS you authored
-- the five Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function for *one* (and one alone) middleware please 
-add a little more detail about what it does.
+Once logged in you will be redirected to the main application where you can access the data on the server, add, delete, and change entries. I also included a new field, bought gift? which is a yes or no string to represent if you have bought a bday gift for the person in a particular entry.
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
 
-### Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+## Design/Evaluation Achievements
+- **Design Achievement 1**: I included an info link to provide information about the main page like how to use it, and the contents on the page
+- **Design Achievement 2**: I followed the following tips from the W3C Web Accessibility Initiative
+  - Writing:
+    - Provided unique and descriptive page titles: For example the main page it called "A3 - Main - CS 4241" which indicates the assignment that this project is apart of, the current page of the application, and the overall class that this assignment is for.
+    - Used headings and subheadings to convey meaning and structure: In my main page I use the h1 header about the data table to indicate the main content and I use the sub headers h3 to denote the individual forms. Then each label is a smaller size than the headers to indicate it belongs to that parent header
+    - Make link text meaningful: for my info link I labelled it "Click to Toggle Info About This Page" to indicate that this link provided useful information about the current page
+    - Provide clear instructions: for the birthday fields a specific format is required which I included in the label "Birthday in the form MM/DD/YYYY:". I also included an alert message on the login page to indicate the error associated with the login if it was unsuccessful.
+    - Keep content clear and concise: for my info popup, I organized it in small sentences and paragraphs as well as bullet points in order to convey information in a concise, and less dense way.
+  - Designing:
+    - Provide sufficient contrast between foreground and background: the css framework that I used implements this already
+    - Don't use color alone to convey information: When the info popup is active I underline the anchor link to indicate that it is active
+    - Ensure that interactive elements are easy to identify: Sakura CSS does a good job of this already, highlighting the anchor link in a different text color and on hover changeing the look to indicate that it is clickable
+    - Ensure that form elements include clearly associated labels: for each form element I included a label, and for the radio buttons I made sure to space them enough so that it is clear which button is for yes and which is for no
+    - Use headings and spacing to group related content: Sakura CSS does a good job of spacing already, but I did move the update form next to the add form using flex row in order to make sure that it was visible to a viewer. I also spaced them addequately to help distinguish them using the space-between option.
+  - Accessibility:
+    - Assocaite a label with every form control: For each label I used the html "for" attribute in order to associate it with its correct input
+    - Identify page language: in both the index and main page I included the meta tag with lang='en' to indicate that the html content was in english
+    - Use-markup to convey meaning and structure: for every element I used I included the proper markup tag, like using form, label, and input tags in each form, using different levels of hx in order to indicate header level, and using ul and li tags to indicate a list in the info popup
+    - Provide meaning for non-standard interactive elements: for the anchor tag link that creates a pop up I included aria-haspopup="true"
+    - Ensure that all ineractive elements are keyboard accessible: for the anchor tag I included its tab index as 1, and included an event listener so that if it was focused and a user hits enter, the popup will display. Also for each form it is standard that the inputs can be tabbed, and the buttons will click on enter
+- **Design Achievement 3**: I followed the CRAP principles:
+  - Contrast:
+    For contrast, Sakura CSS does a good job already. The biggest contrast are the bolded headers. The h1 header is the largest and stands out the most, which decreases as the header levels go down. Sakura CSS also slightly bolds the labels for each input which helps stick out from the normal text in order to draw a users eyes there. For the background color the default is a light grey, which allows the bolded headers and labels to stick out well from the background. The contrast between individual elements is good as well. The headers are much larger and bolder then the labels, which helps to denote them as separate. Along with this the button are highlighted with blue. The use of a background color for the buttons help to identify that they are different than just normal text. Along with this the input sections have a background to also indicate that their function is different than just displaying information. One thing I added was that the disabled inputs on the update form have a darker grey background than the normal inputs. This slight contrast helps to indicate that although it is also an input field, it is somehow different which is then understood that it is disabled when you cannot click on it. Lastly, the anchor link it highlighted in blue, so while it does not have a background, the blue coloring in contrast to the regular dark gray coloring indicates that this text is also different from the regular information text. 
+  - Repetition:
+    For repetition the primary focus was colors. Every interactive element was colored differently than the rest of the page. Sakura again does a good job of this already. For the input fields, all text inputs are the same size, and same backgorund color. For elements that did something, like buttons, links, and radio buttons, they were colored using the accent colors. Anything that is colored in their default blue indicates something that can be clicked. The delete, submit and update buttons are all the accent blue, and the anchor link is blue as well. When an interactive element like these are hovered, they are colored by the purple accent. This helps to indicate that anything blue that shifts to purple when you hover means that it can be clicked, and also helps to indicate that you are currently focused on that thing. One thing I added was I changed the radio select color to match the accent purple to keep the colors consistent and indicate that it was selected. Another repitition I included was using some indicator after every label like ":" or "?" in order to indicate that an answer was needed from the user following that label.
+  - Alignment:
+    The default settings for Sakura uses strong alignment. Everything on the page is aligned to the left which creates a strong implied line, and a neat feeling to the page. Along with this there is no padding or margin to the forms, which helps carry the line down the page. This helps a reader quickly follow the content down the page all the way to the submit button, almost like a call to action to start adding new entries. Within the data table there is also strong left alignment for each category. This helps a user parse through the entries quickly. For example if a user was looking for a specific person the can follow the list of names down and quickly find them since they are all aligned the same. Within the forms there is a left alignment as well with no padding. This is good for the forms as it helps a user quickly navigate from one input to the next, filling in one and then finding the next one they need to fill in. One thing I did change was aligning the forms in a flex-row container. This creates another strong line across the top of the forms which helps to separate the data info section of the page from the form section of the page.
+  - Proximity:
+    Sakura uses margins well in order to establish good proximity practices. Each section is separated from other sections by a good amount of spacing. The bottom of the data table to the top of the forms is enough space to indicate to the user that they are separate. Within the data table the individual rows are tightly packed to show that they are all in the same collection of data, while the columns are spaced well to indicate that the values belong to different attributes of their respective entries. Within the forms the spacing is tight to indicate to a viewer that these elements are all within the same form. Each header of the page is closely located to its respective content in order to indicate which headers belong to which content. Some changes I made was using the space-between attribute on the forms in order to give them better horizontal spacing and separate them visually. Another change I made was to put the radio options on the same line in order to better associate themselves with the same label of "Bought Gift". However I did add some spacing between the options so that it was clear to the user which selection belonged to which answer, as each option was now much closer to their actual label than the other option.
+    
