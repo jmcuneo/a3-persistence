@@ -1,6 +1,6 @@
 <!doctype html>
 
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <title>CS4241 Assignment 3</title>
     <meta charset="utf-8">
@@ -15,22 +15,19 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
-    <div class="container">
-      <header>
-        <h1>Log In to Your Worst Calculator</h1>
-      </header>
-      <!-- <div>
-        <form id="loginForm" action="/login" method="POST">
-            <label for="username">Username: </label>
-            <input type="text" name="username" id="username">
-            <br>
-            <label for="password">Password: </label>
-            <input type="password" name="password" id="password">
-            <br>
-            <input type="submit" value="Sign In">
-        </form>
-      </div> -->
-      <a class="button is-primary" id="githubLogin" href="/auth/github">Log In Using Github</a>
+    <div class="block"></div>
+    <div class="container content has-text-centered">
+      <div class="block">
+        <header>
+          <h1 class="title is-1">Log In to Your Worst Calculator</h1>
+        </header>
+      </div>
+      <div class="block">
+        <p>If you have not logged in using your Github about before, a new calculator will be created for you</p>
+      </div>
+      <div style="padding-top: 20vh" class="column is-mobile is-vcentered">
+        <a class="button is-link is-outlined is-large" id="githubLogin" href="/auth/github">Log In Using Github</a>
+      </div>
     </div>
   </body>
 </html>

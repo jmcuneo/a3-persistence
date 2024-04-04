@@ -25,10 +25,11 @@ app.use( express.json() )
 passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/github/callback"
+    callbackURL: "https://a3-avachadbourne.onrender.com/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    console.log(profile.username)
+    let username = profile.username
+    setCollection(username)
     done(null, profile)
   }
 ));
@@ -56,7 +57,7 @@ app.get('/auth/github/callback', cors(),
 
 async function run() {
   await client.connect()
-  collection = await client.db("sample_mflix").collection("number-data")
+  // collection = await client.db("sample_mflix").collection("number-data")
 
   // route to get all docs
   app.get("/docs", async (req, res) => {
@@ -180,9 +181,16 @@ function pickData (mod, old, valType) {
   }
 }
 
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/')
+async function setCollection (username) {
+  let database = await client.db("sample_mflix")
+  let userCollection = await database.collection(username)
+  if (userCollection) {
+    collection = userCollection
+  } else {
+    database.createCollection(username)
+    collection = await database.collection(username)
+    console.log("New collection created for user " + username)
+  }
 }
 
 run()
