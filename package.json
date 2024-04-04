@@ -4,9 +4,11 @@
     "description": "r/place budget edition.",
     "author": "Andrew Salls",
     "scripts": {
-      "start": "node server.improved.js"
+        "start": "node server.improved.js"
     },
     "dependencies": {
-      "mime": "^2.6.0"
+        "express": "^4.19.2",
+        "mime": "^2.6.0",
+        "mongoose": "^8.3.0"
     }
-  }
+}

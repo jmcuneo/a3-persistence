@@ -1,9 +1,8 @@
 <!doctype html>
 <html lang="en-US">
   <head>
-    <title>Paint Live</title>
+    <title>Paint Live Login</title>
     <meta charset="utf-8">
-    <script src="js/main.js"></script>
     <link rel="stylesheet" href="css/main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,29 +12,16 @@
   </head>
   <body>
     <h1>Paint Live</h1>
-    <form id="content">
+    <form id="login">
       <div class = "center">
-        <label for="color-selector">Enter a display name:</label>
-        <input id="user" name="user" form="content" type="text" placeholder="Enter name" maxlength="16" required>
+        <label for="user">Enter a display name:</label>
+        <input id="user" name="user" form="login" type="text" placeholder="Enter name" maxlength="16" required>
       </div>
-      <br>
-      <div class="center">
-        <label for="color-selector">Select paint color:</label>
-        <input id="color-selector" name="color-selector" form="content" type="color" value="#FFFFFF">
+      <div class = "center">
+        <label for="pass">Enter a password:</label>
+        <input id="pass" name="pass" form="login" type="text" placeholder="Enter password" maxlength="64" required>
       </div>
-      <br>
-      <div id="draw-plane"></div>
-    </form>
-    <div class="center">
-      <p id="status-msg"></p>
-    </div>
-    <aside id="sidebar">
-      <h3>
-        Recent Changes:
-      </h3>
-      <hr>
-      <div id="change-list">
-      </div>
-    </aside>
+      <button id="attempt-login" type="submit">Login</button>
+      <p id="error-msg"></p>
   </body>
 </html>

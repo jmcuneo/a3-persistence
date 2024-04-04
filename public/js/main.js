@@ -16,7 +16,7 @@ const submit = async function( event, x, y ) {
 
   const body = JSON.stringify(submission);
 
-  const response = await fetch( "/submit", {
+  const response = await fetch("/submit", {
     method:"POST",
     body 
   }).then(response => response.json());
@@ -43,7 +43,7 @@ async function updateGrid() {
     clearTimeout(refreshLoopId);
   }
 
-  const response = await fetch("/readGrid", { method: "GET" })
+  const response = await fetch("/read-grid", { method: "GET" })
     .then(response => response.json());
   const colors = response.colors;
   const mostRecent = response.recent;
