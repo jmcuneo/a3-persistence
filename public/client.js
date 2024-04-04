@@ -87,14 +87,28 @@ const login = async function(event){
       console.log( result ) 
       if(result.length == 0){
         console.log("Incorrect password")
+        displayError()
       }else if (result.acknowledged == true){
         console.log("Creating new user")
+        await displayNewLogin()
         window.location.assign('https://a3-briannasahagian.glitch.me/data.html')
       }else{
         console.log("Signing in")
         window.location.assign('https://a3-briannasahagian.glitch.me/data.html')
       }
     };
+
+
+const displayNewLogin = async function(event){
+  var login_message = document.getElementById("message")
+  login_message.innerHTML = "<div class = text-success>New User</div>"
+  return new Promise(r => setTimeout(r, 2000))
+}
+
+const displayError = async function(event){
+  var login_message = document.getElementById("message")
+  login_message.innerHTML = "<div class = text-danger>Incorrect Password</div>"
+}
 /*
  * A function that sends a GET request to the server for the appdata array
  * in order to pass the current content of the array (and in turn the server) to the client
