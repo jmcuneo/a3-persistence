@@ -16,11 +16,10 @@ For me the most difficult part of what I got working was figuring out how to pro
   - Picnic's default blue buttons were the base of my nw color pallete - matching colors from Coolors.com
 
 ## Technical Achievements
-
 - **Lighthouse**: I got 100% on all 4 Lighthouse Tests 
 ![perezlighthouse](https://github.com/Perez0002/a3-oliviaperez/assets/67107221/b3237c04-0c46-4680-85d9-2258ed4cc91c)
 
-### Design/Evaluation Achievements
+## Design/Evaluation Achievements
 
 - **W3C Web Accessibility**:
   - Provide informative, unique page titles: The titles of the login and app page follows the examples given on this site
