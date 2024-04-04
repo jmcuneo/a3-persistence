@@ -9,7 +9,7 @@ http://a3-jacklafond.glitch.me
 - The goal of this project was to implement my bday tracker app from A2 in a way that it persists past the life of the server. I also aimed to improve my design and accessibility on the web page.
 - Some challenges I faced in this project was implementing the express and mongodb server functions correctly. When trying to update an entry it took me a little bit of time to understand how to use the updateOne() method that comes with the mongodb collection object.
 - For authentication I just used one dummy account to login as this didn't take to long to set up and I was more focused on making a better design.
-- The CSS framework I used is Sakura.CSS. I chose this framework as it was a lightweight, clean looking framework. For my app I wanted to design to be simple and intuitive so that the forms were easily understood and navigable. I also like their simple use of colors to add jsut a little bit of flare to the design. https://github.com/oxalorg/sakura
+- The CSS framework I used is Sakura.CSS. I chose this framework as it was a lightweight, clean looking framework. For my app I wanted to design to be simple and intuitive so that the forms were easily understood and navigable. I also like their simple use of colors to add just a little bit of flare to the design. https://github.com/oxalorg/sakura
 - For middleware I included the following:
   - urlencoded: an express middle ware that encodes incoming url requests as to not show sensitive information
   - static: an express middle ware that allows express to serve static files from a specified directory
