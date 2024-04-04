@@ -173,6 +173,7 @@ const getData = async function() {
 
     for(let i = data.length +1 ; i > 0; i--){
       table.deleteRow(i)
+      updateIDs();
     }
     isDeleted = false;
   }

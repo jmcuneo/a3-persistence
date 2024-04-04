@@ -41,7 +41,7 @@ async function run() {
         //console.log(userCount);
         dataCount = await userData.countDocuments();
         //console.log(users.countDocuments());
-//        const cursor = users.find();
+        //        const cursor = users.find();
         //await cursor.forEach(console.log)
     } finally {
 
@@ -70,37 +70,37 @@ app.get('/', (request, response) => {
     response.sendFile('public/login.html', { root: __dirname })
 
 })
-app.post('/login', async (request, response) => {
+app.post('/login', async(request, response) => {
     let username = Object.values(request.body)[0];
     let password = Object.values(request.body)[1];
-    const user = await users.findOne({username: username})
+    const user = await users.findOne({ username: username })
     if (user && user.password === password) {
-        response.json({success: true});
+        response.json({ success: true });
         //console.log(user._id);
         currentUser = user._id.toString();
         console.log(currentUser);
 
 
-      let currentData = await userData.find({user: currentUser}).toArray();
-      currentUserDataCount = currentData.length;
-      console.log(currentData);
-      /*
-        for(let i = 0; i <dataCount; i++){
-            if(currentUser === userData[i].user){
-                currentUserDataCount++;
-            }
-        }
+        let currentData = await userData.find({ user: currentUser }).toArray();
+        currentUserDataCount = currentData.length;
+        console.log(currentData);
+        /*
+          for(let i = 0; i <dataCount; i++){
+              if(currentUser === userData[i].user){
+                  currentUserDataCount++;
+              }
+          }
 
-         */
+           */
 
 
-    } else if(user){
-        response.json({success: false, message: "Invalid password"});
-    }  else if(username === "" || password === ""){
-        response.json({success: false, message: "Invalid user or password"});
-    } else{
-        await users.insertOne({username: username, password: password});
-        response.json({success: true});
+    } else if (user) {
+        response.json({ success: false, message: "Invalid password" });
+    } else if (username === "" || password === "") {
+        response.json({ success: false, message: "Invalid user or password" });
+    } else {
+        await users.insertOne({ username: username, password: password });
+        response.json({ success: true });
         currentUser = user._id;
         currentUserDataCount = 0;
     }
@@ -112,18 +112,18 @@ app.get('/data', (request, response) => {
     request.on("data", function(data) {
         dataString += data
     })
-    request.on("end", async function () {
+    request.on("end", async function() {
         // ... do something with the data here!!!
         //console.log("made it here")
         //console.log(typeof Object.values(JSON.parse( dataString ))[0] === 'string')
         //console.log(appdata)
 
         //console.log(users.find({_id: currentUser}));
-       // console.log(currentUserDataCount);
-       // console.log(typeof currentUserDataCount);
-        let currentData = await userData.find({user: currentUser}).toArray();
+        // console.log(currentUserDataCount);
+        // console.log(typeof currentUserDataCount);
+        let currentData = await userData.find({ user: currentUser }).toArray();
         var jsonArray = JSON.stringify(currentData)
-        response.writeHead(200, "OK", {"Content-Type": "text/plain"})
+        response.writeHead(200, "OK", { "Content-Type": "text/plain" })
         response.end(jsonArray)
     })
 })
@@ -135,7 +135,7 @@ app.post('/submit', (request, response) => {
     request.on("data", function(data) {
         dataString += data
     })
-    request.on("end", async function () {
+    request.on("end", async function() {
         //console.log( JSON.parse( dataString ) )
 
         // ... do something with the data here!!!
@@ -164,9 +164,9 @@ app.post('/submit', (request, response) => {
 
         //console.log(typeof Object.values(JSON.parse( dataString ))[0] === 'string')
         //console.log(appdata)
-        let currentData = await userData.find({user: currentUser}).toArray();
+        let currentData = await userData.find({ user: currentUser }).toArray();
         var jsonArray = JSON.stringify(currentData)
-        response.writeHead(200, "OK", {"Content-Type": "text/plain"})
+        response.writeHead(200, "OK", { "Content-Type": "text/plain" })
         response.end(jsonArray)
     })
 
@@ -179,17 +179,16 @@ app.delete('/remove', (request, response) => {
         dataString += data
     })
 
-    request.on("end", async function () {
+    request.on("end", async function() {
         // console.log( JSON.parse( dataString ) )
 
         // console.log("made it here to delete")
-        const query = {Id: parseInt(Object.values(JSON.parse(dataString))[0]), user: currentUser};
-        let currentData = await userData.find({user: currentUser}).toArray();
+        const query = { Id: parseInt(Object.values(JSON.parse(dataString))[0]), user: currentUser };
+        let currentData = await userData.find({ user: currentUser }).toArray();
         //console.log(typeof Object.values(JSON.parse( dataString ))[0] === 'string')
         if (isNaN(parseInt(Object.values(JSON.parse(dataString))[0])) ||
             parseInt(Object.values(JSON.parse(dataString))[0]) <= 0 ||
-            parseInt(Object.values(JSON.parse(dataString))[0]) > currentData.length + 1) {
-        } else {
+            parseInt(Object.values(JSON.parse(dataString))[0]) > currentData.length + 1) {} else {
             for (let i = 0; i < currentData.length; i++) {
                 if (parseInt(Object.values(JSON.parse(dataString))[0]) === currentData[i].Id) {
                     await userData.deleteOne(query);
@@ -198,11 +197,11 @@ app.delete('/remove', (request, response) => {
             }
         }
 
-        currentData = await userData.find({user: currentUser}).toArray();
+        currentData = await userData.find({ user: currentUser }).toArray();
 
         for (let i = 0; i < currentData.length; i++) {
-            const query = {Id: currentData[i].Id, user: currentUser};
-            const newValues = {$set: {Id: i + 1}};
+            const query = { Id: currentData[i].Id, user: currentUser };
+            const newValues = { $set: { Id: i + 1 } };
             userData.updateOne(query, newValues);
         }
 
@@ -210,7 +209,7 @@ app.delete('/remove', (request, response) => {
 
         //console.log(appdata)
         var jsonArray = JSON.stringify(appdata)
-        response.writeHead(200, "OK", {"Content-Type": "text/plain"})
+        response.writeHead(200, "OK", { "Content-Type": "text/plain" })
         response.end(jsonArray)
     })
 })
@@ -225,9 +224,9 @@ app.put('/modify', (request, response) => {
     let indexToChange = 0;
     let indexFound = false;
 
-    request.on("end", async function () {
-        let currentData = await userData.find({user: currentUser}).toArray();
-        const query = {Id: parseInt(Object.values(JSON.parse(dataString))[0]), user: currentUser};
+    request.on("end", async function() {
+        let currentData = await userData.find({ user: currentUser }).toArray();
+        const query = { Id: parseInt(Object.values(JSON.parse(dataString))[0]), user: currentUser };
         if (isNaN(parseInt(Object.values(JSON.parse(dataString))[0])) ||
             parseInt(Object.values(JSON.parse(dataString))[0]) <= 0 ||
             parseInt(Object.values(JSON.parse(dataString))[0]) > currentData.length
@@ -241,32 +240,32 @@ app.put('/modify', (request, response) => {
                 }
 
                 if (indexFound && Object.values(JSON.parse(dataString))[1] !== "") {
-                    const newValues = {$set: {model: Object.values(JSON.parse(dataString))[1]}};
+                    const newValues = { $set: { model: Object.values(JSON.parse(dataString))[1] } };
                     userData.updateOne(query, newValues);
                 }
 
                 if (indexFound && parseInt(Object.values(JSON.parse(dataString))[2]) > 0) {
-                    const newValues = {$set: {year: parseInt(Object.values(JSON.parse(dataString))[2])}};
+                    const newValues = { $set: { year: parseInt(Object.values(JSON.parse(dataString))[2]) } };
                     userData.updateOne(query, newValues);
                 }
 
                 if (indexFound && parseInt(Object.values(JSON.parse(dataString))[3]) > 0) {
-                    const newValues = {$set: {mpg: parseInt(Object.values(JSON.parse(dataString))[3]), tillEmpty: parseInt(Object.values(JSON.parse(dataString))[3]) * currentData[indexToChange].fuelLoad}};
+                    const newValues = { $set: { mpg: parseInt(Object.values(JSON.parse(dataString))[3]), tillEmpty: parseInt(Object.values(JSON.parse(dataString))[3]) * currentData[indexToChange].fuelLoad } };
                     userData.updateOne(query, newValues);
                 }
 
                 if (indexFound && parseInt(Object.values(JSON.parse(dataString))[4]) > 0) {
-                    const newValues = {$set: {fuelLoad: parseInt(Object.values(JSON.parse(dataString))[4]), tillEmpty: parseInt(Object.values(JSON.parse(dataString))[4]) * currentData[indexToChange].mpg}};
+                    const newValues = { $set: { fuelLoad: parseInt(Object.values(JSON.parse(dataString))[4]), tillEmpty: parseInt(Object.values(JSON.parse(dataString))[4]) * currentData[indexToChange].mpg } };
                     userData.updateOne(query, newValues);
                 }
 
             }
         }
 
-        currentData = await userData.find({user: currentUser}).toArray();
+        currentData = await userData.find({ user: currentUser }).toArray();
 
         var jsonArray = JSON.stringify(currentData)
-        response.writeHead(200, "OK", {"Content-Type": "text/plain"})
+        response.writeHead(200, "OK", { "Content-Type": "text/plain" })
         response.end(jsonArray)
     })
 
