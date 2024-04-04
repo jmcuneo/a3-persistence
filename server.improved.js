@@ -34,7 +34,6 @@ let collection = null;
 let user = null;
 
 async function run() {
-  
   await client.connect();
 
   collection = await client.db("datatest").collection("test");
@@ -66,20 +65,19 @@ async function run() {
 
   app.get("/success", async (req, res) => {
     if (!req.session.accessToken) {
+      res.redirect("/github/login");
+      return;
+    }
 
-    res.redirect("/github/login");
-    return;
-  }
+    const response = await axios.get("https://api.github.com/user", {
+      headers: {
+        Authorization: `token ${req.session.accessToken}`,
+      },
+    });
+    const userData = response.data;
+    user = userData.name;
 
-  const response = await axios.get("https://api.github.com/user", {
-    headers: {
-      Authorization: `token ${req.session.accessToken}`,
-    },
-  });
-  const userData = response.data;
-  user = userData.name;
-    
-  res.sendFile(path.join(__dirname, 'public', 'db.html'));
+    res.sendFile(path.join(__dirname, "public", "db.html"));
   });
 
   app.use((req, res, next) => {
@@ -92,7 +90,7 @@ async function run() {
 
   app.get("/entries", async (req, res) => {
     if (collection !== null) {
-      const docs = await collection.find({name: user}).toArray();
+      const docs = await collection.find({ name: user }).toArray();
       res.json(docs);
     }
   });
