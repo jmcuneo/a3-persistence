@@ -5,7 +5,7 @@ const submit = async function( event ) {
     // remains to this day
     event.preventDefault()
     
-    const uname = document.querySelector( "#username" ),
+    var uname = document.querySelector( "#username" ),
           pass = document.querySelector( "#password" ),
           json = { username: uname.value, password: pass.value},
           body = JSON.stringify( json )
@@ -22,6 +22,10 @@ const submit = async function( event ) {
     console.log(data.msg);
     if(data.login) {
       window.location.href = '/main';
+    } else {
+      uname.value = '';
+      pass.value = '';
+      window.alert(data.msg);
     }
   }
 

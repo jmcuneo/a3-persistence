@@ -28,8 +28,14 @@ app.post( '/login', (req,res)=> {
     res.json({ login: true, msg: 'Login Success'})
   } else {
 
+    let message;
+    if( req.body.username != 'admin' ) {
+      message = 'Log in failed, no such user'
+    } else {
+      message = 'Log in failed, incorrect password'
+    }
     // password or username incorrect, login fail
-    res.json({ login: false, msg: 'Login Failed'});
+    res.json({ login: false, msg: message})
   }
 })
 
