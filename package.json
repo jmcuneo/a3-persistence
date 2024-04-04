@@ -3,9 +3,6 @@
   "version": "",
   "description": "",
   "author": "",
-  "engines": {
-    "node": ">=14.0.0"
-  },
   "scripts": {
     "start": "node server.improved.js"
   },
