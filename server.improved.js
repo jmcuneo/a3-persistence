@@ -10,14 +10,14 @@ const uri = keys.mongodb.uri;
 const client = new MongoClient( uri );
 let  collection = null;
 let collectionSuggest = null;
-let collectionAuth = null;
+let collectionUsers = null;
 
 //Conennect to mongo
 async function run() {
   await client.connect()
   collection = await client.db("a3-db").collection("a3Collection")
   collectionSuggest = client.db("a3-db").collection("a3Suggest")
-  collectionAuth = client.db("a3-db").collection("a3Auth");
+  collectionUsers = client.db("a3-db").collection("a3Auth");
 
   // route to get all docs
   app.get("/docs", async (req, res) => {
@@ -43,7 +43,7 @@ const GitHubStrategy = require('passport-github');
 
 app.use(cookieSession({
   maxAge: 24 * 60 * 60 * 1000,
-  keys: ['yes'] //[keys.session.cookieKey]
+  keys: [keys.session.cookieKey]
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -51,16 +51,11 @@ app.use(passport.session());
 
 //stuff github userId in cookie
 passport.serializeUser((user, done) => {
-  //await startDb(); // Ensure allusers is initialized
-  
   done(null, user.githubId); // Serialize user with a unique identifier
-  console.log('serializing: ', user);
 });
 
 passport.deserializeUser(async (id, done) => {
-  const user = await collectionAuth.findOne({ "githubId": id }); // Find user by ID
-  console.log("user in deserialize:", user);
-  console.log("id in deserialize:", id);
+  const user = await collectionUsers.findOne({ "githubId": id }); // Find user by ID
   done(null, user);
   } 
 );
@@ -70,7 +65,7 @@ passport.use(new GitHubStrategy({
   clientSecret: keys.github.clientSecret,
   callbackURL: "/auth/github/redirect"
 }, async (accessToken, refreshToken, profile, done) => {
-  const currentUser = await collectionAuth.findOne({githubId: profile.id});
+  const currentUser = await collectionUsers.findOne({githubId: profile.id});
   if(currentUser){
       console.log('user is: ', currentUser);
       done(null, currentUser);
@@ -79,7 +74,7 @@ passport.use(new GitHubStrategy({
           username: profile.displayName,
           githubId: profile.id
       }
-      const newUser = await collectionAuth.insertOne(userInfo);
+      const newUser = await collectionUsers.insertOne(userInfo);
       console.log('new user: ', newUser);
       done(null, newUser);
   }
@@ -87,9 +82,11 @@ passport.use(new GitHubStrategy({
 
 
 // Routes
-app.get('/login', (req, res) =>{
-  res.render('login')
-})
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.get('/auth/github', passport.authenticate('github', {
   scope: ['profile']
@@ -103,18 +100,11 @@ app.get('/auth/github/redirect', passport.authenticate('github'), (req, res) => 
 
 // Secret route
 app.get('/profile', (req, res) => {
-  res.send(`profile: ` + req.user.username);
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 /////////////////////////////////////////////////////////////////////////////////////
 app.use(express.json()); //middleware for json
-
-
-// Serve static files from the 'public' directory
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'login.html'));
-});
-app.use(express.static(path.join(__dirname, 'public')));
 
 //arrays
 const appdata = [];
@@ -131,11 +121,12 @@ app.use( (req,res,next) => {
 
 //Handle Submit
 app.post("/submit", express.json(), async (req, res) => {
+  console.log("cookie: ", req.user.username);
   console.log(req.body);
   let data = req.body;
   console.log(data);
   var entry = {
-    name: data.name,
+    name: req.user.username,
     item: data.item,
     price: data.price,
     qty: data.qty, 
@@ -157,33 +148,48 @@ app.post("/remove", express.json(), async (req, res) => {
   //get data to remove
 
   const indexToRemove = req.body.entryIndex;
-  console.log("index to remove NaN: ", isNaN(indexToRemove))
-  console.log("index to remove: ", indexToRemove)
-  
   // Check if indexToRemove is valid/
   
   if (isNaN(indexToRemove) || indexToRemove < 0 || indexToRemove >= appdata.length) {
     return res.status(400).send(JSON.stringify("Invalid index"));
   }
 
+  //check if the user has the authority to remove the item
+  if(appdata[indexToRemove].name != req.user.username){
+    console.log("you cannot remove other peoples data");
+    res.send(JSON.stringify("You cannot remove other user's items"));
+  } 
+  else {
+    const remove = appdata[indexToRemove];  
 
-  // Get data to remove from appdata array using index
-  const remove = appdata[indexToRemove];
-  console.log("appdata: ", appdata)
-  console.log("item to remove: ", remove);
-  
   // Use the attribute 'name' of the object to remove data from MongoDB
   const result = await collection.deleteOne({"name": remove.name, "item": remove.item, "_id": remove._id})
   
   console.log(result);
   appdata.splice(indexToRemove, 1); // Remove the entry from the array
-  console.log("Updated appdata: ", appdata);
-
   res.send(appdata);
+  }
+  
 });
 
-//Handle Refresh
-app.post("/refresh", (req, res) => {
+let mongoDataLoaded = false;
+
+app.post("/refresh", express.json(), async (req, res) => {
+  if (!mongoDataLoaded) {
+    // Load all data from MongoDB only if it hasn't been loaded before
+    const mongoData = await collection.find({}).toArray();
+    for(let i = 0; i < mongoData.length; i++){
+       if(mongoData[i].name != req.user.username){
+        mongoData[i].cost = "";
+        //how to limit what user sees here???
+      }
+      appdata.push(mongoData[i]);
+    }
+    mongoDataLoaded = true; // Set the flag to true to indicate data has been loaded
+  }
+  else{
+    console.log("mongo already loaded");
+  }
   let bothArrays = {
     appdata: appdata,
     suggestdata: suggestdata,
@@ -201,25 +207,36 @@ app.post("/suggest", express.json(), async (req, res) => {
     Sitem: data.Sitem,
     Sqty: data.Sqty, 
   };
-  suggestdata.push(entry);
-  console.log("req: ", entry);
-  const result = await collectionSuggest.insertOne(entry)
-  res.send(JSON.stringify(suggestdata));
+  let repeat = 0;
+  for(let i = 0; i < appdata.length; i++){
+    if(appdata[i].item == entry.Sitem){
+      console.log("repeat", repeat);
+      repeat++;
+    }
+  }
+  if(repeat > 0){
+    console.log("cannot add suggestion");
+    res.send(JSON.stringify("This item is already logged!"));
+  }else{
+    suggestdata.push(entry);
+    console.log("req: ", entry);
+    const result = await collectionSuggest.insertOne(entry)
+    res.send(JSON.stringify(suggestdata));
+  }
+  
 });
+
 
 //Handle Bring
 app.post("/bring", express.json(), async (req, res) => {
   const indexToRemove = req.body.suggestIndex;
-  //console.log("index to remove NaN: ", isNaN(indexToRemove))
-  //console.log("index to remove: ", indexToRemove)
-  
   // Check if indexToRemove is valid/
-  
+  const name = req.user.username;
   if (isNaN(indexToRemove) || indexToRemove < 0 || indexToRemove >= suggestdata.length) {
     return res.status(400).send(JSON.stringify("Invalid index"));
   }
   const remove = suggestdata[indexToRemove];
-  const newData = {name:"", item: suggestdata[indexToRemove].Sitem, price: "",qty: suggestdata[indexToRemove].Sqty};
+  const newData = {name: name, item: suggestdata[indexToRemove].Sitem, price: "",qty: suggestdata[indexToRemove].Sqty};
   suggestdata.splice(indexToRemove, 1); // Remove the entry from the array
   appdata.push(newData);
   console.log("index: ", indexToRemove);
@@ -236,6 +253,5 @@ app.post("/bring", express.json(), async (req, res) => {
     req.json = JSON.stringify(bothArrays);
     res.send(req.json);
 });
-
 
 app.listen(process.env.PORT || 3000);

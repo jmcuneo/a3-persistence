@@ -9,7 +9,7 @@ const nextPageGithub = function(event){
 
 window.onload = function () {
     console.log("hello world");
-    document.getElementById("login").onclick = nextPage;
+    //document.getElementById("login").onclick = nextPage;
     document.getElementById("logingithub").onclick = nextPageGithub;
 
 }
