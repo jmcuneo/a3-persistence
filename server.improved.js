@@ -13,6 +13,7 @@ const { MongoClient, ObjectId } = require('mongodb')
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 const client = new MongoClient( uri )
 let collection = null
+let newUser = false
 
 app.use( express.static( 'public' ) )
 app.use( express.static( 'views'  ) )
@@ -78,8 +79,14 @@ app.use( (req,res,next) => {
 
 
 app.post( '/refresh', cors(), async (req, res) => {
+  
   const result = await collection.find({}).toArray()
-  res.json(result)
+  let resp = {new: false, data: result}
+  if(newUser) {
+    resp.new = true
+  }
+  newUser = false
+  res.json(resp)
 })
 
 app.post( '/submit',cors(), async (req, res) => {
@@ -156,10 +163,12 @@ async function setCollection (username) {
   let userCollection = await database.collection(username)
   if (userCollection) {
     collection = userCollection
+    newUser = false
   } else {
     database.createCollection(username)
     collection = await database.collection(username)
     console.log("New collection created for user " + username)
+    newUser = true
   }
 }
 

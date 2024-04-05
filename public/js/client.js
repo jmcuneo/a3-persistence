@@ -54,7 +54,10 @@ async function deleteItem( event ) {
   })
 
   const resp = await response.json()
-  displayData(resp)
+  if(resp.newUser){
+    alert("A new calculator has been created for your account")
+  }
+  displayData(resp.data)
 }
 
 //Modify an item 
