@@ -4,16 +4,7 @@ Assignment 3 - Persistence: Two-tier Web Application with Database, Express serv
 ## Car Database Part 2
 
 https://a3-andrewnguyen.onrender.com/
-
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
-
-- the goal of the application
-- challenges you faced in realizing the application
-- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why
-  - include any modifications to the CSS framework you made via custom CSS you authored
-- the five Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function for *one* (and one alone) middleware please 
-add a little more detail about what it does.
+NOTE: This link cna break and give a 503 error. Please keep retrying this. Running locally works perfectly fine
 
 My  application is a continuation of my previous assignment: The Cars Database. The goal of my application was to connect my application from the client to the server then to the mongo database where the client can sender data to the server which sends to the database to be stored. 
 I faced challenges in adapting to Express specifically in app.use() as the middleware functions were new to me. I also faced challenges in the directories as my middleware functions had been confused with files being sent to the server.
