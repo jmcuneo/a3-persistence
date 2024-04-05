@@ -27,9 +27,9 @@
   </head>
   <body class="vh-100 vw-100" data-bs-theme="light">
     <div class="container fixed-top bg-white">
-      <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <header role="banner" class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-          <img src="./logo512.png" alt="logo" width="32" height="32" class="me-2" />
+          <img src="./logo512.png" alt="logo" aria-label="logo" width="32" height="32" class="me-2" />
           <span class="fs-4">To Not-Do List</span>
         </a>
 
@@ -63,14 +63,14 @@
     </div>
 
     <div class="container fixed-bottom bg-white">
-      <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+      <footer role="contentinfo" aria-label="To Not-Do List footer" class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
         <div class="col-md-4 d-flex align-items-center">
-          <img src="./logo512.png" alt="logo" width="24" height="24" class="me-2" />
+          <img src="./logo512.png" alt="logo" aria-label="logo" width="24" height="24" class="me-2" />
           <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2024 Gabriel Shiu, CS 4241 Webware</span>
         </div>
 
         <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-          <li class="ms-3"><a id="githubRepo" href="https://github.com/s-leirbag/a2-GabrielShiu">Github Repo</a></li>
+          <li class="ms-3"><a id="githubRepo" aria-label="GitHub repository" href="https://github.com/s-leirbag/a2-GabrielShiu">Github Repo</a></li>
         </ul>
       </footer>
     </div>
