@@ -31,7 +31,15 @@
           <form>
             <div class="form-row">
               <input type="text" id="add_part" placeholder="Name of Part" />
-              <input type="text" id="add_material" placeholder="Material" />
+              <select type="text" id="add_material">
+                <option value = "error" selected disabled hidden>Select Material</option>
+                <option>TPU</option>
+                <option>PLA</option>
+                <option>Steel</option>
+                <option>Aluminum</option>
+                <option>UHMW</option>
+                <option>Foam</option>
+              </select>
               <input type="text" id="add_quantity" placeholder="Quantity" />
               <input
                 type="text"
@@ -41,32 +49,22 @@
               <button class="btn btn-outline-light bg-dark" id="add_button">
                 Add Part
               </button>
+              <button class="btn btn-outline-light bg-dark" id="modify_button">
+                Modify Part
+              </button>
+              <input type = "reset" class ="btn btn-outline-light bg-dark">
             </div>
+            <input type = "radio" id = "ant" name = "robot_type" value = "Antweight">
+            <label for = "ant" class = "text-white">Antweight</label>
+            <input type = "radio" id = "beetle" name = "robot_type" value = "Beetleweight">
+            <label for = "beetle" class = "text-white">Beetleweight</label>
           </form>
           <br />
       </div>
       <br />
-      <div class="row d-flex">
-          <form>
-            <div class="form-row">
-              <input type="text" id="modify_part" placeholder="Name of Part" />
-              <input type="text" id="modify_material" placeholder="Material" />
-              <input type="text" id="modify_quantity" placeholder="Quantity" />
-              <input
-                type="text"
-                id="modify_weight"
-                placeholder="Weight per Unit"
-              />
-              <button class="btn btn-outline-light bg-dark" id="modify_button">
-                Modify Part
-              </button>
-            </div>
-          </form>
-      </div>
-      <br />
       <div class="row w-100 d-flex">
         <table
-          id="part_table"
+          id="part_table_ant"
           class="table table-dark table-striped table-bordered table-hover"
         >
           <tr>
@@ -75,9 +73,21 @@
             <th>Quantity</th>
             <th>Weight</th>
           </tr>
-          <tbody id="table_body"></tbody>
+          <tbody id="table_body_ant"></tbody>
         </table>
         <br />
+        <table
+          id="part_table_beetle"
+          class="table table-dark table-striped table-bordered table-hover"
+        >
+          <tr>
+            <th>Part Name</th>
+            <th>Material</th>
+            <th>Quantity</th>
+            <th>Weight</th>
+          </tr>
+          <tbody id="table_body_beetle"></tbody>
+        </table>
       </div>
       <div class="row d-flex">
           <form>
@@ -90,21 +100,26 @@
             <button class="btn btn-outline-light bg-dark" id="remove_button">
               Remove Part
             </button>
+            <input type = "reset" class ="btn btn-outline-light bg-dark">
               </div>
+            <input type = "radio" id = "r_ant" name = "r_robot_type" value = "Antweight">
+            <label for = "ant" class = "text-white">Antweight</label>
+            <input type = "radio" id = "r_beetle" name = "r_robot_type" value = "Beetleweight">
+            <label for = "beetle" class = "text-white">Beetleweight</label>
           </form>
       </div>
       <br />
       <div class="row d-flex">
-        <img
-          src="https://cdn.glitch.global/f28ad010-65c7-4799-96f7-31a28924a31d/thumbnails%2Ftrex.png?1711331052361"
+        <img class = "img-fluid img-thumbnail border border-dark" width = "375" height = "300"
+          src="https://cdn.glitch.global/7430d0d3-034f-42f9-aab8-408bf982427f/trex.png?v=1712223153710"
           alt="Image of TRex robot CAD"
         />
-        <img
-          src="https://cdn.glitch.global/f28ad010-65c7-4799-96f7-31a28924a31d/thumbnails%2Ftrex_built.png?1711331046164"
-          alt="Image of TRex robot built"
+        <img class = "img-fluid img-thumbnail border border-dark" width = "375" height = "300"
+          src="https://cdn.glitch.global/7430d0d3-034f-42f9-aab8-408bf982427f/fracture.png?v=1712222883735"
+          alt="Image of Fracture robot CAD"
         />
       </div>
-    </div>
+      </div>
           </div>
   </body>
 </html>

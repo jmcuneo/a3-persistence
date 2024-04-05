@@ -5,9 +5,9 @@
 const add = async function(event){
   event.preventDefault()
   
-  const input = document.querySelectorAll("#add_part, #add_material, #add_quantity, #add_weight"),
+  const input = document.querySelectorAll("#add_part, #add_material, #add_quantity, #add_weight, input[name = robot_type]:checked"),
         json = {part_name: input.item(0).value, new_material: input.item(1).value, new_quantity: input.item(2).value,
-        weight_per_unit: input.item(3).value},
+        weight_per_unit: input.item(3).value, robot_type: input.item(4).value},
         body = JSON.stringify(json)
 
     fetch( '/add', {
@@ -18,7 +18,8 @@ const add = async function(event){
   .then( response => response.json() )
   .then( json => {
       console.log( json )
-      constructTable()
+      constructTable("Antweight", "table_body_ant")
+      constructTable("Beetleweight", "table_body_beetle")
     })
 };
 
@@ -26,9 +27,9 @@ const add = async function(event){
 const modify = async function(event){
   event.preventDefault()
   
-  const input = document.querySelectorAll("#modify_part, #modify_material, #modify_quantity, #modify_weight"),
+  const input = document.querySelectorAll("#add_part, #add_material, #add_quantity, #add_weight, input[name = robot_type]:checked"),
         json = {part_name: input.item(0).value, new_material: input.item(1).value, new_quantity: input.item(2).value,
-        weight_per_unit: input.item(3).value},
+        weight_per_unit: input.item(3).value, robot_type: input.item(4).value},
         body = JSON.stringify(json)
 
     fetch( '/modify', {
@@ -39,7 +40,8 @@ const modify = async function(event){
   .then( response => response.json() )
   .then( json => {
       console.log( json )
-      constructTable()
+      constructTable("Antweight", "table_body_ant")
+      constructTable("Beetleweight", "table_body_beetle")
     })
 };
 
@@ -50,8 +52,8 @@ const modify = async function(event){
 const remove = async function(event){
   event.preventDefault()
 
-  const input = document.querySelector("#remove_part"),
-        json = {part_name: input.value},
+  const input = document.querySelectorAll("#remove_part, input[name = r_robot_type]:checked"),
+        json = {part_name: input.item(0).value, robot_type: input.item(1).value},
         body = JSON.stringify(json)
 
     fetch( '/remove', {
@@ -62,7 +64,8 @@ const remove = async function(event){
   .then( response => response.json() )
   .then( json => { 
       console.log( json ) 
-      constructTable()
+      constructTable("Antweight", "table_body_ant")
+      constructTable("Beetleweight", "table_body_beetle")
     })
 };
 
@@ -122,17 +125,19 @@ const receive = async function() {
 }
 
 /* A function that rebuilds the table content from the received appdata array */
-const constructTable = async function() {
-  entries = await receive()
+const constructTable = async function(robot_type, id) {
+  var entries = await receive()
   console.log(entries)
-  htmlString = ""
+  var htmlString = ""
 
   for(let i = 0; i < entries.length; i++){
-    row = "<tr><td>" +  entries[i].part_name + "</td><td>" + entries[i].new_material + "</td><td>" + entries[i].new_quantity + "</td><td>" + entries[i].weight + "</td></tr>"
-    htmlString += row
+    if(entries[i].robot_type === robot_type){
+      var row = "<tr><td>" +  entries[i].part_name + "</td><td>" + entries[i].new_material + "</td><td>" + entries[i].new_quantity + "</td><td>" + entries[i].weight + "</td></tr>"
+      htmlString += row
+    }
   }
 
-  table_body = document.getElementById("table_body")
+  var table_body = document.getElementById(id)
   table_body.innerHTML = htmlString
 }
 
@@ -149,7 +154,8 @@ window.onload = function() {
     add_button.onclick = add;
     remove_button.onclick = remove;
     modify_button.onclick = modify;
-    constructTable()
+    constructTable("Antweight", "table_body_ant")
+    constructTable("Beetleweight", "table_body_beetle")
   }else{
     const login_button = document.getElementById("login_button");
     login_button.onclick = login;

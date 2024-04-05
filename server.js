@@ -31,24 +31,25 @@ var active_user = ""
 
 // Try to do this without updating
 app.post( '/add', async (req,res) => {
-  weight = parseInt(req.body.new_quantity)*parseFloat(req.body.weight_per_unit)
-  const result = await collection.insertOne( {part_name: req.body.part_name, new_material: req.body.new_material, new_quantity: req.body.new_quantity, weight: weight, related_user: active_user} )
+  var weight = parseInt(req.body.new_quantity)*parseFloat(req.body.weight_per_unit)
+  const result = await collection.insertOne( {part_name: req.body.part_name, new_material: req.body.new_material, new_quantity: req.body.new_quantity, weight: weight, related_user: active_user, robot_type: req.body.robot_type} )
   res.json( result )
 })
 
 app.post( '/remove', async (req,res) => {
-  const result = await collection.deleteOne( {part_name: req.body.part_name} )
+  console.log(req.body.part_name)
+  console.log(req.body.robot_type)
+  const result = await collection.deleteOne( {$and: [{part_name: {$eq: req.body.part_name}}, {robot_type: {$eq: req.body.robot_type}}]} )
   res.json( result )
 })
 
 app.post( '/modify', async (req,res) => {
-  new_weight = parseInt(req.body.new_quantity)*parseFloat(req.body.weight_per_unit)
-  const result = await collection.updateOne( {part_name: req.body.part_name}, {$set: {new_material: req.body.new_material, new_quantity: req.body.new_quantity, weight: new_weight}})
+  var new_weight = parseInt(req.body.new_quantity)*parseFloat(req.body.weight_per_unit)
+  const result = await collection.updateOne( {part_name: req.body.part_name, robot_type: req.body.robot_type}, {$set: {new_material: req.body.new_material, new_quantity: req.body.new_quantity, weight: new_weight}})
   res.json( result )
 })
 
 app.get('/receive', async (req, res) => {
-  console.log(req.body.related_user)
   const result = await collection.find({related_user: active_user}).toArray()
   console.log(result)
   res.json( result )
