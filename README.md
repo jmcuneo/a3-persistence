@@ -15,4 +15,4 @@ As for Express middleware, I used the following:
 
 ### Design/Evaluation Achievements
 
-![[lighthouse.png]]
+![Score](lighthouse.png)
