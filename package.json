@@ -4,7 +4,7 @@
   "description": "",
   "author": "Edison Zhang",
   "scripts": {
-    "start": "node server.improved.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.17.1",

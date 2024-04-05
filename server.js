@@ -145,6 +145,8 @@ app.post('/login', async (req, res) => {
 
     if (validated) {
         req.session.userId = user._id;
+        userID = username
+        console.log("New User: "+userID)
         if(isNewAccount) {
             res.status(201).send('new account created');
         }
