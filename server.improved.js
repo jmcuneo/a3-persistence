@@ -97,7 +97,7 @@ app.post("/login", (req, res) => {
     req.on("end", async function () {
         const userData = JSON.parse(dataString);
         if(userData.user.match("^\s*$") || userData.pass.match("^\s*$")) {
-            res.status(200).send("your username or password is invalid.");
+            res.status(200).send("your username or password cannot contain only whitespace.");
             return;
         }
         Accounts.findOne({ username: userData.user }).then(async acc => {
@@ -107,7 +107,7 @@ app.post("/login", (req, res) => {
                     res.status(200).send("Successfully created your account!");
                     return;
                 } else {
-                    res.status(200).send("That username is unavailable.");
+                    res.status(200).send("That username is already in use.");
                     return;
                 }
             } else {
@@ -116,7 +116,7 @@ app.post("/login", (req, res) => {
                     return;
                 }
 
-                res.status(200).send("Your username or password is incorrect. Please try again.");
+                res.status(200).send("Your username or password was entered incorrectly. Please try again.");
                 return;
             }
         });
@@ -127,7 +127,7 @@ app.get("/paint.html", (req, res) => {
     Accounts.findOne({ username: decodeURIComponent(req.cookies.username), password: decodeURIComponent(req.cookies.password) })
     .then(async acc => {
         if(!acc) {
-            res.status(200).sendFile(__dirname + "/public/index.html");
+            res.status(307).sendFile(__dirname + "/public/index.html");
         } else {
             res.status(200).sendFile(__dirname + "/private/paint.html");
         }

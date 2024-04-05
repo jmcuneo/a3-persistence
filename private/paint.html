@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en-US">
-
 <head>
   <title>Paint Live</title>
   <meta charset="utf-8">
@@ -15,7 +14,7 @@
 </head>
 <body>
   <h1>Paint Live</h1>
-  <button id="log-out" type="button">Log out</button>
+  <button id="log-out" type="button" tabindex="0">Log out</button>
   <form id="content">
     <div class="center">
       <div>
@@ -24,10 +23,11 @@
       </div>
     </div>
     <br>
-    <div id="draw-plane"></div>
+    <p id="draw-label" for="draw-plane" class="center">Select a square to change its color! You must wait a minute after each color change.</p>
+    <div id="draw-plane" role="editor" aria-describedby="draw-label"></div>
   </form>
   <div class="center">
-    <p id="status-msg"></p>
+    <p id="status-msg" role="warning"></p>
   </div>
   <aside id="sidebar">
     <h3>
@@ -38,5 +38,4 @@
     </div>
   </aside>
 </body>
-
 </html>

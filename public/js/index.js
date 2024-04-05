@@ -27,7 +27,7 @@ async function submission(e, type) {
             document.cookie = `password=${encodeURIComponent(password)}; max-age=${60 * 60 * 24}`;
             window.open("/paint.html", "_self");
         } else {
-            document.querySelector("#error-msg").textContent = "Your username or password is incorrect. Please try again.";
+            document.querySelector("#error-msg").textContent = "Your username or password was entered incorrectly. Please try again.";
         }
     } else if(type === "create") {
         const response = await fetch("/login", { method: "POST", body: JSON.stringify({ user: username, pass: password, newAccount: true }) })
