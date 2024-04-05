@@ -55,7 +55,7 @@ passport.use(new GitHubStrategy(
   {
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "https://a3-jaysoncaissie.glitch.me/auth/github/callback"
+    callbackURL: "https://a3-persistence-ycvb.onrender.com/auth/github/callback"
   },
   async function(accessToken, refreshToken, profile, cb) {
     try {
