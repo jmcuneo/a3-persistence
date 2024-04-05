@@ -170,10 +170,6 @@ const divide = async function( event ) {
 
 window.onload = async function() {      //on page load
 
-  //await fetch("/getLogin", {
-  //  method: "GET"
-  //})
-
   updateTable();      //update table
 
   const addButton = document.querySelector("#addButton")    //create an add button on the screen
