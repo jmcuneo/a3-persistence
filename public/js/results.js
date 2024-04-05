@@ -11,12 +11,12 @@ const returnHome = async function(event ){
     let breakfast = cells[2].innerText;
     let coffee = cells[3].innerText;
 
-    // Example: Replace the cell content with input fields for editing
+    //Replace the cell content with input fields for editing
     cells[1].innerHTML = '<input type="text" value="' + name + '">';
     cells[2].innerHTML = '<input type="text" value="' + breakfast + '">';
     cells[3].innerHTML = '<input type="text" value="' + coffee + '">';
 
-    // Change the button text and onclick function
+    
     let editButton = row.querySelector("button");
     editButton.innerText = "Save";
     editButton.onclick = function() {
