@@ -1,114 +1,89 @@
-Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
-===
+## Inventory Manager
 
-Check out the [CS 4241 Guides](https://github.com/jmcuneo/cs4241-guides) for help with the technologies discussed in this assignment.
+https://a3-persistence-ycvb.onrender.com/
 
-This assignnment continues where we left off, extending it to use the most popular Node.js server framework (express), 
-a database (mongodb), and a CSS application framework / template of your choice (Boostrap, Material Design, Semantic UI, Pure etc.)
+This project is a simple inventory manager like you would see in a video game. The user clicks items in the resource pool to move them in/out of the inventory. Users can add items to the item pool by typing an object name and it will be displayed in the pool. Valid icons can be found here: https://fontawesome.com/icons. Most things are center justified on this page, but grids were used to organize the items inside the inventory and item pool
 
-Baseline Requirements
----
+Some challenges I encountered were ordering my modules when importing them. I did not realize the order mattered, so I enocuntered errors that I did not know how to solve for a while.
 
-Your application is required to implement the following functionalities:
+I chose to use passport to do github OAuth. I chose this because the graders have github and passport was recommended in the README.
 
-- a `Server`, created using Express (no alternatives will be accepted for this assignment)
-- a `Results` functionality which shows all data associated with a logged in user (except passwords)
-- a `Form/Entry` functionality which allows users to add, modify, and delete data items (must be all three!) associated with their user name / account. 
-- Persistent data storage in between server sessions using [mongodb](https://www.mongodb.com/cloud/atlas) (you *must* use mongodb for this assignment). You can use either the [official mongodb node.js library](https://www.npmjs.com/package/mongodb) or use the [Mongoose library](https://www.npmjs.com/package/mongoose), which enables you to define formal schemas for your database. Please be aware that the course staff cannot provide in-depth support for use of Mongoose.  
-- Use of a [CSS framework or template](https://github.com/troxler/awesome-css-frameworks). 
-This should do the bulk of your styling/CSS for you and be appropriate to your application. 
-For example, don't use [NES.css](https://nostalgic-css.github.io/NES.css/) (which is awesome!) unless you're creating a game or some type of retro 80s site.
+I used the NES.CSS framework, because my game is inspired by video games. I made custom inventory slots in my own CSS file. I also clamped some of the values so that they shrunk with the page if the user's device was not wide enough. In addition to this, I styled a custom dark-mode with high contrast to be more accessible to users. The grid layouts had to be a custom layout as well.
 
-Your application is required to demonstrate the use of the following concepts:  
-
-HTML:  
-- HTML input tags and form fields of various flavors (`<textarea>`, `<input>`, checkboxes, radio buttons etc.)
-- HTML that can display all data *for a particular authenticated user*. Note that this is different from the last assignnment, which required the display of all data in memory on the server.
-
-Note that it might make sense to have two pages for this assignment, one that handles login / authentication and one that contains the rest of your application.
-For example, when visiting the home page for the assignment, users could be presented with a login form. After submitting the login form, if the login is 
-successful, they are taken to the main application. If they fail, they are sent back to the login to try again. For this assignment, it is acceptable to simply create 
-new user accounts upon login if none exist; however, you must alert your users to this fact.  
-
-CSS:  
-- CSS styling should primarily be provided by your chosen template/framework. 
-Oftentimes a great deal of care has been put into designing CSS templates; 
-don't override their stylesheets unless you are extremely confident in your graphic design capabilities. 
-The idea is to use CSS templates that give you a professional looking design aesthetic without requiring you to be a graphic designer yourself.
-
-JavaScript:  
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server. 
-See the [previous assignment](https://github.com/cs-4241-23/shortstack) for reference.
-
-Node.js:  
-- A server using Express and a persistent database (mongodb).
-
-General:  
-- Your site should achieve at least 90% on the `Performance`, `Best Practices`, `Accessibility`, and `SEO` tests 
-using Google [Lighthouse](https://developers.google.com/web/tools/lighthouse) (don't worry about the PWA test, and don't worry about scores for mobile devices).
-Test early and often so that fixing problems doesn't lead to suffering at the end of the assignment. 
-
-Deliverables
----
-
-Do the following to complete this assignment:
-
-1. Implement your project with the above requirements. I'd begin by converting your A2 assignment. First, change the server to use express. Then, modify the server to use mongodb instead of storing data locally. Last but not least, implement user accounts and login. User accounts and login is often the hardest part of this assignment, so budget your time accordingly.
-2. If you developed your project locally, deploy your project to Glitch (unless completing the alternative server technical acheivement described below), and fill in the appropriate fields in your package.json file.
-3. Test your project to make sure that when someone goes to your main page on Glitch (or an alternative server), it displays correctly.
-4. Ensure that your project has the proper naming scheme `a3-FirstnameLastname` so we can find it.
-5. Fork this repository and modify the README to the specifications below.
-6. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a3-FirstnameLastname`.
-
-Acheivements
----
-
-Below are suggested technical and design achievements. You can use these to help boost your grade up to an A and customize the 
-assignment to your personal interests, for a maximum twenty additional points and a maximum grade of a 100%. 
-These are recommended acheivements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README, 
-why it was challenging, and how many points you think the achievement should be worth. 
-ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THEM.
-
-*Technical*
-- (10 points) Implement OAuth authentication, perhaps with a library like [passport.js](http://www.passportjs.org/). 
-*You must either use Github authenticaion or provide a username/password to access a dummy account*. 
-Course staff cannot be expected, for example, to have a personal Facebook, Google, or Twitter account to use when grading this assignment. 
-Please contact the course staff if you have any questions about this. THIS IS THE HARDEST ACHEIVEMENT OFFERED IN WEBWARE. You have been warned!  
-- (5 points) Instead of Glitch, host your site on a different service. Find a service that is reputable and has a free tier. Post your findings on Slack in the #assignment3 channel. DO NOT feel compelled to purchase a paid tier from any service, although if you already have one, you are welcome to use it. Make sure to describe this a bit in your README. What was better about using the service you chose as compared to Glitch? What (if anything) was worse? 
-- (5 points) Get 100% (not 98%, not 99%, but 100%) in all four lighthouse tests required for this assignment.  
-
-*Design/UX*
-- (10 points) Make your site accessible using the [resources and hints available from the W3C](https://www.w3.org/WAI/), Implement/follow twelve tips from their [tips for writing](https://www.w3.org/WAI/tips/writing/), [tips for designing](https://www.w3.org/WAI/tips/designing/), and [tips for development](https://www.w3.org/WAI/tips/developing/). *Note that all twelve must require active work on your part*. 
-For example, even though your page will most likely not have a captcha, you don't get this as one of your twelve tips to follow because you're effectively 
-getting it "for free" without having to actively change anything about your site. 
-Contact the course staff if you have any questions about what qualifies and doesn't qualify in this regard. 
-List each tip that you followed and describe what you did to follow it in your site.
-- (5 points) Describe how your site uses the CRAP principles in the Non-Designer's Design Book readings. 
-Which element received the most emphasis (contrast) on each page? 
-How did you use proximity to organize the visual information on your page? 
-What design elements (colors, fonts, layouts, etc.) did you use repeatedly throughout your site? 
-How did you use alignment to organize information and/or increase contrast for particular elements. 
-Write a paragraph of at least 125 words *for each of four principles* (four paragraphs, 500 words in total). 
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-
-your glitch (or alternative server) link e.g. http://a3-joshua-cuneo.glitch.me
-
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
-
-- the goal of the application
-- challenges you faced in realizing the application
-- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why
-  - include any modifications to the CSS framework you made via custom CSS you authored
-- the five Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function for *one* (and one alone) middleware please 
-add a little more detail about what it does.
+The resource pool persists for every user. They all share the same pool. The number of inventory slots and the items in the slots is saved on a per-user basis. The user can add to the resource pool by typing in an item name and the add button. The user can change the number of inventory slots by pressing the radio buttons. The buttons on the items can be pressed to move items to/from the inventory.
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
+- **Tech Achievement 1**: I implemented the OAauth authentication via the github strategy with passport.js. If a new user is detected, it will register a new account in the database and also alert the user.
+
+-Each user has their own session to allow numerous users to use the site at the same time, without interfering with eachothers data
+
+-The site uses cookies to keep the user logged in for the day.
+
+-I hosted my website using render instead of glitch. I liked that the site updates when I update my github. I miss being able to directly make edits in glitch though, which helped with designing the front-end.
+
+-I received 100% on all lighthouse scores for all pages
+
+![Capture](https://github.com/jjcaissie/a3-jaysoncaissie/assets/132401971/c6442284-2cff-4c44-8c4a-a3b2c8bb3b5d)
+
+![Capture2](https://github.com/jjcaissie/a3-jaysoncaissie/assets/132401971/6d5dfc6c-a478-4bd2-bd62-10e88ce9c384)
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+
+- 1. Provide informative, unique page titles
+	My program consists of two page, both of which have descriptive titles 
+		Login Page - Inventory Manager 	
+		Inventory Manager
+
+2. Use headings to convey meaning and structure
+	Each section has a heading to clearly show what is in the following section
+ ![image](https://github.com/jjcaissie/a3-jaysoncaissie/assets/132401971/15088401-8b2e-4103-81a5-1969c0a5a459)
+
+3. Make link text meaningful
+	The following text is descriptive of what the action does
+	 ![image](https://github.com/jjcaissie/a3-jaysoncaissie/assets/132401971/655b1781-5b10-48a7-a570-88895064049a)
+
+4. Provide sufficient contrast between foreground and background. 
+	Each element is in white while the background is in black. The contrast is incredibly high. The logout button is blue, as it is a little less important than the rest
+
+5. Ensure that interactive elements are easy to identify
+	When hovering over non-interactive elements, the cursor is default. When hovering over a button, it switches to a custom-click cursor. When it hovers over text, it changes to the I icon. When hovering over non-interactive elements, the cursor does not change. The icons also have proper styling for when something is focused to ensure that users who use keyboard navigation know which element is in focus. This shows users what is interactable and what is not. There was one error in my page I could not figure out in time and that is that the “checked” radio button has an extra tabindex
+
+6. Help users avoid and correct mistakes
+	I have built-in alerts for when certain actions cannot be taken. If an action can be taken, visible changes to the page are made.
+  ![image](https://github.com/jjcaissie/a3-jaysoncaissie/assets/132401971/b66e8c39-96df-4df3-aabf-eb86ea2c001b)
+![image](https://github.com/jjcaissie/a3-jaysoncaissie/assets/132401971/97a9b151-5eb7-40de-989e-f694ea6908f4)
+![image](https://github.com/jjcaissie/a3-jaysoncaissie/assets/132401971/2404f786-2b66-4fe0-a551-28097a861bd2)
+ 
+7. Use headings and spacing to group related content
+	Each container has a margin to show that the content inside them clearly belongs to a certain section. They also have clear headings to group them too
+ ![image](https://github.com/jjcaissie/a3-jaysoncaissie/assets/132401971/1f52be11-6181-491a-a8e2-4f1c8349bb14)
+
+8. Write code that adapts to the user’s technology
+The elements get resized/rearranged when the viewport width changes.
+![image](https://github.com/jjcaissie/a3-jaysoncaissie/assets/132401971/25afe9b3-2262-4043-a4d0-445a85fa64a5)
+![image](https://github.com/jjcaissie/a3-jaysoncaissie/assets/132401971/559606d3-038d-4379-b318-23dd3016a246)
+
+9. Ensure that all interactive elements are keyboard accessible
+	Users can navigate the entire page using tab and by inputting text with a keyboard
+
+10. Identify page language and language changes
+	Every page specifies the language is in English 
+  ![image](https://github.com/jjcaissie/a3-jaysoncaissie/assets/132401971/4f7c5b34-dd80-412c-a752-f9c9b9dec586)
+![image](https://github.com/jjcaissie/a3-jaysoncaissie/assets/132401971/289c9636-de3e-4e3b-b63e-1999c484dc74)
+
+11. Provide clear instructions
+	I have instructions for the user to understand how to use each section. I also specify what datatype(integer) to use when entering a value/weight for an object
+ ![image](https://github.com/jjcaissie/a3-jaysoncaissie/assets/132401971/e6f6fe5a-3c26-48eb-958c-8fb8f152b711)
+![image](https://github.com/jjcaissie/a3-jaysoncaissie/assets/132401971/b9d23e40-ff77-42bd-bd1b-8227f0a735d2)
+![image](https://github.com/jjcaissie/a3-jaysoncaissie/assets/132401971/d41ea1a4-4616-49de-9a46-e6cb054f26ed)
+ 
+12. Provide easily identifiable feedback
+	This can be seen in numerous areas. When a new user is created, an alert is shown to communicate to the user that their account was successfully registered. When data is successfully put into the database, the backend data is shown to the user at the bottom of the page. There are also alerts for when operations fail, and there is feedback for the user to help correct their mistakes. 
+
+I used CRAP principles to organize my pages
+
+The C stands for contrast. I demonstrate sufficient contrast in color in my program by making the background black and making sure the color of the elements is different enough to make them pop and be visible to the user. The inventory elements are the most important elements, so I make them a different color from all the other elements to draw attention to these. Contrast does not have to be exclusively color; I also use contrasting font sizes to differentiate kinds of elements. Headers are larger than all the other text elements to ensure readers read these first to know what each section of the page is before diving into that content. The inventory slots are also a slightly different style which helps draw attention to them and make it obvious that they are empty slots that items can go in.
+The R stands for repetition. I utilize repetition to make the document more cohesive and unified. One of the things that reoccurs is the square containers that envelope different sections of the page. Each one has a border with the same style. The headers are also all centered atop the border, which helps the user identify that they are titles for their respective containers. The same font is also used throughout the entirety of the page. The font is similar to that of old games, which gives it a playful vibe and helps it feel more like a game and less like a tool. All elements, besides the custom inventory slots, are styled by the NES.css framework. All of the elements in this are already pre-styled to look great and cohesive together, and this was a huge help in making my site maintain a professional looking design aesthetic.
+The A stands for alignment. The main containers in the page are aligned vertically so the page reads top to bottom naturally. This is an intentional decision, as tasks that should be completed first are near the top, and tasks that the users interact with later are near the bottom. All the sides of the containers are also aligned using the same margins. All the headers are also aligned in the center to keep things organized. Diving deeper into some of the containers, grids are utilized to keep things consistent. These grids are aligned horizontally. The resource pool and inventory both use dynamically sized grids to store arbitrary amounts of items. Elements that are aligned horizontally are related. They are either part of the same step(add/mod/delete), or they are grouped(in an array) in the database.
+The P stands for proximity. Related items are grouped together. For example, all the form items are placed at the top in the same contained area. This makes it clear that these items are related. Once the user types an input, the nearby buttons placed directly below are the next logical step. Next, the instructions for any container are placed directly beneath the header every time. This pattern makes it clear to the user that they can find help right beneath the header. All related items are also placed in boxed containers. When the backend data is revealed, all the data is grouped at the bottom, since it is all related, but not interactable. The most interactable items are placed in the center of the screen, with slightly less interactable elements located above and beneath.
