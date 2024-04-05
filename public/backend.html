@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Use an RPE calculator to help approximate the desired weight for certain rpe. Want to figure out your one rep max? Use an RPE calculator. We also track entries to help track progress. Made a mistake? You can delete or edit your entries.">
+  <meta name="description"
+    content="Use an RPE calculator to help approximate the desired weight for certain rpe. Want to figure out your one rep max? Use an RPE calculator. We also track entries to help track progress. Made a mistake? You can delete or edit your entries.">
   <link rel="stylesheet" href="css/main.css" />
   <title>RPE Calculator</title>
 </head>
@@ -21,8 +22,8 @@
           <input type="number" id="weight" placeholder="Enter weight">
         </form>
         <form class="form-group" id="repform">
-          <label for="reps">Reps:</label>
-          <input type="number" id="reps" placeholder="Enter reps" min="1" max="12">
+          <label for="reps">Reps (1-12):</label>
+          <input type="number" id="reps" placeholder="Enter reps from 1 to 12" min="1" max="12">
         </form>
         <form class="form-group" id="rpeform">
           <label for="rpe">RPE:</label>
@@ -42,6 +43,7 @@
 
       </div>
       <div class="centered-container" id="TableHolder">
+        <h2>RPE Tables</h2>
         <div class="row" id="buttonRow">Rep
           <button id="rep1" value="1">1</button>
           <button id="rep2" value="2">2</button>
@@ -58,13 +60,13 @@
         </div>
         <div id="tablesContainer"></div>
       </div>
-      <div class="container">
+      <div class="centered-container">
         <h2>
           Information
         </h2>
-        <div>
-        Rate of perceived exertion (RPE) is used to measure how hard your body works during physical activity. It runs from 0 – 10, using numbers to rate how much effort an activity takes. The RPE scale can help you manage exercise intensity and improve cardio training and endurance. Some healthcare providers use RPE to evaluate heart and lung health.
-      </div>
+        <div> Rate of perceived exertion (RPE) is used to measure how hard your body works during physical activity.</div>
+        <div> From 0 – 10: how much effort an activity takes. </div>
+        <div> RPE scale can help you manage exercise intensity and improve cardio training and endurance.</div>
       </div>
     </div>
 
@@ -108,7 +110,7 @@
         <button id="cancelbutton">cancel</button>
 
       </div>
-      
+
       <div class="centered-container">
 
         <table id="entries-table">
