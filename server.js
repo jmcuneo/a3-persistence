@@ -1,11 +1,10 @@
-const express = require("express"),
-    { MongoClient, ObjectId } = require("mongodb"),
-    app = express(),
-    path = require('path'),
-    session = require('express-session');
-
-
+const express = require("express");
 const axios = require("axios");
+const path = require("path");
+const session = require("express-session");
+const { MongoClient, ObjectId, ServerApiVersion } = require("mongodb");
+const app = express();
+
 require('dotenv').config();
 
 app.set("view engine", "ejs");
@@ -13,7 +12,13 @@ var access_token = "";
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 
-const client = new MongoClient(uri)
+const client = new MongoClient(uri, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    },
+  });
 
 const clientID = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;

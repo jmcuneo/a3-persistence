@@ -2,7 +2,7 @@
   "name": "a3-persistence",
   "version": "",
   "description": "",
-  "author": "Bryon Tom",
+  "author": "Edison Zhang",
   "scripts": {
     "start": "node server.improved.js"
   },
