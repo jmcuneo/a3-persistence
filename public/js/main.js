@@ -168,6 +168,22 @@ const divide = async function( event ) {
   updateTable()
 }
 
+const signOut = async function() {
+  const response = await fetch('/signOut', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      }
+  });
+
+  if (response.ok) {
+      // Redirect to login page after signing out
+      window.location.href = '/login.html';
+  } else {
+      console.error('Failed to sign out');
+  }
+};
+
 window.onload = async function() {      //on page load
 
   updateTable();      //update table
@@ -183,5 +199,8 @@ window.onload = async function() {      //on page load
 
   const divideButton = document.querySelector("#divideButton")        //create an divide button on the screen
   divideButton.onclick = divide                                       //map the button to the division function
+
+  const signOutButton = document.querySelector('#signOutButton');
+  signOutButton.addEventListener('click', signOut);
 
 }

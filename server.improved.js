@@ -23,7 +23,8 @@ app.use( express.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use( cookie({
   name: 'session',
-  keys: ['key1', 'key2']
+  keys: ['key1', 'key2'],
+  username: ''
 }))
 
 const sendFile = function( response, filename ) {
@@ -63,10 +64,6 @@ const serveLoginIfNotAuthenticated = (req, res, next) => {
 // Apply the middleware to all routes
 app.use(serveLoginIfNotAuthenticated);
 
-const users = {
-  'user1': 'password1'
-}
-
 app.post( '/login', (req,res)=> {
   // express.urlencoded will put your key value pairs 
   // into an object, where the key is the name of each
@@ -75,10 +72,12 @@ app.post( '/login', (req,res)=> {
   
   // below is *just a simple authentication example* 
   // for A3, you should check username / password combos in your database
-  if( req.body.username === 'user1' && req.body.password === 'password1' ) {
+  if( req.body.username === 'user1' && req.body.password === 'password1' || req.body.username === 'user2' && req.body.password === 'password2') {
     // define a variable that we can check in other middleware
     // the session object is added to our requests by the cookie-session middleware
     req.session.login = true
+    req.session.username = req.body.username;
+    console.log(req.session.username)
     
     // since login was successful, send the user to the main content
     // use redirect to avoid authentication problems when refreshing
@@ -213,5 +212,10 @@ app.post( '/editResult', async (req,res) => {
     })
   res.status(200).json( result )
 })
+
+app.post('/signOut', (req, res) => {
+  req.session = null;
+  res.sendStatus(200); 
+});
   
 app.listen( process.env.PORT || 3000 )
