@@ -2,35 +2,39 @@
 <html lang="en">
   <head>
     <title>CS4241 Assignment 2</title>
+    <meta name="description" content="Name list for Brandon Lui's A3 Assignment Website. This was created for the Webware course at WPI. ">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="js/main.js"></script>
-    <link rel="stylesheet" href="css/main.css">
+    <link href="css/main.css" rel="stylesheet">
     
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
-  <body id="main" >
-    <div >
-      <button id="logout">Logout</button>
-    <form >
-      <h1 class="red">Enter your name</h1>
-      <input type="text" id="yourname" value="" placeholder="John Doe">
-      <button id="submit">submit</button>
-        </form>
-        <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Count</th>
-          <th>Added Date</th>
-
-        </tr>
-      </thead>
-      <tbody id="results">
-        <tr></tr>
-      </tbody>
-    </table>
+  <body class="font-sans bg-gray-100" id="main" >
+    <button id="logout" class="absolute top-0 right-0 m-4 text-white bg-blue-500 hover:bg-blue-700 py-2 px-4 rounded">Logout</button>
+    <div class="flex flex-col items-center justify-center min-h-screen py-2">
+      <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h1 class="mb-5 text-5xl text-center text-red-500">Enter your name</h1>
+        <div class="mb-4">
+          <input type="text" id="yourname" value="" placeholder="John Doe" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+        <div class="flex items-center justify-between">
+          <button id="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
+        </div>
+      </form>
+      <table class="table-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <thead>
+          <tr>
+            <th class="px-4 py-2">Name</th>
+            <th class="px-4 py-2">Count</th>
+            <th class="px-4 py-2">Added Date</th>
+          </tr>
+        </thead>
+        <tbody id="results" class="text-center">
+          <tr></tr>
+        </tbody>
+      </table>
     </div>
   </body>
 </html>

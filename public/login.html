@@ -6,18 +6,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="js/login.js"></script>
-    <link rel="stylesheet" href="css/main.css">
+    <link href="css/main.css" rel="stylesheet">
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
-  <body id="main" >
-    <div >
-    <form >
-      <h1 class="red">Login</h1>
-      <input type="text" id="username" value="" placeholder="Username">
-      <input type="password" id="password" value="" placeholder="Password">
-      <button>submit</button>
-    </form>
+  <body class="font-sans" id="main">
+    <div class="flex justify-center">
+      <form>
+        <h1 class="text-5xl mb-5 text-red-500">Login</h1>
+        <input type="text" id="username" value="" placeholder="Username" class="border py-2 px-3 text-grey-darkest mb-3">
+        <input type="password" id="password" value="" placeholder="Password" class="border py-2 px-3 text-grey-darkest mb-3">
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">submit</button>
+      </form>
     </div>
   </body>
 </html>
