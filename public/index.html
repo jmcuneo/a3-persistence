@@ -19,51 +19,76 @@
   </head>
 
   <body>
-
-    <div id="page-header">
-    <h1>Your Personal Library</h1>
-    </div>
-
-    <p >
-      Keep track of your books and your reading progress! Simply add your book title, author, total page count, and your current page number. 
-    </p>
-
-    <div id="addBook" >
-      <h2>Add a Book:</h2>
-      <form id="book-form">
-        <div class="form-group">
-          <label for="title">Title:</label>
-          <input type="text" id="title">
+    <div class="green-background">
+      <div id="page-header">
+        <h1>Your Personal Library</h1>
         </div>
-
-        <div class="form-group">
-          <label for="author">Author:</label>
-          <input type="text" id="author">
-        </div>
-
-        <div class="form-group">
-          <label for="totalPages">Total Pages:</label>
-          <input type="text" id="totalPages">
-        </div>
-
-        <div class="form-group">
-          <label for="currentPage">Current Page #:</label>
-          <input type="text" id="currentPage">
-        </div>
-
-        <button id="submitButton" type="submit" class="rounded-box">Submit</button>
-      </form>
-    </div>
-
-    <br>
-    <br>
-    <br>
     
-    <div id="resultsTable" >
-      <h2>Your Books:</h2>
-      <p>Here are the books in your library! Add books using the form above, or remove books by using the 'Delete' button corresponding the the book row. </p>
-      <table id="bookTable" class="table table-bordered">
-      </table>
-    </div>
+        <p >
+          Keep track of your books and your reading progress! Simply add your book title, author, total page count, and your current page number. 
+        </p>
+    
+        <div id="addBook" >
+          <h2>Add a Book:</h2>
+          <form id="book-form">
+            <div class="form-group">
+              <label for="title">Title:</label>
+              <input type="text" id="title">
+            </div>
+    
+            <div class="form-group">
+              <label for="author">Author:</label>
+              <input type="text" id="author">
+            </div>
+    
+            <div class="form-group">
+              <label for="totalPages">Total Pages:</label>
+              <input type="text" id="totalPages">
+            </div>
+    
+            <div class="form-group">
+              <label for="currentPage">Current Page #:</label>
+              <input type="text" id="currentPage">
+            </div>
+    
+            <button id="submitButton" type="submit" class="rounded-box">Submit</button>
+          </form>
+        </div>
+    
+        <br>
+        <br>
+        <br>
+        
+        <div id="resultsTable" >
+          <h2>Your Books:</h2>
+          <p>Here are the books in your library! Add books using the form above, or remove books by using the 'Delete' button corresponding the the book row. </p>
+          <table id="bookTable" class="table table-bordered">
+          </table>
+        </div>
+    
+        <br>
+        <br>
+    
+        <div id="Book Recommendations">
+          <h2>Book Recommendations</h2>
+          <p>Don't know what book to read? Look at this <a href="https://goodreads.com/list/show/6.Best_Books_of_the_20th_Century" class="dark-blue-text">Goodreads list</a> of best books published during the 20th century! Here are some books featured on the list:</p>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-4">
+                <img src="images/tokillamockingbird.jpg" alt="To Kill a Mockingbird by Harper Lee" class="image-fluid" width="300" >
+              </div>
+              <div class="col-md-4">
+                <img src="images/greatgatsby.jpg" alt="The Great Gatsby by F. Scott Fitzgerald" class="image-fluid" width="300" >
+              </div>
+              <div class="col-md-4">
+                <img src="images/littleprince.jpg" alt="The Little Price by Antoine de Saint-Exupery"  class="image-fluid" width="300" >
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>      
+    
+        
+    
   </body>
 </html>

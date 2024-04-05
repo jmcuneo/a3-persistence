@@ -1,8 +1,7 @@
-
-body {
+.green-background {
   background:#c8d5b9;
-  color:black;
 }
+
 
 table {
   border-collapse: collapse;
@@ -45,4 +44,9 @@ td {
   font-family: "Outfit", sans-serif;
   font-weight: 500;
   padding: 5px;
+}
+
+.dark-blue-text {
+  color: white;
+  background-color: darkblue;
 }
