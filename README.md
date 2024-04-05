@@ -2,13 +2,11 @@
 
 glitch link e.g. https://a3-ethanmoynihan-ffa5e709c487.herokuapp.com/
 
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
 
 - the goal of this website is to mimic a food ordering application
 - creating forms for add to order was difficult. It was also difficult to handle the database implementation
 - I chose to use a password/user database because it seemed like it would be the simplest option, there is currently no protection on this so do not use sensitive passwords when testing the application
-- Used the sakura framework because it is light and looks good\
-- a list of Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function, please add a little more detail about what it does.
+- Used the sakura framework because it is light and looks good
 - App.get was used to redirect the webpage of the user 
 - App.post was used for any data handling or interactions with the databases
 ## Technical Achievements
