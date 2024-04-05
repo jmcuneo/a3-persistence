@@ -2,11 +2,11 @@
 
 Glitch:https://a3-trevorng.glitch.me
 
-##Summary
+## Summary
 This application is a simple maze generator. Giuen a set of parameters, it creates a rectangular tile-based maze. While the maze isn't currently
 interactable, in the future I can use this maze to create an actual game where the user needs to navigate out of it.
 
-##Challenges
+## Challenges
 -User-Data Association
 While I can associate a maze with its creator using mongodb, I
 didn't know how to preserve user credentials.
@@ -18,14 +18,14 @@ wanted to allow more variety in my mazes' designs. For instance, one
 of the current parameters is Amount of Exits. This creates a maze with multiple exits. Although, with its
 current design, mazes with multiple exits do end up having areas of open space in them.
 
-##Authentication
+## Authentication
 As mentioned previously, my authentication strategy used the express-session middleware. I felt it was easier to implement than other
 options (mainly since) doing it manually would be more limiting and difficult. Also, it is based around express, so it felt appropriate.
 
-##CSS
+## CSS
 I decided to go with the NES.css. Since I'm generating a simple maze, I feel like a game-oriented style would be fitting. I didn't really make any modifications to it though.
 
-##Express Middleware Packages
+## Express Middleware Packages
 -Express-Session
 This hands over managing the user sessions to the package, making it easy to authenticate and keep track of users.
 
@@ -36,7 +36,7 @@ This hands over managing the user sessions to the package, making it easy to aut
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
 
-##Sample User
+## Sample User
 Username:User1
 Password:ABC
 
