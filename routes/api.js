@@ -12,7 +12,8 @@ const dataSchema = new Schema({
   name: String,
   id: String,
   addedDate: Date,
-  count: Number
+  count: Number,
+  userId: String
 });
 const Data = mongoose.model('Data', dataSchema);
 
@@ -55,9 +56,26 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// get username 
+router.get('/username', async (req, res) => {
+  try {
+    if (req.session.userId) {
+      const user
+        = await User.findById(req.session
+          .userId);
+      res.json({ username: user.username });
+    } else {
+      es.status(500).json({ error: 'Failed to retrieve username' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve username' });
+  }
+});
+
+//get all data associated with userid
 router.get('/getdata', async (req, res) => {
   try {
-    const data = await Data.find();
+    const data = await Data.find({ userId: req.session.userId });
     res.json(data);
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve data' });
@@ -90,7 +108,8 @@ router.post('/add', async (req, res) => {
     const data = new Data({
       name: name,
       addedDate: new Date(),
-      count: count + 1
+      count: count + 1,
+      userId: req.session.userId
     });
     await data.save();
     res.json(data);

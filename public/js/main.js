@@ -127,3 +127,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
    });
 });
 
+// add username to the page
+fetch('/api/username')
+.then(response => response.json())
+.then(data => {
+  document.getElementById('username').textContent = data.username;
+});
