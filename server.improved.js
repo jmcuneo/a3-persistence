@@ -19,6 +19,18 @@ require("dotenv").config();
 
 const app = express();
 
+//Database Code
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const uri = `mongodb+srv://${process.env.USERNAME}:${process.env.PASS}@${process.env.HOST}`;
+const { parse } = require("path");
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+
 app.use( express.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use( cookie({
@@ -28,6 +40,8 @@ app.use( cookie({
 }))
 
 app.use( express.static(path.join(__dirname, 'public')))
+
+/*
 
 // Middleware to serve login page before any other page if not authenticated
 const serveLoginIfNotAuthenticated = (req, res, next) => {
@@ -41,6 +55,12 @@ const serveLoginIfNotAuthenticated = (req, res, next) => {
 
 // Apply the middleware to all routes
 app.use(serveLoginIfNotAuthenticated);
+*/
+
+// Default route handler
+app.get('/', (req, res)=>{
+  res.sendFile(__dirname + '/public/login.html')
+})
 
 app.post( '/login', (req,res)=> {
   // express.urlencoded will put your key value pairs 
@@ -68,38 +88,18 @@ app.post( '/login', (req,res)=> {
   }
 })
 
-// Default route handler
-app.use('/', (req, res, next) => {
-  // Check if user is authenticated, if not, redirect to login
-  if (req.session.login===true) {
-    next()
-  } else {
-    // User is authenticated, redirect to main content
-    res.sendFile(__dirname + '/public/index.html');
-  }
-});
+async function run(){
+  await client.connect()
+  myCollection = await client.db("CS4241").collection("Calculator")
+}
+
+run()
+
+
 
 app.get('/login', (req, res) => {
-  sendFile(res, (__dirname + '/public/login.html'));
+  res.sendFile(__dirname + '/public/login.html');
 });
-
-//Database Code
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = `mongodb+srv://${process.env.USERNAME}:${process.env.PASS}@${process.env.HOST}`;
-const { ObjectId } = require('mongodb'); // Add this line to import ObjectId from MongoDB
-const { parse } = require("path");
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-
-app.get('/', (req, res)=>{
-  sendFile(res, 'public/login.html')
-})
 
 app.post('/addition', async (req, res) => {
   const collection = await client.db("CS4241").collection("Calculator")
@@ -131,8 +131,7 @@ app.post('/subtract', async (req, res) => {
   collection.insertOne({ count: count + 1, result: result });       //add this result to the array of previous results
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({ result: result }));        //send the result to the client
-
-    }
+  }
 );
 
 app.post('/multiply', async (req, res) => {
@@ -148,7 +147,6 @@ app.post('/multiply', async (req, res) => {
   collection.insertOne({ count: count + 1, result: result });       //add this result to the array of previous results
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({ result: result }));        //send the result to the client
-
     }
 );
 
