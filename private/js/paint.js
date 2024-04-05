@@ -54,13 +54,16 @@ async function updateGrid() {
   for(let i = 0; i < mostRecent.length; i++) {
     const user = mostRecent[i];
 
-    const name = document.createElement("h4");
+    const name = document.createElement("h3");
     name.textContent = user.name;
 
     const color = document.createElement("span");
     color.classList.add("change-color", "center");
     color.style.backgroundColor = user.color;
-    color.textContent = `${user.x}, ${user.y}`;
+
+    const colorText = document.createElement("p");
+    colorText.textContent = `${user.x}, ${user.y}`;
+    color.appendChild(colorText);
 
     const label = document.createElement("p");
     label.textContent = "Changed:";
@@ -144,10 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const x = Math.floor(i / 10);
     const y = i % 10;
 
-    const gridButton = document.createElement("input");
-    gridButton.type = "submit";
-    gridButton.form = "content";
-    gridButton.value = "";
+    const gridButton = document.createElement("div");
     gridButton.classList.add("grid");
     gridButton.onclick = (e) => submit(e, x, y);
     grid.appendChild(gridButton);
