@@ -1,6 +1,8 @@
 const express = require('express')
 const { MongoClient, ObjectId } = require("mongodb")
 const app = express()
+const passport = require('passport');
+var GitHubStrategy = require('passport-github2').Strategy;
 const port = 3000
 require('dotenv').config()
 
@@ -10,6 +12,59 @@ const client = new MongoClient( uri )
 
 let db = null
 let db_user = null
+
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
+passport.use(new GitHubStrategy({
+  clientID: GITHUB_CLIENT_ID,
+  clientSecret: GITHUB_CLIENT_SECRET,
+  callbackURL: "http://127.0.0.1:3000/auth/github/callback"
+},
+function(accessToken, refreshToken, profile, done) {
+  // asynchronous verification, for effect...
+  process.nextTick(function () {
+    
+    // To keep the example simple, the user's GitHub profile is returned to
+    // represent the logged-in user.  In a typical application, you would want
+    // to associate the GitHub account with a user record in your database,
+    // and return that user instead.
+    return done(null, profile);
+  });
+}
+));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// GET /auth/github
+//   Use passport.authenticate() as route middleware to authenticate the
+//   request.  The first step in GitHub authentication will involve redirecting
+//   the user to github.com.  After authorization, GitHub will redirect the user
+//   back to this application at /auth/github/callback
+app.get('/auth/github',
+  passport.authenticate('github', { scope: [ 'user:email' ] }),
+  function(req, res){
+    // The request will be redirected to GitHub for authentication, so this
+    // function will not be called.
+  });
+
+// GET /auth/github/callback
+//   Use passport.authenticate() as route middleware to authenticate the
+//   request.  If authentication fails, the user will be redirected back to the
+//   login page.  Otherwise, the primary route function will be called,
+//   which, in this example, will redirect the user to the home page.
+app.get('/auth/github/callback', 
+  passport.authenticate('github', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
 
 async function connect() {
   await client.connect()

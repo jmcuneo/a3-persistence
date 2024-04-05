@@ -11,7 +11,7 @@ body {
     left: 50%;
     top: 50%;
     width: 20em;
-    height: 27em;
+    height: max-content;
     margin-left: -10em;
     margin-top: -13em;
     background-color: whitesmoke;
@@ -39,7 +39,7 @@ body {
 .toolbar {
     display:flex;
     gap: .5em;
-    background-color: #513566;
+    background-color: #3a264a;
     outline: 0.1em solid #c7a7df;
     border-radius: 3em;
     padding: 0.6em;
@@ -64,6 +64,10 @@ body {
     border-radius: 0.5em;
     text-align: center;
     align-content: center;
+}
+
+.box:hover {
+    opacity: 40%;
 }
 
 .add_box {
@@ -106,6 +110,8 @@ button img {
 
 .leaderboard {
     flex-grow: 1fr;
+    width: max-content;
+    padding-left: 3em;
 }
 
 th, td {
@@ -116,7 +122,7 @@ th, td {
     display: none;
     position: absolute;
     top: 1em;
-    background-color: #513566;
+    background-color: #3a264a;
     outline: 0.3em solid #c7a7df;
     padding: 0.5em;
     border-radius: 0.3em;
@@ -128,10 +134,18 @@ th, td {
     gap: 1em;
 }
 
+th, td, .add_box{
+    color: whitesmoke;
+}
+
 .color {
     width: 1.5em;
     height: 1.5em;
     border-radius: 1em;
+}
+
+.color:hover {
+    outline: 4px dashed #c7a7df;  
 }
 
 .spacer {
@@ -142,9 +156,14 @@ th, td {
     height: 1.5em;
 }
 
+#error {
+    font-size: 16pt;
+    color: crimson;
+}
+
 #logout {
     background-color: #c7a7df;
-    color: #513566;
+    color: #3a264a;
 }
 
 #color_pick:hover .colors {display: flex;}

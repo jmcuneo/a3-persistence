@@ -158,3 +158,19 @@ Include a very brief summary of your project here. Images are encouraged, along 
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+* Page titles: Every page has a unique title that describes its main purpose.
+* Form labels: In the login form, every input has a label describing what it is for.
+* Image alt text: The hammer and brush icons each have alt text describing their functionality
+* Page language: Both pages are identified as English, and there are no language changes within the page.
+* Help users avoid and correct mistakes: When a login form is submitted and it fails, the website will notify the user on what is wrong.
+* Provide easily identifiable feedback: On the login form, the website will highlight and describe which field is filled incorrectly.
+* Use headings and spacing to group related content: On the Box Manager page, the interactive toolbar and box dashboard are grouped to the left, while the leaderboard remains on the right.
+* Include image and media alternatives in your design: Both tool button icons are accompanied with text describing their function.
+* Provide clear instructions: On the login form, the website provides clear instructions for improperly filled out fields.
+* Background/Foreground contrast: The primary background and foreground colors contrast eachother well. Additionally, text is kept white and box colors have high values.
+
+- **Design Achievement 2**: To adhere to CRAP principles, I made the following choices:
+* C: Not only do background and foreground elements contrast in value, but the color options for each box are unique and contrast with the other colors.
+* R: As the amount of data grows, all actions on this website remain the same. Adding a new box never changes, deleting and painting boxes remains the same, and the leaderboard will only grow longer.
+* A: The left side of the box manager contains all the interactive elements, while the right side contains the uninteractive leaderboard.
+* P: On the left side, the toolbar and main box area are very close to each other, implying that the toolbar is associated with the boxes. Additionally, the add box button is always at the tail end of the box area, which implies that it is also associated with the box area.

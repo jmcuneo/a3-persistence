@@ -1,5 +1,5 @@
 const colors = ["Pink", "Red", "Orange", "Blue", "Purple", "Yellow", "Lavender", "Turquoise", "Green", "Pink Velvet", "Lighter Green", "Purpley"]
-const color_values = ["pink", "crimson", "orange", "skyblue", "purple", "palegoldenrod", "lavender", "turquoise", "#007F00", "#FFAACC", "#CCFFCC", "#CCAAEE"]
+const color_values = ["pink", "crimson", "orange", "skyblue", "purple", "#ffe14a", "lavender", "turquoise", "#007F00", "#FFAACC", "#CCFFCC", "#CCAAEE"]
 let color_idx = 0;
 
 //very insecure 
