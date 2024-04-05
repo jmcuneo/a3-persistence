@@ -25,17 +25,13 @@ function initialize(passport, getUserByUsername) {
             done(e)
         }
     }
+    //just using username to identify users. doesnt allow renaming in the future, would need __id field
     passport.use(new LocalStrategy({ usernameField: "username", passwordField: "password" }, authenticateUser))
-    //just using username to identify users. doesnt allow renaming in the future
     passport.serializeUser((user, done) => {
-        console.log(`user: ${JSON.stringify(user)}`)
         done(null, user.username)
     })
     passport.deserializeUser(async (username, done) => {
         const user = await getUserByUsername(username)
-
-        console.log(`${username}: ${user}`)
-
         return done(null, user)
     })
 }

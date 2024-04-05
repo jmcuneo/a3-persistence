@@ -59,12 +59,13 @@ app.get("/", (req, res) => {
   res.render("index.ejs", { name: req.user.username })
 })
 
-app.get("/register", (req, res) => {
-  res.render("register.ejs")
-})
 
 app.get("/login", (req, res) => {
   res.render("login.ejs")
+})
+
+app.get("/register", (req, res) => {
+  res.render("register.ejs")
 })
 
 app.post("/register", async (req, res) => {
@@ -78,14 +79,11 @@ app.post("/register", async (req, res) => {
       await newUser.save()
       res.redirect("/login")
     } else {
-      res.redirect("/register")
+      res.render("register.ejs", { error: "Username already exists!" })
     }
   } catch (error) {
-    console.log("failed crypto" + error)
-    res.send({ ok: false })
-    res.redirect("/register")
+    res.render("register.ejs", { error: "Crypto has failed" })
   }
-
 })
 
 app.post("/login", passport.authenticate("local", {
