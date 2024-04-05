@@ -79,7 +79,6 @@ app.use( (req,res,next) => {
 
 
 app.post( '/refresh', cors(), async (req, res) => {
-  
   const result = await collection.find({}).toArray()
   let resp = {new: false, data: result}
   if(newUser) {
