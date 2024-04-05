@@ -31,9 +31,29 @@ input{
   padding: 10px;
 }
 
+.text-grid{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  margin: 10px;
+  padding: 10px;
+}
+
 .column {
   margin: 50px;
 }
+.column2 {
+  margin: 50px;
+}
+
+.column1 {
+  margin-left: 100px;
+  margin-right: 0px;
+}
+
+
+
+
 
 /*arial font to make table clear and readable*/
 table {
@@ -60,6 +80,12 @@ th {
 
 li {
   font-size: 23px;
+}
+
+label{
+  font-size: 20px;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 /*submit and remove buttons with rounded edges and interactive*/
@@ -89,4 +115,75 @@ form {
   justify-content: center;
   width: 900px;
   margin: auto;
+}
+
+.formsubmit {
+  padding-top: 5px;
+  display: flex;
+  justify-content: center;
+  width: 400px;
+  margin: auto;
+}
+
+.switch{
+  padding-top: 5px;
+  display: flex;
+  justify-content: center;
+  width: auto;
+  margin-right: -150px;
+}
+
+.instructions{
+  display: block;
+  justify-content: center;
+  text-align: center;
+}
+
+/*toggle*/
+.toggle {
+  position: relative;
+}
+
+.toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  background-color: #333;
+  transition: 0.4s;
+  width: 70px;
+  height: 30px;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 12px;
+  width: 12px;
+  background-color: #fff;
+  transition: 0.4s;
+  top: 10px;
+  left: 10px;
+}
+
+input:checked + .slider {
+  background-color: #a75b18;
+  /* box-shadow: 0 0 12px #a75b18; */
+}
+
+input:checked + .slider:before {
+  transform: translateX(40px);
+}
+
+.slider.round {
+  border-radius: 20px;
+}
+.slider.round::before {
+  border-radius: 20px;
 }
