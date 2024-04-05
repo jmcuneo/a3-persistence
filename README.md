@@ -5,10 +5,7 @@ Glitch: http://a3-jolenepern.glitch.me
 This personal library application allows users to log their books and their reading progress within an account. Users are able to add, delete, and modify responses. 
 
 ## Challenges
-When creating this application, I found it very challenging to connect my database to MongoDB, especially adding the capability to modify and delete data.  
-
-## Authentication Strategy
-I chose to use passport-local and lowdb, since they were the easiest to implement.
+When creating this application, I found it very challenging to connect my database to MongoDB, especially adding the capability to modify and delete data.  I also had a very hard time implementing an authentication strategy. 
 
 ## CSS Framework
 I chose to use the Bootstrap CSS framework, as I have heard that it is a very popular and widely-used CSS framework. 
