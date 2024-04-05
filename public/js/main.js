@@ -7,10 +7,17 @@ const submit = async function( event ) {
   // remains to this day
   event.preventDefault()
   
-  const charname = document.querySelector( "#charname" ),
+    let charname = document.querySelector( "#charname" ),
         charrace = document.querySelector( "#charrace" ),
         charclass = document.querySelector( "#charclass" ),
-        action = document.querySelector('input[name="action"]:checked').value;
+        action = document.querySelector('input[name="action"]:checked');
+
+  if(action === null){
+      alert("Please select an action type")
+      return;
+  } else{
+      action = document.querySelector('input[name="action"]:checked').value
+  }
 
     const json = {
             "charname": charname.value,

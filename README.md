@@ -1,145 +1,49 @@
 Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
 ===
-
-Check out the [CS 4241 Guides](https://github.com/jmcuneo/cs4241-guides) for help with the technologies discussed in this assignment.
-
-This assignnment continues where we left off, extending it to use the most popular Node.js server framework (express), 
-a database (mongodb), and a CSS application framework / template of your choice (Boostrap, Material Design, Semantic UI, Pure etc.)
-
-Baseline Requirements
----
-
-Your application is required to implement the following functionalities:
-
-- a `Server`, created using Express (no alternatives will be accepted for this assignment)
-- a `Results` functionality which shows all data associated with a logged in user (except passwords)
-- a `Form/Entry` functionality which allows users to add, modify, and delete data items (must be all three!) associated with their user name / account. 
-- Persistent data storage in between server sessions using [mongodb](https://www.mongodb.com/cloud/atlas) (you *must* use mongodb for this assignment). You can use either the [official mongodb node.js library](https://www.npmjs.com/package/mongodb) or use the [Mongoose library](https://www.npmjs.com/package/mongoose), which enables you to define formal schemas for your database. Please be aware that the course staff cannot provide in-depth support for use of Mongoose.  
-- Use of a [CSS framework or template](https://github.com/troxler/awesome-css-frameworks). 
-This should do the bulk of your styling/CSS for you and be appropriate to your application. 
-For example, don't use [NES.css](https://nostalgic-css.github.io/NES.css/) (which is awesome!) unless you're creating a game or some type of retro 80s site.
-
-Your application is required to demonstrate the use of the following concepts:  
-
-HTML:  
-- HTML input tags and form fields of various flavors (`<textarea>`, `<input>`, checkboxes, radio buttons etc.)
-- HTML that can display all data *for a particular authenticated user*. Note that this is different from the last assignnment, which required the display of all data in memory on the server.
-
-Note that it might make sense to have two pages for this assignment, one that handles login / authentication and one that contains the rest of your application.
-For example, when visiting the home page for the assignment, users could be presented with a login form. After submitting the login form, if the login is 
-successful, they are taken to the main application. If they fail, they are sent back to the login to try again. For this assignment, it is acceptable to simply create 
-new user accounts upon login if none exist; however, you must alert your users to this fact.  
-
-CSS:  
-- CSS styling should primarily be provided by your chosen template/framework. 
-Oftentimes a great deal of care has been put into designing CSS templates; 
-don't override their stylesheets unless you are extremely confident in your graphic design capabilities. 
-The idea is to use CSS templates that give you a professional looking design aesthetic without requiring you to be a graphic designer yourself.
-
-JavaScript:  
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server. 
-See the [previous assignment](https://github.com/cs-4241-23/shortstack) for reference.
-
-Node.js:  
-- A server using Express and a persistent database (mongodb).
-
-General:  
-- Your site should achieve at least 90% on the `Performance`, `Best Practices`, `Accessibility`, and `SEO` tests 
-using Google [Lighthouse](https://developers.google.com/web/tools/lighthouse) (don't worry about the PWA test, and don't worry about scores for mobile devices).
-Test early and often so that fixing problems doesn't lead to suffering at the end of the assignment. 
-
-Deliverables
----
-
-Do the following to complete this assignment:
-
-1. Implement your project with the above requirements. I'd begin by converting your A2 assignment. First, change the server to use express. Then, modify the server to use mongodb instead of storing data locally. Last but not least, implement user accounts and login. User accounts and login is often the hardest part of this assignment, so budget your time accordingly.
-2. If you developed your project locally, deploy your project to Glitch (unless completing the alternative server technical acheivement described below), and fill in the appropriate fields in your package.json file.
-3. Test your project to make sure that when someone goes to your main page on Glitch (or an alternative server), it displays correctly.
-4. Ensure that your project has the proper naming scheme `a3-FirstnameLastname` so we can find it.
-5. Fork this repository and modify the README to the specifications below.
-6. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a3-FirstnameLastname`.
-
-Acheivements
----
-
-Below are suggested technical and design achievements. You can use these to help boost your grade up to an A and customize the 
-assignment to your personal interests, for a maximum twenty additional points and a maximum grade of a 100%. 
-These are recommended acheivements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README, 
-why it was challenging, and how many points you think the achievement should be worth. 
-ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THEM.
-
-*Technical*
-- (10 points) Implement OAuth authentication, perhaps with a library like [passport.js](http://www.passportjs.org/). 
-*You must either use Github authenticaion or provide a username/password to access a dummy account*. 
-Course staff cannot be expected, for example, to have a personal Facebook, Google, or Twitter account to use when grading this assignment. 
-Please contact the course staff if you have any questions about this. THIS IS THE HARDEST ACHEIVEMENT OFFERED IN WEBWARE. You have been warned!  
-- (5 points) Instead of Glitch, host your site on a different service. Find a service that is reputable and has a free tier. Post your findings on Slack in the #assignment3 channel. DO NOT feel compelled to purchase a paid tier from any service, although if you already have one, you are welcome to use it. Make sure to describe this a bit in your README. What was better about using the service you chose as compared to Glitch? What (if anything) was worse? 
-- (5 points) Get 100% (not 98%, not 99%, but 100%) in all four lighthouse tests required for this assignment.  
-
-*Design/UX*
-- (10 points) Make your site accessible using the [resources and hints available from the W3C](https://www.w3.org/WAI/), Implement/follow twelve tips from their [tips for writing](https://www.w3.org/WAI/tips/writing/), [tips for designing](https://www.w3.org/WAI/tips/designing/), and [tips for development](https://www.w3.org/WAI/tips/developing/). *Note that all twelve must require active work on your part*. 
-For example, even though your page will most likely not have a captcha, you don't get this as one of your twelve tips to follow because you're effectively 
-getting it "for free" without having to actively change anything about your site. 
-Contact the course staff if you have any questions about what qualifies and doesn't qualify in this regard. 
-List each tip that you followed and describe what you did to follow it in your site.
-- (5 points) Describe how your site uses the CRAP principles in the Non-Designer's Design Book readings. 
-Which element received the most emphasis (contrast) on each page? 
-How did you use proximity to organize the visual information on your page? 
-What design elements (colors, fonts, layouts, etc.) did you use repeatedly throughout your site? 
-How did you use alignment to organize information and/or increase contrast for particular elements. 
-Write a paragraph of at least 125 words *for each of four principles* (four paragraphs, 500 words in total). 
-
-
-FAQ
----
-**Q: Am I required modify my A2 submission for this assignment?**
-
-No. If you want to start fresh for A3, you are welcome to do so. The option to start with A2 is simply there as a convenience for you.
-
-**Q: Which CSS framework should I use? How do I use it?**
-
-This is for you to figure out. While we do require Express and MongoDB for this assignment, we do not require a specific CSS framework, so we are not going to be discussing a specific one. You will be responsible for choosing a CSS framework and learning how to use it.
-
-**Q: How do I keep my .env file out of my git repo?**
-
-Create a .gitignore file on your local machine and list your .env file in it. Note that while your .env file should NOT appear in your repo, you will still want to add it to your Glitch project so that your website runs successfully.
-
-**Q: I'm confused about how user accounts work for this assignment.**
-
-For the base requirements (discounting the achievements), it should follow this logic:
-
-1. If the user logs in and the account does not exist, create the account and inform the user the account has been created.
-2. If the user logs in and the account exists but the password is incorrect, inform the user.
-3. If the user logs in, the account exists, and the password is correct, then take the user to the page that shows the data specific to the user.
-
-Note that implementing some of the technical achievements may override this requirement, which is fine.
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
 ## Dungeons and Dragons Character Storage
 
-your glitch (or alternative server) link e.g. http://a3-joshua-cuneo.glitch.me
+Hosted on Render: https://a3-aidanmacnevin.onrender.com
 
 This web application serves as a storage point for Dungeons and Dragons Characters, as well as a starting point for newer players. Users are able to submit a character name, race, class, and select a primary type of action. On submission, the character will be added to the table, the primary modifier of the class will be displayed, and a random action will be assigned.
 You can delete entries or modify them with the buttons on the right of the table. With the edit button, you can adjust the modifier or action if the derived value is not as expected.
 
-You can sign in with any username and password, the characters stored in will be unique to the user. Account will be created if it does not already exist. For examples of stored data, use the login: **username:** admin **password:** admin. 
+You can sign in with any username and password, the characters stored in will be unique to the user. Account will be created if it does not already exist. For examples of stored data, use the login: 
+- **username:** admin 
+- **password:** admin
+
+When creating this application, I had some difficulties with passing the new user/bad user information I wanted from the server to the client, but I was able to find a solution. However, I felt that converting the server to be an express server was straightforward after I converted the first few methods. 
+
+I used express-session and mongodb for my user authentication. While it is not extremely secure, this website does not hold sensitive information and decided I did not need to focus on security. As such, I felt that this method would be the easiest way to implement user authentication.
+
+I used the SimpleCSS framework to style my Web App.
 
 
-- the goal of the application
-- challenges you faced in realizing the application
-- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why
-  - include any modifications to the CSS framework you made via custom CSS you authored
-- the five Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function for *one* (and one alone) middleware please 
-add a little more detail about what it does.
 
 ## Technical Achievements
-- **Lighthouse Tests**: I got 100 on all 4 lighthouse tests for both my login page and main app page.  
-  - ![img.png](img.png)
-  - ![img_1.png](img_1.png)
+- **Hosting on a Non-Glitch Service**: I hosted my web app on Render, following the suggestions from Milo and Andrew in the Slack channel. Deploying on Render was straightforward and easy to do. It was very similar to Glitch, though it took a bit longer to deploy. However, it was easy to set the environment variables, any setup commands, and had the ability to deploy from different GitHub commits easily. 
 
-### Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+- **Lighthouse Tests**: I got 100 on all 4 lighthouse tests for both my login page and main app page.    
+  - ![img.png](img.png)
+  - ![img_4.png](img_4.png)
+
+
+## Design Achievements
+- **W3C Site Accessibility**: I followed 12 tips from the W3C tips for Writing, Designing, and Development
+  - **Writing**
+    - _Provide informative, unique page titles_: I titled both the login and the main web pages. For example, my main page is titled "Dungeons and Dragons Character Storage - CS4241 Assignment 3" which describes the site, as well as why the site was created. It shows the class and the assignment.
+    - _Use headings to convey meaning and structure_: On my main page, I used headings to break up the different sections of the page, such as the character entry form, the edit form, and the character table
+    - _Provide clear instructions_: The main page includes instructions on how to use and interact with the page. Additionally, in the case of errors such as incorrect password or missing form entry the user is informed as to what went wrong. 
+    - _Keep content clear and concise_: The instructions on the main page are clear and concise. In addition, the warning popups mentioned prior follow this trend. 
+  - **Designing**
+    - _Provide sufficient contrast between foreground and background_: The SimpleCSS framework I used has contrast between the foreground and background
+    - _Ensure that interactive elements are easy to identify_: All elements that are interactive are easily discernible. Things like text entry forms are clear and grouped together. Buttons all have a distinct color that is consistent throughout the site.
+    - _Ensure that form elements include clearly associated labels_: All form entries have a label to describe its purpose. Additionally, form entries have placeholder text.
+    - _Use headings and spacing to group related content_: The main page is grouped by related content, and each has a heading to describe the section.
+  - **Development**
+    - _Associate a label with every form control_: All labels are connected with a "for" attribute to the entry it is related to.
+    - _Identify page language and language changes_: App pages identify the primary language using the html tag lang='en'
+    - _Use mark-up to convey meaning and structure_: I used the proper markup tags for the elements on my pages. For example, I used the correct heading tags, table elements, and things like labels for forms. 
+    - _Help users avoid and correct mistakes_: When mistakes like invalid password or missing a form question, the user is informed where the issue occurred. 
+    - _Ensure that all interactive elements are keyboard accessible_: All interactive elements are accessible via keyboard and tabs. Things like the radio buttons can be selected via up and down arrow keys, buttons and forms can be submitted/clicked via the enter button.
+
+

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>CS4241 Assignment 2</title>
+    <title>Dungeons and Dragons Character Storage - CS4241 Assignment 3</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="DnD Character Storage for CS4241">
@@ -13,21 +13,26 @@
   </head>
   <body>
   <div class="container">
-    <h1> Dungeons and Dragons Character Storage </h1>
+    <h2> Dungeons and Dragons Character Storage </h2>
 
     <div class="infotext">
-      This application allows a user to store different DnD 5e characters they've created. Input the name, race, class, and select a primary action.
+      This application allows a user to store different D&D 5e characters they've created. <br> Input the name, race, class, and select a primary action.
+      <br>
       The combination of class and type of action will provide you with a random action.
+      <br>
       You can edit or delete entries using the buttons on the right of the table.
     </div>
 
-    <br>
 
+    <div style="display: flex;
+    flex-direction: row;
+    justify-content: space-between;">
     <div class="formContainer">
+      <h3> Store a Character </h3>
       <form id="characterForm">
-        <input type="text" id="charname" placeholder="character name" >
-        <input type="text" id="charrace" placeholder="character race" value="">
-        <input type="text" list="classes" id="charclass" placeholder="select a class">
+        <label for="charname">Character Name</label><input type="text" id="charname" placeholder="character name" >
+        <label for="charrace">Character Race</label><input type="text" id="charrace" placeholder="character race" value="">
+        <label for="charclass">Class</label><input type="text" list="classes" id="charclass" placeholder="select a class">
         <datalist id="classes">
           <option value="Artificer">
           <option value="Barbarian">
@@ -43,10 +48,7 @@
           <option value="Warlock">
           <option value="Wizard">
         </datalist>
-
-
         <br>
-
         <div id="radio-select">
           <label>
             <input type="radio" name="action" value="weapon"> Weapon
@@ -55,12 +57,29 @@
             <input type="radio" name="action" value="spell"> Spell
           </label>
         </div>
-
+        <br>
         <button id="submitbutton">submit</button>
 
       </form>
     </div>
 
+    <div class="formContainer" >
+      <form id="editForm" style="display: none;">
+        <h3> Edit Character </h3>
+        <label for="editname">Character Name</label><input type="text" id="editname">
+        <label for="editrace">Character Race</label><input type="text" id="editrace">
+        <label for="editclass">Class</label><input type="text" id="editclass">
+        <label for="editmodifier">Primary Modifier</label><input type="text" id="editmodifier" >
+        <label for="editaction">Action</label><input type="text" id="editaction" >
+        <br>
+        <button id="savebutton">save</button>
+        <button id="cancelbutton">cancel</button>
+      </form>
+    </div>
+
+    </div>
+
+    <h3> Your Characters </h3>
     <table id="characterTable">
       <tbody id="charTableBody">
         <tr>
@@ -73,19 +92,6 @@
         </tr>
       </tbody>
     </table>
-
-
-    <div class="formContainer" >
-      <form id="editForm" style="display: none;">
-        <label for="editname">Character Name</label><input type="text" id="editname">
-        <label for="editrace">Character Race</label><input type="text" id="editrace">
-        <label for="editclass">Class</label><input type="text" id="editclass">
-        <label for="editmodifier">Primary Modifier</label><input type="text" id="editmodifier" >
-        <label for="editaction">Action</label><input type="text" id="editaction" >
-        <button id="savebutton">save</button>
-        <button id="cancelbutton">cancel</button>
-      </form>
-    </div>
 
   </div>
   </body>
