@@ -9,17 +9,17 @@
     />
     <meta name="viewport" content="width=device_width, initial-scale=1" />
     <script src="client.js"></script>
+    <script src="bootstrap.min.js"></script>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
+      href="bootstrap.min.css"
     />
 
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
   </head>
   <body class="d-flex flex-column bg-dark text-center text-light align-items-center">
+    {{{msg}}}
     <div class = "w-75 bg-secondary d-flex flex-column">
     <br />
     <div class = "w-100 bg-dark">
@@ -103,21 +103,13 @@
             <input type = "reset" class ="btn btn-outline-light bg-dark">
               </div>
             <input type = "radio" id = "r_ant" name = "r_robot_type" value = "Antweight">
-            <label for = "ant" class = "text-white">Antweight</label>
+            <label for = "r_ant" class = "text-white">Antweight</label>
             <input type = "radio" id = "r_beetle" name = "r_robot_type" value = "Beetleweight">
-            <label for = "beetle" class = "text-white">Beetleweight</label>
+            <label for = "r_beetle" class = "text-white">Beetleweight</label>
           </form>
       </div>
       <br />
       <div class="row d-flex">
-        <img class = "img-fluid img-thumbnail border border-dark" width = "375" height = "300"
-          src="https://cdn.glitch.global/7430d0d3-034f-42f9-aab8-408bf982427f/trex.png?v=1712223153710"
-          alt="Image of TRex robot CAD"
-        />
-        <img class = "img-fluid img-thumbnail border border-dark" width = "375" height = "300"
-          src="https://cdn.glitch.global/7430d0d3-034f-42f9-aab8-408bf982427f/fracture.png?v=1712222883735"
-          alt="Image of Fracture robot CAD"
-        />
       </div>
       </div>
           </div>

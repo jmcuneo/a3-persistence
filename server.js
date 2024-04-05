@@ -1,9 +1,15 @@
 const express = require("express"),
       { MongoClient, ObjectId } = require("mongodb"),
-      app = express()
+      app = express(),
+      hbs     = require( 'express-handlebars' ).engine
 
 app.use(express.static("public") )
 app.use(express.json() )
+app.use( express.urlencoded({ extended:true }) )
+
+app.engine( 'handlebars',  hbs() )
+app.set(    'view engine', 'handlebars' )
+app.set(    'views',       './views' )
 
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`
 const client = new MongoClient( uri )
@@ -27,6 +33,7 @@ async function run() {
 
 run()
 
+var logged_in = false
 var active_user = ""
 
 // Try to do this without updating
@@ -59,13 +66,38 @@ app.post( '/login', async (req,res) => {
   const in_db = await login.find({username: req.body.username}).toArray()
   if(in_db.length == 0){
     const result = await login.insertOne(req.body)
+    logged_in = true
     active_user = req.body.username
-    res.json(result)
+    res.render( 'data', {msg: 'New account created successfully!', layout: false} )
   }else{
     const result = await login.find({username: req.body.username, password: req.body.password}).toArray()
-    if(result.length != 0){active_user = req.body.username}
-    res.json(result)
+    if(result.length != 0){
+      console.log(req.body.password)
+      logged_in = true
+      active_user = req.body.username
+      res.redirect( 'data.html' )
+    }else{
+      console.log('inactive' + req.body.username)
+      logged_in = false
+      res.render( 'index', {msg: 'Incorrect login, please re-enter password', layout: false} )
+    }
   }
+})
+
+app.get( '/', (req,res) => {
+  res.render( 'index', { msg:'', layout:false })
+})
+
+// If not authenticated, users are sent to the login page
+app.use( function( req,res,next) {
+  if(logged_in === true)
+    next()
+  else
+    res.render('index', { msg:'Please login with credentials to access the Part Calculator', layout:false })
+})
+
+app.get( '/data.html', ( req, res) => {
+    res.render( 'data', { msg:'', layout:false })
 })
 
 app.listen(3000)

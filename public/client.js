@@ -70,49 +70,6 @@ const remove = async function(event){
 };
 
 /*
- * A function that sends a POST request to the server with the part to remove from appdata
- * identified by the Part Name input field (part_name)
- */
-const login = async function(event){
-  event.preventDefault()
-  
-  const input = document.querySelectorAll("#check_username, #check_password"),
-        json = {username: input.item(0).value, password: input.item(1).value},
-        body = JSON.stringify(json)
-
-   const response = await fetch( '/login', {
-    method:'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: body
-  })
-  
-  const result = await response.json()
-      console.log( result ) 
-      if(result.length == 0){
-        console.log("Incorrect password")
-        displayError()
-      }else if (result.acknowledged == true){
-        console.log("Creating new user")
-        await displayNewLogin()
-        window.location.assign('https://a3-briannasahagian.glitch.me/data.html')
-      }else{
-        console.log("Signing in")
-        window.location.assign('https://a3-briannasahagian.glitch.me/data.html')
-      }
-    };
-
-
-const displayNewLogin = async function(event){
-  var login_message = document.getElementById("message")
-  login_message.innerHTML = "<div class = text-success>New User</div>"
-  return new Promise(r => setTimeout(r, 2000))
-}
-
-const displayError = async function(event){
-  var login_message = document.getElementById("message")
-  login_message.innerHTML = "<div class = text-danger>Incorrect Password</div>"
-}
-/*
  * A function that sends a GET request to the server for the appdata array
  * in order to pass the current content of the array (and in turn the server) to the client
  * @return: The parsed response from the server containing the array data
@@ -147,7 +104,6 @@ const constructTable = async function(robot_type, id) {
  * Supports the receive() GET request function indirectly through constructTable()
  */
 window.onload = function() {
-  if(window.location.href === 'https://a3-briannasahagian.glitch.me/data.html'){
     const add_button = document.getElementById("add_button");
     const remove_button = document.getElementById("remove_button");
     const modify_button = document.getElementById("modify_button");
@@ -156,8 +112,4 @@ window.onload = function() {
     modify_button.onclick = modify;
     constructTable("Antweight", "table_body_ant")
     constructTable("Beetleweight", "table_body_beetle")
-  }else{
-    const login_button = document.getElementById("login_button");
-    login_button.onclick = login;
-  }
 }
