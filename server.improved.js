@@ -35,33 +35,21 @@ const client = new MongoClient(uri, {
   }
 });
 
+async function run(){
+  await client.connect()
+  myCollection = await client.db("CS4241").collection("Calculator")
+}
+
+run()
+
 app.use( express.json())
+app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// Middleware to serve login page before any other page if not authenticated
-const serveLoginIfNotAuthenticated = (req, res, next) => {
-  // If not authenticated and not trying to access the login page
-  if (!req.session.login && req.path !== '/public/login.html' && req.path !== '/') {
-    res.redirect('/public/login.html');
-  } else {
-    next();
-  }
-};
-
-// Apply the middleware to all routes
-app.use(serveLoginIfNotAuthenticated);
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Define a specific route for '/'
 app.get('/', (req, res) => {
-  // Redirect to login page if not authenticated
-  if (!req.session.login) {
-    res.redirect('/public/login.html');
-  } else {
-    // Serve index.html if authenticated
-    sendFile(res, 'public/index.html');
-  }
-});
+    res.sendFile('public/login.html', { root: __dirname })
+  });
 
 app.post( '/login', (req,res)=> {
   // express.urlencoded will put your key value pairs 
@@ -89,16 +77,7 @@ app.post( '/login', (req,res)=> {
   }
 })
 
-async function run(){
-  await client.connect()
-  myCollection = await client.db("CS4241").collection("Calculator")
-}
 
-run()
-
-app.get('/login', (req, res) => {
-  sendFile(res, '/public/login.html');
-});
 
 app.post('/addition', async (req, res) => {
   const collection = await client.db("CS4241").collection("Calculator")
