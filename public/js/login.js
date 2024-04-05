@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
         .then(data => {
             if (data.success) {
                 console.log(data.message);
+                if (data.message === 'User created successfully') {
+                    alert('User created successfully');
+                }
              window.location.href = '/index.html';
             } else {
                 alert(data.message);
