@@ -18,7 +18,7 @@ require("dotenv").config();
 const bodyParser = require('body-parser');
 
 app.use( express.static( 'public' ) )
-app.use( express.json() )
+app.use( express.json())
 //app.use(session({
 //  secret: 'your_secret_key',
 //  resave: false,
@@ -35,6 +35,7 @@ const users = {
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = `mongodb+srv://${process.env.USERNAME}:${process.env.PASS}@${process.env.HOST}`;
 const { ObjectId } = require('mongodb'); // Add this line to import ObjectId from MongoDB
+const { parse } = require("path");
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
@@ -44,35 +45,41 @@ const client = new MongoClient(uri, {
   }
 });
 
-
-
-
 /*
+
 const middleware_post = async (req, res, next) => {
-  await client.connect()
-  const collection = await client.db("CS4241").collection("Calculator")
-  const count = collection.countDocuments() + 1
-  let dataString = ''
+  if(req.method === 'POST'){
+    let dataString = ''
 
-  req.on( 'data', function(data){
-    dataString += data
-  })
+    req.on( 'data', function(data){
+      dataString += data
+    })
 
-  req.on( 'end', function() {
-    if(dataString){
-      const clientData = JSON.parse(dataString)     //define client data
-      num1 = parseFloat(clientData.num1),       //extracting the first number from clientData
-      num2 = parseFloat(clientData.num2),        //extracting the second number from clientData
-      index = parseInt(clientData.index)        //extracting the index from clientdata for the delete result in array case
+    req.on( 'end', function() {
+      if (dataString){
+        const clientData = JSON.parse(dataString)     //define client data
 
-      req.clientData = {
-        num1: num1, 
-        num2: num2,
-        index: index
+        num1 = parseFloat(clientData.num1)       //extracting the first number from clientData
+        num2 = parseFloat(clientData.num2)       //extracting the second number from clientData
+        index = parseInt(clientData.index)
+        id = parseInt(client.id) 
+        content = parseInt(client.content)
+
+        req.clientData = {
+          num1: num1, 
+          num2: num2,
+          index: index,
+          id: id,
+          content: content
+        }
+  
       }
-    }
-    next()
-  })
+      next();
+    })
+  }
+  else {
+    next();
+  }
 }
 
 app.use( middleware_post )
@@ -108,46 +115,73 @@ app.get('/getLogin', (req, res) => {
 
 */
 
-
 app.post('/addition', async (req, res) => {
   const collection = await client.db("CS4241").collection("Calculator")
-  const count = collection.countDocuments() + 1
-  const { num1, num2 } = req.clientData;
-  const result = (num1 + num2).toFixed(2);      //add the two imputted numbers together + truncates
+  const count = ( await collection.countDocuments()) + 1
+  const num1 = parseFloat(req.body.num1)       //extracting the first number from clientData
+  const num2 = parseFloat(req.body.num2)       //extracting the second number from clientData
+
+  console.log("Received num1:", num1);
+  console.log("Received num2:", num2);
+
+  const result = (num1 + num2);      //add the two imputted numbers together + truncates
   collection.insertOne({ count: count + 1, result: result });       //add this result to the array of previous results
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({ result: result }));        //send the result to the client
-});
 
-app.post('/subtract', async(req, res) => {
+    }
+);
+
+app.post('/subtract', async (req, res) => {
   const collection = await client.db("CS4241").collection("Calculator")
-  const count = collection.countDocuments() + 1
-  const { num1, num2 } = req.clientData;
-  const result = (num1 - num2).toFixed(2);          //subtract the two imputted numbers together + truncates
-  collection.insertOne({ count: count + 1, result: result });           //add this result to the array of previous results
+  const count = ( await collection.countDocuments()) + 1
+  const num1 = parseFloat(req.body.num1)       //extracting the first number from clientData
+  const num2 = parseFloat(req.body.num2)       //extracting the second number from clientData
+
+  console.log("Received num1:", num1);
+  console.log("Received num2:", num2);
+
+  const result = (num1 - num2);      //add the two imputted numbers together + truncates
+  collection.insertOne({ count: count + 1, result: result });       //add this result to the array of previous results
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({ result: result }));        //send the result to the client
-});
+
+    }
+);
 
 app.post('/multiply', async (req, res) => {
   const collection = await client.db("CS4241").collection("Calculator")
-  const count = collection.countDocuments() + 1
-  const { num1, num2 } = req.clientData;
-  const result = (num1 * num2).toFixed(2);          //multiply the two imputted numbers together + truncates
-  collection.insertOne({ count: count + 1, result: result });           //add this result to the array of previous results
+  const count = ( await collection.countDocuments()) + 1
+  const num1 = parseFloat(req.body.num1)       //extracting the first number from clientData
+  const num2 = parseFloat(req.body.num2)       //extracting the second number from clientData
+
+  console.log("Received num1:", num1);
+  console.log("Received num2:", num2);
+
+  const result = (num1 * num2);      //add the two imputted numbers together + truncates
+  collection.insertOne({ count: count + 1, result: result });       //add this result to the array of previous results
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({ result: result }));        //send the result to the client
-});
+
+    }
+);
 
 app.post('/divide', async (req, res) => {
   const collection = await client.db("CS4241").collection("Calculator")
-  const count = collection.countDocuments() + 1
-  const { num1, num2 } = req.clientData;
-  const result = (num1 / num2).toFixed(2);          //divide the two imputted numbers together + truncates
-  collection.insertOne({ count: count + 1, result: result });           //add this result to the array of previous results
+  const count = ( await collection.countDocuments()) + 1
+  const num1 = parseFloat(req.body.num1)       //extracting the first number from clientData
+  const num2 = parseFloat(req.body.num2)       //extracting the second number from clientData
+
+  console.log("Received num1:", num1);
+  console.log("Received num2:", num2);
+
+  const result = (num1 / num2);      //add the two imputted numbers together + truncates
+  collection.insertOne({ count: count + 1, result: result });       //add this result to the array of previous results
   res.writeHead(200, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({ result: result }));        //send the result to the client
-});
+
+    }
+);
 
 // route to get all docs
 app.get("/getPreviousResults", async (req, res) => {
@@ -168,7 +202,6 @@ app.post('/deleteResult', async (req, res) => {
 app.post( '/editResult', async (req,res) => {
   const collection = await client.db("CS4241").collection("Calculator")
   const count = collection.countDocuments() + 1
-  const length = req.body.content.length;
   const result = await collection.updateOne(
     { _id: new ObjectId( req.body._id ) },
     { $set:{ result:req.body.content}

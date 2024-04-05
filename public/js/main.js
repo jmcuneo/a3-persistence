@@ -72,14 +72,17 @@ const updateTable = async function() {
 const addition = async function( event ) { 
   event.preventDefault()
 
-  const num1 = document.querySelector('#num1').value,     //get num1 from the first input box
-  num2 = document.querySelector('#num2').value,           //get num2 from the second input box
-  json = { operation: 'addition', num1: num1, num2: num2},      //define the payload
-  body = JSON.stringify( json )                                 //stringify payload
+  const num1 = document.querySelector('#num1').value     //get num1 from the first input box
+  const num2 = document.querySelector('#num2').value           //get num2 from the second input box
+
+  body = JSON.stringify({num1: num1, num2: num2})                                 //stringify payload
 
   const response = await fetch( "/addition", {
     method: "POST",       //post method
-    body: body
+    body: body, 
+    headers: {
+      'Content-Type': 'application/json' // Set content type to JSON
+    }
   })
 
   const responseData = await response.json()  // Get the response
@@ -90,68 +93,77 @@ const addition = async function( event ) {
   updateTable()
 }
 
-//subtraction function
-const subtract = async function( event ) {        
+//subtract function
+const subtract = async function( event ) { 
   event.preventDefault()
 
-  const num1 = document.querySelector('#num1').value,
-  num2 = document.querySelector('#num2').value,
-  json = { operation: 'subtract', num1: num1, num2: num2},
-  body = JSON.stringify( json )
+  const num1 = document.querySelector('#num1').value     //get num1 from the first input box
+  const num2 = document.querySelector('#num2').value           //get num2 from the second input box
+
+  body = JSON.stringify({num1: num1, num2: num2})                                 //stringify payload
 
   const response = await fetch( "/subtract", {
-    method: "POST",
-    body: body 
+    method: "POST",       //post method
+    body: body, 
+    headers: {
+      'Content-Type': 'application/json' // Set content type to JSON
+    }
   })
 
-  const responseData = await response.json()
+  const responseData = await response.json()  // Get the response
 
-  const resultElement = document.querySelector('#result')
-  resultElement.textContent = "Result: " + JSON.stringify(responseData.result) 
+  const resultElement = document.querySelector('#result')        //define the result element on the screen
+  resultElement.textContent = "Result: " + JSON.stringify(responseData.result)     //assign the client side element to the result from the response
 
   updateTable()
 }
 
 //multiplication function
-const multiply = async function( event ) {
+const multiply = async function( event ) { 
   event.preventDefault()
 
-  const num1 = document.querySelector('#num1').value,
-  num2 = document.querySelector('#num2').value,
-  json = { operation: 'multiply', num1: num1, num2: num2},
-  body = JSON.stringify( json )
+  const num1 = document.querySelector('#num1').value     //get num1 from the first input box
+  const num2 = document.querySelector('#num2').value           //get num2 from the second input box
+
+  body = JSON.stringify({num1: num1, num2: num2})                                 //stringify payload
 
   const response = await fetch( "/multiply", {
-    method: "POST",
-    body: body 
+    method: "POST",       //post method
+    body: body, 
+    headers: {
+      'Content-Type': 'application/json' // Set content type to JSON
+    }
   })
 
-  const responseData = await response.json()
+  const responseData = await response.json()  // Get the response
 
-  const resultElement = document.querySelector('#result')
-  resultElement.textContent = "Result: " + JSON.stringify(responseData.result) // Use the plain text response
+  const resultElement = document.querySelector('#result')        //define the result element on the screen
+  resultElement.textContent = "Result: " + JSON.stringify(responseData.result)     //assign the client side element to the result from the response
 
   updateTable()
 }
 
-//division function
-const divide = async function( event ) {
+//addition function
+const divide = async function( event ) { 
   event.preventDefault()
 
-  const num1 = document.querySelector('#num1').value,
-  num2 = document.querySelector('#num2').value,
-  json = { operation: 'divide', num1: num1, num2: num2},
-  body = JSON.stringify( json )
+  const num1 = document.querySelector('#num1').value     //get num1 from the first input box
+  const num2 = document.querySelector('#num2').value           //get num2 from the second input box
+
+  body = JSON.stringify({num1: num1, num2: num2})                                 //stringify payload
 
   const response = await fetch( "/divide", {
-    method: "POST",
-    body: body 
+    method: "POST",       //post method
+    body: body, 
+    headers: {
+      'Content-Type': 'application/json' // Set content type to JSON
+    }
   })
 
-  const responseData = await response.json()
+  const responseData = await response.json()  // Get the response
 
-  const resultElement = document.querySelector('#result')
-  resultElement.textContent = "Result: " + JSON.stringify(responseData.result) // Use the plain text response
+  const resultElement = document.querySelector('#result')        //define the result element on the screen
+  resultElement.textContent = "Result: " + JSON.stringify(responseData.result)     //assign the client side element to the result from the response
 
   updateTable()
 }
