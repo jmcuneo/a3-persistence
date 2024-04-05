@@ -11,112 +11,185 @@
                   Entries can be deleted or modified">
     <script src="js/client.js"></script>
     <link rel="stylesheet" href="css/bulma.css" media="screen">
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css"> -->
-    <!-- <link rel="stylesheet" href="css/main.css"> -->
-    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap"> -->
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   </head>
   <body>
     <div class="container content">
       <header>
-        <h1 class="title is-1 has-text-centered">The Worst Calculator</h1>
-      </header>
-      <div class="block" id="entryForm">
         <div class="block">
-          <h2 class="title is-3">Add Entry Form</h2>
+          <h1 class="title is-1 has-text-centered">The Worst Calculator</h1>
         </div>
-        <div style="width: 50%" class="block">
-          <form class="field">
-            <div class="field is-horizontal">
-              <div class="field-label">
-                <label class="label" for="firstVal">1st Value:</label>
-              </div>
-              <div class="field-body" style="width: 20px">
-                <input style="width: 75px" class="input is-small" type="number" id="firstVal">
-              </div>
-            </div>
-            <div class="field is-horizontal">
-              <div class="field-label">
-                <label class="label" for="secVal">2nd Value:</label>
-              </div>
-              <div  class="field-body">
-                <input style="width: 75px" class="input is-small" type="number" id="secVal">
-              </div>
-            </div>
-
-            <div class="opForm">
-              <p>Choose an operator:</p>
-              <input type="radio" name="operator" id="opA" value="+" checked>
-              <label for="opA">+</label>
-              <br>
-              <input type="radio" name="operator" id="opS" value="-">
-              <label for="opS">-</label>
-              <br>
-              <input type="radio" name="operator" id="opD" value="/">
-              <label for="opD">/</label>
-              <br>
-              <input type="radio" name="operator" id="opM" value="*">
-              <label for="opM">*</label>
-            </div>
-            <label for="guess">Guess (Optional): </label>
-            <input type="number" id="guess">
-            <br>
-
-            <button id="submitButton" class="button is-primary is-medium">Submit</button>
-          </form>
-        </div>
-
-
-      </div>
-      <div id="sTable" class="table-container">
-        <table id="serverTable"
-              class="table is-bordered is-striped is-narrow is-hoverable">
-          <thead>
-            <tr class="tableLabels">
-              <th>ID</th>
-              <th>First Value</th>
-              <th>Second Value</th>
-              <th>Operator</th>
-              <th>Answer</th>
-              <th>Guess Correctness</th>
-            </tr>
-          </thead>
-        </table>
-      </div>
-      <div id="modForm">
-        <h2 class="title is-3">Entry Modification Form</h2>
-        <p>All inputs are optional</p>
-        <form>
-          <label for="newFirst">New 1st Value: </label>
-          <input type="number" id="newFirst">
-          <br>
-          <label for="newSec">New 2nd Value: </label>
-          <input type="number" id="newSec">
-          <br>
-          <div class="opForm">
-            <h3>New Operator:</h3>
-            <input type="radio" name="newOP" id="newPlus" value="+">
-            <label for="newPlus">+</label>
-            <br>
-            <input type="radio" name="newOP" id="newMinus" value="-">
-            <label for="newMinus">-</label>
-            <br>
-            <input type="radio" name="newOP" id="newDiv" value="/">
-            <label for="newDiv">/</label>
-            <br>
-            <input type="radio" name="newOP" id="newMult" value="*">
-            <label for="newMult">*</label>
+      </header>
+      <div class="column is-narrow" id="entryForm">
+        <div class="box" style="width: 300px">
+          <div class="block">
+            <h2 class="title is-3 has-text-centered">Add Entry Form</h2>
           </div>
-          <label for="forceAnswer">Assign Correct Answer: </label>
-          <input type="number" id="forceAnswer">
-          <br>
+          <div class="block">
+            <form class="field">
+              <div class="field is-horizontal is-grouped">
+                <div class="control">
+                  <label class="label has-text-left" for="firstVal">1st Value:</label>
+                </div>
+                <div class="control">
+                  <input style="width: 75px" class="input is-small" type="number" id="firstVal">
+                </div>
+              </div>
+              <div class="field is-horizontal is-grouped">
+                <div class="control">
+                  <label class="label" for="secVal">2nd Value:</label>
+                </div>
+                <div  class="control">
+                  <input style="width: 75px" class="input is-small" type="number" id="secVal">
+                </div>
+              </div>
 
-          <button id="saveButton" class="button is-primary is-medium">Save</button>
-        </form>
+              <div class="block has-text-left">
+                <p class="label is-size-5">Choose an operator:</p>
+                <div class="field is-horizontal is-grouped">
+                  <div  class="control">
+                    <input class="radio" type="radio" name="operator" id="opA" value="+" checked>
+                  </div>                
+                  <div class="control">
+                    <label class="label" for="opA">+</label>
+                  </div>
+                </div>
+                <div class="field is-horizontal is-grouped">
+                  <div  class="control">
+                    <input class="radio" type="radio" name="operator" id="opS" value="-">
+                  </div>                
+                  <div class="control">
+                    <label class="label" for="opS">-</label>
+                  </div>
+                </div>
+                <div class="field is-horizontal is-grouped">
+                  <div  class="control">
+                    <input class="radio" type="radio" name="operator" id="opD" value="/">
+                  </div>                
+                  <div class="control">
+                    <label class="label" for="opD">/</label>
+                  </div>
+                </div>
+                <div class="field is-horizontal is-grouped">
+                  <div  class="control">
+                    <input class="radio" type="radio" name="operator" id="opM" value="*">
+                  </div>                
+                  <div class="control">
+                    <label class="label" for="opM">*</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="field is-horizontal is-grouped">
+                <div class="control">
+                  <label class="label" for="guess">Guess (Optional):</label>
+                </div>
+                <div  class="control">
+                  <input style="width: 75px" class="input is-small" type="number" id="guess">
+                </div>
+              </div>
+              <br>
+              <div class="block">
+                <button id="submitButton" class="button is-primary is-medium">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+
+
       </div>
+      <div class="column is-narrow">
+        <div id="sTable" class="table-container">
+          <table id="serverTable" class="table is-bordered is-striped is-hoverable">
+            <thead>
+              <tr class="tableLabels">
+                <th>ID</th>
+                <th>First Value</th>
+                <th>Second Value</th>
+                <th>Operator</th>
+                <th>Answer</th>
+                <th>Guess Correctness</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+
+
+      <div class="box" id="modForm" style="width: 435px">
+        <h2 class="title is-3 is-spaced has-text-centered">Entry Modification Form</h2>
+        <p class="subtitle is-5">All inputs are optional</p>
+          <div class="block">
+            <form class="field">
+              <div class="field is-horizontal is-grouped">
+                <div class="control">
+                  <label class="label has-text-left" for="newFirst">New 1st Value:</label>
+                </div>
+                <div class="control">
+                  <input style="width: 75px" class="input is-small" type="number" id="newFirst">
+                </div>
+              </div>
+              <div class="field is-horizontal is-grouped">
+                <div class="control">
+                  <label class="label" for="newSec">New 2nd Value:</label>
+                </div>
+                <div  class="control">
+                  <input style="width: 75px" class="input is-small" type="number" id="newSec">
+                </div>
+              </div>
+  
+              <div class="block has-text-left">
+                <p class="label is-size-5">Choose an operator:</p>
+                <div class="field is-horizontal is-grouped">
+                  <div  class="control">
+                    <input class="radio" type="radio" name="newOP" id="newPlus" value="+">
+                  </div>                
+                  <div class="control">
+                    <label class="label" for="newPlus">+</label>
+                  </div>
+                </div>
+                <div class="field is-horizontal is-grouped">
+                  <div  class="control">
+                    <input class="radio" type="radio" name="newOP" id="newMinus" value="-">
+                  </div>                
+                  <div class="control">
+                    <label class="label" for="newMinus">-</label>
+                  </div>
+                </div>
+                <div class="field is-horizontal is-grouped">
+                  <div  class="control">
+                    <input class="radio" type="radio" name="newOP" id="newDiv" value="/">
+                  </div>                
+                  <div class="control">
+                    <label class="label" for="newDiv">/</label>
+                  </div>
+                </div>
+                <div class="field is-horizontal is-grouped">
+                  <div  class="control">
+                    <input class="radio" type="radio" name="newOP" id="newMult" value="*">
+                  </div>                
+                  <div class="control">
+                    <label class="label" for="newMult">*</label>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="field is-horizontal is-grouped">
+                <div class="control">
+                  <label class="label" for="forceAnswer">Assign Correct Answer:</label>
+                </div>
+                <div  class="control">
+                  <input style="width: 75px" class="input is-small" type="number" id="forceAnswer">
+                </div>
+              </div>
+
+              <button id="saveButton" class="button is-primary is-medium">Save</button>
+            </form>
+          </div>
+      </div>
+      <br>
     </div>
   </body>
 </html>

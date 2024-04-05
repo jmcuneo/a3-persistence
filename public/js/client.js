@@ -135,7 +135,7 @@ function displayData(data) {
 
       let tdID = document.createElement("td") //New column for data ID display
       tdID.innerHTML = i
-      tdID.className = "entryID"
+      tdID.className = "has-text-info has-text-weight-bold has-text-centered"
       tr.appendChild(tdID)
       let tempId = null;
       for (let key in data[i]) {//For every data point in the row...
@@ -155,11 +155,11 @@ function displayData(data) {
       }
 
       //Make a delete button
-      let deleteTd = makeButton("button is-danger is-small", "Delete", tempId, deleteItem)
+      let deleteTd = makeButton("button is-danger is-outlined is-small", "Delete", tempId, deleteItem)
       tr.appendChild(deleteTd)
 
       //Make a modify button
-      let modifyTd = makeButton("button is-info is-small", "Modify", tempId, modItem)
+      let modifyTd = makeButton("button is-warning is-outlined is-small", "Modify", tempId, modItem)
       tr.appendChild(modifyTd)
 
       table.appendChild(tr)
@@ -171,7 +171,7 @@ function displayData(data) {
 function handleGuess (td, value) {
   if(value) { //If true, display correct instead of "true"
     td.innerHTML = "Correct"
-    td.style.color = "green"
+    td.style.color = "#05ff05"
   } else { //If false, display "Incorrect" instead of "false"
     td.innerHTML = "Incorrect"
     td.style.color = "red"
