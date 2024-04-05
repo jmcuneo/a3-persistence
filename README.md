@@ -141,17 +141,13 @@ Yes, so long as those are IN ADDITION TO Express, MongoDB, and a CSS framework o
 Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
 ---
 
-## Your Web Application Title
+## Calculator app
 
-your glitch (or alternative server) link e.g. http://a3-joshua-cuneo.glitch.me
+Connor Chartier - ctchartier@wpi.edu
+My glitch url http://a3-connorchartier.glitch.me
 
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
+My application allows the user to add, subtract, multiply, and divide any two numbers. These numbers get stored in a database and can be retrieved based on the user who is signed in. My login is functional but sometimes the page does not immediately show the page, i was not able to figure out why. But if you click the "sign out button", it will bring you to the login page. If the user inputs a username and password that is unknown to the database, a new account is made. But if they input an existing account, the user will be able to see the previous computations from that account. I did not use OAuth, I used a seperate page, because i though it would be easiest to implement. I used the Bootstrap CSS framework because i did some reasearch and i found that it was multipurpose and easy to use. I applied it to both my index.html and my login.html. I made no modifications to the CSS package. My website achieves at least 90% in all 4 categories. Also I included the HTML elements for textarea, input and a checkbox. Though the checkbox doesnt do anything. If i had more time i was going to have the remember me button save the user info so they did not have to login again but i was unable to due to the timing and scope of the project.
 
-- the goal of the application
-- challenges you faced in realizing the application
-- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why
-  - include any modifications to the CSS framework you made via custom CSS you authored
 - the five Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function for *one* (and one alone) middleware please 
 add a little more detail about what it does.
 
