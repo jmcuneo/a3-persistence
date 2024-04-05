@@ -1,2 +1,5 @@
+User-agent: Googlebot
+Allow: /login.html
+
 User-agent: *
 Disallow: /
