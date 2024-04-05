@@ -16,8 +16,12 @@ const http = require( "http" ),
   bodyParser = require('body-parser');
 
 require("dotenv").config();
-
 const app = express();
+app.use( cookie({
+  name: 'session',
+  keys: ['key1', 'key2'],
+  username: ''
+}))
 
 //Database Code
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
@@ -33,21 +37,12 @@ const client = new MongoClient(uri, {
 
 app.use( express.json())
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use( cookie({
-  name: 'session',
-  keys: ['key1', 'key2'],
-  username: ''
-}))
-
-app.use( express.static(path.join(__dirname, 'public')))
-
-/*
 
 // Middleware to serve login page before any other page if not authenticated
 const serveLoginIfNotAuthenticated = (req, res, next) => {
   // If not authenticated and not trying to access the login page
-  if (!req.session.login && req.path !== '/login') {
-    res.redirect('/login');
+  if (!req.session.login && req.path !== '/public/login.html' && req.path !== '/') {
+    res.redirect('/public/login.html');
   } else {
     next();
   }
@@ -55,12 +50,18 @@ const serveLoginIfNotAuthenticated = (req, res, next) => {
 
 // Apply the middleware to all routes
 app.use(serveLoginIfNotAuthenticated);
-*/
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Default route handler
-app.get('/', (req, res)=>{
-  res.sendFile(__dirname + '/public/login.html')
-})
+// Define a specific route for '/'
+app.get('/', (req, res) => {
+  // Redirect to login page if not authenticated
+  if (!req.session.login) {
+    res.redirect('/public/login.html');
+  } else {
+    // Serve index.html if authenticated
+    sendFile(res, 'public/index.html');
+  }
+});
 
 app.post( '/login', (req,res)=> {
   // express.urlencoded will put your key value pairs 
@@ -81,7 +82,7 @@ app.post( '/login', (req,res)=> {
     // use redirect to avoid authentication problems when refreshing
     // the page or using the back button, for details see:
     // https://stackoverflow.com/questions/10827242/understanding-the-post-redirect-get-pattern 
-    res.redirect( '/' )
+    res.redirect( 'index.html' )
   }else{
     // password incorrect, redirect back to login page
     res.sendFile(__dirname + '/public/login.html')
@@ -95,10 +96,8 @@ async function run(){
 
 run()
 
-
-
 app.get('/login', (req, res) => {
-  res.sendFile(__dirname + '/public/login.html');
+  sendFile(res, '/public/login.html');
 });
 
 app.post('/addition', async (req, res) => {
