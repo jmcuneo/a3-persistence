@@ -1,0 +1,19 @@
+{
+  "name": "a3-persistence",
+  "version": "",
+  "description": "",
+  "author": "Edison Zhang",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "mongodb": "^4.4.12",
+    "ejs": "^3.1.9",
+    "axios": "^1.6.8"
+  },
+  "engines": {
+    "node": "16.x"
+  }
+}
