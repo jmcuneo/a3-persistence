@@ -2,7 +2,7 @@ Readme
 ---
 Lucas Sicard
 
-## Your Web Application Title
+## Monthly Cost Tracker
 https://a3-lucassicard.glitch.me/
 
 #### Summary
