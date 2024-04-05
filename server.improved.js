@@ -27,28 +27,6 @@ app.use( cookie({
   username: ''
 }))
 
-const sendFile = function( response, filename ) {
-  const type = mime.getType( filename ) 
-
-  fs.readFile( filename, function( err, content ) {
-
-    // if the error = null, then we"ve loaded the file successfully
-    if( err === null ) {
-
-      // status code: https://httpstatuses.com
-      response.writeHeader( 200, { "Content-Type": type })
-      response.end( content )
-
-    }else{
-
-      // file not found, error code 404
-      response.writeHeader( 404 )
-      response.end( "404 Error: File Not Found" )
-
-    }
-  })
-}
-
 app.use( express.static(path.join(__dirname, 'public')))
 
 // Middleware to serve login page before any other page if not authenticated
@@ -86,23 +64,23 @@ app.post( '/login', (req,res)=> {
     res.redirect( '/' )
   }else{
     // password incorrect, redirect back to login page
-    sendFile( res, (__dirname + '/public/login.html') )
+    res.sendFile(__dirname + '/public/login.html')
   }
 })
 
-app.get('/login', (req, res) => {
-  sendFile(res, (__dirname + '/public/login.html'));
-});
-
 // Default route handler
-app.get('/', (req, res) => {
+app.use('/', (req, res, next) => {
   // Check if user is authenticated, if not, redirect to login
-  if (!req.session.login) {
-    res.redirect('/login');
+  if (req.session.login===true) {
+    next()
   } else {
     // User is authenticated, redirect to main content
-    sendFile(res, (__dirname + '/public/index.html'));
+    res.sendFile(__dirname + '/public/index.html');
   }
+});
+
+app.get('/login', (req, res) => {
+  sendFile(res, (__dirname + '/public/login.html'));
 });
 
 //Database Code
@@ -118,6 +96,10 @@ const client = new MongoClient(uri, {
     deprecationErrors: true,
   }
 });
+
+app.get('/', (req, res)=>{
+  sendFile(res, 'public/login.html')
+})
 
 app.post('/addition', async (req, res) => {
   const collection = await client.db("CS4241").collection("Calculator")
@@ -217,5 +199,27 @@ app.post('/signOut', (req, res) => {
   req.session = null;
   res.sendStatus(200); 
 });
+
+const sendFile = function( response, filename ) {
+  const type = mime.getType( filename ) 
+
+  fs.readFile( filename, function( err, content ) {
+
+    // if the error = null, then we"ve loaded the file successfully
+    if( err === null ) {
+
+      // status code: https://httpstatuses.com
+      response.writeHeader( 200, { "Content-Type": type })
+      response.end( content )
+
+    }else{
+
+      // file not found, error code 404
+      response.writeHeader( 404 )
+      response.end( "404 Error: File Not Found" )
+
+    }
+  })
+}
   
 app.listen( process.env.PORT || 3000 )
