@@ -1,90 +1,23 @@
 const express = require("express");
-//const { MongoClient } = require('mongodb');
+const { MongoClient } = require('mongodb');
 const app = express();
 const path = require("path");
-const authRoutes = require('./routes/auth-routes');
-const profileRoutes = require('./routes/profile-routes');
 
-const passportSetup = require('./configs/passport-setup');
+
 const keys = require('./configs/keys');
-const { run } = require('./mongo.js');
-const { client } = require('./mongo.js');
-const cookieSession = require('cookie-session');
-const passport = require('passport');
-//var session = require('express-session');
-
-app.use(cookieSession({
-  maxAge: 24 * 60 * 60 * 1000,
-  keys: [keys.session.cookieKey]
-}));
-
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use('/auth', authRoutes);
-app.use('/profile', profileRoutes);
-
-app.use(session({
-  secret: 'paperscissorsrock',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { secure: true }
-}));
-app.use(passport.initialize());
-app.use(passport.session());
-
-
-app.use(express.json()); //middleware for json
-
-
-// Serve static files from the 'public' directory
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'login.html'));
-});
-app.use(express.static(path.join(__dirname, 'public')));
-
-
-let collection = null
-
-async function startServer() {
-  const db = await run(); // Get database connection
-  // Your server setup code here
-  collection = db.collection("a3Collection")
-  const collectionSuggest = db.collection("a3Suggest")
-
-  app.get("/docs", async (req, res) => {
-    if (collection !== null) {
-      const docs = await collection.find({}).toArray()
-      res.json( docs )
-    }
-  })
-  app.get("/docsSuggest", async (req, res) => {
-    if (collectionSuggest !== null) {
-      const docsSuggest = await collectionSuggest.find({}).toArray()
-      res.json( docsSuggest )
-    }
-  })
-  return client.db('a3-db');
-};
-
-
-startServer();
-
-module.exports = { app };
-/*
-//const uri = "mongodb+srv://ngcleary:45Richfield@cluster0.yywwl2c.mongodb.net/?retryWrites=true&w=majority";
+//mongo
 const uri = keys.mongodb.uri;
-const client = new MongoClient( uri )
-module.exports = client;
+const client = new MongoClient( uri );
+let  collection = null;
+let collectionSuggest = null;
+let collectionAuth = null;
 
-let collection = null
-
+//Conennect to mongo
 async function run() {
   await client.connect()
   collection = await client.db("a3-db").collection("a3Collection")
   collectionSuggest = client.db("a3-db").collection("a3Suggest")
-  //collectionAuth = client.db("a3-db").collection("a3Auth");
+  collectionAuth = client.db("a3-db").collection("a3Auth");
 
   // route to get all docs
   app.get("/docs", async (req, res) => {
@@ -99,13 +32,89 @@ async function run() {
       res.json( docsSuggest )
     }
   })
-  //return client.db('a3-db');
-};*/
-//run();
+};
+run();
+
+//start cookies/passport
+const cookieSession = require('cookie-session');
+const passport = require('passport');
+const GitHubStrategy = require('passport-github');
 
 
+app.use(cookieSession({
+  maxAge: 24 * 60 * 60 * 1000,
+  keys: ['yes'] //[keys.session.cookieKey]
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 
+//stuff github userId in cookie
+passport.serializeUser((user, done) => {
+  //await startDb(); // Ensure allusers is initialized
+  
+  done(null, user.githubId); // Serialize user with a unique identifier
+  console.log('serializing: ', user);
+});
+
+passport.deserializeUser(async (id, done) => {
+  const user = await collectionAuth.findOne({ "githubId": id }); // Find user by ID
+  console.log("user in deserialize:", user);
+  console.log("id in deserialize:", id);
+  done(null, user);
+  } 
+);
+
+passport.use(new GitHubStrategy({
+  clientID: keys.github.clientID,
+  clientSecret: keys.github.clientSecret,
+  callbackURL: "/auth/github/redirect"
+}, async (accessToken, refreshToken, profile, done) => {
+  const currentUser = await collectionAuth.findOne({githubId: profile.id});
+  if(currentUser){
+      console.log('user is: ', currentUser);
+      done(null, currentUser);
+  } else{
+      const userInfo = {
+          username: profile.displayName,
+          githubId: profile.id
+      }
+      const newUser = await collectionAuth.insertOne(userInfo);
+      console.log('new user: ', newUser);
+      done(null, newUser);
+  }
+}));
+
+
+// Routes
+app.get('/login', (req, res) =>{
+  res.render('login')
+})
+
+app.get('/auth/github', passport.authenticate('github', {
+  scope: ['profile']
+}));
+
+
+//callback route for github -> tell passport to give us the profile info from the code
+app.get('/auth/github/redirect', passport.authenticate('github'), (req, res) => {
+  res.redirect('/profile/');
+});
+
+// Secret route
+app.get('/profile', (req, res) => {
+  res.send(`profile: ` + req.user.username);
+});
+
+/////////////////////////////////////////////////////////////////////////////////////
+app.use(express.json()); //middleware for json
+
+
+// Serve static files from the 'public' directory
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+app.use(express.static(path.join(__dirname, 'public')));
 
 //arrays
 const appdata = [];
