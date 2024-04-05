@@ -120,8 +120,10 @@ I mostly used application-level middleware. I used the following Express middlew
 - app.delete() - This function is used to delete data from the database. I used in my server code this to look for if the ID exists and then delete data from the database.
 - app.put() - This function is used to modify data in the database. I used this in my server code to look for the correct ID then modify data in the database.
 
+lighthouse Scores:
 ![alt text](https://github.com/atnguyen01/a3-AndrewNguyen/blob/main/img/Screenshot%202024-04-04%20192417.png)
 
+Note: I didn't add cookies so if you refresh and try to add again the database will not pick up a user. You'd have to log in again
 
 ## Technical Achievements
 - **Tech Achievement 1**: I used Render to create my webpage rather than Glitch. I found that Render was easier to use than Glitch as it was more user-friendly and had a better interface. I also found that Render was better than Glitch in terms of loading the page and updating the page. Here is the message I sent earlier in the Slack:
@@ -135,7 +137,7 @@ I mostly used application-level middleware. I used the following Express middlew
   Cons:
   - Deployment for free version is slow (I had to cancel and restart the automatic deployment to get it to work)
   - Loading the page itself sometimes is slow as well
-  - Sometimes the server breaks (it doesn't do that me when i run locally)
+  - Sometimes the server breaks (it doesn't do that me when I run locally)
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative.
@@ -151,5 +153,8 @@ I mostly used application-level middleware. I used the following Express middlew
   - Tip 10: Provide easily identifiable feedback. I used an alert to signify that the login was incorrect.
   - Tip 11: Use headings and spacing to group related content. I used headers for my forms to signify what the form is for and separate spaces.
   - Tip 12: Reflect the reading order in the code order. I used the order of the code to signify the order of the page. The title is first, then the login form, then the footer. Same with the main page having title, forms, and table.
-- **Design Achievement 2**: I used the CRAP principles in my design. 
-  
+- **Design Achievement 2**: I used the CRAP principles in my design.
+  My site uses the principle of proximity by grouping items together. This principle is mostly involved with grouping and formatting items that are related next to each. Proximity is used to organize the visual information on my page by grouping the login form together and the table together. The login form is grouped together with the username and password fields and the submit button. The table is grouped together with the table headers and the data. Each form, which is labeled in the HTML, keeps all of its components next to each other. Also, my submit, modify and delete are separate to signify they are different forms. They show this on the site by using the HTML grid to give space between them while containing their content.
+  My site uses the principle of alignment to organize information and increase contrast for particular elements. This principle is about placement and how things that are connected are near each other while not being arbitrarily placed. Alignment is used to organize information by aligning the text and the form fields. I place text in the login pages above the their respective fields and placed them on the left side of the screen as we write from left to write. In my main page the text on my forms have instructions above and centered in their grid space. Also, I have text below the forms also centered in their grid space with examples on inputs. The headers remain center to show the titles of the pages.
+  My site uses the principle of repetition to show consistency. This principle is about repeating elements. Repetition is used to show consistency by using the same font and color for the text and buttons. In my login the text has the same CSS properties along with the two inputs having their own properties. In my main page, the table below remains consistent with text font and size when creating new data. All of my forms use the same buttons and input CSS to show consistency and that they are all interactable within the page. My text inputs all use the same bootstrap class to match while my drop downs use the same bootstrap CSS as well to match. The headers match the font of the page they are on as well. Main matches the font of the table and login matches the font of the sub header.
+  My site uses the principle of contrast. This principle is about making things stand out by making things look different by using different colors and sizes. I used contrast to make the login form stand out by using a different background color and text color. The login form has a white background with black text while the main page has a grey background with black text. The submit button is blue to signify that it is interactable. The main page follows the text being black with a white background as well. The forms also uses different colors as well specifically the dropdowns and buttons. After viewing the lighthouse information, it suggested to make the colors of the buttons red to contrast with the background the most.  
