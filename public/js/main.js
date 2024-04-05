@@ -11,6 +11,8 @@ const submit = async function( event ) {
         json = { name: input.value },
         body = JSON.stringify( json )
 
+        console.log(body);
+
         const response = await fetch( "/api/add", {
           method:"POST",
           headers: { 'Content-Type': 'application/json' }, 
@@ -22,21 +24,28 @@ const submit = async function( event ) {
   input.value = "";
   if (response.status === 200 ) {
     row = JSON.parse(text);
-    addRow(row);
+    addRow(row, document.getElementById('results'));
     }
   }
+const logoutFunc = async function( event ) {
+  event.preventDefault()
+  const response = await fetch( "/logout", {
+    method:"GET",
+    headers: { 'Content-Type': 'application/json' }
+  })
+  if (response.status === 200 ) {
+    window.location.href = '/login.html';
+  }
+}
 
 
 
 window.onload = function() {
-   const button = document.querySelector("button");
-  button.onclick = submit;
+   const submitButton = document.getElementById("submit");
+   submitButton.onclick = submit;
 
   const logout = document.getElementById('logout');
-  logout.onclick = function() {
-    event.preventDefault()
-  window.location.href = '/logout';
-  }
+  logout.onclick = logoutFunc;
 }
 const addRow = function(row, results) {
   let tr = document.createElement('tr');
