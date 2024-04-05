@@ -57,7 +57,7 @@ Sample Readme (delete the above when you're ready to submit, and modify the belo
 
 ## Maze Generator Beta 1.0
 
-Glitch:
+Glitch:https://a3-trevorng.glitch.me
 
 Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
 This application is a simple maze generator. Giuen a set of parameters, it creates a rectangular tile-based maze. While the maze isn't currently
