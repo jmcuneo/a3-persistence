@@ -1,3 +1,7 @@
 a {
   text-decoration: none;
 }
+
+#login-error-message {
+  color: #f44336;
+}
