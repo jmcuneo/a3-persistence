@@ -54,21 +54,43 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.get("/", (req, res) => {
-  console.log(JSON.stringify(req.body))
+//auth middlewares
+
+function isAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next()
+  }
+  res.redirect("/login")
+
+}
+
+function isNotAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return res.redirect("/")
+  }
+  next()
+
+}
+
+app.get("/", isAuthenticated, (req, res) => {
   res.render("index.ejs", { name: req.user.username })
 })
 
-
-app.get("/login", (req, res) => {
+app.get("/login", isNotAuthenticated, (req, res) => {
   res.render("login.ejs")
 })
 
-app.get("/register", (req, res) => {
+app.post("/login", isNotAuthenticated, passport.authenticate("local", {
+  successRedirect: "/",
+  failureRedirect: "/login",
+  failureFlash: true
+}))
+
+app.get("/register", isNotAuthenticated, (req, res) => {
   res.render("register.ejs")
 })
 
-app.post("/register", async (req, res) => {
+app.post("/register", isNotAuthenticated, async (req, res) => {
   //get username. find username in database. if exists, give error. If not exists, create model and update record with username, hashed password, and salt. redirect to login
   try {
     const dbUser = await User.findOne({ username: req.body.username })
@@ -86,13 +108,16 @@ app.post("/register", async (req, res) => {
   }
 })
 
-app.post("/login", passport.authenticate("local", {
-  successRedirect: "/",
-  failureRedirect: "/login",
-  failureFlash: true
-}))
+app.post("/logout", (req, res) =>{
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect('/login');
+  })
+})
 
-app.post('/add-task', async (req, res) => {
+app.post('/add-task', isAuthenticated, async (req, res) => {
   const reqTask = req.body
   const dbTask = await Task.findOne({ 'task': reqTask.task })
   if (dbTask == null) {
@@ -104,12 +129,14 @@ app.post('/add-task', async (req, res) => {
   res.send(JSON.stringify(allTasks))
 })
 
-app.delete('/delete-task', (req, res) => {
+app.delete('/delete-task', isAuthenticated, (req, res) => {
   const taskName = req.body
   res.send(JSON.stringify([{ task: "hi", creationDate: "2024-03-12", dueDate: "2024-03-12", daysUntilDue: 12 }]))
 })
 
-
+app.get('*', function (req, res) {
+  res.redirect('/')
+})
 
 // // const handlePost = function (request, response) {
 // //   let dataString = ""
