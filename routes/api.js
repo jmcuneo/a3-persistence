@@ -23,14 +23,15 @@ const userSchema = new Schema({
 });
 const User = mongoose.model('User', userSchema);
 
-const app = express();
 const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
+const redisClient = require('redis').createClient();
 
 app.use(session({
-  secret: 'your secret key',
+  store: new RedisStore({ client: redisClient }),
+  secret: 'your-secret',
   resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false } // set to true if your app is on https
+  saveUninitialized: false
 }));
 
 router.post('/login', async (req, res) => {
