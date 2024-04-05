@@ -15,6 +15,7 @@ let collectionBooks = null
 let collectionLogin = null
 let currentUserLoggedIn = null
 
+// Function to connect to both databases in mongo
 async function run() {
   await client.connect()
   collectionBooks = await client.db("webware").collection("books_read")
@@ -79,7 +80,7 @@ app.post( '/login', async (req,res)=> {
 
 
 
-
+// Sends the user to the index page
 app.get( '/', (req,res) => {
   res.render( 'index', { msg:'', layout:false })
 })
@@ -101,18 +102,21 @@ app.use( (req,res,next) => {
   }
 })
 
+// Route for the index page
 app.get( '/index.html', ( req, res) => {
 
   res.render( 'index', { msg:'', layout:false })
 
 })
 
+// Route for the main page
 app.get( '/main.html', ( req, res) => {
 
   res.render( 'main', { msg:'Success! You have logged in '+currentUserLoggedIn+"!", layout:false })
 
 })
 
+// Route for the API that returns a list of books
 app.get( '/getPeople', async (req, res) => {
 
   const docs = await collectionBooks.find({username: currentUserLoggedIn}).toArray()
@@ -120,9 +124,9 @@ app.get( '/getPeople', async (req, res) => {
 
 })
 
-
+// Route that adds a book to the database
 app.post( '/submitAdd', (req, res) => {
-  // Pushes a new person to the people array using the parsed data
+  // Pushes a new book to the people array using the parsed data
   let dataString = ""
 
   req.on( "data", function( data ) {
@@ -143,8 +147,9 @@ app.post( '/submitAdd', (req, res) => {
   })
 })
 
+// Route that removes a book from the database
 app.post( '/submitRemove', (req, res) => {
-  // Pushes a new person to the people array using the parsed data
+  // Pushes a new book to the people array using the parsed data
   let dataString = ""
 
   req.on( "data", function( data ) {
@@ -165,8 +170,9 @@ app.post( '/submitRemove', (req, res) => {
   })
 })
 
+// Route that updates a book in the database
 app.post( '/submitEdit', (req, res) => {
-  // Pushes a new person to the people array using the parsed data
+  // Pushes a new book to the people array using the parsed data
   let dataString = ""
 
   req.on( "data", function( data ) {

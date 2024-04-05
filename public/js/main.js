@@ -1,6 +1,10 @@
 // FRONT-END (CLIENT) JAVASCRIPT HERE
 
-
+/** 
+ * Pulls the genre value out of the form upon submission
+ * @param {string} formType 
+ * @returns string value of the radio box that is checked, null if nothing is checked
+ */
 function getGenre(formType) {
   var genres = document.getElementsByName(formType);
  
@@ -13,7 +17,11 @@ function getGenre(formType) {
 }
 
 
-// Function that will return the list of people stored in the server
+
+/**
+ * Function to get books for the user
+ * @returns a JSON string that contains all the books a certain user has read
+ */
 var getBooks = async function () {
 
   // Makes the get request to get the array of people from the server
@@ -29,7 +37,10 @@ var getBooks = async function () {
   return books
 }
 
-// Function that will submit a post request adding a person to the list in the server
+/**
+ * Adds a book to the database from a post request.
+ * @param {*} event 
+ */
 const submitAdd = async function( event ) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
@@ -56,7 +67,10 @@ const submitAdd = async function( event ) {
 
 };
 
-// Function that will submit a post request removing a person from the list in the server
+/**
+ * Deletes a book from the database from a post request.
+ * @param {*} event 
+ */
 const submitRemove = async function( event ) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
@@ -81,7 +95,10 @@ const submitRemove = async function( event ) {
   addDataToTable();
 };
 
-// Function that will submit a post request modifying a person from the list in the server
+/**
+ * Edits a book in the database from a post request.
+ * @param {*} event 
+ */
 const submitEdit = async function( event ) {
   // stop form submission from trying to load
   // a new .html page for displaying results...
