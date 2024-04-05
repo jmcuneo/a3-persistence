@@ -3,18 +3,16 @@ const bodyParser = require('body-parser');
 const apiRoutes = require('./routes/api');
 const path = require('path');
 const session = require('express-session');
-const RedisStore = require('connect-redis')(session);
-const redisClient = require('redis').createClient();
 
 const app = express();
 
 const port = process.env.PORT || 3000;
 app.use(session({
-    store: new RedisStore({ client: redisClient }),
-    secret: 'your-secret',
+    secret: 'your secret',
     resave: false,
     saveUninitialized: true
-}));
+  }));
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 
