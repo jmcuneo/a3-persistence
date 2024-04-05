@@ -133,13 +133,13 @@ app.get("/paint.html", (req, res) => {
         }
     });
 });
-app.get("/js/main.js", (req, res) => {
+app.get("/js/paint.js", (req, res) => {
     Accounts.findOne({ username: decodeURIComponent(req.cookies.username), password: decodeURIComponent(req.cookies.password) })
     .then(async acc => {
         if(!acc) {
             res.status(400).send("Invalid username or password");
         } else {
-            res.status(200).sendFile(__dirname + "/private/js/main.js");
+            res.status(200).sendFile(__dirname + "/private/js/paint.js");
         }
     });
 });
