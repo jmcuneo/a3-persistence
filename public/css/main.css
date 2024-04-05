@@ -2917,6 +2917,12 @@ button img {
   padding-left: 3em;
 }
 
+.button-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
 th, td {
   text-align: center;
 }

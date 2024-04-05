@@ -1,5 +1,6 @@
 const express = require('express')
 const { MongoClient, ObjectId } = require("mongodb")
+var session = require('express-session');
 const app = express()
 const passport = require('passport');
 var GitHubStrategy = require('passport-github2').Strategy;
@@ -23,47 +24,30 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new GitHubStrategy({
-  clientID: GITHUB_CLIENT_ID,
-  clientSecret: GITHUB_CLIENT_SECRET,
-  callbackURL: "http://127.0.0.1:3000/auth/github/callback"
+  clientID: "f55cac6ac0c54d5baf80",
+  clientSecret: "f2e8111b26a8c2cc944e8da550b1a77015c9bc16",
+  callbackURL: "https://tested-tidy-shear.glitch.me/auth/github/callback"
 },
 function(accessToken, refreshToken, profile, done) {
-  // asynchronous verification, for effect...
   process.nextTick(function () {
-    
-    // To keep the example simple, the user's GitHub profile is returned to
-    // represent the logged-in user.  In a typical application, you would want
-    // to associate the GitHub account with a user record in your database,
-    // and return that user instead.
     return done(null, profile);
   });
 }
 ));
 
+app.use(session({ secret: 'i love javascript', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// GET /auth/github
-//   Use passport.authenticate() as route middleware to authenticate the
-//   request.  The first step in GitHub authentication will involve redirecting
-//   the user to github.com.  After authorization, GitHub will redirect the user
-//   back to this application at /auth/github/callback
 app.get('/auth/github',
   passport.authenticate('github', { scope: [ 'user:email' ] }),
-  function(req, res){
-    // The request will be redirected to GitHub for authentication, so this
-    // function will not be called.
-  });
+  function(req, res){});
 
-// GET /auth/github/callback
-//   Use passport.authenticate() as route middleware to authenticate the
-//   request.  If authentication fails, the user will be redirected back to the
-//   login page.  Otherwise, the primary route function will be called,
-//   which, in this example, will redirect the user to the home page.
 app.get('/auth/github/callback', 
   passport.authenticate('github', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
+  async function(req, res) {
+    const login = await validateUser(req.user.username, "", true);
+    res.redirect('/html/boxes.html?user=' + req.user.username);
   });
 
 async function connect() {
@@ -188,8 +172,8 @@ app.post('/get_boxes', async (req, res) => {
   })
 })
 
-async function validateUser(user, pass) {
-  if (user === "" || pass === "") {
+async function validateUser(user, pass, github) {
+  if (user === "" || (pass === "" && github === false)) {
     return false;
   }
   const login = await db_user.collection("login");
@@ -203,6 +187,13 @@ async function validateUser(user, pass) {
   }
   return true;
 }
+
+app.get('/logout', function(req, res, next){
+  req.logout(function(err) {
+    if (err) { return next(err); }
+    res.redirect('/');
+  });  
+});
 
 app.get('/user_exists', async (req, res) => {
   const login = await db_user.collection("login");
@@ -223,7 +214,7 @@ app.post('/login', async (req, res) => {
 
   req.on( "end", async function() {
     let data = JSON.parse(dStr);
-    const login = await validateUser(data.user, data.pass);
+    const login = await validateUser(data.user, data.pass, false);
     res.writeHead(200, "OK", {"Content-Type": "text/plain"});
     if (login) {
       res.write("1");

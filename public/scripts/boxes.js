@@ -94,7 +94,7 @@ const load_boxes = async function () {
 }
 
 const logout = function () {
-    window.location.href = '/'
+    window.location.href = '/logout'
 }
 
 const update_leaderboard = async function () {

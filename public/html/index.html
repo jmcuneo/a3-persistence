@@ -19,7 +19,10 @@
         <label for="agreement">Do you promise not to add, delete, or paint any boxes that do not belong to you?</label>
         <input required="true" id="agreement" type="checkbox" />
         <h3 id="error" style="display: none"></h3>
-        <input onclick="login()" id="submit" type="button" value="Login"/>
+        <div class="button-row">
+          <a href="/auth/github">Use Github</a>
+          <input onclick="login()" id="submit" type="button" value="Login"/>
+        </div>
       </form>
     </main>
   </body>
