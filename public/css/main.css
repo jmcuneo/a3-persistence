@@ -36,11 +36,27 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: 48pt;
   margin-top: 0;
+  margin-bottom: 0;
+}
+
+body>h4 {
+  margin-top: 0;
+  background-color: #0b93c9;
+  width: max-content;
+  padding: 1vh 2vh;
+  border-radius: 10vw;
+  transition: 0.2s linear filter;
+  user-select: none;
+  cursor: pointer;
+}
+body>h4:hover {
+  filter: brightness(80%);
 }
 
 #color-selector {
   width: 40px;
   height: 40px;
+  cursor: pointer;
 }
 #color-selector::-webkit-color-swatch {
   border: none;
@@ -68,6 +84,10 @@ label {
   aspect-ratio: 1/1;
   grid-template-columns: repeat(10, 10%);
   grid-template-rows: repeat(10, 10%);
+}
+
+.grid {
+  cursor: pointer;
 }
 
 #status-msg {
@@ -137,3 +157,17 @@ hr {
   margin-bottom: 5px;
 }
 
+#attempt-login, #attempt-create-account {
+  font-family: "Lora", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16pt;
+
+  width: 15vw;
+  height: 5vh;
+  margin-top: 5vh;
+  cursor: pointer;
+  margin-left: 2vw;
+  margin-right: 2vw;
+}

@@ -3,16 +3,10 @@ let refreshLoopId = undefined;
 const submit = async function( event, x, y ) {
   event.preventDefault()
   const submission = {
-    name: document.querySelector("#user").value,
     color: document.querySelector("#color-selector").value,
     x: x,
     y: y
   };
-
-  if(submission.name === "" || submission.name.match("^\\s+$")) {
-    logStatus("Please enter a display name.", "#FFFF33");
-    return;
-  }
 
   const body = JSON.stringify(submission);
 
@@ -51,7 +45,7 @@ async function updateGrid() {
   const grid = document.getElementById("draw-plane");
 
   for(let i = 0; i < 100; i++) {
-    grid.children[i].style.backgroundColor = colors[i];
+    grid.children[i].style.backgroundColor = colors.find(c => c.x == Math.floor(i / 10) && c.y == i % 10).color;
   }
 
   const recentList = document.querySelector("#change-list");
@@ -66,13 +60,13 @@ async function updateGrid() {
     const color = document.createElement("span");
     color.classList.add("change-color", "center");
     color.style.backgroundColor = user.color;
-    color.textContent = `${user.coord.x}, ${user.coord.y}`;
+    color.textContent = `${user.x}, ${user.y}`;
 
     const label = document.createElement("p");
     label.textContent = "Changed:";
 
     const time = document.createElement("p");
-    time.textContent = convertToReadableTime(new Date(user.lastSubmitted));
+    time.textContent = convertToReadableTime(new Date(user.updatedAt));
 
     const wrapper = document.createElement("div");
     wrapper.classList.add("change");
@@ -160,4 +154,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   updateGrid();
+
+  document.querySelector("#log-out").onclick = () => {
+    document.cookie = "username" + "=; max-age=0";
+    document.cookie = "password" + "=; max-age=0";
+    window.open("/index.html", "_self");
+  }
 });
