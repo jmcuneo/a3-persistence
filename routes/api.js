@@ -68,7 +68,7 @@ router.post('/delete', async (req, res) => {
   const { row } = req.body;
   try {
     const result = await Data.deleteOne({ _id: row._id });
-    res.json({ success: result.deletedCount > 0 });
+    res.json({ success: true });
   } catch (error) {
     res.status(500).json({ error: 'Failed to delete data' });
   }
@@ -77,7 +77,7 @@ router.post('/edit', async (req, res) => {
   const { row } = req.body;
   try {
     const result = await Data.updateOne({ _id: row._id }, { name: row.newName });
-    res.json({ success: result.nModified > 0 });
+    res.json({ success: true});
   } catch (error) {
     res.status(500).json({ error: 'Failed to edit data' });
   }

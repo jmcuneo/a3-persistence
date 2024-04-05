@@ -103,11 +103,10 @@ const addRow = function(row, results) {
     })
     .then(response => response.json())
     .then(data => {
-      if (data.success) {
+      if (data.success === true) {
         td.textContent = newName;
       } else {
-        //reload
-        location.reload();
+        alert('Failed to edit data');
       }
     });
   };
