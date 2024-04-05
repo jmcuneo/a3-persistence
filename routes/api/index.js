@@ -17,60 +17,8 @@ const dataSchema = new Schema({
 });
 const Data = mongoose.model('Data', dataSchema);
 
-//create a user model
-const userSchema = new Schema({
-  username: String,
-  password: String
-});
-const User = mongoose.model('User', userSchema);
 
-const app = express();
-const session = require('express-session');
 
-app.use(session({
-  secret: 'your secret key',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: false } // set to true if your app is on https
-}));
-
-router.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  try {
-    let user = await User.findOne({ username });
-    if (!user) {
-      user = new User({ username, password });
-      await user.save();
-      req.session.userId = user._id;
-      res.json({ success: true, message: 'User created successfully' });
-    } else {
-      if (user.password === password) {
-        req.session.userId = user._id;
-        res.json({ success: true, message: 'Login successful' });
-      } else {
-        res.json({ success: false, message: 'Invalid password' });
-      }
-    }
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to login' });
-  }
-});
-
-// get username 
-router.get('/username', async (req, res) => {
-  try {
-    if (req.session.userId) {
-      const user
-        = await User.findById(req.session
-          .userId);
-      res.json({ username: user.username });
-    } else {
-      es.status(500).json({ error: 'Failed to retrieve username' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to retrieve username' });
-  }
-});
 
 //get all data associated with userid
 router.get('/getdata', async (req, res) => {

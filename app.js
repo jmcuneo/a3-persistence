@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const apiRoutes = require('./routes/api');
+const loginRoutes = require('./routes/api/login');
 const path = require('path');
 const session = require('express-session');
 
@@ -15,7 +16,6 @@ app.use(session({
 
 
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use((req, res, next) => {
 
     if (!req.session.userId && !req.path.startsWith('/api/login') && req.path != '/login.html') {
@@ -42,6 +42,7 @@ app.get('/logout', (req, res) => {
 
 app.use(bodyParser.json());
 app.use(express.json());
+app.use('/api/login', loginRoutes);
 app.use('/api', apiRoutes);
 
 

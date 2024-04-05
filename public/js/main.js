@@ -64,8 +64,7 @@ const addRow = function(row, results) {
  let a = document.createElement('a');
   a.href = '#';
   a.textContent = 'delete';
-  td2.appendChild(a);
-  td2.onclick = function() {
+  a.onclick = function() {
     fetch('/api/delete', {
       method: 'POST',
       headers: {
@@ -80,14 +79,14 @@ const addRow = function(row, results) {
       }
     });
   };
+  td2.appendChild(a);
   tr.appendChild(td2);
   
   let td3 = document.createElement('td');
   let a2 = document.createElement('a');
   a2.href = '#';
   a2.textContent = 'edit';
-  td3.appendChild(a2);
-  td3.onclick = function() {
+  a2.onclick = function() {
     let newName = prompt('Enter a new name', row.name);
     if (!newName) {
       return;
@@ -110,6 +109,7 @@ const addRow = function(row, results) {
       }
     });
   };
+  td3.appendChild(a2);
   tr.appendChild(td3);
 
   results.appendChild(tr);
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 // add username to the page
-fetch('/api/username')
+fetch('/api/login/getusername')
 .then(response => response.json())
 .then(data => {
   document.getElementById('username').textContent = data.username;
