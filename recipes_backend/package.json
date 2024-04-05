@@ -13,9 +13,14 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "express": "^4.19.2",
+    "express-api-response": "^0.4.1",
     "express-async-handler": "^1.2.0",
+    "express-respond": "^1.6.1",
+    "express-session": "^1.18.0",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.5.0",
-    "mongoose": "^8.2.4"
+    "mongoose": "^8.2.4",
+    "passport": "^0.7.0"
   },
   "devDependencies": {
     "i": "^0.3.7",

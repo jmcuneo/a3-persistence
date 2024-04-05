@@ -1,10 +1,12 @@
 const asyncHandler = require("express-async-handler");
 const Recipe = require("../models/recipeModel");
+const status= require("express/lib/response");
 //@desc Get all recipes
 //@ route GET /recipes
 //@access private
 const getRecipes = asyncHandler(async (req,res)=>{
-    const recipes = await Recipe.find({user_id: req.user.id});
+    const recipes = await Recipe.find();
+    console.log(hello);
     res.status(200).json(recipes);
 });
 
@@ -14,7 +16,7 @@ const getRecipes = asyncHandler(async (req,res)=>{
 const createRecipe = asyncHandler(async (req,res)=>{
     console.log("The request body is: ", req.body);
     const{recipe_name, recipe_ingredients, recipe_description} = req.body;
-    if(!recipe_name || !recipe_ingredients || recipe_description){
+    if(!recipe_name || !recipe_ingredients || !recipe_description){
         res.status(400);
         throw new Error("All fields are mandatory");
     }
