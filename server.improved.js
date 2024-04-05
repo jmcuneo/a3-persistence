@@ -20,23 +20,25 @@ const recentListSchema = new mongoose.Schema({
     name: String,
     color: String,
     x: Number,
-    y: Number
-}, { timestamps: true });
+    y: Number,
+    updatedAt: Date
+});
 const RecentList = mongoose.model("recentList", recentListSchema);
 
 const accountSchema = new mongoose.Schema({
     username: String,
     password: String, //Plaintext, very secure
     lastColor: String,
-    isAdmin: Boolean
-}, { timestamps: true });
+    isAdmin: Boolean,
+    updatedAt: Date
+},);
 const Accounts = mongoose.model("accounts", accountSchema);
 
 app.use(express.static(__dirname + "/public"));
 
 app.get("/read-grid", async (_req, res) => {
     const colors = await Cells.find().exec();
-    const recent = await RecentList.find().sort({ createdAt: "asc" }).exec();
+    const recent = await RecentList.find().sort({ updatedAt: "asc" }).exec();
     res.status(200).send(JSON.stringify({ colors: colors, recent: recent }));
 });
 
@@ -57,22 +59,21 @@ app.post("/submit", (req, res) => {
             return;
         }
 
-        const checkDate = Date.now();
+        const checkDate = new Date().getTime();
         await Accounts.findOne({ username: userData.name, password: userData.pass }).then(async found => {
-            console.log(checkDate - new Date(found.updatedAt).getTime());
-            if (checkDate - new Date(found.updatedAt).getTime() < EDIT_DELAY) {
+            if (checkDate - found.updatedAt.getTime() < EDIT_DELAY) {
                 res.status(200).send(JSON.stringify({ result: "deny", extra: EDIT_DELAY - (checkDate - new Date(found.updatedAt).getTime()) }));
                 return;
             }
 
             const coord = { x: userData.x, y: userData.y };
 
-            found.lastColor = userData.color;
-            await RecentList.find().sort({ createdAt: "asc" }).limit(20).then(async recent => {
+            await Accounts.updateOne({ username: userData.name, password: userData.pass }, { lastColor: userData.color, updatedAt: checkDate }).exec();
+            await RecentList.find().sort({ updatedAt: "asc" }).limit(20).then(async recent => {
                 if (recent.length >= 20) {
-                    await RecentList.updateOne({ _id: recent[0]._id }, { name: userData.name, color: userData.color, x: coord.x, y: coord.y }).exec();
+                    await RecentList.updateOne({ _id: recent[0]._id }, { name: userData.name, color: userData.color, x: coord.x, y: coord.y, updatedAt: checkDate }).exec();
                 } else {
-                    await RecentList.create({ name: userData.name, color: userData.color, x: coord.x, y: coord.y });
+                    await RecentList.create({ name: userData.name, color: userData.color, x: coord.x, y: coord.y, updatedAt: checkDate });
                 }
             });
             await Cells.updateOne({ x: coord.x, y: coord.y }, { color: userData.color }).exec();
@@ -102,7 +103,7 @@ app.post("/login", (req, res) => {
         Accounts.findOne({ username: userData.user }).then(async acc => {
             if(userData.newAccount) {
                 if(!acc) {
-                    Accounts.create({ username: userData.user, password: userData.pass, lastColor: "#FFFFFF", isAdmin: false });
+                    Accounts.create({ username: userData.user, password: userData.pass, lastColor: "#FFFFFF", isAdmin: false, updatedAt: new Date() });
                     res.status(200).send("Successfully created your account!");
                     return;
                 } else {
@@ -152,7 +153,7 @@ async function initializeDatabse() {
     }
 
     await Cells.insertMany(initList);
-    await Accounts.create({ username: process.env.ADMIN_USER, password: process.env.ADMIN_PASS, lastColor: "#FFFFFF", isAdmin: true });
+    await Accounts.create({ username: process.env.ADMIN_USER, password: process.env.ADMIN_PASS, lastColor: "#FFFFFF", isAdmin: true, updatedAt: new Date() });
 }
 
 async function run() {
@@ -161,6 +162,9 @@ async function run() {
         await mongoose.connect(process.env.URI, clientOptions);
         await mongoose.connection.db.admin().command({ ping: 1 });
         console.log("Connected to MongoDB!");
+        if(process.env.RESET_DB === "TRUE") {
+            initializeDatabse();
+        }
         app.listen(parseInt(process.env.PORT));
     } catch (ex) {
         console.log(ex);
