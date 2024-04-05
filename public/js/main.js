@@ -186,7 +186,7 @@ const signOut = async function() {
 
 window.onload = async function() {      //on page load
 
-  //updateTable()
+  updateTable()
 
   const addButton = document.querySelector("#addButton")    //create an add button on the screen
   addButton.onclick = addition                              //map the button to the addition function

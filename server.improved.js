@@ -48,7 +48,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Define a specific route for '/'
 app.get('/', (req, res) => {
-    res.sendFile('public/login.html', { root: __dirname })
+    res.sendFile('/public/login.html', { root: __dirname })
   });
 
 app.post( '/login', (req,res)=> {
