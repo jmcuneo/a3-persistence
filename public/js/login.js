@@ -41,7 +41,7 @@ const createAccount = function(event){
           // Redirect to homepage
           response.json().then(data => {
             // Store the username from the response
-            localStor200age.setItem('userName', username);
+            localStorage.setItem('userName', username);
             console.log(username);
             window.location.href = "/html/home.html";
 
