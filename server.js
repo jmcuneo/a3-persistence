@@ -30,7 +30,7 @@ app.get('/main', (req, res) => {
 		res.sendFile(path.join(__dirname + '/public/main.html'));
 	} else {
 		// Not logged in
-		res.status(401).send()
+		res.sendFile(path.join(__dirname + '/public/err.html'));
 	}
 })
 

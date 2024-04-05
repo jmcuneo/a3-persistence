@@ -22,7 +22,7 @@ const login = async function(event) {
         err_msg.appendChild(document.createTextNode("Incorrect Username or Password!"))
         document.body.appendChild(err_msg)
     } else if(response.status == 200){
-        return
+        location.href = "/main"
     }
 }
 
