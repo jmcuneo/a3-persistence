@@ -2,9 +2,72 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>CS4241 Assignment 3</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Madimi+One&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
+
+    <style>
+      html, body, pre, code, kbd, samp {
+          font-family: "Press Start 2P";
+      }
+
+    .kalam-light {
+  font-family: "Kalam", cursive;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.kalam-regular {
+  font-family: "Kalam", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.kalam-bold {
+  font-family: "Kalam", cursive;
+  font-weight: 700;
+  font-style: normal;
+}
+.rubik-mono one-regular {
+  font-family: "Rubik Mono One", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.madimi-one-regular {
+  font-family: "Madimi One", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+</style>
 </head>
 <body>
+<canvas id="mazeCanvas" width="600" height="600" style="border:1px solid #000000;">
 
+</canvas>
+<br>
+<label for="Maze X Size">Length of Maze</label>
+<input type="number"  onkeydown="return false" value= "15" id="Maze X Size" step="1" min="10" max="25"><br><br>
+
+<label for="Maze Y Size">Width of Maze</label>
+<input type="number"  onkeydown="return false" value= "15" id="Maze Y Size" step="1" min="10" max="25"><br><br>
+
+<label for="Amount of Exits">Number of Exit Tiles</label>
+<input type="number"  onkeydown="return false" value= "1" id="Amount of Exits" step="1" min="1" max="3"><br><br>
+
+
+<button id="makeMaze" style="background-color:#00ffff" onclick="makeMaze()">Generate</button>
+<button id="saveMaze" style="background-color:#90ee90" onclick="saveMaze()">Save</button>
+<br>
+<br>
+<button id="listMazes" style="background-color:#b22222" onclick="getSavedMazes()" >Get Saved Mazes
+</button>
+
+<script type="text/javascript" src="/app.js"></script>
 </body>
 </html>

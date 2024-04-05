@@ -1,44 +1,6 @@
-Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
-===
-
-Check out the [CS 4241 Guides](https://github.com/jmcuneo/cs4241-guides) for help with the technologies discussed in this assignment.
-
-This assignnment continues where we left off, extending it to use the most popular Node.js server framework (express), 
-a database (mongodb), and a CSS application framework / template of your choice (Boostrap, Material Design, Semantic UI, Pure etc.)
-
-Baseline Requirements
----
-
-Your application is required to implement the following functionalities:
-
-- a `Server`, created using Express (no alternatives will be accepted for this assignment)
-- a `Results` functionality which shows all data associated with a logged in user (except passwords)
-- a `Form/Entry` functionality which allows users to add, modify, and delete data items (must be all three!) associated with their user name / account. 
-- Persistent data storage in between server sessions using [mongodb](https://www.mongodb.com/cloud/atlas) (you *must* use mongodb for this assignment). You can use either the [official mongodb node.js library](https://www.npmjs.com/package/mongodb) or use the [Mongoose library](https://www.npmjs.com/package/mongoose), which enables you to define formal schemas for your database. Please be aware that the course staff cannot provide in-depth support for use of Mongoose.  
-- Use of a [CSS framework or template](https://github.com/troxler/awesome-css-frameworks). 
-This should do the bulk of your styling/CSS for you and be appropriate to your application. 
-For example, don't use [NES.css](https://nostalgic-css.github.io/NES.css/) (which is awesome!) unless you're creating a game or some type of retro 80s site.
-
-Your application is required to demonstrate the use of the following concepts:  
-
 HTML:  
 - HTML input tags and form fields of various flavors (`<textarea>`, `<input>`, checkboxes, radio buttons etc.)
 - HTML that can display all data *for a particular authenticated user*. Note that this is different from the last assignnment, which required the display of all data in memory on the server.
-
-Note that it might make sense to have two pages for this assignment, one that handles login / authentication and one that contains the rest of your application.
-For example, when visiting the home page for the assignment, users could be presented with a login form. After submitting the login form, if the login is 
-successful, they are taken to the main application. If they fail, they are sent back to the login to try again. For this assignment, it is acceptable to simply create 
-new user accounts upon login if none exist; however, you must alert your users to this fact.  
-
-CSS:  
-- CSS styling should primarily be provided by your chosen template/framework. 
-Oftentimes a great deal of care has been put into designing CSS templates; 
-don't override their stylesheets unless you are extremely confident in your graphic design capabilities. 
-The idea is to use CSS templates that give you a professional looking design aesthetic without requiring you to be a graphic designer yourself.
-
-JavaScript:  
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server. 
-See the [previous assignment](https://github.com/cs-4241-23/shortstack) for reference.
 
 Node.js:  
 - A server using Express and a persistent database (mongodb).
@@ -93,22 +55,45 @@ Write a paragraph of at least 125 words *for each of four principles* (four para
 Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
 ---
 
-## Your Web Application Title
+## Maze Generator Beta 1.0
 
-your glitch (or alternative server) link e.g. http://a3-joshua-cuneo.glitch.me
+Glitch:
 
 Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
+This application is a simple maze generator. Giuen a set of parameters, it creates a rectangular tile-based maze. While the maze isn't currently
+interactable, in the future I can use this maze to create an actual game where the user needs to navigate out of it.
 
-- the goal of the application
-- challenges you faced in realizing the application
-- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why
-  - include any modifications to the CSS framework you made via custom CSS you authored
-- the five Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function for *one* (and one alone) middleware please 
-add a little more detail about what it does.
+There were two main challenges here:
+-User-Data Association
+While I can associate a maze with its creator using mongodb, I
+didn't know how to preserve user credentials.
+I ended up looking at the middleware express-session to keep track of the user's session.
+
+-Maze Generation
+While I followed the initial guide of using depth-first search, I
+wanted to be more flexibile in regards to how my maze works. For instance, one 
+of the current parameters is Amount of Exits. This creates a maze with multiple exits. Albiet, with its
+current design, mazes with multiple exits do end up having areas of open space in them.
+
+As mentioned previously, my authentication strategy used the express-session middleware. I felt it was easier to implement than other
+options (mainly since) doing it manually would be more limiting and difficult. Also, it is based around express, so it felt appropriate.
+
+
+I decided to go with the NES.css. Since I'm generating a simple maze, I feel like a game-oriented style would be fitting. I didn't really make any modifications to it though.
+
+Express Middleware Packages
+-Express-Session
+This hands over managing the user sessions to the package, making it easy to authenticate and keep track of users.
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
+- **Tech Achievement 1**:I used express-session alongside mongodb to manage users, their mazes, and keep track of user sessions.
+- **Tech Achievement 2**:I utilized a depth-first search to generate a maze that I could display on a canvas.
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+
+Sample User
+Username:User1
+Password:ABC
+
+you can also create your own user if you want

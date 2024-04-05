@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Login page for a maze generator!">
+    <title>Login Landing Page</title>
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+    <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
+
+    <style>
+      html, body, pre, code, kbd, samp {
+          font-family: "Press Start 2P";
+      }
+
+.login_input_holder{
+    margin-top:50%;
+    display: flex;
+    flex-direction:column;
+    justify-content: center; /* Horizontally center the content */
+    align-items: center; /* Vertically center the content */
+}
+    </style>
+</head>
+<body>
+    <div class="login_input_holder">
+        <label for="username">Username</label>
+        <input  style="margin-top: 30px; margin-bottom:15px" class="login_input" id="username" type="text">
+        <br>
+        <label for="password">Password</label>
+        <input style="margin-bottom:15px" class="login_input" id="password" type="password">
+    </div>
+
+    <button id="login" style="position: absolute; margin-left:50%; -ms-transform: translateX(-50%);
+  transform: translateX(-50%);" onclick="login()">Login</button>
+    <br>
+    <br>
+    <button id="register"  style="position: absolute; margin-left:50%; -ms-transform: translateX(-50%);
+  transform: translateX(-50%);"onclick="register()">Register</button>
+    <script type="text/javascript" src="/login.js"></script>
+</body>
+</html>

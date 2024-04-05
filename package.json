@@ -1,6 +1,11 @@
 {
   "dependencies": {
     "express": "^4.19.2",
-    "mongodb": "^6.5.0"
+    "express-session": "^1.18.0",
+    "express-ws": "^5.0.2",
+    "fs": "^0.0.1-security",
+    "mime": "^2.6.0",
+    "mongodb": "^6.5.0",
+    "nes.css": "^2.3.0"
   }
 }

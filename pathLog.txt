@@ -1,0 +1,166 @@
+Moved to tile 14,13
+Moved to tile 13,13
+Moved to tile 13,12
+Moved to tile 12,12
+Moved to tile 12,11
+Moved to tile 11,11
+Moved to tile 11,12
+Moved to tile 10,12
+Moved to tile 10,13
+Moved to tile 9,13
+Moved to tile 9,12
+Moved to tile 8,12
+Moved to tile 8,13
+Moved to tile 8,14
+Moved to tile 9,14
+Moved to tile 10,14
+Moved to tile 11,14
+Moved to tile 12,14
+Moved to tile 12,13
+Moved to tile 11,13
+Tile 11,13 is a dead end
+Moved back to Tile 12,13, keep going
+Valid Tile 12,14, stop backtracking
+The possible path found is tile 13,14
+Restarting at 12,14
+Can choose between these
+Our candidate options are
+	 13,14
+Moved to tile 13,14
+Moved to tile 14,14
+Tile 14,14 is a dead end
+Moved back to Tile 13,14, keep going
+Moved back to Tile 12,14, keep going
+Moved back to Tile 11,14, keep going
+Moved back to Tile 10,14, keep going
+Moved back to Tile 9,14, keep going
+Valid Tile 8,14, stop backtracking
+The possible path found is tile 7,14
+Restarting at 8,14
+Can choose between these
+Our candidate options are
+	 7,14
+Moved to tile 7,14
+Moved to tile 6,14
+Moved to tile 5,14
+Moved to tile 5,13
+Moved to tile 4,13
+Moved to tile 4,14
+Moved to tile 3,14
+Moved to tile 3,13
+Moved to tile 3,12
+Moved to tile 2,12
+Moved to tile 2,11
+Moved to tile 1,11
+Moved to tile 1,12
+Moved to tile 0,12
+Moved to tile 0,13
+Moved to tile 1,13
+Moved to tile 2,13
+Moved to tile 2,14
+Moved to tile 1,14
+Moved to tile 0,14
+Tile 0,14 is a dead end
+Moved back to Tile 1,14, keep going
+Moved back to Tile 2,14, keep going
+Moved back to Tile 2,13, keep going
+Moved back to Tile 1,13, keep going
+Moved back to Tile 0,13, keep going
+Valid Tile 0,12, stop backtracking
+The possible path found is tile 0,11
+Restarting at 0,12
+Can choose between these
+Our candidate options are
+	 0,11
+Moved to tile 0,11
+Moved to tile 0,10
+Moved to tile 0,9
+Moved to tile 1,9
+Moved to tile 1,8
+Moved to tile 1,7
+Moved to tile 2,7
+Moved to tile 2,8
+Moved to tile 3,8
+Moved to tile 3,7
+Moved to tile 4,7
+Moved to tile 5,7
+Moved to tile 5,6
+Moved to tile 6,6
+Moved to tile 6,7
+Moved to tile 6,8
+Moved to tile 6,9
+Moved to tile 6,10
+Moved to tile 5,10
+Moved to tile 5,9
+Moved to tile 4,9
+Moved to tile 4,8
+Moved to tile 5,8
+Tile 5,8 is a dead end
+Moved back to Tile 4,8, keep going
+Valid Tile 4,9, stop backtracking
+The possible path found is tile 4,10
+Valid Tile 4,9, stop backtracking
+The possible path found is tile 3,9
+Restarting at 4,9
+Can choose between these
+Our candidate options are
+	 3,9
+	 4,10
+Moved to tile 3,9
+Moved to tile 2,9
+Moved to tile 2,10
+Moved to tile 1,10
+Tile 1,10 is a dead end
+Valid Tile 2,10, stop backtracking
+The possible path found is tile 3,10
+Restarting at 2,10
+Can choose between these
+Our candidate options are
+	 3,10
+Moved to tile 3,10
+Moved to tile 4,10
+Moved to tile 4,11
+Moved to tile 3,11
+Tile 3,11 is a dead end
+Valid Tile 4,11, stop backtracking
+The possible path found is tile 4,12
+Restarting at 4,11
+Can choose between these
+Our candidate options are
+	 5,11
+	 4,12
+Moved to tile 4,12
+Moved to tile 5,12
+Moved to tile 6,12
+Moved to tile 7,12
+Moved to tile 7,11
+Moved to tile 6,11
+Moved to tile 5,11
+Tile 5,11 is a dead end
+Moved back to Tile 6,11, keep going
+Valid Tile 7,11, stop backtracking
+The possible path found is tile 7,10
+Restarting at 7,11
+Can choose between these
+Our candidate options are
+	 8,11
+	 7,10
+Moved to tile 7,10
+Moved to tile 8,10
+Moved to tile 8,11
+Moved to tile 9,11
+Moved to tile 10,11
+Moved to tile 10,10
+Moved to tile 9,10
+Moved to tile 9,9
+Moved to tile 10,9
+Moved to tile 11,9
+Moved to tile 11,10
+Moved to tile 12,10
+Moved to tile 12,9
+Moved to tile 13,9
+Moved to tile 13,10
+Moved to tile 14,10
+Moved to tile 14,9
+Moved to tile 14,8
+Moved to tile 14,7
