@@ -1,8 +1,11 @@
+body{
+    background-color: gray;
+}
 .login-container {
     max-width: 400px;
     margin: 100px auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: #f9f9f9;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -33,7 +36,7 @@ input[type="password"] {
 button {
     width: 100%;
     padding: 12px;
-    background-color: #007bff;
+    background-color: #000;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -43,7 +46,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: darkgray;
 }
 
 .error-message {
