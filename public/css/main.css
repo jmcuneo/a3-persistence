@@ -1,0 +1,49 @@
+/* 
+Adobe Color Swatches in Hex (Also can be found in the adobe_colors.png image in repo):
+Color 1: #348888
+Color 2: #22BABB
+Color 3: #FA7F08
+Color 4: #F24405
+*/
+
+body {
+  background-color: #348888;      /*the background color of the website*/
+}
+
+h1 {      /*element selector*/
+  text-align: center;
+  color: #F24405;     /*default color of the header 1s*/
+}
+
+h2 {
+  text-align: left;
+  color: #22BABB;     /*default color of the header 2s*/
+}
+
+
+#t {             /*ID delector*/
+  text-align: center;
+  color: #FA7F08;         /*default color of the header p sections*/
+}
+
+i {
+  font-style: italic;
+}
+
+b {
+  font-weight: bold;
+}
+
+.center {        /*class selector*/
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table {
+  border: 1px solid;          /*styling table itself*/
+}
+
+td {
+  border: 1px solid;          /*styling for the table cells*/
+}

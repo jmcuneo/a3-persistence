@@ -1,0 +1,23 @@
+{
+  "name": "a3-connorchartier",
+  "version": "1.0",
+  "description": "CS4241: Assignment 3",
+  "author": "Connor Chartier",
+  "scripts": {
+    "start": "node server.improved.js"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "cookie-session": "^2.1.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mime": "^2.6.0",
+    "mongodb": "^6.5.0"
+  },
+  "engines": {
+    "node": "16.x"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.3"
+  }
+}
