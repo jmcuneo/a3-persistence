@@ -99,7 +99,7 @@ async function run() {
     // route to get all entries
     app.get("/docs", async (req, res) => {
         if (rpeCollection !== null) {
-            const docs = await rpeCollection.find({}).toArray();
+            const docs = await rpeCollection.find({userID: userID}).toArray();
             res.json(docs);
         }
     })
