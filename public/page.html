@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS4241 Assignment 3</title>
+  <meta name="description" content="To do list website.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=NTR&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
+  <link rel="stylesheet" href="style.css"> 
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+<body>
+  <div class="container">
+    <div class="navbar">
+      <nav class="demo imponent">
+        <a href="#" class="brand">
+          <span><h2>To Do List</h2></span>
+        </a>
+      </nav>
+    </div>
+  </div>
+  <p>Add a task to your to-do list:</p>
+  <div class="third">
+    <form id="taskForm">
+      <label for="task">Task:</label>
+      <input id="task" type="text" placeholder="Task" required>
+
+      <label for="priority">Priority:</label>
+      <select id="priority" required>
+        <option value="" disabled selected>Select Priority</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+
+      <label for="dueDate">Due Date:</label>
+      <input id="dueDate" type="date" required>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <p>Your current to-do list:</p>
+
+  <table id="results" class="primary">
+    <thead>
+      <tr>
+        <th>Task</th>
+        <th>Priority</th>
+        <th>Due Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
