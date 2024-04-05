@@ -2,32 +2,50 @@ const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv')
 const mongoose = require('mongoose')
+const crypto = require("crypto")
 
 const taskSchema = new mongoose.Schema({
   task: String,
   creationDate: String,
   dueDate: String,
-});
+}, { collection: "tasks" });
+// const userSchema = new mongoose.Schema({
+//   username: String,
+//   passwordHash: String,
+//   salt: String,
+// }, { collection: "users" });
 
 dotenv.config()
 const DB_PASSWORD = process.env.DB_PASSWORD
 const DB_USERNAME = process.env.DB_USERNAME
 
-const uri = `mongodb+srv://${encodeURIComponent(DB_USERNAME)}:${encodeURIComponent(DB_PASSWORD)}@a3.n93xx9m.mongodb.net/?retryWrites=true&w=majority&appName=a3`;
+const uri = `mongodb+srv://${encodeURIComponent(DB_USERNAME)}:${encodeURIComponent(DB_PASSWORD)}@a3.n93xx9m.mongodb.net/todo?retryWrites=true&w=majority&appName=a3`;
 const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
 
 mongoose.connect(uri, clientOptions)
+const Task = mongoose.model("Task", taskSchema)
 
 const app = express()
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {
+  extensions: ['html']
+}));
 
-app.post('/add-task', (req, res) => {
-  const task = req.body
-  res.send(JSON.stringify([{ task: "hi", creationDate: "2024-03-12", dueDate: "2024-03-12", daysUntilDue: 12 }]))
+
+
+app.post('/add-task', async (req, res) => {
+  const reqTask = req.body
+  const dbTask = await Task.findOne({ 'task': reqTask.task })
+  if (dbTask === null) {
+    const newTask = new Task({ task: reqTask.task, creationDate: reqTask.creationDate, dueDate: reqTask.dueDate })
+    await newTask.save()
+  }
+  const allTasks = await Task.find({}, "task creationDate dueDate") ?? []
+  console.log(`result of find: ${JSON.stringify(allTasks)}`)
+  res.send(JSON.stringify(allTasks))
 })
 
 app.delete('/delete-task', (req, res) => {
@@ -35,6 +53,23 @@ app.delete('/delete-task', (req, res) => {
   res.send(JSON.stringify([{ task: "hi", creationDate: "2024-03-12", dueDate: "2024-03-12", daysUntilDue: 12 }]))
 })
 
+// app.post("/register", async (req, res) => {
+//   try {
+//     //get username. find username in database. if exists, give error. If not exists, create model and update record with username, hashed password, and salt. redirect to login
+//     res.redirect("/login")
+//   } catch (error) {
+
+//     res.redirect("/register")
+
+//   }
+//   // console.log("register " + req.body.username)
+//   // console.log("register " + req.body.password)
+
+// })
+// app.post("/login", (req, res) => {
+//   console.log("login " + req.body.username)
+//   console.log("login " + req.body.password)
+// })
 
 // // const handlePost = function (request, response) {
 // //   let dataString = ""

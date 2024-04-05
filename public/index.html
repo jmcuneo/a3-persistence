@@ -2,7 +2,7 @@
 <html lang="en" data-bs-theme="dark">
 
 <head>
-  <title>CS4241 Assignment 2</title>
+  <title>TODO App</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="js/main.js"></script>
@@ -26,17 +26,17 @@
 </head>
 
 <body>
-  <div class="container">
-    <div class="row justify-content-center align-items-center g-2">
+  <div class="container mt-5">
+    <div class="row justify-content-center align-items-center g-2 mb-3">
       <div class="col">
-        <div class="col text-center mt-5 mb-5" id="title-bar">
+        <div class="col text-center" id="main-title-bar">
           <h1>Welcome To TODO App!
             <br><span class="fs-4">Simply add your task and watch it appear in your list!</span>
           </h1>
         </div>
       </div>
     </div>
-    <div class="row justify-content-center align-items-center g-2">
+    <div class="row justify-content-center align-items-center g-2 mb-3">
       <div class="col">
         <form id="input-form" class="rounded border border-light-subtle p-2">
           <div class="mb-3">
@@ -53,18 +53,17 @@
         </form>
       </div>
     </div>
-
-    <!-- <div id="input-form-wrapper"> -->
-
-    <!-- </div> -->
-
-    <div id="data-display-wrapper">
-      <table id="task-table">
-        <thead id="task-table-header">
-        </thead>
-        <tbody id="task-table-body">
-        </tbody>
-      </table>
+    <div class="row justify-content-center align-items-center g-2">
+      <div class="col">
+        <div id="data-display-wrapper" class="rounded table-responsive">
+          <table id="task-table" class="table table-primary">
+            <thead id="task-table-header">
+            </thead>
+            <tbody id="task-table-body">
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </body>

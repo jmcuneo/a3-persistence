@@ -8,6 +8,8 @@ window.onload = function () {
   dateInput.setAttribute('value', today);
 }
 
+
+
 const submit = async function (event) {
   event.preventDefault()
   const form = document.getElementById("input-form")
