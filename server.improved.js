@@ -124,7 +124,6 @@ app.post("/submit", async (request, response) => {
         dataString += data
     })
 
-    console.log("holy fuck my balls itch")
 
     request.on("end", async function () {
         const formData = JSON.parse(dataString);
