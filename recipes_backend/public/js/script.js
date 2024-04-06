@@ -12,25 +12,36 @@ const submit = async function( event ) {
     // this was the original browser behavior and still
     // remains to this day
     event.preventDefault();
-    const FirstName = document.querySelector( "#FirstName" ),
-        MiddleName = document.querySelector( "#MiddleName" ),
-        LastName = document.querySelector( "#LastName" ),
-        Email = document.querySelector( "#Email" ),
-        StartLocation = document.querySelector( "#StartLocation" ),
-        Destination = document.querySelector( "#Destination" ),
-        Transport =document.querySelector("#transport-mode")
+    let emptyField = null;
+    if(!(document.querySelector("#SuperSpicy"))){
+        emptyField = document.querySelector("#SuperSpicy");
+    }
+    else if(!(document.querySelector("#MediumSpicy"))){
+        emptyField = document.querySelector("#MediumSpicy");
+    }
+    else if(!(document.querySelector("#Sour"))){
+        emptyField = document.querySelector("#Sour");
+    }
+    else if(!(document.querySelector("#Sweet"))){
+        emptyField = document.querySelector("#Sweet");
+    }
+    else{
+        emptyField = document.querySelector("#Salty");
+    }
+    const recipe_name = document.querySelector( "#RecipeName" ),
+        recipe_ingredients = document.querySelector( "#Ingredients" ),
+        recipe_description = document.querySelector( "#recipeDescription" ),
+        dietary_restriction = document.querySelector("#allergen")
     json = {
-        FirstName: FirstName.value,
-        MiddleName: MiddleName.value,
-        LastName: LastName.value,
-        Email: Email.value,
-        StartLocation: StartLocation.value,
-        Destination: Destination.value,
-        Transport: Transport.value,
+        recipe_name: recipe_name.value,
+        recipe_ingredients: recipe_ingredients.value,
+        recipe_description: recipe_description.value,
+        recipe_taste: emptyField.value,
+        dietary_restriction: dietary_restriction.value
     },
         body = JSON.stringify( json )
     console.log(body);
-    const response = await fetch( "/submit", {
+    const response = await fetch( "/CreateRecipes", {
         method:"POST",
         body
     });
@@ -61,8 +72,8 @@ async function del(uid){
  * @returns {Promise<void>}
  */
 async function modify(uid) {
-    console.log("hello" + document.getElementById("email_attribute"));
-    document.getElementById("Email").value = uid.getAttribute("email_attribute");
+    console.log("hello" + document.getElementById("recipe_taste_attribute"));
+    document.getElementById("recipe_taste").value = uid.getAttribute("recipe_taste_attribute");
     document.getElementById("StartLocation").value = uid.getAttribute("start_attribute");
     document.getElementById("Destination").value = uid.getAttribute("dest_attribute");
     document.getElementById("Confirm").style.display="block";
@@ -74,18 +85,18 @@ async function modify(uid) {
  * @constructor
  */
 async function NewData(){
-    const FirstName = document.querySelector( "#FirstName" ),
-        MiddleName = document.querySelector( "#MiddleName" ),
-        LastName = document.querySelector( "#LastName" ),
-        Email = document.querySelector( "#Email" ),
+    const recipe_name = document.querySelector( "#recipe_name" ),
+        recipe_ingredients = document.querySelector( "#recipe_ingredients" ),
+        recipe_description = document.querySelector( "#recipe_description" ),
+        recipe_taste = document.querySelector( "#recipe_taste" ),
         StartLocation = document.querySelector( "#StartLocation" ),
         Destination = document.querySelector( "#Destination" ),
         Transport =document.querySelector("#transport-mode")
     json = {
-        FirstName: FirstName.value,
-        MiddleName: MiddleName.value,
-        LastName: LastName.value,
-        Email: Email.value,
+        recipe_name: recipe_name.value,
+        recipe_ingredients: recipe_ingredients.value,
+        recipe_description: recipe_description.value,
+        recipe_taste: recipe_taste.value,
         StartLocation: StartLocation.value,
         Destination: Destination.value,
         Transport: Transport.value,
@@ -112,17 +123,15 @@ async function display(object){
     let elements=""
     table.innerHTML=" "
     for(let i=0; i<object.length;i++){
-        elements=`<td>${i}</td> <td>${object[i].FirstName}</td> <td>${object[i].MiddleName}</td>
-        <td>${object[i].LastName}</td> <td >${object[i].Email}</td>
-         <td id="start">${object[i].StartLocation}</td> <td id="dest"> ${object[i].Destination}</td>
-         <td id="travel"> ${object[i].Transport}</td> <td> ${object[i].cost}</td>
+        elements=`<td>${i}</td> <td>${object[i].recipe_name}</td> <td>${object[i].recipe_ingredients}</td>
+        <td>${object[i].recipe_description}</td> <td >${object[i].recipe_taste}</td><td>${object[i].dietary_restriction}</td>
          <td><button onclick="modify(this)" id="update" 
-        ${object[i].Email ? `email_attribute="${object[i].Email}"` : ''}
-        ${object[i].StartLocation ? `start_attribute="${object[i].StartLocation}"` : ''}
-        ${object[i].Destination ? `dest_attribute="${object[i].Destination}"` : ''}
-        ${object[i].Transport ? `transport_attribute="${object[i].Transport}"` : ''}
+        ${object[i].recipe_taste ? `recipe_taste_attribute="${object[i].recipe_taste}"` : ''}
+        ${object[i].recipe_name ? `recipe_name_attribute="${object[i].recipe_name}"` : ''}
+        ${object[i].recipe_ingredients ? `recipe_ingredients_attribute="${object[i].recipe_ingredients}"` : ''}
+        ${object[i].recipe_description ? `recipe_description_attribute="${object[i].recipe_description}"` : ''}
+        ${object[i].dietary_restriction ? `dietary_restriction_attribute="${object[i].dietary_restriction}"` : ''}
         >Update</button></td>
-
          <td><button del_attribute=${i} onclick="del(${i})" id="delete">Delete</button></td>`
         let entries = `<tr>${elements}</tr>`
         table.innerHTML += entries;

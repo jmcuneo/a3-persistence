@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 const recipeSchema = mongoose.Schema({
     user_id: {
-        type: mongoose.Schema.Types.ObjectId,
+        // type: mongoose.Schema.Types.ObjectId,
+        type: Number,
         required: true,
+        default: 123,
         ref: "User",
     },
     recipe_name: {
@@ -16,7 +18,13 @@ const recipeSchema = mongoose.Schema({
     recipe_description: {
         type: String,
         required: [true, "Please add the recipe description"],
-    }
+    },
+    recipe_taste: {
+        type: String,
+    },
+    dietary_restriction: {
+        type: String,
+    },
 },
     {
         timestamps: true,
