@@ -24,10 +24,13 @@
       <form id="addForm">
         <div>If you would like to enter a user into the dataset, enter information here:</div>
         <br>
+        <p>First Name:</p>
         <input type="text" id="firstName" placeholder="First name*" required>
         <br><br>
+        <p>Middle Name:</p>
         <input type="text" id="middleName" placeholder="Middle name">
         <br><br>
+        <p>Last Name:</p>
         <input type="text" id="lastName" placeholder="Last name*" required>
         <br><br>
         <button type="submit" class="btn btn-primary" id="newButton">Submit</button>
@@ -43,10 +46,12 @@
         <br><br>
         <div>If you would like to delete a user form the dataset, enter the line ID:</div>
         <br>
+        <p>ID:</p>
         <input type="text" id="deleteId" placeholder="ID Here">
         <br><br>
         <button type="submit" class="btn btn-danger" id="deleteButton">Submit</button>
       </form>
+      <br>
     </div>
     <div class="right-panel">
       <table id="table">
@@ -72,8 +77,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <div>If you would like to edit one of the users in the database, enter their ID# and their new
-          information.</div>
+        <div>If you would like to edit one of the users in the database, please select them from the dropdown.</div>
         <br>
         <div class="dropdown">
           <button class="dropdown-toggle btn btn-primary" id="dropdownMenuButton" data-toggle="dropdown"
