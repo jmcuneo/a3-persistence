@@ -2,6 +2,9 @@
 ## Dov Ushman https://a3-dovushman-a0bb9427d812.herokuapp.com/
 ## Class Directory
 
+For this project, I continued working on my class directory. When a user enters a person's first and last name (the middle name is optional), the table on the side is populated with their information, including the provided information, their initials, and an associated ID number. Below the name textboxes, I have a textbox where a user can enter a line ID, which will delete the corresponding line in the table and in the server. There is also a modify button and if a user clicks it then a pop up appears where they can select a table entry and then adjust the information on a person in the table. 
+
+The main page on this project also reaches above a 90 all sections of the lighthouse test!
 
 ## Technical Achievements
 - **Tech Achievement 1**: For my technical achievements, I used heroku to host my website.
