@@ -23,7 +23,7 @@ const logIn = async function( event ) {
     body 
   })
   .then(response => response.text()).then(text => {
-
+    console.log(text)
     if(text === "correct")
     {
       window.location.href = "home.html"
