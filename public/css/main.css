@@ -14,7 +14,7 @@ body {
   height: 100vh;
 }
 form {
-  background-color: #d3ff82;
+  background-color: #ffaa54;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -50,7 +50,7 @@ h1 {      /*element selector*/
 
 h2 {
   text-align: left;
-  color: #22BABB;     /*default color of the header 2s*/
+  color: #080807;     /*default color of the header 2s*/
 }
 
 
