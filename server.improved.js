@@ -14,6 +14,7 @@ const taskSchema = new mongoose.Schema({
   creationDate: String,
   dueDate: String,
 }, { collection: "tasks" })
+
 const userSchema = new mongoose.Schema({
   username: String,
   hashedPassword: String,
@@ -62,7 +63,6 @@ function isAuthenticated(req, res, next) {
     return next()
   }
   res.redirect("/login")
-
 }
 
 function isNotAuthenticated(req, res, next) {
@@ -70,7 +70,6 @@ function isNotAuthenticated(req, res, next) {
     return res.redirect("/")
   }
   next()
-
 }
 
 app.get("/", isAuthenticated, (req, res) => {
@@ -133,7 +132,7 @@ app.post('/add-task', isAuthenticated, async (req, res) => {
   const allTasks = await Task.find({ username: username }, "-_id task creationDate dueDate") ?? []
 
   let appDataToSend = allTasks.map((model) => { return model.toObject() })
-  appDataToSend.forEach((obj, index) => {
+  appDataToSend.forEach((obj) => {
     const timeDiff = new Date(obj.dueDate) - new Date()
     const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24))
     // -0 fix
@@ -142,73 +141,24 @@ app.post('/add-task', isAuthenticated, async (req, res) => {
   res.send(JSON.stringify(appDataToSend))
 })
 
-app.delete('/delete-task', isAuthenticated, (req, res) => {
-  const taskName = req.body
-  res.send(JSON.stringify([{ task: "hi", creationDate: "2024-03-12", dueDate: "2024-03-12", daysUntilDue: 12 }]))
+app.delete('/delete-task', isAuthenticated, async (req, res) => {
+  const taskName = req.body.task
+  await Task.deleteOne({ 'task': req.body.task }).where({ username: req.user.username }).exec()
+
+  const allTasks = await Task.find({ username: req.user.username }, "-_id task creationDate dueDate") ?? []
+
+  let appDataToSend = allTasks.map((model) => { return model.toObject() })
+  appDataToSend.forEach((obj) => {
+    const timeDiff = new Date(obj.dueDate) - new Date()
+    const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24))
+    obj.daysUntilDue = daysDiff + 0
+  })
+  res.send(JSON.stringify(appDataToSend))
 })
 
 app.get('*', function (req, res) {
   res.redirect('/')
 })
-
-// // const handlePost = function (request, response) {
-// //   let dataString = ""
-
-// //   request.on("data", function (data) {
-// //     dataString += data
-// //   })
-
-// //   request.on("end", function () {
-// //     let taskObj = JSON.parse(dataString)
-
-//     const index = appData.findIndex(obj => obj.task === taskObj.task)
-
-//     const newTaskObject = {
-//       task: taskObj.task, creationDate: taskObj.creationDate, dueDate: taskObj.dueDate
-//     }
-//     if (index !== -1) {
-//       appData[index] = newTaskObject
-//     } else {
-//       appData.push(newTaskObject)
-//     }
-
-//     //you can have a day change between computations and sends, so just computing directly before sending out
-//     let appDataToSend = appData
-//     appDataToSend.forEach(obj => {
-//       const timeDiff = new Date(obj.dueDate) - new Date()
-//       const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24))
-//       // -0
-//       obj.daysUntilDue = daysDiff + 0
-//     })
-
-//     response.writeHead(200, "OK", { "Content-Type": "application/json" })
-//     response.end(JSON.stringify(appDataToSend))
-//   })
-// }
-
-// const handleDelete = function (request, response) {
-//   let dataString = ""
-
-//   request.on("data", function (data) {
-//     dataString += data
-//   })
-
-//   request.on("end", () => {
-//     let data = JSON.parse(dataString)
-
-//     const index = appData.findIndex(obj => obj.task === data.task)
-
-//     if (index > -1) {
-//       appData.splice(index, 1)
-//     } else {
-//       console.log("Could not delete")
-//     }
-//     response.writeHead(200, "OK", { "Content-Type": "application/json" })
-//     response.end(JSON.stringify(appData))
-//   })
-// }
-
-
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {

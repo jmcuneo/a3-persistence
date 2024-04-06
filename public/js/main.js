@@ -26,7 +26,6 @@ const submit = async function (event) {
       body
     })
     const allTasks = await response.json()
-    console.log(`recv: ${JSON.stringify(allTasks)}`)
     populateTaskTable(allTasks)
   } else {
     console.log("did not validate")
