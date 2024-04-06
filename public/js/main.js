@@ -50,20 +50,20 @@ const updateTable = async function() {
           });
           cellDelete.appendChild(deleteButton);                       //add the delete button to the cell for delete button
 
-          const cellEdit = document.createElement('td')
-          const editButton = document.createElement('button')
-          editButton.textContent = 'Edit'
-          editButton.addEventListener('click', function () {
-          const newInput = prompt('Enter new value: ')
-            editResult(result._id, newInput)
+          const cellEdit = document.createElement('td')         //define the cell for edit
+          const editButton = document.createElement('button')     //create edit button
+          editButton.textContent = 'Edit'                           //"edit" text inside of the button
+          editButton.addEventListener('click', function () {        //create an event handler for the edit button
+          const newInput = prompt('Enter new value: ')              //new input 
+            editResult(result._id, newInput)            //call function edit result
           });
-          cellEdit.appendChild(editButton)
+          cellEdit.appendChild(editButton)        //add edit button to the edit cell
 
-          row.appendChild(cellIndex)     //add the of the index cell to the row
-          row.appendChild(cellResult)    //add the of the result cell to the row
-          row.appendChild(cellDelete)    //add the of the delete cell to the row
-          row.appendChild(cellEdit)
-          tbody.appendChild(row)         //add the row to the defined table
+          row.appendChild(cellIndex)     //add the index cell to the row
+          row.appendChild(cellResult)    //add the result cell to the row
+          row.appendChild(cellDelete)    //add the delete cell to the row
+          row.appendChild(cellEdit)      //add the edit cell to the row
+          tbody.appendChild(row)         //add the row the defined table
       });
   }
 }
@@ -168,19 +168,18 @@ const divide = async function( event ) {
   updateTable()
 }
 
-const signOut = async function() {
-  const response = await fetch('/signOut', {
+const signOut = async function() {              //sign out 
+  const response = await fetch('/signOut', {        //send a post to the server to be signed out
       method: 'POST',
       headers: {
           'Content-Type': 'application/json'
       }
   });
 
-  if (response.ok) {
-      // Redirect to login page after signing out
-      window.location.href = '/login.html';
+  if (response.ok) {      //check to see if the response works
+      window.location.href = '/login.html';       //send to the login.html
   } else {
-      console.error('Failed to sign out');
+      console.error('Failed to sign out');        //eror in case it did not work
   }
 };
 
@@ -200,7 +199,6 @@ window.onload = async function() {      //on page load
   const divideButton = document.querySelector("#divideButton")        //create an divide button on the screen
   divideButton.onclick = divide                                       //map the button to the division function
 
-  const signOutButton = document.querySelector('#signOutButton');
-  signOutButton.addEventListener('click', signOut);
-
+  const signOutButton = document.querySelector('#signOutButton');       //create an edit button on the screen
+  signOutButton.addEventListener('click', signOut);                     //map the button to the sign out function
 }
