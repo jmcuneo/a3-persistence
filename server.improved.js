@@ -158,16 +158,20 @@ app.post('/deleteResult', async (req, res) => {       //delete result function
 });
 
 app.post( '/editResult', async (req,res) => {       //edit existing data function
-  const result = await data.updateOne(        //update the data
-    { _id: new ObjectId( req.body._id ) },
-    { $set:{ result:req.body.content}       //set new value
-    })
-  res.status(200).json( result )
+  try {
+    const result = await data.updateOne(        //update the existing entry
+      { _id: new ObjectId(req.body._id) },
+      { $set: { result: req.body.content } }
+    );
 
-  if (result.modifiedCount === 1) {     //check to make sure something was modified 
-    res.status(200).json({ success: true });
-  } else {
-    res.status(500).json({ success: false, message: 'Failed to update result.' });      //if not, send error message
+    if (result.modifiedCount === 1) {     //if something was modified
+      res.status(200).json({ success: true });
+    } else {
+      res.status(500).json({ success: false, message: 'Failed to update result.' });      //error
+    }
+  } catch (error) {       //error
+    console.error("Error:", error);
+    res.status(500).json({ success: false, message: 'Internal server error.' });
   }
 })
 
