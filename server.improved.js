@@ -1,26 +1,28 @@
+//SERVER
+
+//whole buncha requirements and imports. honestly idek how many of these i still need
 const express = require("express");
-const cookie  = require( "cookie-session" );
+const cookie = require("cookie-session");
 const fs = require("fs");
 const mime = require("mime");
 const dir = "public/";
 const port = 3000;
-
+const render = require("render");
 const appdata = [];
 const app = express();
 app.use( express.urlencoded({ extended:true }) )
+app.set('view engine', 'ejs');
 
-// cookie middleware! The keys are used for encryption and should be
-// changed
 app.use( cookie({
   name: 'session',
   keys: ['key1', 'key2']
 }))
 
-
 const bodyParser = require("body-parser")
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
+//setting up the database connections
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`;
 const client = new MongoClient(uri, {
@@ -31,55 +33,60 @@ const client = new MongoClient(uri, {
   }
 });
 
+const loguri = `mongodb+srv://${process.env.USER}:${process.env.PASS}@${process.env.HOST}`;
+const logclient = new MongoClient(loguri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+
 let collection = null;
+let userCollection = null;
 
-//-----------------------------------------------------------------------------
-
-
-
-app.post( '/login', (req,res)=> {
-  debugger
-  // express.urlencoded will put your key value pairs 
-  // into an object, where the key is the name of each
-  // form field and the value is whatever the user entered
-  console.log( req.body )
+//login function, connects to database
+//if the username isnt found, adds to collection and then approves login
+//if the username does exist but the password doesnt, fails login
+//if username and password match, then approves the login
+app.post( '/login', async  (req,res)=> {
+  const userCollection = await logclient.db("JacobsA3Database").collection("Users")
+  const { username, password } = req.body;
+  const user = await userCollection.findOne({ username });
   
-  // below is *just a simple authentication example* 
-  // for A3, you should check username / password combos in your database
-  if( req.body.password === 'test' ) {
-    // define a variable that we can check in other middleware
-    // the session object is added to our requests by the cookie-session middleware
+  if (!user) {
+    userCollection.insertOne({ username, password });
+    //window.alert('New account created');
     req.session.login = true
-    
-    // since login was successful, send the user to the main content
-    // use redirect to avoid authentication problems when refreshing
-    // the page or using the back button, for details see:
-    // https://stackoverflow.com/questions/10827242/understanding-the-post-redirect-get-pattern 
-    res.redirect( 'index.html' )
-  }else{
-    // cancel session login in case it was previously set to true
-    req.session.login = false
-    // password incorrect, send back to login page
-    res.render('login', { msg:'login failed, please try again', layout:false })
+    res.redirect(__dirname + '/public/login.html' );
+  }
+  else if (user.password !== password) {
+    //window.alert('Incorrect password.');
+    return res.sendFile( __dirname + '/public/login.html' )
+  }
+  else
+  {
+    req.session.login = true
+    res.redirect( '/index.html?username=' + username)
   }
 })
 
-
+//logout request, sets the session to false
+app.post('/logout', (req,res) => {
+  req.session.login = false;
+  res.sendStatus(200);
+  
+})
 
 // add some middleware that always sends unauthenicaetd users to the login page
 app.use( function( req,res,next) {
   if( req.session.login === true )
     next()
   else
-    res.render('login', { msg:'login failed, please try again', layout:false })
+    res.sendFile( __dirname + '/public/login.html' )
 })
 
-app.get( '/main.html', ( req, res) => {
-    res.render( 'index', { msg:'success you have logged in', layout:false })
-})
-
-//-----------------------------------------------------------------------------
-
+//run function to ping database, and ensure connection
 async function run() {
   await client.connect()
   collection = await client.db("JacobsA3Database").collection("A3Dataset")
@@ -96,6 +103,12 @@ async function run() {
 
 run();
 
+//default pages, AKA login
+app.get("/", (req, res) => {
+  sendFile(res, "public/login.html");
+});
+
+//grabs the array
 app.get("/docs", async (req, res) => {
     if (collection !== null) {
       const docs = await collection.find({}).toArray()
@@ -103,65 +116,37 @@ app.get("/docs", async (req, res) => {
     }
   })
 
-
-
-app.get("/", (req, res) => {
-  sendFile(res, 'public/login.html');
-});
-
-app.post("/", (req, res) => {
-  const finalData = req.body;
-  const method = finalData.method;
-
-  if (method === "/delete") {
-    const targetIndex = finalData.index;
-    appdata.splice(targetIndex, 1);
-    res.send("Bye bye!");
-  } else if (method === "/add") {
-    appdata.push(finalData.string);
-    res.send("Added/Submitted!");
-  } else if (method === "/edit") {
-    appdata[finalData.index] = finalData.content;
-    res.send("Edited!");
-  } else {
-    res.status(400).send("Yikes");
-  }
-});
-
-
-
 app.use( (req,res,next) => {
   if( collection !== null ) {
     next()
   }else{
-    res.status( 503 ).send()
+    res.status( 400 ).send()
   }
 })
 
+//submission request, adds the request data to the database 
 app.post( '/submit', async (req,res) => {
   const myCollection = await client.db("JacobsA3Database").collection("A3Dataset");
   const combString = req.body.content;
   const strL = req.body.content.length;
-  //console.log(strL)
-  const result = await myCollection.insertOne( {CombinedString : combString,
-                                                StringLength : strL} );
-  
+  const username = req.body.username;
+  const result = await myCollection.insertOne( {UserName : username,
+                                                CombinedString : combString,
+                                                StringLength : strL
+                                                 } );
   res.json( result );
-  //console.log("Combined string is: " + JSON.stringify(req.body))
-  //console.log(req.body)
 })
 
-// assumes req.body takes form { _id:5d91fb30f3f81b282d7be0dd } etc.
+//finds sent id in database, and deletes document
 app.post( '/delete', async (req,res) => {
   const myCollection = await client.db("JacobsA3Database").collection("A3Dataset");
-  //console.log(req.body.content)
   const result = await myCollection.deleteOne({ 
     _id:new ObjectId( req.body.content ) 
   })
-  
   res.json( result )
 })
 
+//finds sent id in database, and edit document to new values
 app.post( '/edit', async (req,res) => {
   const myCollection = await client.db("JacobsA3Database").collection("A3Dataset");
   const combString = req.body.content;
@@ -171,7 +156,6 @@ app.post( '/edit', async (req,res) => {
     { $set:{ CombinedString:req.body.content,
              StringLength : strL}}
   )
-
   res.json( result )
 })
 
@@ -195,14 +179,4 @@ const sendFile = function( response, filename ) {
    })
 }
 
-
 app.listen(port)
-
-
-/*app.get("/", (req, res) => {
-  sendFile(res, "public/index.html");
-});*/
-
-/*app.get("/getArray", (req, res) => {
-  res.json(collection);
-});*/
