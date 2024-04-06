@@ -86,7 +86,7 @@ function populateTaskTable(tasks) {
       tableDeleteButton(event.target)
     }
     deleteButton.textContent = "Delete row"
-    deleteButton.setAttribute("class", "del-button")
+    deleteButton.setAttribute("class", "del-button btn btn-danger")
     delButtonCell.appendChild(deleteButton)
     tr.appendChild(delButtonCell)
 

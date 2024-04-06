@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <% if( typeof(error) !="undefined"){ %>
+        <% if( typeof(error) !="undefined" ){ %>
             <div class="row justify-content-center align-items-center g-2">
                 <div class="col">
                     <div class="col text-center mb-5">
@@ -45,41 +45,42 @@
                 </div>
             </div>
             <% }%>
-        <div class="row justify-content-center align-items-center g-2">
-            <div class="col">
-                <form class="rounded border border-light-subtle p-2" action="/register" method="POST">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Enter username</label>
-                        <input type="text" class="form-control" name="username" id="username"
-                            placeholder="Enter a new username" required />
-                        <small class="form-text text-muted"><a href="/login">Log into</a> an existing account
-                            </small>
+                <div class="row justify-content-center align-items-center g-2">
+                    <div class="col">
+                        <form class="rounded border border-light-subtle p-2" action="/register" method="POST">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Enter username</label>
+                                <input type="text" class="form-control" name="username" id="username"
+                                    placeholder="Enter a new username" required />
+                                <small class="form-text text-muted"><a href="/login">Log into</a> an existing account
+                                </small>
+                            </div>
+                            <div class="mb-2">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" name="password" id="password"
+                                    placeholder="Enter a secure password" required />
+                            </div>
+                            <div class="form-check form-check-inline mb-3">
+                                <input class="form-check-input" type="checkbox" id="show-password"
+                                    onclick="togglePassword()" />
+                                <label class="form-check-label" for="show-password">Show password</label>
+                            </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary">
+                                    Submit
+                                </button>
+                            </div>
+                            <script>function togglePassword() {
+                                    var x = document.getElementById("password");
+                                    if (x.type === "password") {
+                                        x.type = "text";
+                                    } else {
+                                        x.type = "password";
+                                    }
+                                }</script>
+                        </form>
                     </div>
-                    <div class="mb-2">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" name="password" id="password"
-                            placeholder="Enter a secure password" required />
-                    </div>
-                    <div class="form-check form-check-inline mb-3">
-                        <input class="form-check-input" type="checkbox" id="show-password" onclick="togglePassword()" />
-                        <label class="form-check-label" for="show-password">Show password</label>
-                    </div>
-                    <div>
-                        <button type="submit" class="btn btn-primary">
-                            Submit
-                        </button>
-                    </div>
-                    <script>function togglePassword() {
-                            var x = document.getElementById("password");
-                            if (x.type === "password") {
-                                x.type = "text";
-                            } else {
-                                x.type = "password";
-                            }
-                        }</script>
-                </form>
-            </div>
-        </div>
+                </div>
     </div>
 </body>
 
