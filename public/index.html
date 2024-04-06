@@ -10,12 +10,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <!-- <script src="/js/main.js" defer></script> -->
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" defer>
     <!-- get rid of favicon error -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/main.css" defer>
   </head>
   
@@ -33,7 +30,6 @@
         Other user's price and cost are hidden.
       </h5>
     </div>
-
       <div class="column1">
         <form class="formsubmit">
           <input type="text" id="youritem" maxlength="10" value="" placeholder="Enter Item">
@@ -43,7 +39,6 @@
         </form>
       </div>
     </div>
-
     <div>
       <form>
         <input type="text" id="suggestItem" maxlength="10" value="" placeholder="Enter Item">
@@ -51,7 +46,13 @@
         <button type="button" class="btn btn-warning" id="suggest">suggest</button>
       </form>
     </div>
-
+    <section class="guests" aria-label="Guest List">
+      <button class="toggleguestlist" role="switch" aria-label="listToggle" aria-checked="false" tabindex="0" id="guestToggle">
+          <div class="toggle-circle"></div>
+      </button>
+      <label for="guestToggle">double click to Hide/show guest list</label>
+  </section>
+    
     <!--Start of Flex-->
     </div>
     <div class="flex-container">
@@ -60,6 +61,7 @@
         <h2>Who's Bringing What:</h2>
         <table id="table">
           <tr>
+            <th>ID</th>
             <th>Name</th>
             <th>Item</th>
             <th>Quanitity</th>
@@ -79,13 +81,31 @@
         <h2>Suggestions:</h2>
         <table id="tableSuggest">
           <tr>
-            <th role="columnheader">Item</th>
+            <th>Item</th>
             <th>Quanitity</th>
             <th>Bring This Item</th>
           </tr>
         </table>
       </div>
     </div>
-  
+    <form >
+      <div>
+      <input type="number" min= "0" step="1"  oninput="validity.valid||(value='');" id="enterId" value="" placeholder="Enter Id number"> <!--only allow whole, positive numbers-->
+      </div>
+      <div>
+        <input type="text" id="newitem" maxlength="10" value="" placeholder="Enter Edit">
+      </div>
+        <div>
+          <button id="edit" class="btn btn-warning">Edit</button>
+        </div>
+    </form>
+    <form>
+      <input type="radio" id="item" name="editOption" value="item" class="radio">
+      <label for="item">Item</label><br>
+      <input type="radio" id="qty" name="editOption" value="qty">
+      <label for="qty">Quantity</label><br>
+      <input type="radio" id="price" name="editOption" value="price">
+      <label for="price">Price</label><br>
+    </form>
   </body>
 </html>
