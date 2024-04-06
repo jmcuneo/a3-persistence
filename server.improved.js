@@ -87,6 +87,11 @@ app.get('/', (req, res) => {
 });
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/logout', (req, res) => {
+  console.log("log out successful");
+  req.logout();
+  res.redirect('/');
+})
 
 app.get('/auth/github', passport.authenticate('github', {
   scope: ['profile']
