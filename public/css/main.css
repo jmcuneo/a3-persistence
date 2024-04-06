@@ -1,0 +1,45 @@
+body {
+  background:black;
+  color:black;
+  font-family: Cambria;
+}
+
+h1 {
+  margin: 20px;
+}
+
+.grid-layout {
+  display: grid;
+  grid-gap: 10px;
+  justify-items: center;
+  width: 100%;
+}
+
+form {
+  margin: 20px;
+}
+
+.grid-cell {
+  background-color: white;
+  width: 60%;
+}
+
+th {
+  font-weight: bold;
+}
+
+table {
+  border-collapse: collapse;
+  width: 60%;
+}
+
+td,
+th {
+  padding: 10px;
+  border: 1px solid #000;
+}
+
+#dataTable {
+  border-spacing: 25px;
+  margin: 20px;
+}
