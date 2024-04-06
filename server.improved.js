@@ -9,6 +9,7 @@ const session = require("express-session")
 const initializePassport = require("./passport-config")
 
 const taskSchema = new mongoose.Schema({
+  username: String,
   task: String,
   creationDate: String,
   dueDate: String,
@@ -108,7 +109,7 @@ app.post("/register", isNotAuthenticated, async (req, res) => {
   }
 })
 
-app.post("/logout", (req, res) =>{
+app.post("/logout", (req, res) => {
   req.logout((err) => {
     if (err) {
       return next(err);
@@ -118,15 +119,27 @@ app.post("/logout", (req, res) =>{
 })
 
 app.post('/add-task', isAuthenticated, async (req, res) => {
-  const reqTask = req.body
-  const dbTask = await Task.findOne({ 'task': reqTask.task })
+  const username = req.user.username
+
+  const dbTask = await Task.findOne({ 'task': req.body.task }).where({ username: username }).exec()
+
   if (dbTask == null) {
-    const newTask = new Task({ task: reqTask.task, creationDate: reqTask.creationDate, dueDate: reqTask.dueDate })
+    const newTask = new Task({ username: username, task: req.body.task, creationDate: req.body.creationDate, dueDate: req.body.dueDate })
     await newTask.save()
+  } else {
+    dbTask.dueDate = req.body.dueDate
+    await dbTask.save()
   }
-  const allTasks = await Task.find({}, "task creationDate dueDate") ?? []
-  console.log(`result of find: ${JSON.stringify(allTasks)}`)
-  res.send(JSON.stringify(allTasks))
+  const allTasks = await Task.find({ username: username }, "-_id task creationDate dueDate") ?? []
+
+  let appDataToSend = allTasks.map((model) => { return model.toObject() })
+  appDataToSend.forEach((obj, index) => {
+    const timeDiff = new Date(obj.dueDate) - new Date()
+    const daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24))
+    // -0 fix
+    obj.daysUntilDue = daysDiff + 0
+  })
+  res.send(JSON.stringify(appDataToSend))
 })
 
 app.delete('/delete-task', isAuthenticated, (req, res) => {

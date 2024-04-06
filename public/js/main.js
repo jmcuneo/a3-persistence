@@ -14,20 +14,19 @@ const submit = async function (event) {
   event.preventDefault()
   const form = document.getElementById("input-form")
   if (form.checkValidity()) {
-
+    //send form data, then get user associated data back
     const input = document.getElementById("task-input").value
     const dueDate = document.getElementById("calendar").value
     const json = { "task": input, "creationDate": new Date().toISOString().split("T")[0], "dueDate": dueDate }
     const body = JSON.stringify(json)
 
-    console.log(`body: ${body}`)
     const response = await fetch("/add-task", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body
     })
-
     const allTasks = await response.json()
+    console.log(`recv: ${JSON.stringify(allTasks)}`)
     populateTaskTable(allTasks)
   } else {
     console.log("did not validate")
