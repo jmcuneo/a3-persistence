@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>CS4241 Assignment 2</title>
+  <meta charset="utf-8">
+  <script src="js/main.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picnic">
+
+  <!-- get rid of favicon error -->
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+
+<body>
+  <div class="off-third">
+    <div class="half">
+      <h1 class="modal">
+        To-Do List
+      </h1>
+      <fieldset class="flex two">
+        <span><input type="text" id="class" value="Class"></span>
+        <span><input type="text" id="task" value="Task"></span>
+      </fieldset>
+
+      <fieldset class="flex two">
+        <span><input type="text" id="time" value="Time"></span>
+        <span><label>
+            <input type="checkbox" id="includeTime">
+            <span class="checkable">Include Date Added</span>
+          </label>
+      </fieldset>
+
+      <button id="submitButton">Submit</button>
+      <button id="clearButton">Clear</button>
+    </div>
+
+    <table id="dataTable" class = "primary">
+      <thead id="dataHead"></thead>
+      <tbody id="dataBody"></tbody>
+    </table>
+    
+  </div>
+</body>
+
+</html>
