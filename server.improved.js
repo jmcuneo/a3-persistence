@@ -79,10 +79,11 @@ app.post( '/login', async(req,res)=> {      //login post method
    
 }
 else{         //if not a current user in the database
-  await accounts.insertOne({ username: username, password: password });       //add the username and password to the accounts database
-  const dbUser = username           //set the dbUser to the Username given 
+  const insertedUser = await accounts.insertOne({ username: username, password: password });       //add the username and password to the accounts database
+  currentUser = insertedUser.insertedId.toString();         //set the string of the user's id to the user
   res.redirect( '/index.html' )       //redirect to the index.html (calculator)
-  currentUser = dbUser._id.toString();         //set the string of the user's id to the user
+  req.session.login = true
+  req.session.username = req.body.username
   }
 })
 
