@@ -15,7 +15,7 @@ body {
   height: 100vh;
 }
 form {
-  background-color: #fff;
+  background-color: #d3ff82;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -24,7 +24,6 @@ form {
 input[type="text"],
 input[type="password"],
 input[type="checkbox"],
-input[type="radio"],
 textarea,
 input[type="submit"] {
   width: 100%;
@@ -77,6 +76,7 @@ b {
 
 table {
   border: 1px solid;          /*styling table itself*/
+  background-color: #d3ff82;
 }
 
 td {
