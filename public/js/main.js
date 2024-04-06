@@ -137,11 +137,10 @@ const remove = async function(event) {
         console.log("end of delete on client")
 }
 
+//function to modify the entries in the table on the server and database
 const modify = function(event) {
     console.log("modify function called")
     
-    // $('#modifyModal').modal('hide');
-
         const modifyId = document.querySelector("#dropdownMenuButton").innerText.split(' - ')[0];
         const modifyFirstName = document.querySelector("#modifyFirstName")
         const modifyMiddleName = document.querySelector("#modifyMiddleName")
@@ -178,10 +177,7 @@ const modify = function(event) {
             }
             
         })
-
-    // console.log("button is pressed")
     
- 
 }
 
 // Modify table function to update the table on the front end
@@ -228,7 +224,6 @@ function removeTable(id) {
         }
     }
 
-    //const i is used to find the corresponding id on the client side version of the table and remove it from console so the current table can be printed there
     const i = currTable.findIndex(function(temp) {
         return temp.id === id;
     })
@@ -249,18 +244,11 @@ let idsInUse = [];
 let highestId = 0;
 
 
-
+//this function updates the entries in the dropdown by reading the entries in the table
 function updateDropdown() {
-    // Select the table
     var table = document.getElementById('table');
-
-    // Select the dropdown button
     var dropdownButton = document.getElementById('dropdownMenuButton');
-
-    // Select the dropdown menu
     var dropdownMenu = document.querySelector('.dropdown-menu');
-
-    // Clear the dropdown menu
     dropdownMenu.innerHTML = '';
 
     for (let i = 1; i < table.rows.length; i++) {
@@ -296,7 +284,6 @@ window.onload = async function() {
 
     console.log("window.onload called");
 
-    // const modifyForm = document.querySelector("#submitModifications");
     const modifyForm = document.querySelector("#modifyForm");
     console.log(modifyForm)
     modifyForm.onsubmit = function (event) {
@@ -304,13 +291,6 @@ window.onload = async function() {
         modify(event)
     }
 
-    
-//     const submitModificationsButton = document.querySelector("#submitModifications");
-// submitModificationsButton.onsubmit = async function(event) {
-//   event.preventDefault();
-//   console.log("modifyForm.onsubmit called");
-//   await modify(event);
-// };
 
     const createButton = document.querySelector("#newButton");
     createButton.onclick = submit;
@@ -318,7 +298,6 @@ window.onload = async function() {
     const deleteButton = document.querySelector("#deleteButton")
     deleteButton.onclick = remove;
 
-    // fetch('/data')
     fetch(`/data?userId=${mongoUserId}`)
         .then(response => response.json())
         .then(dataArray => {

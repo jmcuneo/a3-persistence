@@ -11,14 +11,7 @@ const submit = async function(event) {
     //this creates the json
     json = { username: username, password: password},
         body = JSON.stringify(json)
-    // const json = { username: username, password: password};
-    // const body = JSON.stringify(json);
 
-    //this is the response to the server
-    // const response = await fetch("/signin", {
-    //     method: "POST",
-    //     body
-    // })
     const response = await fetch("/signin", {
         method: "POST",
         body: body,

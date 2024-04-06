@@ -88,29 +88,7 @@ app.get("/data", async (request, response) => {
 
 let userId = "";
 
-// app.post("/signin", async (request, response) => {
-//     console.log("sign in post request received")
-//     const {username, password} = request.body;
-//     const user = await users.findOne({username: username});
-//     if (user && user.password === password) {
-//         const userData = await db.collection('userData').findOne({userId: user._id});
-        
-//         userId = user._id.toString();
-//         response.cookie('userId', userId);
-//         response.json({status: 'success', user: user, userData: userData});
-//     }
-//     else if (user){
-//         response.json({status: 'error', message: 'Invalid password' });
-//     }
-//     else {
-//         const newUser = {username: username, password: password};
-//         await users.insertOne(newUser);
-//         const userData = await db.collection('userData').findOne({userId: newUser._id});
-//         userId = newUser._id.toString();
-//         response.cookie('userId', userId);
-//         response.json({status: 'success', user: newUser, userData: userData});
-//     }
-// });
+
 app.post("/signin", async (request, response) => {
     console.log("sign in post request received")
     const {username, password} = request.body;
@@ -187,34 +165,6 @@ app.post("/submit", async (request, response) => {
     })
 })
 
-// app.put("/modify", async (request, response) => {
-//     const { id, firstName, middleName, lastName } = request.body;
-
-//     // Find the document in the MongoDB collection
-//     const userData = await usersData.findOne({$and: [
-//         { id: parseInt(id) },
-//         { userId: request.cookies['userId'] }
-//     ]});
-
-//     if (!userData) {
-//         response.json({ status: 'error', message: 'No matching document found' });
-//         return;
-//     }
-
-//     // Update the document with the new data
-//     try {
-//         await usersData.updateOne(
-//             { _id: userData._id },
-//             { $set: { firstName: firstName, middleName: middleName, lastName: lastName } }
-//         );
-//         console.log(`Updated document in the MongoDB collection: ${JSON.stringify(request.body)}`);
-//         response.json({ status: 'success', message: 'Update successful' });
-//     } catch (error) {
-//         console.error(`Failed to update document in the MongoDB collection: ${error}`);
-//         response.json({ status: 'error', message: 'Update failed' });
-//     }
-// });
-
 app.put("/modify", async (request, response) => {
     console.log(request.body)
     const { id, firstName, middleName, lastName } = request.body;
@@ -225,10 +175,8 @@ app.put("/modify", async (request, response) => {
         return;
     }
 
-    // Calculate the initials after the names have been updated
     const initial = (firstName.charAt(0) + (middleName.charAt(0) || '') + lastName.charAt(0)).toUpperCase();
 
-    // Find the document in the MongoDB collection
     const userData = await usersData.findOne({$and: [
         { id: parseInt(id) },
         { userId: request.cookies['userId'] }
@@ -239,7 +187,6 @@ app.put("/modify", async (request, response) => {
         return;
     }
 
-    // Update the document with the new data
     try {
         await usersData.updateOne(
             { _id: userData._id },

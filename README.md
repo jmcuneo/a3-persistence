@@ -14,7 +14,7 @@ Include a very brief summary of your project here. Images are encouraged, along 
 add a little more detail about what it does.
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
+- **Tech Achievement 1**: For my technical achievements, I used heroku to host my website.
 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative. I met cvghjkhghjk amount of achievements. Specifically:
