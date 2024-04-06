@@ -131,12 +131,14 @@ app.post("/submit", express.json(), async (req, res) => {
   let data = req.body;
   console.log(data);
   var entry = {
+    tableId: (appdata.length + 1),
     name: req.user.username,
     item: data.item,
     price: data.price,
     qty: data.qty, 
     cost: data.price * data.qty
   };
+  console.log("length ", (appdata.length + 1));
   appdata.push(entry);
   console.log("req: ", entry);
   const result = await collection.insertOne(entry)
@@ -178,6 +180,7 @@ app.post("/remove", express.json(), async (req, res) => {
 });
 
 let mongoDataLoaded = false;
+let suggestMongoLoaded = false
 
 app.post("/refresh", express.json(), async (req, res) => {
   if (!mongoDataLoaded) {
@@ -190,15 +193,23 @@ app.post("/refresh", express.json(), async (req, res) => {
       }
       appdata.push(mongoData[i]);
     }
+    if (!suggestMongoLoaded) {
+      const mongoDataSuggest = await collectionSuggest.find({}).toArray();
+      for(let j = 0; j < mongoDataSuggest.length; j++){
+        suggestdata.push(mongoDataSuggest[j]);
+      }
     mongoDataLoaded = true; // Set the flag to true to indicate data has been loaded
+    suggestMongoLoaded = true;
   }
+}
   else{
     console.log("mongo already loaded");
   }
   let bothArrays = {
     appdata: appdata,
     suggestdata: suggestdata,
-  };
+  }
+  console.log("Suggest data:", bothArrays.suggestdata)
   res.writeHead(200, { "Content-Type": "application/json" });
   res.end(JSON.stringify(bothArrays));
 });
@@ -231,6 +242,41 @@ app.post("/suggest", express.json(), async (req, res) => {
   
 });
 
+app.post("/edit", express.json(), async (req, res) => {
+  let data = req.body;
+  let appindex = (parseFloat(data.tableId) - 1);
+  let inttableid = parseFloat(data.tableId)
+  console.log("data: ", data)
+  console.log("type of editelement: ", typeof(data.edit));
+  console.log("edidtelement: ", data.edit)
+  if(data.edit == "item"){
+    const result = await collection.updateOne(
+      { tableId: inttableid }, // Match document by ID
+      { $set: { "item": data.newitem } } // Update the specified field
+  );
+  console.log("mongo: ", result);
+
+    appdata[appindex].item = data.newitem;
+}else if(data.editelement == "qty"){
+  const result = await collection.updateOne(
+    { tableId: inttableid }, // Match document by ID
+    { $set: { "qty": data.newitem } } // Update the specified field
+);
+console.log("mongo: ", result);
+  appdata[appindex].qty = data.newitem;
+  } else{
+    const result = await collection.updateOne(
+      { tableId: inttableid }, // Match document by ID
+      { $set: { "price": data.newitem }, $set: {"cost": (parseInt(data.newitem) * appdata[appindex].qty)} } // Update the specified field
+  );
+    appdata[appindex].price = data.newitem;
+
+  }
+  console.log("new item: ", data.newitem);
+  console.log("appdata array new: ", appdata);
+  res.send(JSON.stringify(appdata));
+});
+
 
 //Handle Bring
 app.post("/bring", express.json(), async (req, res) => {
@@ -241,7 +287,7 @@ app.post("/bring", express.json(), async (req, res) => {
     return res.status(400).send(JSON.stringify("Invalid index"));
   }
   const remove = suggestdata[indexToRemove];
-  const newData = {name: name, item: suggestdata[indexToRemove].Sitem, price: "",qty: suggestdata[indexToRemove].Sqty};
+  const newData = {tableId: (appdata.length + 1), name: name, item: suggestdata[indexToRemove].Sitem, price: "",qty: suggestdata[indexToRemove].Sqty, cost:""};
   suggestdata.splice(indexToRemove, 1); // Remove the entry from the array
   appdata.push(newData);
   console.log("index: ", indexToRemove);
