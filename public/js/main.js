@@ -87,24 +87,29 @@ const submit = async function( event, endpoint) {
 } */
 
 
-export async function submit(event, endpoint, querySelector) {
+export async function submit(event, endpoint, querySelector, method="POST") {
   // stop form submission from trying to load
   // a new .html page for displaying results...
   // this was the original browser behavior and still
   // remains to this day
+  let body = "";
   if(event) event.preventDefault();
-  const input = new FormData(document.querySelector(querySelector));
-  console.log(input);
-  let values = Object.fromEntries(input.entries());
-  /* values = parseData.toFloat(values); */
-  console.log(values);
-  const body = JSON.stringify(values);
-  console.log(body);
+  if(querySelector){
+    const input = new FormData(document.querySelector(querySelector));
+    console.log(input);
+    let values = Object.fromEntries(input.entries());
+    /* values = parseData.toFloat(values); */
+    console.log(values);
+    body = JSON.stringify(values);
+    console.log(body);
+
+  }
   const response = await fetch(endpoint, {
-    method: "POST",
+    method: method,
     credentials: "same-origin",
     headers: {
       "Content-Type": "application/json",
+      'Authorization': `Bearer ${document.cookie.substring(6)}`,
     },
     body,
   });
@@ -112,9 +117,31 @@ export async function submit(event, endpoint, querySelector) {
   const text = await response.json();
   console.log(response.status);
   if (response.status == 200) {
-    console.log("setting cookie");
-    document.cookie = `token=${text}`;
-    redirect(null, "/user-data")
+    console.log(endpoint)
+    switch(endpoint){
+      case "/register/new-user":
+        console.log("setting cookie");
+        document.cookie = `token=${text}`;
+        redirect(null, "/user-data");
+        break;
+      case "/login/auth":
+        console.log("setting cookie");
+        document.cookie = `token=${text}`;
+        redirect(null, "/user-data");
+        break;
+      case "/auth/user-data/add-cat":
+        console.log("do something with the response bozo");
+        break;
+      case "/auth/user-data/fetch-cats":
+        console.log("good lorde");
+        return text;
+        break;
+      default:
+        console.log("redirecting to login")
+        redirect(null, "/login");
+        break;
+    }
+    
   }
   console.log("token:", text);
   return;

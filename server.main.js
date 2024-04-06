@@ -50,8 +50,9 @@ app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 app.post("/login/auth", (req, res) => {
-  let rsp = db.attemptLogin(req.body);
-  rsp.then(result => {
+  /* dba means database action!! */
+  let dba = db.attemptLogin(req.body);
+  dba.then(result => {
     if(result){
       const token = auth.generateAccessToken({ username: req.body.username })
       res.status(200).json(token);
@@ -62,16 +63,50 @@ app.post("/login/auth", (req, res) => {
 });
 app.get('/auth/user-data', auth.authenticateToken, (req, res) => {
   console.log("success????")
-  // executes after authenticateToken
-  // ...
 })
+app.post('/auth/user-data/add-cat', auth.authenticateToken, (req, res) =>{
+  console.log(req.user.username,req.body);
+  let dba = db.addCatDataByUsername(req.user.username, req.body)
+  dba.then(result => {
+    if(result){
+      res.status(200).send({ message: "successfully added a cat"});
+    }else {
+      res.status(400).send({ message: "uhoh"});
+    }
+  })
+});
+app.post('/auth/user-data/fetch-cats', auth.authenticateToken, (req, res) =>{
+  console.log(req.user.username,req.body);
+  let dba = db.getCatDataByUsername(req.user.username)
+  dba.then(result => {
+    if(result){
+      console.log(result);
+      res.status(200).send(result);
+    }else {
+      res.status(400).send({ message: "uhoh"});
+    }
+  })
+});
+/* 
+  this wont work with this version of mongodb, im either just going to say fuck the whole thing or
+  figure it out some other way
+  app.post("/upload/image", storage.upload.single("avatar"), (req, res) => {
+  const file = req.file
+
+  // Respond with the file details
+  res.send({
+    message: "Uploaded",
+    id: file.id,
+    name: file.filename,
+    contentType: file.contentType,
+  })
+}) */
 
 app.get("/register", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "register.html"))
 });
 app.get("/user-data", (req,res) => {
   res.sendFile(path.join(__dirname, "public", "user-data.html"))
-
 })
 app.post("/register/new-user", (req, res) => {
   let rsp = db.userExists(req.body);
@@ -98,4 +133,6 @@ app.get(
     res.redirect("/");
   }
 );
+
+
 app.listen(process.env.PORT || 3001);

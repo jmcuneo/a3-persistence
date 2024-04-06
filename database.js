@@ -1,4 +1,5 @@
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, GridFSBucket } = require("mongodb");
+const fs = require("fs");
 const env = require("dotenv").config();
 const uri = `mongodb+srv://ibixler:${process.env.DB_PW}@webware-a3-ibixler.fj4jqxh.mongodb.net/?retryWrites=true&w=majority&appName=webware-a3-ibixler`;
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -21,18 +22,94 @@ exports.userExists = async function (data) {
 
     if (items.length == 0) {
       await collection.insertOne(data);
-      return 1; 
+      return 1;
     } else {
-      return 0; 
+      return 0;
     }
   } catch (error) {
     console.error("Error in userExists:", error);
-    return 0; 
+    return 0;
   } finally {
     client.close();
   }
 };
-exports.createUser = async function (data, collection) {
+exports.addCatDataByUsername = async function(username,data){
+  try{
+    await client.connect();
+    const database = client.db("Catabase");
+    let collection = database.collection("Login");
+    const user = await collection.findOne({ username });
+    console.log("username: ", username);
+    console.log("user: ", user)
+    let _id;
+    if(user){
+      console.log("user found with ID");
+      _id = user._id;
+      collection = database.collection("Cats")
+      data["uid"] = _id;
+      await collection.insertOne(data);
+      return 1;     
+    }
+  } catch (error) {
+    console.error("Error in userExists:", error);
+    return 0;
+  } finally {
+    client.close();
+  }
+}
+exports.getCatDataByUsername = async function(username){
+  try{
+    await client.connect();
+    const database = client.db("Catabase");
+    let collection = database.collection("Login");
+    const user = await collection.findOne({ username });
+    console.log("username: ", username);
+    console.log("user: ", user)
+    let _id;
+    if(user){
+      console.log("user found with ID");
+      _id = user._id;
+      collection = database.collection("Cats")
+      const cursor = await collection.find({uid: _id})
+      let ret = []
+      for await( const doc of cursor){
+        ret.push(doc);
+      }
+      console.log(ret)
+      return ret;     
+    }
+  } catch (error) {
+    console.error("Error in userExists:", error);
+    return 0;
+  } finally {
+    client.close();
+  }
+}
+exports.getUserIdByUsername = async function(username) {
+  try {
+      await client.connect();
+      const database = client.db("Catabase");
+      const collection = database.collection("Login");
+
+
+      const user = await collection.findOne({ username });
+
+
+      if (user) {
+          console.log("User found with ID:", user._id);
+          return user._id;
+      } else {
+          console.log("User not found with username:", username);
+          return null; 
+      }
+  } catch (error) {
+      console.error("Error in getUserIdByUsername:", error);
+      throw error;
+  } finally {
+      await client.close();
+  }
+};
+/* exports.createUser = async function (data, collection) {
   try {
     await collection.insertOne(data).toArray(function (err, result) {
       if (err) throw err;
@@ -41,7 +118,7 @@ exports.createUser = async function (data, collection) {
   } finally {
     await client.close();
   }
-};
+}; */
 exports.attemptLogin = async function (data) {
   try {
     await client.connect();
@@ -53,20 +130,51 @@ exports.attemptLogin = async function (data) {
 
     if (items.length == 0) {
       console.log("hey no users");
-      return 0; 
+      return 0;
     } else {
       console.log(items);
-      if(items[0].password === data.password) return 1;
-      return 0; 
+      if (items[0].password === data.password) return 1;
+      return 0;
     }
   } catch (error) {
     console.error("Error in userExists:", error);
-    return 0; 
+    return 0;
   } finally {
     client.close();
   }
 };
-/* 
+exports.uploadImage = async function (data, filename) {
+  try {
+    await client.connect();
+    const database = client.db("Catabase");
+    const bucket = new GridFSBucket(database, { bucketName: "CatPics" });
+
+    
+    const uploadStream = bucket.openUploadStream(filename, {
+      chunkSizeBytes: 1048576, 
+      metadata: { userID: data.userID, filename: filename },
+    });
+
+    const readStream = fs.createReadStream("./tmp/" + filename);
+    readStream.pipe(uploadStream);
+
+    await new Promise((resolve, reject) => {
+      uploadStream.on("error", reject);
+      uploadStream.on("finish", resolve);
+    });
+
+    console.log("Image uploaded successfully");
+    return 1;
+  } catch (error) {
+    console.error("Error in uploadImage:", error);
+    return 0; 
+  } finally {
+    await client.close();
+  }
+};
+
+/* this.uploadImage({ userID: "660edd20d2598c317470aa08" }, "test.png");
+ *//* 
 async function run() {
   try {
     const database = client.db('Catabase');

@@ -8,33 +8,7 @@ import {redirect, submit} from './main.js'
 let averageData ={
   
 } */
-/* function generateTable(data, flag){
-  let table = "";
-  table = '<table>';
-  if(!flag){
-    table += '<tr><th>Make</th><th>Model</th><th>Year</th><th>MPG</th><th>Gs</th><th>accel</th></tr>';
-    data.forEach(item => {
-        table += `<tr><td>${item.make}</td><td>${item.model}</td><td>${item.year}</td><td>${item.mpg}</td><td>${item.lateralGs}</td><td>${item.accel}</td></tr>`;
-    })
-  } else{
-    table += '<tr><th>Avg Make Len</th><th>Avg Model Len</th><th>Avg Year</th><th>Avg MPG</th><th>Avg Gs</th><th>Avg accel</th></tr>';
-    table += `<tr><td>${data.avgMake}</td><td>${data.avgMake}</td><td>${data.avgYear}</td><td>${data.avgMpg}</td><td>${data.avgLateralGs}</td><td>${data.avgAccel}</td></tr>`
-  }
-  
-  table += '</table>';
-  return table;
-} */
-/* const parseData = {
-  toFloat: function(data){
-    let ret = {
-
-    };
-    for (const [key, value] of Object.entries(data)){
-      ret[key] = isNaN(+value) ? value : +value;
-    }
-    return ret; 
-  }
-}
+/* 
 */
 
 /* const getData = async function(event){
