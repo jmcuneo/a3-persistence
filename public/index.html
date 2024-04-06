@@ -1,0 +1,45 @@
+<!doctype html>
+<meta name="description" content="This page will combine two strings together, and tell you the length of the combined string">
+<html lang="en">
+  <head>
+    <title>String Combiner</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="js/main.js"></script>
+   <!--<link rel="stylesheet" href="css/main.css">  -->  
+<link href="https://cdn.jsdelivr.net/npm/beercss@3.5.1/dist/cdn/beer.min.css" rel="stylesheet">
+
+<script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.5.1/dist/cdn/beer.min.js"></script>
+
+<script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.0/dist/cdn/material-dynamic-colors.min.js"></script> 
+    
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+    <h1 id="pagetitle" class="center">This site will combine your text!</h1>
+    <br>
+    <br>
+    <br>
+    <form>
+      <label> First half here:<input type="text" id="frontstring"></label>
+      <label> Second half here:<input type="text" id="backstring"></label>
+      <br>
+      <button id = "submitButton">Combine!</button>
+      <br>
+      <br>
+    </form>
+
+    <table id="responseTable" class = "center">
+      <tr>
+        <th> Entry Number </th>
+        <th> Combined String </th>
+        <th> String Length </th>
+        <th> Delete </th>
+        <th> Edit </th>
+      </tr>
+    </table>
+    
+    <button id = "logoutButton" class = "center">logout</button>
+  </body>
+</html>
