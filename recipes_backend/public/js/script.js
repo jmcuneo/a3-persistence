@@ -43,11 +43,14 @@ const submit = async function( event ) {
     console.log(body);
     const response = await fetch( "/CreateRecipes", {
         method:"POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
         body
     });
     const text = await response.text();
     display(JSON.parse(text));
-    console.log( "text:" + JSON.parse(text) );
+    console.log( "text:" + JSON.parse(text[0]));
 }
 
 /**
@@ -146,9 +149,9 @@ async function display(object){
 window.onload = async function() {
     const button = document.querySelector("#Submit");
     button.onclick = submit;
-    const response = await fetch("/display", {
-        method: "GET",
-    });
-    const text = await response.text();
-    display(JSON.parse(text));
+    // const response = await fetch("/display", {
+    //     method: "GET",
+    // });
+    // const text = await response.text();
+    // display(JSON.parse(text));
 }

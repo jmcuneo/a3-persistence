@@ -8,6 +8,7 @@ const jwt = require("./middleware/validateTokenHandler")
 const path = require('path');
 connectDb();
 const app = express();
+app.use(express.static('public'))
 const port = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -15,7 +16,7 @@ app.use(express.json());
 //app.use("/users", require("./routes/userRoutes"));
 app.use(errorHandler);
 app.get("/", async (req,res) => {
-    const htmlFile = path.join(__dirname, './html/main.html');
+    const htmlFile = path.join(__dirname, './public/html/main.html');
     res.sendFile(htmlFile)
 });
 

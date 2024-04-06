@@ -26,7 +26,8 @@ const createRecipe = asyncHandler(async (req,res)=>{
         //user_id: req.user.id,
     });
     //res.status(200).json(recipe);
-    getRecipe(req,res);
+    let result = getRecipe(req,res);
+    return res.sgetRecipe(req,res);
 });
 
 //@desc Get particular recipe
@@ -35,14 +36,16 @@ const createRecipe = asyncHandler(async (req,res)=>{
 const getRecipe = asyncHandler(async (req,res)=>{
     console.log("Hello");
     //const recipe = await Recipe.findById(req.params.id);
-    const recipe = await Recipe.findById(123);
+    const recipe = await Recipe.find({user_id:123});
     if(!recipe){
         res.status(404);
         throw new Error("Recipe Not Found");
     }
+    console.log("Recipe: "+recipe);
+    return recipe;
     //res.status(200).json(recipe);
-    const htmlFile = path.join(__dirname, '../recipes_backend/html/main.html');
-    res.sendFile(htmlFile)
+    //const htmlFile = path.join(__dirname, '../recipes_backend/html/main.html');
+    //res.sendFile(htmlFile)
 });
 
 //@desc Update a recipe
