@@ -19,8 +19,8 @@ I used 'serve-static' to deliver static pages from my views and public folders. 
 
 Here are the Lighthouse results for my pages:
 
-![alt text](Lighthouse_login_page.png)
-![alt text](Lighthouse_data_page.png)
+![alt text](images/Lighthouse_login_page.png)
+![alt text](images/Lighthouse_data_page.png)
 
 ## Technical Achievements
 **[1] Hosting Application on a Non-Glitch Service**: I deployed my application on the Render platform. 
@@ -38,7 +38,7 @@ Overall I honestly like Glitch better, but I'm glad I got to explore another hos
 
 I did this via the `radio_button` input that allows users to select the type of robot they are adding, modifying, or removing the part to/from. In addition to filtering by username, I also filter by robot_type associated with each collection entry. Thus, a user [1] has to select a robot_type when adding the part or it will not populate one of the rendered tables, [2] has to select a robot_type when deleting a part or the server will not know which part to delete (say there is a scenario where there are two parts with the exact same stats, one in each table -- what should the server do then??), and [3] has to select a robot_type when modifying a part for the same reason as removal. The exact same parts siutation is actually more common than you would think: wheel hubs for Beetleweight robots are not built to add much weight to the robot and are generally in harms way during competition. Based on these criteria, PLA is a good choice for the hub material. Antweight robots are typically only made of PLA because they have to be 3x lighter than Beetleweights. Thus, there could be a scenario with two wheel hub entries with the exact same stats (one entry per robot table).
 
-![Tables Filtered by robot_type](Filtered_Robot_Type_Table-1.png)
+![Tables Filtered by robot_type](images/Filtered_Robot_Type_Table-1.png)
 
 I believe this technical achievement should be worth +5pts.
 
@@ -49,9 +49,9 @@ I believe this technical achievement should be worth +5pts.
 (b) `Provide informative, unique page titles`: I adapted the W3C recommended format (specific page • company name) to reflect the project I was creating. Thus, my page titles became "Login Page • Unofficial WPI Combat Robotics Tool" and "Part Calculator • Unofficial WPI Combat Robotics Tool". These titles (especially the part after the dot) makes the purpose of this application extremely clear and meaningful. Maybe if the tool were to get picked up by the team, I would be able to develop an official name for the project...but for now it is a student-developed project and not associated with the actual WPI Combat Robotics Club, which was important to note. <br>
 (c) `Identify page language and language changes`: I made sure to identify the page language as English for ech page using the `<html lang = "en">`  tag.<br>
 (d) `Ensure that interactive elements are easy to identify`: In order to make sure interactive elements were easily identifiable, all of my buttons/submit inputs have consistent styling and change color (darken to black) when a user hovers over them. I had to ensure that this styling was still consistent when I changed my login page button to a 'submit' type input. 
-![Hover changing interactive buttons](Interactive_Buttons-1.png)
+![Hover changing interactive buttons](images/Interactive_Buttons-1.png)
 My styling is also very consistent when it comes to form groups (form-row) accross pages, and I include placeholder values for every field (even on the dropdown). I had to play around with select attributes to get the `Select Material` value to show up on the dropdown menu, but I ended up using selected, hidden, and disabled to ensure that once a user clicked the dropdown, they could no longer select the option. 
-![Dropdown Select Material option](Dropdown_Select_Material-1.png)<br>
+![Dropdown Select Material option](images/Dropdown_Select_Material-1.png)<br>
 (e) `Write meaningful text alternatives for images`: After exploring this W3C tip, I realized that my alt text was not very descriptive, especially for first time users or users who are not typically in the combat robotics club sphere. I made my alt text more informative for these users to better understand the concepts in the images. 
 - New alt for TRex CAD image: "Image of the CAD of an Antweight robot named TRex. 
                An Antweight is a 1lb-limited combat robot mostly made of PLA plastic. 
@@ -62,16 +62,16 @@ My styling is also very consistent when it comes to form groups (form-row) accro
 (f) `Use headings to convey meaning and structure`: My A2 application had no headings or subheadings, which I realized was not an ideal practice for A3. At first I just added a "Part Calculator" heading for each page and decided that this would be enough to understand the purpose of the site. However, after reading the W3C tips on headings and subheadings, I realized I needed a different header for both of my pages ("Login Page" vs. "Part Calculator"). I also realized I needed subheadings for each part table so that users could distinguish them, so I added those as well ("Antweight Table", "Beetleweight Table").<br>
 (g) `Use headings and spacing to group related content`: Following the last W3C tip, I decided to ensure that my groupings were distinct enough to separate different elements on the page. My page is organized in a top-down format, and I made sure that there were breaks AND distinct changes in either color or sizing between sections. For instance, between my "Part Calculator" heading and my instructions, I have a dark gray bar to distinguish the sections. Between my add/modify form and my first table I have a large white subheading "Antweight Table".<br>
 (h) `Provide clear instructions`: I made sure my messages for the login screen were informative when each case occurred "New account created successfully!" for first time account creation, "Incorrect login, please re-enter password" for an incorrect password for an existing user. I also added an instructions area for the information needed to properly use the part calculator tool. This section explained what the app was for and explained the information needed for each field. I also added a link with more information about calculating the weight_per_unit field. 
-![Provided instructions](Provided_Instructions-1.png)<br>
+![Provided instructions](images/Provided_Instructions-1.png)<br>
 (i) `Make link text meaningful`: When I included the link to the Onshape instructions, I made sure to describe it with meaningful text and also made the link stand out on the page. The link directs the user to a guide on how to use Onshape's mass properties tool, which allows them to 'weigh' a part of their CAD. Thus, I described the link with this text: "Link to Onshape Mass Properties Tool Instructions".<br>
 (j) `Don't use color alone to convey information`: My layout style is very consistent for different elements on each page, such that color alone is not used to identify any one type of element. For instance, all of my forms are organized with the form-row class, all of my buttons have the same exact button class styling `"btn btn-outline-light bg-dark"`, both of my tables have the same styling `"table table-dark table-striped table-bordered table-hover"`, and my images are grouped in the same location. This W3C tip is especially noticeable in one of the last elements I added onto my page (the link to Onshape's information page). Instead of using color alone to distinguish the link from the rest of the instructions, the base text color is actually the same. I use the italicized font format plus a dark background to make sure the link stands out. Even without the dark/light contrast of the link background and text, there is still a change in font format (italics) to signal that the text is a link. The link also becomes underlined on hover. 
-![Link styling](Provided_Instructions-2.png)<br>
+![Link styling](images/Provided_Instructions-2.png)<br>
 (k) `Provide sufficient contrast between foreground and background`: In order to test this principle, I put my website through a few simulations on a color-blindness visualization tool. Here are some of the results:
-![Deuteranopia visualization](Deuteranopia_Visualization-1.jpg)
-![Protanopia visualization](Protanopia_Visualization.jpg)
-![Tritanopia visualization](Tritanopia_Visualization.jpg)
-![Monochromacy visualization](Monochromacy_Visualization.jpg)
+![Deuteranopia visualization](images/Deuteranopia_Visualization-1.jpg)
+![Protanopia visualization](images/Protanopia_Visualization.jpg)
+![Tritanopia visualization](images/Tritanopia_Visualization.jpg)
+![Monochromacy visualization](images/Monochromacy_Visualization.jpg)
 From these visualizations of my page through Deuteranopia (1st Image), Protanopia (2nd Image), Tritanopia (3rd Image), and  Monochromacy (4th Image), I determined that the contrast was strong enough that text and interactive elements were still identifiable. There was not too much of a difference aside from a slight tinge of another color/shade between the different filters. <br>
 (l) `Reflect the reading order in the code order`: While I was coding my HTML pages, I made sure to code in the order that the page was laid out. This means that my code order for the data.html page is as follows: page header, instructions, add/modify material form, Antweight table, Beetleweight table, remove form, images. The W3C tip helped me organize my code in a way that it is fairly readable without the tags and in a way that I could easily add new elements to the code by visualizing where they would go on my actual page layout. 
-![index.html organization](index_org.png)<br>
-![data.html organization](data_org.png)
+![index.html organization](images/index_org.png)<br>
+![data.html organization](images/data_org.png)
