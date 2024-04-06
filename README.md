@@ -4,19 +4,19 @@ TaskWave is simple to-do list application that allows users to create, edit, and
 
 ## Technologies Used
 
-**Bun**: A fast all-in-one JavaScript runtime used for server management.
-**Express**: Web framework for handling routing and middleware.
-**MongoDB**: NoSQL database used for storing data such as user profiles and tasks.
+- **Bun**: A fast all-in-one JavaScript runtime used for server management.
+- **Express**: Web framework for handling routing and middleware.
+- **MongoDB**: NoSQL database used for storing data such as user profiles and tasks.
 
 ### Express Middleware
 
-**bcryptjs**: Securely hashes and salts passwords.
-**Chalk**: Enhances console output with colored text.
-**Cookie**-parser: Parses cookies attached to the client request headers.
-**dotenv**: Manages environment variables from a .env file.
-**jsonwebtoken**: Implements JSON Web Tokens for secure authentication.
-**mongoose**: MongoDB object modeling tool to manage data interactions.
-**uuid**: Generates unique identifiers for entities like tasks.
+- **bcryptjs**: Securely hashes and salts passwords.
+- **Chalk**: Enhances console output with colored text.
+- **Cookie**-parser: Parses cookies attached to the client request headers.
+- **dotenv**: Manages environment variables from a .env file.
+- **jsonwebtoken**: Implements JSON Web Tokens for secure authentication.
+- **mongoose**: MongoDB object modeling tool to manage data interactions.
+- **uuid**: Generates unique identifiers for entities like tasks.
 
 
 ## Technical Achievements
