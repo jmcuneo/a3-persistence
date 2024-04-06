@@ -1,7 +1,7 @@
 ## BoxFort
 
 glitch: https://a3-patrickhunter.glitch.me/
-render: https://a3-patrickhunter.glitch.me/ (note: does not support github oauth)
+render: https://a3-persistence-ztz8.onrender.com (note: does not support github oauth)
 
 The goal of the project was to implement a CRUD-based website using express and mongodb. GitHub authentication was used because it had extensive documentation on how to properly authenticate users using Express, which helped improve the original authentication scheme. I used the Pico framework since it was modern and easy to use. A few CSS modifications were made, mostly to make the site more accessible. The following Express middleware was used:
 * session: used to keep user data persistent throughout the site.
