@@ -33,9 +33,13 @@ const logIn = async function( event ) {
       alert("This account does not exist, so a new account was created with these credentials")
       window.location.href = "home.html"
     }
-    else
+    else if (text == "incorrect")
     {
       alert("Incorrect Password")
+    }
+    else
+    {
+      alert(text)
     }
   })
 }
