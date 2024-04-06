@@ -6,7 +6,7 @@
  * @param event The submit event.
  * @returns {Promise<void>}
  */
-const submit = async function( event ) {
+const submit = async function(event) {
     // stop form submission from trying to load
     // a new .html page for displaying results...
     // this was the original browser behavior and still
@@ -28,30 +28,45 @@ const submit = async function( event ) {
     else{
         emptyField = document.querySelector("#Salty");
     }
-    const recipe_name = document.querySelector( "#RecipeName" ),
-        recipe_ingredients = document.querySelector( "#Ingredients" ),
-        recipe_description = document.querySelector( "#recipeDescription" ),
-        dietary_restriction = document.querySelector("#allergen")
-    json = {
+    const recipe_name = document.querySelector("#RecipeName"),
+        recipe_ingredients = document.querySelector("#Ingredients"),
+        recipe_description = document.querySelector("#recipeDescription"),
+        dietary_restriction = document.querySelector("#allergen");
+
+    const json = {
         recipe_name: recipe_name.value,
         recipe_ingredients: recipe_ingredients.value,
         recipe_description: recipe_description.value,
         recipe_taste: emptyField.value,
         dietary_restriction: dietary_restriction.value
-    },
-        body = JSON.stringify( json )
-    console.log(body);
-    const response = await fetch( "/CreateRecipes", {
-        method:"POST",
+    };
+
+    const body = JSON.stringify(json); // Explicitly declare the body variable
+
+    console.log("Request body:", body);
+
+    const response = await fetch("/CreateRecipes", {
+        method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body
+        body: body // Pass the body variable here
     });
+
     const text = await response.text();
-    display(JSON.parse(text));
-    console.log( "text:" + JSON.parse(text[0]));
-}
+
+    console.log("Response text:", text);
+
+    try {
+        const parsedResponse = JSON.parse(text);
+        console.log("Parsed response:", parsedResponse);
+        await display(parsedResponse); // Await the display function call
+    } catch (error) {
+        console.error("Error parsing JSON:", error);
+        // Handle parsing error, e.g., display an error message to the user
+    }
+};
+
 
 /**
  * This function is called when the user clicks the delete button.
@@ -95,7 +110,7 @@ async function NewData(){
         StartLocation = document.querySelector( "#StartLocation" ),
         Destination = document.querySelector( "#Destination" ),
         Transport =document.querySelector("#transport-mode")
-    json = {
+    const json = {
         recipe_name: recipe_name.value,
         recipe_ingredients: recipe_ingredients.value,
         recipe_description: recipe_description.value,
@@ -103,7 +118,7 @@ async function NewData(){
         StartLocation: StartLocation.value,
         Destination: Destination.value,
         Transport: Transport.value,
-    },
+    }
         body = JSON.stringify( json )
     const response = await fetch("/submit", {
         method: "PUT",

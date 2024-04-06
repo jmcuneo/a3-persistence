@@ -27,7 +27,7 @@ const createRecipe = asyncHandler(async (req,res)=>{
     });
     //res.status(200).json(recipe);
     let result = getRecipe(req,res);
-    return res.sgetRecipe(req,res);
+    return res.json(result);
 });
 
 //@desc Get particular recipe
