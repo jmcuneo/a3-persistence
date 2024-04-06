@@ -23,7 +23,16 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false }
 }));
-
+class gameManager{
+    constructor(){
+    }
+};
+class mazeHunter{
+    constructor(startX,startY){
+        this.x=startX;
+        this.y=startY;
+    }
+}
 async function findUser(userData) {
   // Use connect method to connect to the server
   await client.connect();
@@ -183,10 +192,27 @@ app.post('/userMazes',async(req,res) => {
     }
 
 });
+currentPlayers={
+
+};
+app.post('/playMaze',async(req,res)=>{
+    if (req.session.user) {
+        let user=req.session.user.username;
+        currentPlayers[user]=JSON.parse(req.body);
+    }
+
+});
+
+app.post('/actionRequest',async(req,res)=>{
+    if (req.session.user) {
+        let user=req.session.user.username;
+    }
+
+});
 
 app.post('/saveMaze', async(req, res) => {
     if (req.session.user) {
-        console.log("SAVING USER <AZE");
+        console.log("SAVING USER MAZE");
         let nameObj={
 
         Username:req.session.user.username
