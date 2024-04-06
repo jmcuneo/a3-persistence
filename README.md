@@ -14,7 +14,9 @@ password: password1
 
 I did not use OAuth, I used a seperate page, because i though it would be easiest to implement. I used the Bootstrap CSS framework because i did some reasearch and i found that it was multipurpose and easy to use. I applied it to both my index.html and my login.html. 
 
-I made no modifications to the CSS package. My website achieves at least 90% in all 4 categories. Also I included the HTML elements for textarea, input and a checkbox. Though the checkbox and comments dont do anything. If i had more time i was going to have the remember me button save the user info so they did not have to login again but i was unable to due to the timing and scope of the project.
+I made no modifications to the Bootstrap CSS framwork.  My website achieves at least 90% in all 4 categories. Also I included the HTML elements for textarea, input and a checkbox. Though the checkbox and comments dont do anything. If i had more time i was going to have the remember me button save the user info so they did not have to login again but i was unable to due to the timing and scope of the project.
+
+I'm using the express.js framework to reduce the work required to connect from the server to the client and handle the posts and gets more effectively. I am also using cooke-session which helps store the session data for the user which helps track the user's data from the login to the server with username and password data. I use body-parser which helps parse a request body from the client to the server . This help when using req.body to access data in a given GET or POST request. Dotenv helps to set up a .env file to store the sensitive data used to access my mongodb database.
 
 ## Technical Achievements
 - **Tech Achievement 1**: I did not use OAuth authentication via the GitHub strategy
