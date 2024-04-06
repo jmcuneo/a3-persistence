@@ -1,12 +1,11 @@
-
 ## Calculator app
 
 Connor Chartier - ctchartier@wpi.edu
 My glitch url: http://a3-connorchartier.glitch.me
 
-My application allows the user to add, subtract, multiply, and divide any two numbers. These numbers get stored in a database and can be retrieved based on the user who is signed in. 
+My application allows the user to add, subtract, multiply, and divide any two numbers. These numbers get stored in a database and can be retrieved based on the user who is signed in. The data stored in the database as well as deleted and edited
 
-My login is functional but sometimes the page does not immediately show the page, i was not able to figure out why. So immediatley when entering onto the calculator page, you can click the "sign out button", it will bring you to the login page. If the user inputs a username and password that is unknown to the database, a new account is made. But if they input an existing account, the user will be able to see the previous computations from that account. 
+My login page is fully functional but sometimes the page does not immediately show the page, i was not able to figure out why. So immediatley when entering onto the calculator page, you can click the "sign out" button, it will bring you to the login page. If the user inputs a username and password that is unknown to the database, a new account is made. Any data will be stored with that new username and password. If user signs out and inputs an existing account, the user will be able to see the previous computations from associated with that username and password. 
 
 Here is a sample user you can see previous results for:
 
@@ -25,7 +24,6 @@ I made no modifications to the CSS package. My website achieves at least 90% in 
 ### Design/Evaluation Achievements
 - **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
 - **Design Achievement 2**: Here is my description of my use of CRAP principles:
-
 Contrast:
 In my design, the high-contrast is strategically used to highlight important page elements. For instance, the clear blue color of the submit button helps contrasts against the vibrant orange background, ensuring its visibility to the user for future interaction. Similarly, I made the choice of black text color for headers against lighter backgrounds. This helps provide clear legible text compared to the surrounding content. This use of contrast not only adds to the the visual appeal of the index.html and login.html pages but also increases the navigation and readability of them. Using high contrast guides users' attention to key components helping to make the interaction with the interface clearer and more intuitive.
 
