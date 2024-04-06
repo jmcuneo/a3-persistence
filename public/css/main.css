@@ -46,17 +46,21 @@ tr:nth-child(even) {
 }
 
 #newButton {
-  color: white;
-  background-color: #255FF4;
-  border-color: #255FF4;
-  border-radius: 1.5em;
-  width: 90px;
+  width: 115px;
 }
 
 #deleteButton {
-  color: white;
-  background-color: #f44336;
-  border-color: #f44336;
-  border-radius: 1.5em;
-  width: 90px;
+  width: 115px;
+}
+
+#modifyUserButton{
+  width: 115px;
+}
+
+#dropdownMenuButton{
+  width: 206px;
+}
+
+p{
+  font-size: 16px;
 }

@@ -1,0 +1,29 @@
+
+#usernameInput{
+    width: 400px;
+    align-content: center;
+}
+
+#passwordInput{
+    width: 400px;
+    align-content: center;
+}
+
+#loginButton{
+    width: 150px;
+    align-content: center;
+}
+h1{
+    text-align: center;
+}
+h2{
+    text-align: center;
+}
+h4{
+    text-align: center;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+/* #idDropdownButton{
+    color: primary;
+} */

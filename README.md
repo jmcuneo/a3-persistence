@@ -1,122 +1,3 @@
-Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
-===
-
-Check out the [CS 4241 Guides](https://github.com/jmcuneo/cs4241-guides) for help with the technologies discussed in this assignment.
-
-This assignnment continues where we left off, extending it to use the most popular Node.js server framework (express), 
-a database (mongodb), and a CSS application framework / template of your choice (Boostrap, Material Design, Semantic UI, Pure etc.)
-
-Baseline Requirements
----
-
-Your application is required to implement the following functionalities:
-
-- a `Server`, created using Express (no alternatives will be accepted for this assignment)
-- a `Results` functionality which shows all data associated with a logged in user (except passwords)
-- a `Form/Entry` functionality which allows users to add, modify, and delete data items (must be all three!) associated with their user name / account. 
-- Persistent data storage in between server sessions using [mongodb](https://www.mongodb.com/cloud/atlas) (you *must* use mongodb for this assignment). You can use either the [official mongodb node.js library](https://www.npmjs.com/package/mongodb) or use the [Mongoose library](https://www.npmjs.com/package/mongoose), which enables you to define formal schemas for your database. Please be aware that the course staff cannot provide in-depth support for use of Mongoose.  
-- Use of a [CSS framework or template](https://github.com/troxler/awesome-css-frameworks). 
-This should do the bulk of your styling/CSS for you and be appropriate to your application. 
-For example, don't use [NES.css](https://nostalgic-css.github.io/NES.css/) (which is awesome!) unless you're creating a game or some type of retro 80s site.
-
-Your application is required to demonstrate the use of the following concepts:  
-
-HTML:  
-- HTML input tags and form fields of various flavors (`<textarea>`, `<input>`, checkboxes, radio buttons etc.)
-- HTML that can display all data *for a particular authenticated user*. Note that this is different from the last assignnment, which required the display of all data in memory on the server.
-
-Note that it might make sense to have two pages for this assignment, one that handles login / authentication and one that contains the rest of your application.
-For example, when visiting the home page for the assignment, users could be presented with a login form. After submitting the login form, if the login is 
-successful, they are taken to the main application. If they fail, they are sent back to the login to try again. For this assignment, it is acceptable to simply create 
-new user accounts upon login if none exist; however, you must alert your users to this fact.  
-
-CSS:  
-- CSS styling should primarily be provided by your chosen template/framework. 
-Oftentimes a great deal of care has been put into designing CSS templates; 
-don't override their stylesheets unless you are extremely confident in your graphic design capabilities. 
-The idea is to use CSS templates that give you a professional looking design aesthetic without requiring you to be a graphic designer yourself.
-
-JavaScript:  
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server. 
-See the [previous assignment](https://github.com/cs-4241-23/shortstack) for reference.
-
-Node.js:  
-- A server using Express and a persistent database (mongodb).
-
-General:  
-- Your site should achieve at least 90% on the `Performance`, `Best Practices`, `Accessibility`, and `SEO` tests 
-using Google [Lighthouse](https://developers.google.com/web/tools/lighthouse) (don't worry about the PWA test, and don't worry about scores for mobile devices).
-Test early and often so that fixing problems doesn't lead to suffering at the end of the assignment. 
-
-Deliverables
----
-
-Do the following to complete this assignment:
-
-1. Implement your project with the above requirements. I'd begin by converting your A2 assignment. First, change the server to use express. Then, modify the server to use mongodb instead of storing data locally. Last but not least, implement user accounts and login. User accounts and login is often the hardest part of this assignment, so budget your time accordingly.
-2. If you developed your project locally, deploy your project to Glitch (unless completing the alternative server technical acheivement described below), and fill in the appropriate fields in your package.json file.
-3. Test your project to make sure that when someone goes to your main page on Glitch (or an alternative server), it displays correctly.
-4. Ensure that your project has the proper naming scheme `a3-FirstnameLastname` so we can find it.
-5. Fork this repository and modify the README to the specifications below.
-6. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a3-FirstnameLastname`.
-
-Acheivements
----
-
-Below are suggested technical and design achievements. You can use these to help boost your grade up to an A and customize the 
-assignment to your personal interests, for a maximum twenty additional points and a maximum grade of a 100%. 
-These are recommended acheivements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README, 
-why it was challenging, and how many points you think the achievement should be worth. 
-ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THEM.
-
-*Technical*
-- (10 points) Implement OAuth authentication, perhaps with a library like [passport.js](http://www.passportjs.org/). 
-*You must either use Github authenticaion or provide a username/password to access a dummy account*. 
-Course staff cannot be expected, for example, to have a personal Facebook, Google, or Twitter account to use when grading this assignment. 
-Please contact the course staff if you have any questions about this. THIS IS THE HARDEST ACHEIVEMENT OFFERED IN WEBWARE. You have been warned!  
-- (5 points) Instead of Glitch, host your site on a different service. Find a service that is reputable and has a free tier. Post your findings on Slack in the #assignment3 channel. DO NOT feel compelled to purchase a paid tier from any service, although if you already have one, you are welcome to use it. Make sure to describe this a bit in your README. What was better about using the service you chose as compared to Glitch? What (if anything) was worse? 
-- (5 points) Get 100% (not 98%, not 99%, but 100%) in all four lighthouse tests required for this assignment.  
-
-*Design/UX*
-- (10 points) Make your site accessible using the [resources and hints available from the W3C](https://www.w3.org/WAI/), Implement/follow twelve tips from their [tips for writing](https://www.w3.org/WAI/tips/writing/), [tips for designing](https://www.w3.org/WAI/tips/designing/), and [tips for development](https://www.w3.org/WAI/tips/developing/). *Note that all twelve must require active work on your part*. 
-For example, even though your page will most likely not have a captcha, you don't get this as one of your twelve tips to follow because you're effectively 
-getting it "for free" without having to actively change anything about your site. 
-Contact the course staff if you have any questions about what qualifies and doesn't qualify in this regard. 
-List each tip that you followed and describe what you did to follow it in your site.
-- (5 points) Describe how your site uses the CRAP principles in the Non-Designer's Design Book readings. 
-Which element received the most emphasis (contrast) on each page? 
-How did you use proximity to organize the visual information on your page? 
-What design elements (colors, fonts, layouts, etc.) did you use repeatedly throughout your site? 
-How did you use alignment to organize information and/or increase contrast for particular elements. 
-Write a paragraph of at least 125 words *for each of four principles* (four paragraphs, 500 words in total). 
-
-
-FAQ
----
-**Q: Am I required modify my A2 submission for this assignment?**
-
-No. If you want to start fresh for A3, you are welcome to do so. The option to start with A2 is simply there as a convenience for you.
-
-**Q: Which CSS framework should I use? How do I use it?**
-
-This is for you to figure out. While we do require Express and MongoDB for this assignment, we do not require a specific CSS framework, so we are not going to be discussing a specific one. You will be responsible for choosing a CSS framework and learning how to use it.
-
-**Q: How do I keep my .env file out of my git repo?**
-
-Create a .gitignore file on your local machine and list your .env file in it. Note that while your .env file should NOT appear in your repo, you will still want to add it to your Glitch project so that your website runs successfully.
-
-**Q: I'm confused about how user accounts work for this assignment.**
-
-For the base requirements (discounting the achievements), it should follow this logic:
-
-1. If the user logs in and the account does not exist, create the account and inform the user the account has been created.
-2. If the user logs in and the account exists but the password is incorrect, inform the user.
-3. If the user logs in, the account exists, and the password is correct, then take the user to the page that shows the data specific to the user.
-
-Note that implementing some of the technical achievements may override this requirement, which is fine.
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
 
 ## Your Web Application Title
 
@@ -136,4 +17,38 @@ add a little more detail about what it does.
 - **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative. I met cvghjkhghjk amount of achievements. Specifically:
+
+Writing Achievements:
+- I used page titles so a user would know what website is running by looking at their browser tab
+- I used headings to help organize the page 
+- I provided clear instructions on how to use my app.
+- I provided clear and consise insturctions that would be easy for users to follow
+
+Design Achievements:
+- I provided contrast between foreground and background. For example in my text inputs, I have place holder text which is a light grey and is clearly not typed in.
+- I did not rely on color to convey information. For required information, I included an asterisk and for all of my buttons I made sure their purpose was in writing.
+- I made sure all of my interactive elements had some way to be easily identified. All of my interactive components has the mouse change symbols when being hovered over.
+- I provide easily identifiable feedback through alerts that tell users about minimum requirements to run my program.
+- I use headings and spacing to group related content to help organize the the page.
+
+Developing Achievements:
+- Use mark-up to convey meaning and strucutre. For my code, I used different html strucutres to help organize my code and by giving them ids to keep all of the code that makes up a component together. 
+- Help users avoid and correct mistakes. When an error occurs, I tell the user about minimum requirements to different fields so they can fix their inputs.
+- Reflect the reading order in the code. My HTML code reflects the order items appear on the page.
+
+- **Design Achievement 2**:
+My website used the CRAP principles to help improve my website.
+
+**Contrast:****
+ The first page of my application is the login page. This page is relatively simple but did use contrasting colors. While the majority of the page was white with black text, the use of grey to outline text boxes and provide sample text are ways I try to direct the user’s attention. By making this button a vibrant blue (the only other color on the page), I hope to make it clear that this is important. On the main page, there are more essential pieces. I made any button bright blue or red to make it stand out on the white background. For the table on the side, I used alternating colors to help the user keep track of the information on a singular line.
+
+**Repetition:**
+ I used different pieces of repetition on my website to make it look cleaner. On both the login page and the main page, any inputs or buttons are the same size as the others on the page. In the table on the main page, I used a repeating color pattern to allow the user to help differentiate the different lines of the table and to help keep the page looking clean. I also used repeating patterns to make my code more usable. Above all of my text boxes, it states what the text input should be. Placeholders also show what should be entered inside the text boxes. Similarly, all of the buttons state what they do. Another location I have a repeating pattern is within my modal, within the dropdown to select who should be modified, there is a consistent order of information displayed to make repeating this process easy.
+
+**Alignment:**
+The alignment of my page was done very purposefully. First of all, on the main page, there is a header in the top center of the screen. Under this, the screen is split into left and right. The content on both sides of the screen starts at the same height. Between different components on the screen, there is a consistent gap unless the gap was purposely created to show the difference between fields and what is being asked in the second section. The table alignment was also done purposefully. I believe having a line ID first followed by a person’s first name, middle name, and last name followed by their initials is the optimal way to present this type of table. Lastly, the gap between the left and right sides was made to be large enough that it would be clear they were separate but small enough not to take up too much space and make the information look condensed.
+
+**Proximity:**
+ I used proximity on my site to keep related information together. By having the table as the entire structure on the right side of the screen, anything on the right side is part of the table. The table also has column headers, so if a user wants to look at first names, they are nicely organized. On the left side of the screen, all related items are kept together. All things related to the inputs are at the top, and the removal items are at the bottom. By having a modify button in the middle, the modified information is kept very separate in a modal where it won’t be confused with anything else. Having only the needed information available and centered on the screen makes its purpose very clear.
+
