@@ -3,6 +3,9 @@
   "version": "1.0",
   "description": "A Simple To-Do List",
   "author": "Stephen Fanning",
+  "engines":{
+    "node": "14.X"
+  },
   "scripts": {
     "start": "node server.js"
   },
