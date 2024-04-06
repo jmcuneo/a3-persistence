@@ -1,11 +1,11 @@
 import {redirect, submit} from './main.js'
 let data =[];
-function generateTable(){
+function generateTable(data){
   let table = "";
   table = '<table>';
-  if(this.data.length){
+  if(data){
     table += '<tr><th>name</th><th>Age</th><th>Coat</th><th>Solidity</th></tr>';
-    this.data.forEach(item => {
+    data.forEach(item => {
         table += `<tr><td>${item.name}</td><td>${item.age}</td><td>${item.coat}</td><td>${item.solidity}</td></tr>`;
     })
   }
@@ -35,14 +35,16 @@ async function checkAuth(event, endpoint){
       'Authorization': `Bearer ${document.cookie.substring(6)}`,
     }
   })
-  const text = await rsp.json();
-  console.log(text)
+  if (rsp.status === 403){
+    redirect(null, "login")
+  }
+  await rsp.json();
 }
 
-function makeTable(){
+function makeTable(data){
   const tableContainer = document.getElementById('catData');
   tableContainer.innerHTML = "";
-  tableContainer.innerHTML = generateTable();
+  tableContainer.innerHTML = generateTable(data);
 }
 
 window.onload = function() {
@@ -51,16 +53,16 @@ window.onload = function() {
   loginRedirectButton.onclick = () => redirect(event, "/login");
   const registerButton = document.querySelector('#submit');
   registerButton.onclick = () => submit(event, "/register/new-user") */
+  checkAuth(null, "/auth/user-data").then(response => console.log("response: ",response))
   if(document.cookie){
     console.log("cookie exists")
   }else{
     redirect(null,"/login")
   }
-  checkAuth(null, "/auth/user-data")
-  submit(event, "/auth/user-data/fetch-cats", false).then(result => console.log(result))
-  data.concat(submit(event, "/auth/user-data/fetch-cats", false));
+  if(!this.data) submit(event, "/auth/user-data/fetch-cats", false).then(result => this.data = result).then(() => makeTable(this.data));
+  //data.concat(submit(event, "/auth/user-data/fetch-cats", false));
   const submitButton = document.querySelector("#submit");
-  submitButton.onclick = () => submit(event, "/auth/user-data/add-cat", "#catInfo").then(()=>this.data.concat(submit(event, "/auth/user-data/fetch-cats", false))).finally(() => makeTable());
+  submitButton.onclick = () => submit(event, "/auth/user-data/add-cat", "#catInfo").then(submit(event, "/auth/user-data/fetch-cats", false)).then(result => this.data = result).finally(() => makeTable(this.data));
   /* const deleteButton = document.querySelector("#delete");
   deleteButton.onclick = () => submit(event, "/delete"); */
 }

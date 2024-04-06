@@ -86,18 +86,29 @@ const submit = async function( event, endpoint) {
 
 } */
 
+export async function submit(event, endpoint, querySelector, method="POST"){
+  submitHelper(event, endpoint, querySelector, method="POST").catch(error => {
+    console.log(error);
+    document.getElementById('errorMessage').innerHTML = "<p>fill all fields</p>";
+  }).then(() => {
+    document.getElementById('errorMessage').textContent = "";
 
-export async function submit(event, endpoint, querySelector, method="POST") {
-  // stop form submission from trying to load
-  // a new .html page for displaying results...
-  // this was the original browser behavior and still
-  // remains to this day
+  })
+}
+
+async function submitHelper(event, endpoint, querySelector, method="POST") {
+  
   let body = "";
   if(event) event.preventDefault();
   if(querySelector){
     const input = new FormData(document.querySelector(querySelector));
     console.log(input);
     let values = Object.fromEntries(input.entries());
+    for(const [key, value] of Object.entries(values)){
+      if(value === ""){
+        throw new Error("null fields");
+      }
+    }
     /* values = parseData.toFloat(values); */
     console.log(values);
     body = JSON.stringify(values);

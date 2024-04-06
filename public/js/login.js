@@ -5,7 +5,7 @@ window.onload = function () {
   const registerButton = document.querySelector("#register");
   registerButton.onclick = () => redirect(event, "/register");
   const loginButton = document.querySelector("#login");
-  loginButton.onclick = () => submit(event, "/login/auth", "#loginData")
+  loginButton.onclick = () => submit(event, "/login/auth", "#loginData").catch()
   /* const loginButton = document.querySelector(); */
   /* const deleteButton = document.querySelector("#delete");
     deleteButton.onclick = () => submit(event, "/delete"); */

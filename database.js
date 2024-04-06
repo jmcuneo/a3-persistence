@@ -45,9 +45,18 @@ exports.addCatDataByUsername = async function(username,data){
     if(user){
       console.log("user found with ID");
       _id = user._id;
+      const filter = {uid: _id, name: data.name};
+      const options = {upsert: true, new: true};
+      const update = {
+        $set: {
+          age: data.age,
+          coat: data.coat,
+          solidity: data.solidity
+        }
+      }
       collection = database.collection("Cats")
       data["uid"] = _id;
-      await collection.insertOne(data);
+      await collection.updateOne(filter,update,options);
       return 1;     
     }
   } catch (error) {
