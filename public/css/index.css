@@ -1,0 +1,16 @@
+body {
+  padding: 20px;
+  height: 100vh;
+}
+
+.center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+#attempt-login, #attempt-create-account {
+  margin-left: 2vw;
+  margin-right: 2vw;
+}

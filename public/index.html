@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <title>Paint Live - Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Login; Online collaborative paint tool; Andrew Salls; CS 4241">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora&family=Roboto&display=swap" rel="stylesheet">
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <script src="/js/index.js"></script>
+  </head>
+  <body>
+    <h1>Paint Live</h1>
+    <form id="login">
+      <div>
+        <label for="user">Enter a display name:</label>
+        <input id="user" name="user" form="login" type="text" placeholder="Enter name" maxlength="16" required>
+      </div>
+      <div>
+        <label for="pass">Enter a password:</label>
+        <input id="pass" name="pass" form="login" type="password" placeholder="Enter password" maxlength="64" required>
+      </div>
+      <div class = "center">
+        <button id="attempt-create-account" type="submit">Create Account</button>
+        <button id="attempt-login" type="submit">Login</button>
+      </div>
+      <div class = "center">
+        <p id="error-msg"></p>
+      </div>
+  </body>
+</html>

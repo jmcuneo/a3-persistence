@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <title>Paint Live</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Online collaborative paint tool; Andrew Salls; CS 4241">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" />
+  <link rel="stylesheet" href="css/paint.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora&family=Roboto&display=swap" rel="stylesheet">
+  <!-- get rid of favicon error -->
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <script src="js/paint.js"></script>
+</head>
+<body>
+  <h1>Paint Live</h1>
+  <button id="log-out" type="button" tabindex="0">Log out</button>
+  <form id="content">
+    <div class="center">
+      <div>
+        <label for="color-selector">Select paint color</label>
+        <input id="color-selector" name="color-selector" form="content" type="color" value="#FFFFFF">
+      </div>
+    </div>
+    <br>
+    <p id="draw-label" for="draw-plane" class="center">Select a square to change its color! You must wait a minute after each color change.</p>
+    <div id="draw-plane" aria-describedby="draw-label"></div>
+  </form>
+  <div class="center">
+    <p id="status-msg"></p>
+  </div>
+  <aside id="sidebar">
+    <h2>
+      Recent Changes:
+    </h2>
+    <hr>
+    <div id="change-list">
+    </div>
+  </aside>
+</body>
+</html>
