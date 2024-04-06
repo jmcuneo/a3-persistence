@@ -59,14 +59,6 @@ h2 {
   color: #FA7F08;         /*default color of the header p sections*/
 }
 
-i {
-  font-style: italic;
-}
-
-b {
-  font-weight: bold;
-}
-
 .center {        /*class selector*/
   display: block;
   margin-left: auto;

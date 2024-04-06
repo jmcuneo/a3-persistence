@@ -5,13 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Calculator Login</title>
-    <link rel="stylesheet" href="css/main.css"><!--reference to the .css file that houses styling information-->
+    <link rel="stylesheet" href="css/main.css">     <!--reference to the .css file that houses styling information-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <style>
-        body {
-            font-family: "Arial", sans-serif; /* Change font family if needed */
-        }
-    </style>
 </head>
 <body>
     <form action="/login" method="POST">
@@ -29,10 +24,9 @@
         <label for="rememberMe">Remember Me:</label>
         <input type="checkbox" id="rememberMe" name="rememberMe">
         </div>
-        <br>
         <div> 
             <label for="comments">Comments:</label>
-            <textarea id="comments" name="comments" rows="4" cols="30"></textarea>
+            <textarea id="comments" name="comments" rows="2" cols="30"></textarea>
         </div>
         <input type="submit" value="Login">
     </form>
