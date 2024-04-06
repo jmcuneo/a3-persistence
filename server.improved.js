@@ -88,6 +88,29 @@ app.get("/data", async (request, response) => {
 
 let userId = "";
 
+// app.post("/signin", async (request, response) => {
+//     console.log("sign in post request received")
+//     const {username, password} = request.body;
+//     const user = await users.findOne({username: username});
+//     if (user && user.password === password) {
+//         const userData = await db.collection('userData').findOne({userId: user._id});
+        
+//         userId = user._id.toString();
+//         response.cookie('userId', userId);
+//         response.json({status: 'success', user: user, userData: userData});
+//     }
+//     else if (user){
+//         response.json({status: 'error', message: 'Invalid password' });
+//     }
+//     else {
+//         const newUser = {username: username, password: password};
+//         await users.insertOne(newUser);
+//         const userData = await db.collection('userData').findOne({userId: newUser._id});
+//         userId = newUser._id.toString();
+//         response.cookie('userId', userId);
+//         response.json({status: 'success', user: newUser, userData: userData});
+//     }
+// });
 app.post("/signin", async (request, response) => {
     console.log("sign in post request received")
     const {username, password} = request.body;
@@ -108,7 +131,11 @@ app.post("/signin", async (request, response) => {
         const userData = await db.collection('userData').findOne({userId: newUser._id});
         userId = newUser._id.toString();
         response.cookie('userId', userId);
-        response.json({status: 'success', user: newUser, userData: userData});
+        if (userData) {
+            response.json({status: 'success', user: newUser, userData: userData});
+        } else {
+            response.json({status: 'error', message: 'User data not found for new user'});
+        }
     }
 });
 
