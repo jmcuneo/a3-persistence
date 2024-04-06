@@ -1,114 +1,93 @@
-Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
-===
+## TODO app
 
-Check out the [CS 4241 Guides](https://github.com/jmcuneo/cs4241-guides) for help with the technologies discussed in this assignment.
+Railway link: https://a3-carlosmedina-production.up.railway.app/
 
-This assignnment continues where we left off, extending it to use the most popular Node.js server framework (express), 
-a database (mongodb), and a CSS application framework / template of your choice (Boostrap, Material Design, Semantic UI, Pure etc.)
+Summary notes:
 
-Baseline Requirements
----
+- The goal of this application was to extend my previous TODO app into a user based todo app. This means each person gets their own list.
 
-Your application is required to implement the following functionalities:
+- A challenge I faced was how to put alerts inside of the HTML to make sure that the messages were accessible and easy to notice. This led me to use `ejs`, which allows for templating inside of the HTML
 
-- a `Server`, created using Express (no alternatives will be accepted for this assignment)
-- a `Results` functionality which shows all data associated with a logged in user (except passwords)
-- a `Form/Entry` functionality which allows users to add, modify, and delete data items (must be all three!) associated with their user name / account. 
-- Persistent data storage in between server sessions using [mongodb](https://www.mongodb.com/cloud/atlas) (you *must* use mongodb for this assignment). You can use either the [official mongodb node.js library](https://www.npmjs.com/package/mongodb) or use the [Mongoose library](https://www.npmjs.com/package/mongoose), which enables you to define formal schemas for your database. Please be aware that the course staff cannot provide in-depth support for use of Mongoose.  
-- Use of a [CSS framework or template](https://github.com/troxler/awesome-css-frameworks). 
-This should do the bulk of your styling/CSS for you and be appropriate to your application. 
-For example, don't use [NES.css](https://nostalgic-css.github.io/NES.css/) (which is awesome!) unless you're creating a game or some type of retro 80s site.
+- I chose the local authentication strategy with scrypt from the Node crypto library due to the ease of use.
 
-Your application is required to demonstrate the use of the following concepts:  
+- I used bootstrap as I have head of it before and thought it had sane defaults. I didn't make many customizations, except for the color of the alert text when log in fails.
 
-HTML:  
-- HTML input tags and form fields of various flavors (`<textarea>`, `<input>`, checkboxes, radio buttons etc.)
-- HTML that can display all data *for a particular authenticated user*. Note that this is different from the last assignnment, which required the display of all data in memory on the server.
-
-Note that it might make sense to have two pages for this assignment, one that handles login / authentication and one that contains the rest of your application.
-For example, when visiting the home page for the assignment, users could be presented with a login form. After submitting the login form, if the login is 
-successful, they are taken to the main application. If they fail, they are sent back to the login to try again. For this assignment, it is acceptable to simply create 
-new user accounts upon login if none exist; however, you must alert your users to this fact.  
-
-CSS:  
-- CSS styling should primarily be provided by your chosen template/framework. 
-Oftentimes a great deal of care has been put into designing CSS templates; 
-don't override their stylesheets unless you are extremely confident in your graphic design capabilities. 
-The idea is to use CSS templates that give you a professional looking design aesthetic without requiring you to be a graphic designer yourself.
-
-JavaScript:  
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server. 
-See the [previous assignment](https://github.com/cs-4241-23/shortstack) for reference.
-
-Node.js:  
-- A server using Express and a persistent database (mongodb).
-
-General:  
-- Your site should achieve at least 90% on the `Performance`, `Best Practices`, `Accessibility`, and `SEO` tests 
-using Google [Lighthouse](https://developers.google.com/web/tools/lighthouse) (don't worry about the PWA test, and don't worry about scores for mobile devices).
-Test early and often so that fixing problems doesn't lead to suffering at the end of the assignment. 
-
-Deliverables
----
-
-Do the following to complete this assignment:
-
-1. Implement your project with the above requirements. I'd begin by converting your A2 assignment. First, change the server to use express. Then, modify the server to use mongodb instead of storing data locally. Last but not least, implement user accounts and login. User accounts and login is often the hardest part of this assignment, so budget your time accordingly.
-2. If you developed your project locally, deploy your project to Glitch (unless completing the alternative server technical acheivement described below), and fill in the appropriate fields in your package.json file.
-3. Test your project to make sure that when someone goes to your main page on Glitch (or an alternative server), it displays correctly.
-4. Ensure that your project has the proper naming scheme `a3-FirstnameLastname` so we can find it.
-5. Fork this repository and modify the README to the specifications below.
-6. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a3-FirstnameLastname`.
-
-Acheivements
----
-
-Below are suggested technical and design achievements. You can use these to help boost your grade up to an A and customize the 
-assignment to your personal interests, for a maximum twenty additional points and a maximum grade of a 100%. 
-These are recommended acheivements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README, 
-why it was challenging, and how many points you think the achievement should be worth. 
-ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THEM.
-
-*Technical*
-- (10 points) Implement OAuth authentication, perhaps with a library like [passport.js](http://www.passportjs.org/). 
-*You must either use Github authenticaion or provide a username/password to access a dummy account*. 
-Course staff cannot be expected, for example, to have a personal Facebook, Google, or Twitter account to use when grading this assignment. 
-Please contact the course staff if you have any questions about this. THIS IS THE HARDEST ACHEIVEMENT OFFERED IN WEBWARE. You have been warned!  
-- (5 points) Instead of Glitch, host your site on a different service. Find a service that is reputable and has a free tier. Post your findings on Slack in the #assignment3 channel. DO NOT feel compelled to purchase a paid tier from any service, although if you already have one, you are welcome to use it. Make sure to describe this a bit in your README. What was better about using the service you chose as compared to Glitch? What (if anything) was worse? 
-- (5 points) Get 100% (not 98%, not 99%, but 100%) in all four lighthouse tests required for this assignment.  
-
-*Design/UX*
-- (10 points) Make your site accessible using the [resources and hints available from the W3C](https://www.w3.org/WAI/), Implement/follow twelve tips from their [tips for writing](https://www.w3.org/WAI/tips/writing/), [tips for designing](https://www.w3.org/WAI/tips/designing/), and [tips for development](https://www.w3.org/WAI/tips/developing/). *Note that all twelve must require active work on your part*. 
-For example, even though your page will most likely not have a captcha, you don't get this as one of your twelve tips to follow because you're effectively 
-getting it "for free" without having to actively change anything about your site. 
-Contact the course staff if you have any questions about what qualifies and doesn't qualify in this regard. 
-List each tip that you followed and describe what you did to follow it in your site.
-- (5 points) Describe how your site uses the CRAP principles in the Non-Designer's Design Book readings. 
-Which element received the most emphasis (contrast) on each page? 
-How did you use proximity to organize the visual information on your page? 
-What design elements (colors, fonts, layouts, etc.) did you use repeatedly throughout your site? 
-How did you use alignment to organize information and/or increase contrast for particular elements. 
-Write a paragraph of at least 125 words *for each of four principles* (four paragraphs, 500 words in total). 
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-
-your glitch (or alternative server) link e.g. http://a3-joshua-cuneo.glitch.me
-
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
-
-- the goal of the application
-- challenges you faced in realizing the application
-- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why
-  - include any modifications to the CSS framework you made via custom CSS you authored
-- the five Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function for *one* (and one alone) middleware please 
-add a little more detail about what it does.
+- Example of a logged in user: ![Example of results showing on main page](/main_page.png)
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
+
+- **Tech Achievement 1** (15pt): I created an express app with various middlewares to create authentication sessions, easier json handling, and message passing, among other things. I also created routes to deal with serving pages and handling api requests. Additionally, this computes some data before sending it back for the client to populate its results table with.
+
+- **Tech Achievement 2** (10pt): (Fulfills delete req) I have a results table that populates after a user enters a task. This will show all of a users data, and does show other users' data. In this table, there is also a button to initiate deletion of the specific task.
+
+- **Tech Achievement 3** (15pt + 5pt): (Fulfills create and modify req and HTML tags req) I created a form that can modify or create tasks and sends the to the express server for storage. This uses a form the the post method and gives a json payload to the server to create its database models and query information with.
+
+- **Tech Achievement 4** (15pt): I created an Atlas MongoDB database to store users and todo tasks. For this, I used the Mongoose driver and set up two schemas, one for users and one for tasks. All database accesses were done with a `username` filter to only query documents belonging to the logged in user. To do updates and inserts, I first checked if the user existed. If it didn't, I created a new model based on the schema and saved it with the contents I received from the entry form. If it did exists, I used the return document and updated the `dueDate` field. For deletion, I simply find the document with the same task name as the one received from the entry form and delete it with a query.
+
+- **Tech Achievement 5** (10pt): I used Bootstrap 5 to create a nice looking and accessible website. Bootstrap includes breakpoints and a flex grid system so that the look of the website transitions nicely between screen sizes and doesn't undermine accessability, as they have pre chosen colors.
+
+- **Tech Achievement 6** (10pt + 5pt): Achieved 100 on all Lighthouse scores: ![100 on all tests](/100_seo_after_robots.png)
+
+- **Tech Achievement 7** (10pt): I used OAuth authentication via the local strategy. Two dummy accounts are set up with dummy data to show that the app separates storage based on user. `user`:`123`, and `user2`:`123`
+
+- **Tech Achievement 8** (5pt): This site is hosted on Railway. The pros of this site were that it lets you easily add secrets, directly integrates with GitHub, and auto deploys when a change happens on GitHub or in your project. You also get a custom sub-domain, and 5 dollars of credit. The last pro is that it is fast. This can be extended as they have an optional sleep on inactive toggle. The cons were that there is no forever free tier. Overall I think it is a good site.
+
+_Additional achievements. Points are opinions based off of complexity/work done_
+
+- **Tech Achievement 9** (5pt): I used passport.js to create a session that carries data about the logged in user. This prevents logged in users from accessing the register and login pages. It also makes accessible the home page and the logout route.
+
+- **Tech Achievement 10** (10pt): I created a register and login page. Both of these make requests to the `users` collection in Atlas and either registers a user, rejects a registration, rejects a log in, or accepts a log in. The accept flow redirects the user to the next page. The reject flow shows a multitude of errors, all posted as inline HTML rendered by express through ejs. Examples are below:
+
+![username exists already during registration](/username_exists_register.png)
+![no username exists login](/username_no_exist_login.png)
+![incorrect password login](/incorrect_pass_login.png)
+
+- **Tech Achievement 11** (2pt): I made a simple show/hide password checkbox on registration and login forms:
+  ![shown password](/pass_show.png)
+  ![hidden password](/pass_hide.png)
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+
+- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative:
+
+- Provide informative, unique page titles
+
+> My title tags describe the content of the page concisely
+
+- Make link text meaningful
+
+> I rewrote my links so that they fit in the sentence, and aren't "click here"
+
+- Provide clear instructions
+
+> Form inputs have example placeholder text
+
+- Provide sufficient contrast between foreground and background
+
+> All text/elements pass AA contrast checks
+
+- Ensure that interactive elements are easy to identify
+
+> Links are differently colored, along with buttons (which also have a cursor change)
+
+- Ensure that form elements include clearly associated labels
+
+> Form labels have short descriptive elements
+
+- Associate a label with every form control
+
+> Form labels have short descriptive elements
+
+- Identify page language and language changes
+
+> All pages have lang="en"
+
+- Use mark-up to convey meaning and structure
+
+> I use the \<nav\> tag and semantic tags inside of the results table
+
+- Ensure that all interactive elements are keyboard accessible
+
+> You are able to tab through all elements
+
+- **Design Achievement 2** _CRAP principles_ : I made sure to use the contrast notion of the CRAP in all of my pages. This was done rather easily as I used the dark mode setting of bootstrap. This puts mostly white colors on mostly dark gray backgrounds, leading to high contrast. Additionally, the accent colors were blue, which has a contrast ration of 3.42:1 and a AA pass rating when used for interface components (blue: 0d6efd, background: 212529 ). The repetition element was done by using a table for received data. This lays out the data nicely, where each column represents the same type of data no matter how far down you are. All of my content is centered and margined from the sides of the screen. This makes the content flow easy to follow. I made sure to use the proximity notion of the CRAP in my forms; labels, inputs, and help text are grouped together by their proximity. I repeated the same form design across all three pages of my website as it is simple and promoted memory of where fields are.

@@ -2,7 +2,7 @@
 <html lang="en" data-bs-theme="dark">
 
 <head>
-    <title>Login</title>
+    <title>Login for TODO app</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="js/main.js"></script>
@@ -38,7 +38,7 @@
             <div class="row justify-content-center align-items-center g-2">
                 <div class="col">
                     <div class="col text-center mb-5">
-                        <div class="alert alert-secondary" role="alert" id="login-error-message">
+                        <div class="alert alert-dark border-danger" role="alert" id="login-error-message">
                             <%= messages.error %>
                         </div>
                     </div>
@@ -52,8 +52,9 @@
                                 <label for="username" class="form-label">Enter username</label>
                                 <input type="text" class="form-control" name="username" id="username"
                                     placeholder="Enter your username" required />
-                                <small class="form-text text-muted">Click <a href="/register">here</a> to
-                                    register a new user</small>
+                                <small class="form-text text-muted"> <a href="/register"> Register
+                                        </a> for an account
+                                </small>
                             </div>
                             <div class="mb-2">
                                 <label for="password" class="form-label">Password</label>

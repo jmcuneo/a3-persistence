@@ -7,6 +7,7 @@ const passport = require("passport")
 const flash = require("express-flash")
 const session = require("express-session")
 const initializePassport = require("./passport-config")
+const compression = require("compression")
 
 const taskSchema = new mongoose.Schema({
   username: String,
@@ -39,6 +40,7 @@ initializePassport(
 
 const app = express()
 
+app.use(compression())
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, '/public/views'))
 
