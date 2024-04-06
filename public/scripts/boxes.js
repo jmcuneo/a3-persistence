@@ -44,7 +44,7 @@ const use_tool = function (tIDX, self, other) {
 
 const handle_boxclick = async function () {
     const id = this.id.split('_')[1];
-    const body = JSON.stringify({user: username, id: id, color: colors[color_idx]});
+    const body = JSON.stringify({id: id, color: colors[color_idx]});
     switch(tool) {
         case 1: fetch("/rmv_box", {method: "POST", body:body});
                 this.remove();
@@ -57,7 +57,6 @@ const handle_boxclick = async function () {
 
 const addbox = async function () {
     const json = {
-        user: username,
         color: colors[color_idx]
     }, body = JSON.stringify(json);
     const response = await fetch( "/add_box", {
@@ -68,10 +67,8 @@ const addbox = async function () {
 }
 
 const load_boxes = async function () {
-    const body = JSON.stringify({user: username})
     const response = await fetch( "/get_boxes", {
-        method: "POST",
-        body: body
+        method: "GET",
       })
       const r_json = await response.json();
       const box_cont = document.getElementById("box_area");

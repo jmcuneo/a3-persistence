@@ -1,5 +1,4 @@
 const pingUser = async (e) => {
-    console.log(e);
     const user_field = document.getElementById("user");
     const pass_field = document.getElementById("pwd");
     user_field.style.border = "none";
@@ -25,7 +24,7 @@ const login = async () => {
     const pass_field = document.getElementById("pwd");
     const error = document.getElementById("error")
     let body = JSON.stringify({user: user_field.value, pass: pass_field.value})
-    const login = await fetch("/login", {method: "POST", body:body});
+    const login = await fetch("/try_login", {method: "POST", body:body});
     let resp = await login.text();
     if(resp != "1") {
         const login_btn = document.getElementById("submit")
@@ -41,6 +40,6 @@ const login = async () => {
             error.innerHTML = "Incorrect password for " + user_field.value + ".";
         }
     } else {
-        window.location.href = '/html/boxes.html?user=' + user_field.value;
+        window.location.href = `/login?user=${user_field.value}&pass=${pass_field.value}`;
     }
 }

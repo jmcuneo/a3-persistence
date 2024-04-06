@@ -2944,6 +2944,7 @@ th, td {
 
 th, td, .add_box {
   color: whitesmoke;
+  background-color: #13171f;
 }
 
 .color {
