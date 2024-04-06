@@ -1,35 +1,26 @@
-<!doctype html>
 <html lang="en">
   <head>
-    <title>CS4241 Assignment 3</title>
-    <meta charset="utf-8">
-    <meta name="description" content="A site for recording details about parts">
-    <meta name="viewport" content="initial-scale=1">
-    <script src="bootstrap.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="bootstrap.min.css"
-    />
-    
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <title>Login Page • Unofficial WPI Combat Robotics Tool</title>
+    <meta charset="utf-8" />
+    <meta name="description" content="A site for recording details about parts"/>
+    <meta name="viewport" content="initial-scale=1"/>
+    <link rel="stylesheet" href="bootstrap.min.css"/>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo="/>
   </head>
   <body class="pt-5 mt-5 d-flex flex-column bg-dark text-center text-light align-items-center">
-    <div class = "mt-5 py-5 w-100 bg-secondary d-flex align-items-center flex-column">
-    <br />
-    <div class = "w-100 bg-dark">
-    <h1>Part Calculator</h1>
-      </div>
-    <br />
-     <div class="row d-flex justify-content-center">
-      <form action="/login" method="POST">
-        <div class="form-row">
-        <input type="text" id = "username" name = "username" placeholder="Username">
-        <input type="password" id = "password" name = "password" placeholder="Password">
-        <input id = "submit" type = "submit" class="btn btn-outline-light bg-dark" value = "Login">
-        </div>
-      </form><br>
-    </div><br>
+    <div class="mt-5 py-5 w-100 bg-secondary d-flex align-items-center flex-column"><br>
+      <div class="w-100 bg-dark">
+        <h1>Login Page</h1>
+      </div><br>
+      <div class="row d-flex justify-content-center">
+        <form action="/login" method="POST">
+          <div class="form-row">
+            <input type="text" id="username" name="username" placeholder="Username"/>
+            <input type="password" id="password" name="password" placeholder="Password"/>
+            <input id="submit" type="submit" class="btn btn-outline-light bg-dark" value="Login"/>
+          </div>
+        </form><br>
+      </div><br>
       {{{msg}}}
     </div>
   </body>

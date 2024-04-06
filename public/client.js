@@ -1,6 +1,7 @@
 /*
- * A function that sends a POST request to the server with the part entry to add to appdata
- * if the part with part_name exists, modify the entry instead of adding a new entry
+ * A function that sends a POST request to the server with the part entry to add to the database
+ * The request fields include part_name, material, quantity, weight_per_unit, and the robot_type (Antweight or Beetleweight),
+ * where material and robot_type are limited by the presented options
  */
 const add = async function(event){
   event.preventDefault()
@@ -23,7 +24,11 @@ const add = async function(event){
     })
 };
 
-/* Placeholder modify until I can combine them? */
+/*
+ * A function that sends a POST request to the server with the part entry to modify within the database
+ * The request fields include part_name, material, quantity, weight_per_unit, and the robot_type (Antweight or Beetleweight),
+ * where material and robot_type are limited by the presented options
+ */
 const modify = async function(event){
   event.preventDefault()
   
@@ -46,8 +51,8 @@ const modify = async function(event){
 };
 
 /*
- * A function that sends a POST request to the server with the part to remove from appdata
- * identified by the Part Name input field (part_name)
+ * A function that sends a POST request to the server with the part entry to remove from the database
+ * identified by the part_name input field
  */
 const remove = async function(event){
   event.preventDefault()
@@ -70,7 +75,7 @@ const remove = async function(event){
 };
 
 /*
- * A function that sends a GET request to the server for the appdata array
+ * A function that sends a GET request to the server for the table data in array format
  * in order to pass the current content of the array (and in turn the server) to the client
  * @return: The parsed response from the server containing the array data
  */
@@ -81,7 +86,10 @@ const receive = async function() {
   return JSON.parse(entries)
 }
 
-/* A function that rebuilds the table content from the received appdata array */
+/* A function that rebuilds the table content from the received array of part entries
+ * @param: The robot_type to filter the data by (to create either Antweight or Beetleweight table)
+ * @param: The id of the table to populate (table_body_ant or table_body_beetle)
+*/
 const constructTable = async function(robot_type, id) {
   var entries = await receive()
   console.log(entries)
@@ -100,8 +108,8 @@ const constructTable = async function(robot_type, id) {
 
 /* 
  * A function that runs everytime the window is loaded (navigating to page or refreshing)
- * Supports the add() and remove() POST request functions
- * Supports the receive() GET request function indirectly through constructTable()
+ * Supports the add(), modify() and remove() POST request functions
+ * Supports the receive() GET request function indirectly through constructTable() calls for both tables
  */
 window.onload = function() {
     const add_button = document.getElementById("add_button");

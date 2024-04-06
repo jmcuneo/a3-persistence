@@ -1,37 +1,37 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>CS4241 Assignment 3</title>
-    <meta charset="utf-8" />
-    <meta
-      name="description"
-      content="A site for recording details about parts"
-    />
+    <title>Part Calculator • Unofficial WPI Combat Robotics Tool</title>
+    <meta charset="utf-8"/>
+    <meta name="description" content="A site for recording details about parts"/>
     <meta name="viewport" content="width=device_width, initial-scale=1" />
-    <link
-      rel="stylesheet"
-      href="bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="bootstrap.min.css"/>
     <script src="client.js"></script>
-
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo="/>
   </head>
   <body class="d-flex flex-column bg-dark text-center text-light align-items-center">
     {{{msg}}}
-    <div class = "w-75 bg-secondary d-flex flex-column">
-    <br />
-    <div class = "w-100 bg-dark">
-    <h1>Part Calculator</h1>
-      </div>
-    <br />
-    <div class="d-flex flex-column align-items-center">
-      <div class="row d-flex justify-content-center">
+    <div class="w-75 bg-secondary d-flex flex-column"><br>
+      <div class="w-100 bg-dark">
+        <h1>Part Calculator</h1>
+      </div><br>
+      <t class="text-white">This site is meant to allow users to customize robot
+        loadouts with parts of their choice. Users should specify (left to
+        right) the part name they are adding, the material (select from the
+        provided options, the quantity of that part they need (ex: 4 wheels or 1
+        chassis) and the estimated weight per unit. If you are using CADing
+        software, you should be able to get the weight per unit from your CADing
+        service. Here is an example of how to do that with Onshape:
+        <a class="text-white bg-dark font-italic" href="https://cad.onshape.com/help/Content/massprops-ps.htm">
+          Link to Onshape Mass Properties Tool Instructions
+        </a>
+      </t><br>
+      <div class="d-flex flex-column align-items-center">
+        <div class="row d-flex justify-content-center">
           <form>
             <div class="form-row">
-              <input type="text" id="add_part" placeholder="Name of Part" />
+              <input type="text" id="add_part" placeholder="Name of Part"/>
               <select type="text" id="add_material">
-                <option value = "error" selected disabled hidden>Select Material</option>
+                <option value="error" selected disabled hidden>Select Material</option>
                 <option>TPU</option>
                 <option>PLA</option>
                 <option>Steel</option>
@@ -39,86 +39,74 @@
                 <option>UHMW</option>
                 <option>Foam</option>
               </select>
-              <input type="text" id="add_quantity" placeholder="Quantity" />
-              <input
-                type="text"
-                id="add_weight"
-                placeholder="Weight per Unit"
-              />
-              <button class="btn btn-outline-light bg-dark" id="add_button">
-                Add Part
-              </button>
-              <button class="btn btn-outline-light bg-dark" id="modify_button">
-                Modify Part
-              </button>
-              <input type = "reset" class ="btn btn-outline-light bg-dark">
+              <input type="text" id="add_quantity" placeholder="Quantity"/>
+              <input type="text" id="add_weight" placeholder="Weight per Unit"/>
+              <button class="btn btn-outline-light bg-dark" id="add_button">Add Part</button>
+              <button class="btn btn-outline-light bg-dark" id="modify_button">Modify Part</button>
+              <input type="reset" class="btn btn-outline-light bg-dark"/>
             </div>
-            <input type = "radio" id = "ant" name = "robot_type" value = "Antweight">
-            <label for = "ant" class = "text-white">Antweight</label>
-            <input type = "radio" id = "beetle" name = "robot_type" value = "Beetleweight">
-            <label for = "beetle" class = "text-white">Beetleweight</label>
-          </form>
-          <br />
-      </div>
-      <br />
-      <div class="row w-100 d-flex">
-        <table
-          id="part_table_ant"
-          class="table table-dark table-striped table-bordered table-hover"
-        >
-          <tr>
-            <th>Part Name</th>
-            <th>Material</th>
-            <th>Quantity</th>
-            <th>Weight</th>
-          </tr>
-          <tbody id="table_body_ant"></tbody>
-        </table>
-        <br />
-        <table
-          id="part_table_beetle"
-          class="table table-dark table-striped table-bordered table-hover"
-        >
-          <tr>
-            <th>Part Name</th>
-            <th>Material</th>
-            <th>Quantity</th>
-            <th>Weight</th>
-          </tr>
-          <tbody id="table_body_beetle"></tbody>
-        </table>
-      </div>
-      <div class="row d-flex">
+            <input type="radio" id="ant" name="robot_type" value="Antweight"/>
+            <label for="ant" class="text-white">Antweight</label>
+            <input type="radio" id="beetle" name="robot_type" value="Beetleweight"/>
+            <label for="beetle" class="text-white">Beetleweight</label>
+          </form><br>
+        </div><br>
+        <div class="row w-100 d-flex justify-content-center">
+          <h2>Antweight Table</h2>
+          <table id="part_table_ant" class="table table-dark table-striped table-bordered table-hover">
+            <tr>
+              <th>Part Name</th>
+              <th>Material</th>
+              <th>Quantity</th>
+              <th>Weight</th>
+            </tr>
+            <tbody id="table_body_ant"></tbody>
+          </table><br>
+          <h2>Beetleweight Table</h2>
+          <table id="part_table_beetle" class="table table-dark table-striped table-bordered table-hover">
+            <tr>
+              <th>Part Name</th>
+              <th>Material</th>
+              <th>Quantity</th>
+              <th>Weight</th>
+            </tr>
+            <tbody id="table_body_beetle"></tbody>
+          </table>
+        </div>
+        <div class="row d-flex">
           <form>
-            <div class = "form-row">
-            <input
-              type="text"
-              id="remove_part"
-              placeholder="Part name to remove"
-            />
-            <button class="btn btn-outline-light bg-dark" id="remove_button">
-              Remove Part
-            </button>
-            <input type = "reset" class ="btn btn-outline-light bg-dark">
-              </div>
-            <input type = "radio" id = "r_ant" name = "r_robot_type" value = "Antweight">
-            <label for = "r_ant" class = "text-white">Antweight</label>
-            <input type = "radio" id = "r_beetle" name = "r_robot_type" value = "Beetleweight">
-            <label for = "r_beetle" class = "text-white">Beetleweight</label>
+            <div class="form-row">
+              <input type="text" id="remove_part" placeholder="Part name to remove"/>
+              <button class="btn btn-outline-light bg-dark" id="remove_button">Remove Part</button>
+              <input type="reset" class="btn btn-outline-light bg-dark"/>
+            </div>
+            <input type="radio" id="r_ant" name="r_robot_type" value="Antweight"/>
+            <label for="r_ant" class="text-white">Antweight</label>
+            <input type="radio" id="r_beetle" name="r_robot_type" value="Beetleweight"/>
+            <label for="r_beetle" class="text-white">Beetleweight</label>
           </form>
+        </div><br>
+        <div class="row d-flex">
+          <img
+            class="img-fluid img-thumbnail border border-dark"
+            width="539"
+            height="403"
+            src="https://cdn.glitch.global/7430d0d3-034f-42f9-aab8-408bf982427f/trex_50_1_50.webp?v=1712351879360"
+            alt="Image of the CAD of an Antweight robot named TRex. 
+               An Antweight is a 1lb-limited combat robot mostly made of PLA plastic. 
+               A CAD is a Computer-Aided Design, a digital design of the robot that is created before it is built to better visualize how parts fit together."
+          />
+          <img
+            class="img-fluid img-thumbnail border border-dark"
+            width="571"
+            height="368"
+            src="https://cdn.glitch.global/7430d0d3-034f-42f9-aab8-408bf982427f/fracture_50_1_50.webp?v=1712352192367"
+            alt="Image of the CAD of a Beetleweight robot named Fracture. 
+               A Beetleweight is a 3lb-limited combat robot usually made of different metals and TPU plastic. 
+               A CAD is a Computer-Aided Design, a digital design of the robot that is created before it is built to better visualize how parts fit together."
+          />
+        </div>
       </div>
-      <br />
-      <div class="row d-flex">
-        <img class = "img-fluid img-thumbnail border border-dark" width = "539" height = "403"
-          src="https://cdn.glitch.global/7430d0d3-034f-42f9-aab8-408bf982427f/trex_50_1_50.webp?v=1712351879360"
-          alt="Image of TRex robot CAD"
-        />
-        <img class = "img-fluid img-thumbnail border border-dark" width = "571" height = "368"
-          src="https://cdn.glitch.global/7430d0d3-034f-42f9-aab8-408bf982427f/fracture_50_1_50.webp?v=1712352192367"
-          alt="Image of Fracture robot CAD"
-        />
-      </div>
-      </div>
-          </div>
+    </div>
   </body>
 </html>

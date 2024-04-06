@@ -1,161 +1,77 @@
 Assignment 3 - Persistence: Two-tier Web Application with Database, Express server, and CSS template
-===
-
-Check out the [CS 4241 Guides](https://github.com/jmcuneo/cs4241-guides) for help with the technologies discussed in this assignment.
-
-This assignnment continues where we left off, extending it to use the most popular Node.js server framework (express), 
-a database (mongodb), and a CSS application framework / template of your choice (Boostrap, Material Design, Semantic UI, Pure etc.)
-
-Baseline Requirements
+=== 
 ---
 
-Your application is required to implement the following functionalities:
+## Part Calculator
 
-- (15 points) a `Server`, created using Express (no alternatives will be accepted for this assignment)
-- (10 points) a `Results` functionality which shows all data associated with a logged in user (except passwords)
-- (15 points) a `Form/Entry` functionality which allows users to add, modify, and delete data items (must be all three!) associated with their user name / account.
-- Persistent data storage in between server sessions using [mongodb](https://www.mongodb.com/cloud/atlas) (you *must* use mongodb for this assignment). You can use either the [official mongodb node.js library](https://www.npmjs.com/package/mongodb) or use the [Mongoose library](https://www.npmjs.com/package/mongoose), which enables you to define formal schemas for your database. Please be aware that the course staff cannot provide in-depth support for use of Mongoose.  (15 pts.)
-- (10 points) Use of a [CSS framework or template](https://github.com/troxler/awesome-css-frameworks). This should do the bulk of your styling/CSS for you and be appropriate to your application. 
-For example, don't use [NES.css](https://nostalgic-css.github.io/NES.css/) (which is awesome!) unless you're creating a game or some type of retro 80s site.
+Link to my site: https://a3-briannasahagian.onrender.com/ <br>
+You can use test login username: trex, password: trocks
 
-Your application is required to demonstrate the use of the following concepts:  
+The goal of my application is to extend the Part Calculator application I made in A2. I really liked the idea I came up with for the last assignment but was having a lot of trouble with manually styling the CSS. I also think that if I am able to implement this app in a user-friendly manner, people on the combat robotics team may be interested in using it as an organizational tool.
 
-HTML:  
-- (5 points) HTML input tags and form fields of various flavors (`<textarea>`, `<input>`, checkboxes, radio buttons, etc.)
-- HTML that can display all data *for a particular authenticated user*. Note that this is different from the last assignnment, which required the display of all data in memory on the server.
+The main challenge I had while developing the application was twofold. First, I really wanted to be able to distinguish between the two classes of robots I was familiar with: Antweight (1lb) and Beetleweight (3lb). In the old version of the application, it was impossible to have two chassis in the table at once, but if the user had two different types of robots they would have two different chassis with different materials and weights. Each builder can only build one Antweight (according to club rules for WPI) and Beetleweights are extremely expensive, so most members only build one. However, these robots can both be built at the same time, since they are of different classes. Thus, I had to find a way to support both classes of robots on my application (this is one of my technical achievements explained in that section). The other challenge was getting the images to display on the page while maintaining a high Lighthouse score. I had to take the screenshots from my own computer, as the images are my own CAD designs. My computer only takes screenshots at 2000x1000 resolution, so I needed to size the images correctly so they [1] didn't lose too much quality and become blurry and [2] didn't cause layout shifting issues.
 
-Note that it might make sense to have two pages for this assignment, one that handles login / authentication and one that contains the rest of your application.
-For example, when visiting the home page for the assignment, users could be presented with a login form. After submitting the login form, if the login is 
-successful, they are taken to the main application. If they fail, they are sent back to the login to try again. For this assignment, it is acceptable to simply create 
-new user accounts upon login if none exist; however, you must alert your users to this fact.  
+I chose to use cookies (req.session.login) to authenticate my users because that seemed the easiest to implement since we had an in class example to follow.
 
-CSS:  
-- CSS styling should primarily be provided by your chosen template/framework. 
-Oftentimes a great deal of care has been put into designing CSS templates; 
-don't override their stylesheets unless you are extremely confident in your graphic design capabilities. 
-The idea is to use CSS templates that give you a professional looking design aesthetic without requiring you to be a graphic designer yourself.
+I chose to use Bootstrap to develop this application because it is a professional-looking framework that my MQP team used for a very similar type of website: https://wpidlib.github.io/WPID-Library-Docs/index.html. I really like the way that the site came out for that project so I wanted to see if I could make a similar looking page for my application. I was not on front-end for my MQP so this is my first time using Bootstrap. I did not modify the CSS framework, but just took advantage of the provided classes.
 
-JavaScript:  
-- At minimum, a small amount of front-end JavaScript to get / fetch data from the server. 
-See the [previous assignment](https://github.com/cs-4241-23/shortstack) for reference.
+I used 'serve-static' to deliver static pages from my views and public folders. This middleware also adds MIME types and auto converts the / URL to ./index.html. I also used 'cookie-session' to enable and use cookies on my application for each user session through the req.session.login variable.  
 
-Node.js:  
-- A server using Express and a persistent database (mongodb).
+Here are the Lighthouse results for my pages:
 
-General:  
-- (10 points) Your site should achieve at least 90% on the `Performance`, `Best Practices`, `Accessibility`, and `SEO` tests 
-using Google [Lighthouse](https://developers.google.com/web/tools/lighthouse) (don't worry about the PWA test, and don't worry about scores for mobile devices).
-Test early and often so that fixing problems doesn't lead to suffering at the end of the assignment. 
-
-Deliverables
----
-
-Do the following to complete this assignment:
-
-1. Implement your project with the above requirements. I'd begin by converting your A2 assignment. First, change the server to use express. Then, modify the server to use mongodb instead of storing data locally. Last but not least, implement user accounts and login. User accounts and login is often the hardest part of this assignment, so budget your time accordingly.
-2. If you developed your project locally, deploy your project to Glitch (unless completing the alternative server technical acheivement described below), and fill in the appropriate fields in your package.json file.
-3. Test your project to make sure that when someone goes to your main page on Glitch (or an alternative server), it displays correctly.
-4. Ensure that your project has the proper naming scheme `a3-FirstnameLastname` so we can find it.
-5. Fork this repository and modify the README to the specifications below.
-6. Create and submit a Pull Request to the original repo. Name the pull request using the following template: `a3-FirstnameLastname`.
-
-Acheivements
----
-
-Below are suggested technical and design achievements. You can use these to help boost your grade up to an A and customize the 
-assignment to your personal interests, for a maximum twenty additional points and a maximum grade of a 100%. 
-These are recommended acheivements, but feel free to create/implement your own... just make sure you thoroughly describe what you did in your README, 
-why it was challenging, and how many points you think the achievement should be worth. 
-ALL ACHIEVEMENTS MUST BE DESCRIBED IN YOUR README IN ORDER TO GET CREDIT FOR THEM.
-
-*Technical*
-- (10 points) Implement OAuth authentication, perhaps with a library like [passport.js](http://www.passportjs.org/). 
-*You must either use Github authenticaion or provide a username/password to access a dummy account*. 
-Course staff cannot be expected, for example, to have a personal Facebook, Google, or Twitter account to use when grading this assignment. 
-Please contact the course staff if you have any questions about this. THIS IS THE HARDEST ACHEIVEMENT OFFERED IN WEBWARE. You have been warned!  
-- (5 points) Instead of Glitch, host your site on a different service. Find a service that is reputable and has a free tier. Post your findings on Slack in the #assignment3 channel. DO NOT feel compelled to purchase a paid tier from any service, although if you already have one, you are welcome to use it. Make sure to describe this a bit in your README. What was better about using the service you chose as compared to Glitch? What (if anything) was worse? 
-- (5 points) Get 100% (not 98%, not 99%, but 100%) in all four lighthouse tests required for this assignment.  
-
-*Design/UX*
-- (10 points) Make your site accessible using the [resources and hints available from the W3C](https://www.w3.org/WAI/), Implement/follow twelve tips from their [tips for writing](https://www.w3.org/WAI/tips/writing/), [tips for designing](https://www.w3.org/WAI/tips/designing/), and [tips for development](https://www.w3.org/WAI/tips/developing/). *Note that all twelve must require active work on your part*. 
-For example, even though your page will most likely not have a captcha, you don't get this as one of your twelve tips to follow because you're effectively 
-getting it "for free" without having to actively change anything about your site. 
-Contact the course staff if you have any questions about what qualifies and doesn't qualify in this regard. 
-List each tip that you followed and describe what you did to follow it in your site.
-- (5 points) Describe how your site uses the CRAP principles in the Non-Designer's Design Book readings. 
-Which element received the most emphasis (contrast) on each page? 
-How did you use proximity to organize the visual information on your page? 
-What design elements (colors, fonts, layouts, etc.) did you use repeatedly throughout your site? 
-How did you use alignment to organize information and/or increase contrast for particular elements. 
-Write a paragraph of at least 125 words *for each of four principles* (four paragraphs, 500 words in total). 
-
-
-FAQ
----
-**Q: Am I required modify my A2 submission for this assignment?**
-
-No. If you want to start fresh for A3, you are welcome to do so. The option to start with A2 is simply there as a convenience for you.
-
-**Q: Which CSS framework should I use? How do I use it?**
-
-This is for you to figure out. While we do require Express and MongoDB for this assignment, we do not require a specific CSS framework, so we are not going to be discussing a specific one. You will be responsible for choosing a CSS framework and learning how to use it.
-
-**Q: How do I keep my .env file out of my git repo?**
-
-Create a .gitignore file on your local machine and list your .env file in it. Note that while your .env file should NOT appear in your repo, you will still want to add it to your Glitch project so that your website runs successfully.
-
-**Q: I'm confused about how user accounts work for this assignment.**
-
-For the base requirements (discounting the achievements), it should follow this logic:
-
-1. If the user logs in and the account does not exist, create the account and inform the user the account has been created.
-2. If the user logs in and the account exists but the password is incorrect, inform the user.
-3. If the user logs in, the account exists, and the password is correct, then take the user to the page that shows the data specific to the user.
-
-Note that implementing some of the technical achievements may override this requirement, which is fine.
-
-**Q: I'm getting a syntax error when trying to connect to MongoDB using the code in the tutorial.**
-
-Your version of Node may be outdated. Check out [this link](https://stackoverflow.com/questions/77749884/session-options-session-syntaxerror-unexpected-token-mongoose-give-a) for more information.
-
-**Q: Do I have to handle multiple user accounts?**
-
-No. You only need one dummy account UNLESS you are doing the GitHub login technical achievement. Make sure you mention in your README how the user should log in!
-
-**Q: If we use OAuth for logging in, do we still need the same pattern of behavior from the website when logging in (as described above)?**
-
-Yes, insofar as the logged in user should still be taken to a page with the user's data, the login should fail for the incorrect password, and a new account should be created if the username is unrecognized.
-
-Note that if you are doing OAuth, this last part might be difficult (especially if you are doing GitHub authentication). If that's the case, then the user should be taken to a page where they can create an account for your site.
-
-**Q: Does "HTML input tags and form fields of various flavors" mean that we need to use multiple different kinds of inputs, or does it mean that we just need to use some form of input?**
-
-You should have at least two different input types for this assignment. The purpose is to show your understanding beyond the simple `input` type you saw in A2.
-
-**Q: Am I allowed to use other libraries/frameworks/etc. in this assignment?**
-
-Yes, so long as those are IN ADDITION TO Express, MongoDB, and a CSS framework of your choice. Describe in your README any additional libraries or frameworks you used for this assignment. Also remember that the staff might not be familiar with these, so we may be unable to help you if you run into technical problems.
-
-
-Sample Readme (delete the above when you're ready to submit, and modify the below so with your links and descriptions)
----
-
-## Your Web Application Title
-
-your glitch (or alternative server) link e.g. http://a3-joshua-cuneo.glitch.me
-
-Include a very brief summary of your project here. Images are encouraged, along with concise, high-level text. Be sure to include:
-
-- the goal of the application
-- challenges you faced in realizing the application
-- what authentication strategy you chose to use and why (choosing one because it seemed the easiest to implement is perfectly acceptable)
-- what CSS framework you used and why
-  - include any modifications to the CSS framework you made via custom CSS you authored
-- the five Express middleware packages you used and a short (one sentence) summary of what each one does. If you use a custom function for *one* (and one alone) middleware please 
-add a little more detail about what it does.
+![alt text](Lighthouse_login_page.png)
+![alt text](Lighthouse_data_page.png)
 
 ## Technical Achievements
-- **Tech Achievement 1**: I used OAuth authentication via the GitHub strategy
+**[1] Hosting Application on a Non-Glitch Service**: I deployed my application on the Render platform. 
+
+Pros
+- The auto deployment is pretty cool, though it did not always work for me (or took awhile to actually update onload). I will say, one of my biggest drawbacks on Glitch is the fact that I cannot find an "re-import from Github" option on the assignment I'm working on -- so if I have to re-import because I've made a lot of local changes I have to either copy every single file or import to a completely new project.
+- The process to deploy is super intuitive and uploading from Github is quite easy.<br>
+
+Cons
+- Render is extremely slow at deploying, redeploying, and bringing up projects. Glitch is much much faster in comparison.
+
+Overall I honestly like Glitch better, but I'm glad I got to explore another hosting service.
+
+**[2] Filtering Data by Robot Type (Maintaining Two User-Specific Tables)**: I implemented two tables for each user account instead of one to facilitate the condition I specified earlier in the project description.
+
+I did this via the `radio_button` input that allows users to select the type of robot they are adding, modifying, or removing the part to/from. In addition to filtering by username, I also filter by robot_type associated with each collection entry. Thus, a user [1] has to select a robot_type when adding the part or it will not populate one of the rendered tables, [2] has to select a robot_type when deleting a part or the server will not know which part to delete (say there is a scenario where there are two parts with the exact same stats, one in each table -- what should the server do then??), and [3] has to select a robot_type when modifying a part for the same reason as removal. The exact same parts siutation is actually more common than you would think: wheel hubs for Beetleweight robots are not built to add much weight to the robot and are generally in harms way during competition. Based on these criteria, PLA is a good choice for the hub material. Antweight robots are typically only made of PLA because they have to be 3x lighter than Beetleweights. Thus, there could be a scenario with two wheel hub entries with the exact same stats (one entry per robot table).
+
+![Tables Filtered by robot_type](Filtered_Robot_Type_Table-1.png)
+
+I believe this technical achievement should be worth +5pts.
 
 ### Design/Evaluation Achievements
-- **Design Achievement 1**: I followed the following tips from the W3C Web Accessibility Initiative...
+**[1] Implementing W3C Accessibility Tips**: I followed the following tips from the W3C Web Accessibility Initiative:
+
+(a) `Include alternative text for images`: I swapped one of my images when I switched from A2 to A3 and needed to add a new alt message for this second image. I ended up with the alt text "Image of TRex robot CAD" and "Image of Fracture robot CAD". After updating this alt attribute, I had alterntive text for all of my images, however, I ended up coming back to these attributes later on to make them more accessible.<br>
+(b) `Provide informative, unique page titles`: I adapted the W3C recommended format (specific page • company name) to reflect the project I was creating. Thus, my page titles became "Login Page • Unofficial WPI Combat Robotics Tool" and "Part Calculator • Unofficial WPI Combat Robotics Tool". These titles (especially the part after the dot) makes the purpose of this application extremely clear and meaningful. Maybe if the tool were to get picked up by the team, I would be able to develop an official name for the project...but for now it is a student-developed project and not associated with the actual WPI Combat Robotics Club, which was important to note. <br>
+(c) `Identify page language and language changes`: I made sure to identify the page language as English for ech page using the `<html lang = "en">`  tag.<br>
+(d) `Ensure that interactive elements are easy to identify`: In order to make sure interactive elements were easily identifiable, all of my buttons/submit inputs have consistent styling and change color (darken to black) when a user hovers over them. I had to ensure that this styling was still consistent when I changed my login page button to a 'submit' type input. 
+![Hover changing interactive buttons](Interactive_Buttons-1.png)
+My styling is also very consistent when it comes to form groups (form-row) accross pages, and I include placeholder values for every field (even on the dropdown). I had to play around with select attributes to get the `Select Material` value to show up on the dropdown menu, but I ended up using selected, hidden, and disabled to ensure that once a user clicked the dropdown, they could no longer select the option. 
+![Dropdown Select Material option](Dropdown_Select_Material-1.png)<br>
+(e) `Write meaningful text alternatives for images`: After exploring this W3C tip, I realized that my alt text was not very descriptive, especially for first time users or users who are not typically in the combat robotics club sphere. I made my alt text more informative for these users to better understand the concepts in the images. 
+- New alt for TRex CAD image: "Image of the CAD of an Antweight robot named TRex. 
+               An Antweight is a 1lb-limited combat robot mostly made of PLA plastic. 
+               A CAD is a Computer-Aided Design, a digital design of the robot that is created before it is built to better visualize how parts fit together."
+- New alt for Fracture CAD image: "Image of the CAD of a Beetleweight robot named Fracture. 
+               A Beetleweight is a 3lb-limited combat robot usually made of different metals and TPU plastic. 
+               A CAD is a Computer-Aided Design, a digital design of the robot that is created before it is built to better visualize how parts fit together."<br>
+(f) `Use headings to convey meaning and structure`: My A2 application had no headings or subheadings, which I realized was not an ideal practice for A3. At first I just added a "Part Calculator" heading for each page and decided that this would be enough to understand the purpose of the site. However, after reading the W3C tips on headings and subheadings, I realized I needed a different header for both of my pages ("Login Page" vs. "Part Calculator"). I also realized I needed subheadings for each part table so that users could distinguish them, so I added those as well ("Antweight Table", "Beetleweight Table").<br>
+(g) `Use headings and spacing to group related content`: Following the last W3C tip, I decided to ensure that my groupings were distinct enough to separate different elements on the page. My page is organized in a top-down format, and I made sure that there were breaks AND distinct changes in either color or sizing between sections. For instance, between my "Part Calculator" heading and my instructions, I have a dark gray bar to distinguish the sections. Between my add/modify form and my first table I have a large white subheading "Antweight Table".<br>
+(h) `Provide clear instructions`: I made sure my messages for the login screen were informative when each case occurred "New account created successfully!" for first time account creation, "Incorrect login, please re-enter password" for an incorrect password for an existing user. I also added an instructions area for the information needed to properly use the part calculator tool. This section explained what the app was for and explained the information needed for each field. I also added a link with more information about calculating the weight_per_unit field. 
+![Provided instructions](Provided_Instructions-1.png)<br>
+(i) `Make link text meaningful`: When I included the link to the Onshape instructions, I made sure to describe it with meaningful text and also made the link stand out on the page. The link directs the user to a guide on how to use Onshape's mass properties tool, which allows them to 'weigh' a part of their CAD. Thus, I described the link with this text: "Link to Onshape Mass Properties Tool Instructions".<br>
+(j) `Don't use color alone to convey information`: My layout style is very consistent for different elements on each page, such that color alone is not used to identify any one type of element. For instance, all of my forms are organized with the form-row class, all of my buttons have the same exact button class styling `"btn btn-outline-light bg-dark"`, both of my tables have the same styling `"table table-dark table-striped table-bordered table-hover"`, and my images are grouped in the same location. This W3C tip is especially noticeable in one of the last elements I added onto my page (the link to Onshape's information page). Instead of using color alone to distinguish the link from the rest of the instructions, the base text color is actually the same. I use the italicized font format plus a dark background to make sure the link stands out. Even without the dark/light contrast of the link background and text, there is still a change in font format (italics) to signal that the text is a link. The link also becomes underlined on hover. 
+![Link styling](Provided_Instructions-2.png)<br>
+(k) `Provide sufficient contrast between foreground and background`: In order to test this principle, I put my website through a few simulations on a color-blindness visualization tool. Here are some of the results:
+![Deuteranopia visualization](Deuteranopia_Visualization-1.jpg)
+![Protanopia visualization](Protanopia_Visualization.jpg)
+![Tritanopia visualization](Tritanopia_Visualization.jpg)
+![Monochromacy visualization](Monochromacy_Visualization.jpg)
+From these visualizations of my page through Deuteranopia (1st Image), Protanopia (2nd Image), Tritanopia (3rd Image), and  Monochromacy (4th Image), I determined that the contrast was strong enough that text and interactive elements were still identifiable. There was not too much of a difference aside from a slight tinge of another color/shade between the different filters. <br>
+(l) `Reflect the reading order in the code order`: While I was coding my HTML pages, I made sure to code in the order that the page was laid out. This means that my code order for the data.html page is as follows: page header, instructions, add/modify material form, Antweight table, Beetleweight table, remove form, images. The W3C tip helped me organize my code in a way that it is fairly readable without the tags and in a way that I could easily add new elements to the code by visualizing where they would go on my actual page layout. 
+![index.html organization](index_org.png)<br>
+![data.html organization](data_org.png)
