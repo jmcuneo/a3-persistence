@@ -19,7 +19,7 @@ app.use(express.urlencoded({extended:true}))
 
 app.use( cookie({
 	name: "session",
-	keys: ["psgruihamIUfhy", "nmgsa6pof124k"]
+	keys: [process.env.KEY1, process.env.KEY2]
 }))
 
 async function authHelper(collection, req, res) {
