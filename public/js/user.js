@@ -1,5 +1,5 @@
 import {redirect, submit, errorHandler} from './main.js'
-let data =[];
+let data = false;
 function generateTable(data){
   let table = "";
   table = '<table>';
@@ -59,13 +59,26 @@ window.onload = function() {
   }else{
     redirect(null,"/login")
   } */
-  if(!this.data) submit(event, "/auth/user-data/fetch-cats", false)
-                  .then(result => makeTable(result))
-                    .catch((error)=> errorHandler(error));
+  submit(event, "/auth/user-data/fetch-cats", false)
+                .then(result => makeTable(result))
+                  .catch((error)=> errorHandler(error)); 
+  if(localStorage.getItem("hasCodeRunBefore") === null){
+    localStorage.setItem("hasCodeRunBefore", true);
+  }
   //data.concat(submit(event, "/auth/user-data/fetch-cats", false));
   const submitButton = document.querySelector("#submit");
   submitButton.onclick = () => submit(event, "/auth/user-data/add-cat", "#catInfo")
-                                .then(submit(event, "/auth/user-data/fetch-cats", false))
+                                .then(() => submit(event, "/auth/user-data/fetch-cats", false))
+                                  .then(result => makeTable(result))
+                                    .catch((error) => errorHandler(error));
+  const logoutButton = document.querySelector("#logout");
+  logoutButton.onclick = () => {
+    document.cookie = "token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT"
+    redirect(null, '/login')
+  }
+  const deleteButton = document.querySelector("#delete")
+  deleteButton.onclick = () => submit(event, "/auth/user-data/delete-cat", "#catInfo")
+                                .then(() => submit(event, "/auth/user-data/fetch-cats", false))
                                   .then(result => makeTable(result))
                                     .catch((error) => errorHandler(error));
   /* const deleteButton = document.querySelector("#delete");

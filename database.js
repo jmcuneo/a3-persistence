@@ -68,6 +68,37 @@ exports.addCatDataByUsername = async function(username,data){
     client.close();
   }
 }
+exports.deleteCatDataByUsername = async function(username,data){
+  try{
+    await client.connect();
+    const database = client.db("Catabase");
+    let collection = database.collection("Login");
+    const user = await collection.findOne({ username });
+    console.log("username: ", username);
+    console.log("user: ", user)
+    let _id;
+    if(user){
+      console.log("user found with ID");
+      _id = user._id;
+      const filter = {uid: _id, name: data.name};
+      const options = {upsert: true, new: true};
+      const update = {
+        age: data.age,
+        coat: data.coat,
+        solidity: data.solidity
+      }
+      collection = database.collection("Cats")
+      data["uid"] = _id;
+      await collection.deleteOne(update);
+      return 1;     
+    }
+  } catch (error) {
+    console.error("Error in catdata:", error);
+    return 0;
+  } finally {
+    client.close();
+  }
+}
 exports.getCatDataByUsername = async function(username){
   try{
     await client.connect();

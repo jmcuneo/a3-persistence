@@ -107,10 +107,19 @@ export async function submit(event, endpoint, querySelector, method="POST") {
     console.log(input);
     let values = Object.fromEntries(input.entries());
     for(const [key, value] of Object.entries(values)){
-      if(value === ""){
+      if(value === "" && key !== "file"){
         throw new Error("null fields");
       }
     }
+    /* if(endpoint==="/auth/user-data/add-cat"){
+      let reader = new FileReader();
+      reader.onload = (event =>{
+        const fileData =  event.target.result
+        values["media"] = fileData.toJSON()
+        console.log(values)
+      });
+      reader.readAsDataURL(file.files[0]);
+    } */
     /* values = parseData.toFloat(values); */
     console.log(values);
     body = JSON.stringify(values);
@@ -145,6 +154,9 @@ export async function submit(event, endpoint, querySelector, method="POST") {
       case "/auth/user-data/add-cat":
         console.log("do something with the response bozo");
         break;
+      case "/auth/user-data/delete-cat":
+        console.log("DELETED CABT");
+        break;
       case "/auth/user-data/fetch-cats":
         console.log("good lorde");
         return text;
@@ -161,6 +173,15 @@ export async function submit(event, endpoint, querySelector, method="POST") {
   console.log("token:", text);
   return;
 };
+
+function logFile (event) {
+	let str = event.target.result;
+	let img = document.createElement('img');
+  let app = document.querySelector('#image')
+	img.src = str;
+	app.append(img);
+	console.log(str);
+}
 
 export function errorHandler(error){
   console.error("error: ", error.toString())

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>CS4241 Assignment 2</title>
+    <title>Cat-abase User Details</title>
     <meta charset="utf-8">
     <script type="module" src="js/main.js"></script>
     <script type="module" src="js/user.js"></script>
@@ -25,6 +25,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Silkscreen:wght@400;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     
+
   </head>
   <body>
     <div class="flexbox">
@@ -35,11 +36,23 @@
         <input type="number" name="age" placeholder="Age" ><br>
         <input type="text" name="coat" placeholder="Coat Information" ><br>
         <input type="number" name="solidity" placeholder="Solidity Factor" ><br>
+        <!-- <label for="file">File to upload</label>
+	    <input type="file" id="file" accept="image/*"> -->
       </form>
-      <button id="submit">submit</button>
-      <div id="errorMessage" style="color: red;"></div>
-      <div id="catData">
+      <div>
+          <button id="submit">Submit A Cat</button>
+          <button id="delete">Delete A Cat</button>
+          <button id="logout">Logout</button>
+          <!-- <button id="upload">Upload</button>
+            <small id="status"></small> -->
+          <div id="errorMessage" style="color: red;"></div>
+
       </div>
+      <div id="image"></div>
+      <h3>Your Cats</h3>
+      <h4>About the fields!!</h4>
+      <p>Here you can see data about each cat! <br> Name is the name of the cat <br> Age is the age of the cat <br>Coat is a description of the cats coat(a few words) <br> Solidity is a gentile way of saying how rotund is this cat exactly</p>
+      <div id="catData"></div>
     </div>
   </body>
 </html>

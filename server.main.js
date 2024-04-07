@@ -75,8 +75,20 @@ app.post('/auth/user-data/add-cat', auth.authenticateToken, (req, res) =>{
     }
   })
 });
+app.post('/auth/user-data/delete-cat', auth.authenticateToken, (req, res) =>{
+  console.log(req.user.username,req.body);
+  let dba = db.deleteCatDataByUsername(req.user.username, req.body)
+  dba.then(result => {
+    if(result){
+      res.status(200).send({ message: "successfully deleted a cat"});
+    }else {
+      res.status(400).send({ message: "uhoh"});
+    }
+  })
+});
 app.post('/auth/user-data/fetch-cats', auth.authenticateToken, (req, res) =>{
   console.log(req.user.username,req.body);
+  console.log(req.user.file);
   let dba = db.getCatDataByUsername(req.user.username)
   dba.then(result => {
     if(result){
