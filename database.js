@@ -2,7 +2,6 @@ const { MongoClient, ServerApiVersion, GridFSBucket } = require("mongodb");
 const fs = require("fs");
 const env = require("dotenv").config();
 const uri = `mongodb+srv://ibixler:${process.env.DB_PW}@webware-a3-ibixler.fj4jqxh.mongodb.net/?retryWrites=true&w=majority&appName=webware-a3-ibixler`;
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,

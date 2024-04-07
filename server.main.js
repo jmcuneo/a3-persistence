@@ -1,23 +1,19 @@
 const express = require("express");
 const app = express();
-var GitHubStrategy = require("passport-github2").Strategy;
-const passport = require("passport");
 const env = require("dotenv").config();
-var session = require("express-session");
 const path = require("path");
 
-var util = require("util");
+
 var bodyParser = require("body-parser");
-var methodOverride = require("method-override");
-var partials = require("express-partials");
+
+
 var db = require("./database")
 var auth = require("./jwt")
 
-app.use(partials());
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(methodOverride());
-passport.use(
+/* passport.use(
   new GitHubStrategy(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
@@ -30,22 +26,22 @@ passport.use(
       });
     }
   )
-);
+); */
 
 app.use(express.static(path.join(__dirname, "public")));
-app.use(passport.initialize());
+/* app.use(passport.initialize()); */
 /* app.use(passport.session()); */
 
 app.use(express.static("public"));
 app.use(express.static("views"));
 
-app.get(
+/* app.get(
   "/auth",
   passport.authenticate("github", { scope: ["user:email"] }),
   function (req, res) {
     //console.log('req made')
   }
-);
+); */
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
@@ -137,14 +133,14 @@ app.post("/register/new-user", (req, res) => {
     
   });
 })
-app.get(
+/* app.get(
   "/auth/callback/github",
   passport.authenticate("github", { failureRedirect: "/login" }),
   function (req, res) {
     // Successful authentication, redirect home.
     res.redirect("/");
   }
-);
+); */
 
 
 app.listen(process.env.PORT || 3001);
