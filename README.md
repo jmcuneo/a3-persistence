@@ -2,6 +2,9 @@
 
 https://éamonn.ie/a3/
 
+dummy username: `dummy`
+dummy password: `password`
+
 This is a website which allows a registered user to submit reports regarding severe weather. Reports are sent to a database, and only the user (and the database's operator) can see the reports that they made. They can also modify and delete their reports.
 
 Challenges I faced: Getting my chosen CSS template/framework to work well with my HTML design, I had to design my HTML to make much more use semantic tags than it did initially. Other challenges I faced invovled some technical achievements.
