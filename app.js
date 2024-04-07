@@ -13,6 +13,9 @@ class genParams{
         this.exitCount=eCnt;
     }
 }
+
+
+
 async function playMaze(){
     if (currentMaze!=null && !isPlaying){
         //block all other buttons until game is done
@@ -43,6 +46,7 @@ async function action(code){
         //send request to move to server
     }
 }
+
 async function clearMaze(){
     if(!isPlaying){
         let canvas=document.getElementById("mazeCanvas");
@@ -72,11 +76,11 @@ async function makeMaze(){
     }
 
 }
+
+
 async function saveMaze(){
     if (isPlaying){
         var url="http://"+ window.location.hostname + ":"+PORT +'/saveMaze';
-        //http://localhost:5173/
-
         if (currentMaze!=null){
             console.log("ATTEMPTINMG TO SAVE");
             var jsonBody=JSON.stringify(currentMaze);
@@ -85,7 +89,6 @@ async function saveMaze(){
                 body:jsonBody
             })
             let res=await response.text();
-            console.log("Done");
             alert(res);
         }
         else{
@@ -94,18 +97,18 @@ async function saveMaze(){
     }
 
 }
+
+
 async function getSavedMazes(){
-    if (isPlaying){
+    if (!isPlaying){
         var url="http://"+ window.location.hostname + ":"+PORT +'/userMazes';
         let listButton=document.getElementById("listMazes");
         while (listButton.firstChild) {
           listButton.removeChild(listButton.lastChild);
         }
-        listButton.textContent = "Get Saved Mazes";
         //maybe put a cute loading image or smth while getting mazes, same for generating
         const response = await fetch(url, {
             method:"POST",
-            body:jsonBody
         })
         let data= await response.text();
         let jsonResult=JSON.parse(data);
@@ -118,6 +121,7 @@ async function getSavedMazes(){
         }
     }
 }
+
 //the saved mazes should be separate from above
 async function loadMaze(){
     if(isPlaying){
@@ -132,6 +136,7 @@ async function loadMaze(){
         await mapDrawer(currentMaze);
     }
 }
+
 async function mapDrawer(maze){
     let tilesToDraw=maze.tiles;
     let canvas=document.getElementById("mazeCanvas");

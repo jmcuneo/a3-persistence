@@ -23,20 +23,71 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false }
 }));
+
+app.get('*',(req,res)=>{
+  const filename = req.url.slice( 1 );
+  console.log(filename);
+  console.log("STAT" + req.status);
+  if( req.url === "/" ) {
+    sendFile( res, "login.html" )
+  }else{
+    sendFile( res, filename )
+  }
+
+})
+const sendFile = function( response, filename ) {
+   const type = mime.getType( filename )
+
+   fs.readFile( filename, function( err, content ) {
+
+     // if the error = null, then we"ve loaded the file successfully
+     if( err === null ) {
+       // status code: https://httpstatuses.com
+       response.writeHeader( 200, { "Content-Type": type })
+       response.end( content )
+
+     }else{
+
+       // file not found, error code 404
+       response.writeHeader( 404 )
+
+       response.end( "404 Error: File Not Found" )
+
+     }
+   })
+}
+
+
+
 class gameManager{
-    constructor(){
+    constructor(maze,sPos){
+        this.maze=maze;
+        this.playerPos=sPos;
+        this.playerFlashes=2;
+        this.playerActionCharge=0;
+        this.canPlayerAct=false;
     }
 };
 class mazeHunter{
     constructor(startX,startY){
         this.x=startX;
         this.y=startY;
+        this.state=-1;
+        /*
+        states:
+        -1:inactive
+        0:wandering
+        1:alerted
+        2:hunting
+        */
     }
 }
+
+
+
 async function findUser(userData) {
   // Use connect method to connect to the server
   await client.connect();
-  console.log('Connected successfully to server');
   const db = client.db(dbName);
   const userCollection=await db.collection( "MazeUsers");
     const result=await userCollection.countDocuments(userData);
@@ -72,7 +123,7 @@ async function addMaze(userData,maze){
   console.log('Connected successfully to server');
   const db = client.db(dbName);
   const userCollection=await db.collection( "Mazes");
-    const result=await userCollection.countDocuments({"Username":userData.Username});
+    const result=await userCollection.countDocuments(userData);
     console.log(result);
     let mazeObj=null;
     if (result>0){//user has a maze here, add another one
@@ -89,7 +140,6 @@ async function addMaze(userData,maze){
             MazeID:0,
         }
     }
-    console.log("SAVE ATTEMPT");
     let insertResult=await userCollection.insertOne(mazeObj);
     if (insertResult){
         console.log("MAZE SAVED");
@@ -99,54 +149,31 @@ async function addMaze(userData,maze){
 }
 async function getMazes(userData){
     await client.connect();
-  console.log('Connected successfully to server');
-  const db = client.db(dbName);
-  const userCollection=await db.collection( "Mazes");
-  let mazesToReturn=[];
-    const result=await userCollection.find({"Username":userData.Username});
-      for await (const doc of result) {
-        console.log("FOUND MAZE");
+    const db = client.db(dbName);
+    const userCollection=await db.collection( "Mazes");
+    let mazesToReturn=[];
+    const result=await userCollection.find(userData);
+    for await (const doc of result) {
         mazesToReturn.push({ID:doc.MazeID,XSize:doc.Maze.xSize,YSize:doc.Maze.ySize});
-      }
-      console.log("FOUND " + mazesToReturn.length + " MAZES");
-      return mazesToReturn;
+    }
+    return mazesToReturn;
 }
 
-async function makeSavedMaze(userData,mazeID){
+async function makeSavedMaze(user,mazeID){
+    let nameObj={
+        "Username":user,
+        "ID":mazeID
+    }
+    let result= await getMazes(nameObj);
+    if (result.length==1){
 
+    }
+    else{
+        //err
+        return -1;
+    }
 }
-app.get('*',(req,res)=>{
-  const filename = req.url.slice( 1 );
-  console.log(filename);
-  console.log("STAT" + req.status);
-  if( req.url === "/" ) {
-    sendFile( res, "login.html" )
-  }else{
-    sendFile( res, filename )
-  }
 
-})
-const sendFile = function( response, filename ) {
-   const type = mime.getType( filename )
-
-   fs.readFile( filename, function( err, content ) {
-
-     // if the error = null, then we"ve loaded the file successfully
-     if( err === null ) {
-       // status code: https://httpstatuses.com
-       response.writeHeader( 200, { "Content-Type": type })
-       response.end( content )
-
-     }else{
-
-       // file not found, error code 404
-       response.writeHeader( 404 )
-
-       response.end( "404 Error: File Not Found" )
-
-     }
-   })
-}
 app.post('/login', async(req, res) => {
   // Replace this with the actual data you want to send.
   let userDetails=JSON.parse(req.body);
@@ -182,9 +209,10 @@ app.post('/register', async(req, res) => {
 
 app.post('/userMazes',async(req,res) => {
     if (req.session.user) {
+        console.log("GETTING USER MAZES " + req.session.user.username);
         let nameObj={
 
-            Username:req.session.user.username
+            "Username":req.session.user.username
         }
         let result= await getMazes(nameObj);
         res.send(JSON.stringify(result));
@@ -198,7 +226,19 @@ currentPlayers={
 app.post('/playMaze',async(req,res)=>{
     if (req.session.user) {
         let user=req.session.user.username;
-        currentPlayers[user]=JSON.parse(req.body);
+        let id=req.body;
+        let maze= await makeSavedMaze(user,id);
+        if (maze==-1){
+
+        }
+        else{
+            let sTiles=getStarts(maze);
+            let startPos=sTiles[Math.floor(Math.random()*sTiles.length)];
+            let gm=new gameManager(maze,startPos);
+            let hunter=new mazeHunter();
+            currentPlayers[user]=;
+        }
+
     }
 
 });
@@ -212,10 +252,9 @@ app.post('/actionRequest',async(req,res)=>{
 
 app.post('/saveMaze', async(req, res) => {
     if (req.session.user) {
-        console.log("SAVING USER MAZE");
         let nameObj={
 
-        Username:req.session.user.username
+            "Username":req.session.user.username
         }
         let result= await addMaze(nameObj,JSON.parse(req.body));
         if (result){
@@ -275,6 +314,18 @@ Tile Tags: Can have multiple"
 "EDGE"
 "START"
 */
+async function getStarts(maze){
+    let startTiles=[];
+    for (let x=0;x<maze.xSize;x++){
+        for (let y=0;y<maze.ySize;y++){
+            if (maze.tiles[x][y].tags.include("START")){
+                startTiles.push(maze.tiles[x][y]);
+            }
+        }
+    }
+    return startTiles;
+}
+
 async function generate(params){
     console.log("RECEIVED REQ TO MAKE MAZE");
     let x=params.xSize
@@ -615,6 +666,7 @@ function getTilesOfTag(gMap,tagArr,operator="OR"){
     }
     return tileArr;
 }
+
 process.on('SIGINT', () => {
     if (serverShutdown){
      process.exit(); // Exit the process
