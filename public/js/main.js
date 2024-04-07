@@ -86,17 +86,19 @@ const submit = async function( event, endpoint) {
 
 } */
 
-export async function submit(event, endpoint, querySelector, method="POST"){
+/* export async function submit(event, endpoint, querySelector, method="POST"){
   submitHelper(event, endpoint, querySelector, method="POST").catch(error => {
+    console.dir((error.responseText));
     console.log(error);
+
     document.getElementById('errorMessage').innerHTML = "<p>fill all fields</p>";
   }).then(() => {
     document.getElementById('errorMessage').textContent = "";
 
   })
-}
+} */
 
-async function submitHelper(event, endpoint, querySelector, method="POST") {
+export async function submit(event, endpoint, querySelector, method="POST") {
   
   let body = "";
   if(event) event.preventDefault();
@@ -126,8 +128,8 @@ async function submitHelper(event, endpoint, querySelector, method="POST") {
   });
 
   const text = await response.json();
-  console.log(response.status);
-  if (response.status == 200) {
+  console.log("response status:", response.status);
+  if (response.status === 200) {
     console.log(endpoint)
     switch(endpoint){
       case "/register/new-user":
@@ -151,14 +153,27 @@ async function submitHelper(event, endpoint, querySelector, method="POST") {
         console.log("redirecting to login")
         redirect(null, "/login");
         break;
-    }
+    } 
     
+  } else if(response.status === 401){
+    redirect(null, "/login");
   }
   console.log("token:", text);
   return;
 };
 
-
+export function errorHandler(error){
+  console.error("error: ", error.toString())
+  if(error.toString().match("null fields")){
+    console.log("errah");
+    document.querySelector('#errorMessage');
+    errorMessage.textContent = '';
+    errorMessage.textContent = 'Please fill out all fields';
+    return;
+  }else{
+    redirect(null, "/login")
+  }
+}
 export async function redirect( event, endpoint) {
   if(event) event.preventDefault();
   const response = await fetch(endpoint, {

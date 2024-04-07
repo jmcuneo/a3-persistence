@@ -8,11 +8,13 @@ const client = new MongoClient(uri, {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
+    connectTimeoutMS: 10000,
   },
 });
 
 exports.userExists = async function (data) {
   try {
+    console.log("userexists called ")
     await client.connect();
 
     const database = client.db("Catabase");
@@ -60,7 +62,7 @@ exports.addCatDataByUsername = async function(username,data){
       return 1;     
     }
   } catch (error) {
-    console.error("Error in userExists:", error);
+    console.error("Error in catdata:", error);
     return 0;
   } finally {
     client.close();
@@ -73,25 +75,27 @@ exports.getCatDataByUsername = async function(username){
     let collection = database.collection("Login");
     const user = await collection.findOne({ username });
     console.log("username: ", username);
-    console.log("user: ", user)
+    console.log("user: ", user);
     let _id;
     if(user){
       console.log("user found with ID");
       _id = user._id;
-      collection = database.collection("Cats")
+      console.log(client)
+      collection = await database.collection("Cats")
       const cursor = await collection.find({uid: _id})
-      let ret = []
-      for await( const doc of cursor){
-        ret.push(doc);
-      }
+      let ret =  await cursor.toArray();
+    
       console.log(ret)
       return ret;     
     }
   } catch (error) {
-    console.error("Error in userExists:", error);
+    console.error("Error in fetchcatdata:", error);
     return 0;
   } finally {
-    client.close();
+    if(client){
+      client.close();
+
+    }
   }
 }
 exports.getUserIdByUsername = async function(username) {

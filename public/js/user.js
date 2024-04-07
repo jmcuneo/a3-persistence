@@ -1,4 +1,4 @@
-import {redirect, submit} from './main.js'
+import {redirect, submit, errorHandler} from './main.js'
 let data =[];
 function generateTable(data){
   let table = "";
@@ -53,16 +53,21 @@ window.onload = function() {
   loginRedirectButton.onclick = () => redirect(event, "/login");
   const registerButton = document.querySelector('#submit');
   registerButton.onclick = () => submit(event, "/register/new-user") */
-  checkAuth(null, "/auth/user-data").then(response => console.log("response: ",response))
-  if(document.cookie){
+  //checkAuth(null, "/auth/user-data").then(response => console.log("response: ",response))
+  /* if(document.cookie){
     console.log("cookie exists")
   }else{
     redirect(null,"/login")
-  }
-  if(!this.data) submit(event, "/auth/user-data/fetch-cats", false).then(result => this.data = result).then(() => makeTable(this.data));
+  } */
+  if(!this.data) submit(event, "/auth/user-data/fetch-cats", false)
+                  .then(result => makeTable(result))
+                    .catch((error)=> errorHandler(error));
   //data.concat(submit(event, "/auth/user-data/fetch-cats", false));
   const submitButton = document.querySelector("#submit");
-  submitButton.onclick = () => submit(event, "/auth/user-data/add-cat", "#catInfo").then(submit(event, "/auth/user-data/fetch-cats", false)).then(result => this.data = result).finally(() => makeTable(this.data));
+  submitButton.onclick = () => submit(event, "/auth/user-data/add-cat", "#catInfo")
+                                .then(submit(event, "/auth/user-data/fetch-cats", false))
+                                  .then(result => makeTable(result))
+                                    .catch((error) => errorHandler(error));
   /* const deleteButton = document.querySelector("#delete");
   deleteButton.onclick = () => submit(event, "/delete"); */
 }
