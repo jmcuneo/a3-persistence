@@ -1,7 +1,6 @@
 const express = require("express"),
 			cookie = require("cookie-session"),
 			bcrypt = require("bcrypt"),
-			url = require("url"),
 			app = express(),
 			{ MongoClient, ObjectId } = require("mongodb")
 
@@ -39,7 +38,7 @@ async function authHelper(collection, req, res) {
 				}
 				else {
 					console.log("invalid password!")
-					res.send("<script>alert(\"invalid password!\"); window.location.href=\"/\"; </script>");
+					res.send("<script>alert(\"invalid password!\"); window.location.href=\"/a3\"; </script>");
 				}
 			})
 		}
@@ -51,7 +50,7 @@ async function authHelper(collection, req, res) {
 				let newEntry = {username: req.body.username, password: hash};
 				const newUser = await collection.insertOne(newEntry);
 			})
-			res.send("<script>alert(\"Account created! Please log in!\"); window.location.href=\"/\"; </script>");
+			res.send("<script>alert(\"Account created! Please log in!\"); window.location.href=\"/a3\"; </script>");
 		}
 }
 
@@ -70,8 +69,7 @@ function auth() {
 auth()
 
 app.use( function (req,res,next) {
-	// check for robots.txt to not make lighthouse mad
-	if (req.session.login === true || url.parse(req.url).pathname === "/robots.txt") next()
+	if (req.session.login === true ) next()
 	else res.sendFile(__dirname + "/public/index.html")
 })
 
