@@ -22,23 +22,27 @@ const submit = async function (event) {
       alert("You must give the task a name and complete due date");
   }
   else{
-      let click = new Audio("add.mp3");
-      click.play();
+    let click = new Audio("add.mp3");
+    click.play();
 
-      const nameInput = document.querySelector("#task-name"),
-      dateInput = document.querySelector("#task-date"),
-      colorInput = document.querySelector("#task-color"),
-      json = {
-        name: nameInput.value,
-        date: dateInput.value,
-        color: colorInput.value
-      },
-      body = JSON.stringify(json)
+    const nameInput = document.querySelector("#task-name"),
+    dateInput = document.querySelector("#task-date"),
+    colorInput = document.querySelector("#task-color"),
+    json = {
+      name: nameInput.value,
+      date: dateInput.value,
+      color: colorInput.value
+    },
+    body = JSON.stringify(json)
+
+    console.log(body)
   
     const response = await fetch("/submit", {
       method: "POST",
       body
     })
+
+    console.log(response)
   
     syncClientData();
   }
