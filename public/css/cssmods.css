@@ -1,0 +1,62 @@
+#idth {
+	width: 10%;
+}
+
+table, td, th {
+	word-wrap: break-word;
+}
+
+table {
+	table-layout: fixed;
+	border-collapse: collapse;
+}
+
+#actionth, #dateth {
+	width: 15%
+}
+
+#descth {
+	width: 20%;
+}
+
+th {
+	width: 10%
+}
+
+td, th {
+	border-left: 2px solid;
+	border-right: 2px solid;
+}
+td {
+	border-top: 2px solid;
+}
+
+table td:first-child, table th:first-child {
+	border-left: none;
+}
+
+table td:last-child, table th:last-child {
+	border-right: none;
+}
+
+#submission {
+	display: grid;
+	grid-template-columns: repeat(2,1fr);
+	grid-template-rows: repeat(9,1fr);
+	grid-column-gap: 0px;
+	grid-row-gap: 0px;
+}
+
+#tlabel { grid-area: 1 / 1 / 2 / 2; }
+#dlabel { grid-area: 1 / 2 / 2 / 3; }
+#type { grid-area: 2 / 1 / 3 / 2; }
+#event-date { grid-area: 2 / 2 / 3 / 3; }
+#xlabel { grid-area: 3 / 1 / 4 / 2; }
+#ylabel { grid-area: 3 / 2 / 4 / 3; }
+#x-coord { grid-area: 4 / 1 / 5 / 2; }
+#y-coord { grid-area: 4 / 2 / 5 / 3; }
+#submitbutton { grid-area: 9 / 1 / 10 / 3; }
+#desclabel { grid-area: 5 / 1 / 6 / 3; }
+#description { grid-area: 6 / 1 / 9 / 3; }
+#modify-button { grid-area: 9 / 1 / 10 / 2; }
+#cancel-button { grid-area: 9 / 2 / 10 / 3; }
