@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Storm Reports - A3</title>
+    <meta charset="utf-8">
+		<meta name="description" content="Login page for storm reporting form">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="js/main.js"></script>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/yegor256/tacit@gh-pages/tacit-css-1.7.1.min.css"/>
+		<link rel="stylesheet" href="css/cssmods.css">
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  </head>
+  <body>
+		<section>
+			<header>
+				<h1 id="title">Storm Reports</h1>
+			</header>
+			<article>
+				<h2>Report Form</h2>
+				<form id ="submission">
+					<label for="type" id="tlabel">Event Type</label>
+					<select id="type" name="Event">
+						<option value="Tornado">Tornado</option>
+						<option value="Hail">Hail</option>
+						<option value="Lightning">Lightning</option>
+						<option value="Wind">Wind</option>
+					</select>
+					<label for="event-date" id="dlabel">Event Date</label>
+					<input type="date" id="event-date" name="Event date">
+					<label for="x-coord" id="xlabel">X coord</label>
+					<input type="text" id="x-coord" placeholder="X coordinate">
+					<label for="y-coord" id="ylabel">Y coord</label>
+					<input type="text" id="y-coord" placeholder="Y coordinate">
+					<label for="description" id="desclabel">Description</label>
+					<textarea id="description" placeholder="description" rows="5" cols="20"></textarea>
+					<button id="submitbutton">submit</button>
+				</form>
+				<h2>Your Reports</h2>
+				<figure id = "report-table-container">
+					<table>
+						<tr id ="toprow">
+							<th id = "idth">id</th>
+							<th>Event Type</th>
+							<th>X coord</th>
+							<th>Y coord</th>
+							<th id="descth">Description</th>
+							<th id="dateth">Date</th>
+							<th>Days since</th>
+							<th id="actionth">Actions</th>
+						</tr>
+					</table>
+				</figure>
+			</article>
+			<footer>
+				<p>©Éamonn Prendergast 2024</p>
+			</footer>
+		</section>
+  </body>
+</html>
