@@ -1,0 +1,47 @@
+button {
+  color:blue;
+  font-family: "Trirong", serif;
+}
+
+body {
+  background:black;
+  color:white;
+}
+
+.p_class {
+  color:red;
+}
+
+#yourname {
+  color:aqua;
+  font-size:32px;
+  font-weight:bold;
+}
+
+#show_data {
+  display: grid;
+  grid-template-columns: repeat(1fr, 5);
+  background-color: blueviolet;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.each_data{
+  display: flex;
+  width: 500;
+  flex-wrap: wrap;
+
+  /* grid-template-columns: repeat(1fr); */
+}
+.each_data > div {
+  flex: 1 1 150px;
+}
+
+#the_form {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+
+#user_name_field {
+  background-color: aqua;
+}

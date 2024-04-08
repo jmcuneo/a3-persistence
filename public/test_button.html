@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkboxes Example</title>
+</head>
+<body>
+    <form id="checkboxForm">
+        <label><input type="checkbox" name="option"> Option 1</label><br>
+        <label><input type="checkbox" name="option" value="Option2"> Option 2</label><br>
+        <label><input type="checkbox" name="option" value="Option3"> Option 3</label><br>
+        <button type="button" id="submitButton">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('submitButton').onclick = () => {
+            const selectedOptions = [];
+            document.querySelectorAll('#checkboxForm input[type=checkbox]:checked').forEach((checkbox) => {
+                selectedOptions.push(checkbox.value);
+            });
+            console.log(selectedOptions);
+        };
+    </script>
+</body>
+</html>
