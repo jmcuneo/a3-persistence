@@ -1,25 +1,17 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <title>CS4241 Assignment 2</title>
-    <meta charset="utf-8">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <!-- <link rel="stylesheet" type="text/css" href="css/login.css"> -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login Form</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button id="login_button">Login</button>
+    </div>
     <script src="js/login.js"></script>
-    <link rel="stylesheet" href="css/main.css">
-    
-    <!-- get rid of favicon error -->
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-  </head>
-  <body>
-    <p class="p_class">Login Form</p>
-    <form id="the_form">
-      <br/><label>User Name:</label><br>
-      <input type="text" id="user_name" value="Default">
-      <br/><label>Password:</label><br>
-      <input type="password" id="password" value="0000">
-      <br/>
-      <button>Login</button>
-      <radio_button>Login</radio_button>
-    </form>
-    <br/>
-  </body>
+</body>
 </html>

@@ -26,27 +26,9 @@ async function initDB() {
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
 }
 
-// async function serverGetUserData() {
-//     // await client.connect()
-//     // collection = await client.db("test_db_1").collection("test_collection")
-//     // console.log("Pinged your deployment. You successfully connected to MongoDB!");
-
-//     // route to get all docs
-//     if (current_user === null) {
-//         console.log("Not Logged In")
-//         return
-//     }
-
-//     app.get("/user_data", async (req, res) => {
-//         if (collection !== null) {
-//         const docs = await collection.find({"username": current_user["username"]}).toArray()
-//         res.json( docs )
-//         }
-//     })
-// }
-
-
-
+app.get('/', (req, res) => {
+    res.redirect('/login.html');
+})
 
 // route to get all docs
 app.get("/docs", async (req, res) => {

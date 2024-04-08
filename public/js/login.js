@@ -1,43 +1,52 @@
 
 
-const get_data = async function fetchAppData( event ) {
-    event.preventDefault()
+const login = async (username, password) => {
+    try {
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password })
+        });
+        console.log("Input\n", JSON.stringify({ username, password }))
+        const data = await response.json();
 
-    const response = await fetch('/data_base',{method:"GET"}); // Use the fetch API to get the data
-    if (!response.ok) {
-        throw new Error('Network response was not ok');
+        if (!response.ok) {
+            console.log(response)
+            // alert("Login failed")
+            alert(`Login Warning: ${data.message}`)
+            throw new Error('Login request failed');
+        }
+
+        console.log('Login successful:', data);
+        window.location.href = "index.html";
+        // Handle successful login, such as redirecting to another page or updating UI
+    } catch (error) {
+        console.error('Error during login:', error);
+        // Handle error, such as showing a login error message
     }
-    const data = await response.json(); // Parse the JSON data
-    console.log("data\n", data)
-    return data
-}
+};
 
-const submit = async function (event) {
-    event.preventDefault()
 
-    const data = await get_data(event)
-
-    input_user_name = document.querySelector("#user_name").value
-    input_password = document.querySelector("#password").value
-
-    console.log(data)
-    console.log(data[0]["user"])
-    console.log(data["password"])
-
-    
-
-    // if (input_user_name in data && input_password in data) {
-    //     console.log("success")
-    // } else {
-    //     console.log('Fail: ' + input_user_name + input_password)
-    // }
-}
 
 
 window.onload = function() {
-    // get_data;
-    const button = document.querySelector("button");
+    // // get_data;
+    const button = document.getElementById("login_button");
+    // let input_username = document.getElementById("username").value
+    // let input_password = document.getElementById("password").value
+    // console.log(input_password, input_password)
+    button.onclick = (event) => {
+        event.preventDefault()
+        let input_username = document.getElementById("username").value
+        let input_password = document.getElementById("password").value
+        login(input_username, input_password)
+    }
+    // button.onclick = submit
 
-    button.onclick = submit;
-    // button.onclick = update_data;
+
+    // // // button.onclick = update_data;
+    // login('user123', 'password123');
+
 }
