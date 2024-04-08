@@ -1,6 +1,8 @@
 
 ## Simple Data Stroage
 
-your glitch (or alternative server) link e.g. http://a3-lehong-wang.glitch.me
+your glitch (or alternative server) link e.g. http://a3-lehong-wang.glitch.me/login.html
 
 The web application is a system that allows users to store information on a database. This application have a sign in page where users can login or sign up with an account and passowrd. The password authentication is implemented as just sending the username and password to the server, and the server directly checks them against values in its database. I chose this method because it is the most straightforward. After logging in, the user will see a page where all data belonging to that user is listed. To make this listing look better, instead of the Bootstrap CSS framework that I used, I created a bit of my own custom css to make the table entries aline in a table. In this page, users can add, edit, and delete their data entries, and update them to Mongodb database. The server side ofapplication uses express, and the main middleware used is the express.json, which helps with parsing string data to json objects. During the development of this application, since I'm very new to web development, I mostly struggled with communication between the server and the client, and getting an entuition of how the web application functions. This project really helped me get a hold of how web applications work.
+
+However, there is one small problem that I couldn't solve in this project, which is that the root of the website does not link to the login page, so the user needs to go to the login.html page manually every time. I did put in express redeirection, but it doesn't work. Also, when I deploy it to glitch, the web application doesn't work. I have no idea why that is becase it works just fine when ran locally. I could need some help on that part.
