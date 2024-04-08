@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Workout Log</title>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Workout Log.">
+    <script src="../js/main.js"></script>
+    <link rel="stylesheet" href="../css/main.css">
+    <link async rel="preload" href="https://fonts.googleapis.com">
+    <link async rel="preload" href="https://fonts.gstatic.com" crossorigin>
+    <link async rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body class="text-white bg-dark d-flex flex-row">
+<div class="bg-secondary d-flex flex-column" style="width: 15%">
+        <div class="sidebar-entry bg-dark text-white rounded-5" style="display: flex" id="make-workout">
+            <img loading="lazy" src="../assets/write.svg" alt="Picture" style="height: 24px; margin: 0px 10px 0px 5px"/>
+            New List
+        </div>
+    <div class="sidebar-entry bg-dark text-white rounded-5" id="view-workout">View Workouts</div>
+    <div style="border-bottom: 1px solid white"> </div>
+    <div id="workout-list" style="display: flex; flex-direction: column"></div>
+</div>
+<div class="window" id="make-workout-window" style="display: flex">
+    <form style="user-select: none; display: flex; flex-direction: column; gap: 20px; padding: 20px">
+        Title
+        <input id="title" class="form-title-entry text-white bg-transparent" placeholder="Workout Name" for="title" name="title"/>
+        Description
+        <textarea id="description" class="form-description-entry bg-transparent text-white" placeholder="Workout Description" for="description" name="description"></textarea>
+        <label for="workoutType">Workout Type:</label>
+        <select class="workout-type-selector bg-dark text-white" id="workoutType">
+            <option value="cardio">Cardio</option>
+            <option value="strength">Strength Training</option>
+            <option value="flexibility">Flexibility</option>
+            <option value="balance">Balance & Stability</option>
+            <option value="endurance">Endurance</option>
+        </select>
+        <button id="submit-button" class="add-button bg-secondary text-white btn" type="submit">Log Workout</button>
+    </form>
+</div>
+<div class="window" id="view-workout-window" style="display: none; flex-direction: column">
+    <h1>All Workouts</h1>
+    <table class="table" style="border: 2px solid white; height: 300px">
+        <thead>
+        <th style="font-size: 32px" class="text-white">Workout Title</th>
+        <th style="font-size: 32px" class="text-white">Workout Description</th>
+        <th style="font-size: 32px" class="text-white">Workout Type</th>
+        </thead>
+        <tbody id="table-body" class="text-white">
+
+        </tbody>
+    </table>
+</div>
+<div class="window" id="edit-workout-window" style="display: none;">
+    <div style="user-select: none; display: flex; flex-direction: column; gap: 20px; padding: 20px">
+        Title
+        <input id="title-edit" class="form-title-entry text-white bg-transparent" placeholder="Workout Name"/>
+        Description
+        <textarea id="description-edit" class="form-description-entry text-white bg-transparent" placeholder="Workout Description"></textarea>
+        <label for="workoutType">Workout Type:</label>
+        <select class="workout-type-selector bg-dark text-white" id="workoutType-edit">
+            <option value="cardio">Cardio</option>
+            <option value="strength">Strength Training</option>
+            <option value="flexibility">Flexibility</option>
+            <option value="balance">Balance & Stability</option>
+            <option value="endurance">Endurance</option>
+        </select>
+        <button id="edit-button" class="add-button bg-secondary text-white btn">Edit Workout</button>
+        <button id="delete-button" class="add-button bg-secondary text-white btn">Delete Workout</button>
+    </div>
+</div>
+</body>
+</html>

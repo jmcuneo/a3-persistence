@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Workout Log.">
+    <script defer src="js/login.js"></script>
+    <title>Login</title>
+    <link async rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">x
+</head>
+<body class="bg-secondary d-flex flex-row mt-50">
+<div class="container mt-5 flex-row" style="gap: 10px; display: flex" id="login-page">
+    <div class="login-container bg-dark text-white p-4 rounded shadow container-lg min-h-100">
+        <h2>Login</h2>
+            <div class="input-group mb-3">
+                <label for="username-login">Username:</label>
+                <input type="text" id="username-login" name="username" class="form-control" required>
+            </div>
+            <div class="input-group mb-3">
+                <label for="password-login">Password:</label>
+                <input type="password" id="password-login" name="password" class="form-control" required>
+            </div>
+            <div class="input-group">
+                <button class="add-button bg-secondary text-white btn" id="login-button" onclick="login()">Login</button>
+            </div>
+    </div>
+    <div class="login-container bg-dark text-white p-4 rounded shadow container-lg min-h-100">
+        <h2>Create Account</h2>
+        <div class="input-group mb-3">
+            To access exclusive features, personalized content, and a seamless user experience, we highly recommend creating an account on our login page. By creating an account, you'll gain access to member-only areas, receive updates tailored to your interests, and be able to manage your preferences and settings effortlessly.
+        </div>
+        <div class="input-group">
+            <button id="login-create-account-button" class="bg-secondary text-white btn">Create Account</button>
+        </div>
+    </div>
+</div>
+<div class="container mt-5" id="create-account-page" style="display: none">
+    <div class="login-container bg-dark text-white p-4 rounded shadow">
+        <h2>Create Account</h2>
+            <div class="input-group mb-3">
+                <label for="username-create">Username:</label>
+                <input type="text" id="username-create" class="form-control" required>
+            </div>
+            <div class="input-group mb-3">
+                <label for="password-create">Password:</label>
+                <input type="password" id="password-create"class="form-control" required>
+            </div>
+            <div class="input-group">
+                <button id="create-account-button" class="bg-secondary text-white btn">Create Account</button>
+            </div>
+        <button id="back-button" class="bg-secondary text-white btn">Back to Login</button>
+    </div>
+</div>
+</body>
+</html>
