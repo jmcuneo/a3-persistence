@@ -1,8 +1,10 @@
+var compression = require('compression')
 const express = require("express");
 const { MongoClient } = require('mongodb');
 const app = express();
 const path = require("path");
 
+app.use(compression())
 
 const keys = require('./configs/keys');
 //mongo
@@ -17,7 +19,7 @@ async function run() {
   await client.connect()
   collection = await client.db("a3-db").collection("a3Collection")
   collectionSuggest = client.db("a3-db").collection("a3Suggest")
-  collectionUsers = client.db("a3-db").collection("a3Auth");
+  collectionUsers = await client.db("a3-db").collection("a3Auth");
 
   // route to get all docs
   app.get("/docs", async (req, res) => {
