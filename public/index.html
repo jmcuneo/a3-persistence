@@ -78,7 +78,6 @@ body{
         <h2>Who's Bringing What:</h2>
         <table id="table">
           <tr>
-            <th>ID</th>
             <th>Name</th>
             <th>Item</th>
             <th>Quanitity</th>
@@ -108,7 +107,7 @@ body{
     </div>
     <form >
       <div>
-      <input type="number" min= "0" step="1"  oninput="validity.valid||(value='');" id="enterId" value="" placeholder="Enter Id number"> <!--only allow whole, positive numbers-->
+      <input type="text" id="enterId" value="" placeholder="Enter item to edit"> 
       </div>
       <div>
         <input type="text" id="newitem" maxlength="10" value="" placeholder="Enter Edit">
