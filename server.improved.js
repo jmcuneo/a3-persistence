@@ -132,6 +132,13 @@ app.post("/submit", express.json(), async (req, res) => {
   console.log(req.body);
   let data = req.body;
   console.log(data);
+  for(let i = 0; i < appdata.length; i++){
+    if(data.item == appdata[i].item){
+      console.log("item already logged!");
+      res.send(JSON.stringify("Item already logged!"));
+      return;
+    } 
+  }
   var entry = {
     tableId: (appdata.length + 1),
     name: req.user.username,
@@ -244,41 +251,103 @@ app.post("/suggest", express.json(), async (req, res) => {
   
 });
 
+const getindex = function(data){
+  let index;
+  console.log("index on init: ", index);
+  for(let i = 0; i < appdata.length; i++){
+    // console.log("name assoc with item: ", appdata[i].username);
+    // console.log("req.user.name: ", req.user.username);
+    if(appdata[i].item == data.ogItem){
+      index = i;
+    }
+  }
+  console.log("after loop index: ", index);
+  return index;
+}
 app.post("/edit", express.json(), async (req, res) => {
   let data = req.body;
-  let appindex = (parseFloat(data.tableId) - 1);
-  let inttableid = parseFloat(data.tableId)
-  console.log("data: ", data)
-  console.log("type of editelement: ", typeof(data.edit));
-  console.log("edidtelement: ", data.edit)
-  if(data.edit == "item"){
-    const result = await collection.updateOne(
-      { tableId: inttableid }, // Match document by ID
-      { $set: { "item": data.newitem } } // Update the specified field
-  );
-  console.log("mongo: ", result);
+  const index = getindex(data);
 
-    appdata[appindex].item = data.newitem;
-}else if(data.editelement == "qty"){
-  const result = await collection.updateOne(
-    { tableId: inttableid }, // Match document by ID
-    { $set: { "qty": data.newitem } } // Update the specified field
-);
-console.log("mongo: ", result);
-  appdata[appindex].qty = data.newitem;
-  } else{
-    const result = await collection.updateOne(
-      { tableId: inttableid }, // Match document by ID
-      { $set: { "price": data.newitem }, $set: {"cost": (parseInt(data.newitem) * appdata[appindex].qty)} } // Update the specified field
-  );
-    appdata[appindex].price = data.newitem;
+    if(index == undefined){
+      console.log("No item exists");
+      res.send(JSON.stringify("Enter a valid item"));
+      return;
+    }
 
+  if (data.edit === "item") {
+    const filter = { item: data.ogItem }; // Filter to find the document by the original item
+    const foundItem = await collection.findOne(filter);
+
+    if (foundItem && foundItem.name === req.user.username) {
+        // The item is found, and the associated name matches req.user.username
+        const updateFilter = { _id: foundItem._id }; // Filter to update the found item
+        const update = { $set: { item: data.newitem } }; // Update operation to set the new item
+
+        // Use updateOne to update the document matching the filter
+        const result = await collection.updateOne(updateFilter, update);
+
+        console.log("mongo: ", result);
+        appdata[index].item = data.newitem;
+    } else {
+        // Either the item is not found or the associated name doesn't match
+        console.log("Item not found or unauthorized to update.");
+        res.send(JSON.stringify("Item not found or unauthorized to update."));
+        return;
+    }
+    
   }
-  console.log("new item: ", data.newitem);
+  if (data.edit === "qty") {
+    const filter = { item: data.ogItem }; // Filter to find the document by the original item
+    const foundItem = await collection.findOne(filter);
+
+    if (foundItem && foundItem.name === req.user.username) {
+        // The item is found, and the associated name matches req.user.username
+        const updateFilter = { _id: foundItem._id }; // Filter to update the found item
+        const update = { $set: { qty: data.newitem } }; // Update operation to set the new item
+
+        // Use updateOne to update the document matching the filter
+        const result = await collection.updateOne(updateFilter, update);
+
+        console.log("mongo: ", result);
+        appdata[index].qty = data.newitem;
+    } else {
+        // Either the item is not found or the associated name doesn't match
+        console.log("Item not found or unauthorized to update.");
+        res.send(JSON.stringify("Item not found or unauthorized to update."));
+        return;
+    }
+    
+  }
+  if (data.edit === "price") {
+    const filter = { item: data.ogItem }; // Filter to find the document by the original item
+    const foundItem = await collection.findOne(filter);
+
+    if (foundItem && foundItem.name === req.user.username) {
+        // The item is found, and the associated name matches req.user.username
+        const updateFilter = { _id: foundItem._id }; // Filter to update the found item
+        const update = { $set: { 
+          price: data.newitem,
+          cost: ((parseInt(data.newitem)) * appdata[index].qty)
+         } 
+        }; // Update operation to set the new item
+        
+        // Use updateOne to update the document matching the filter
+        const result = await collection.updateOne(updateFilter, update);
+
+        console.log("mongo: ", result);
+        appdata[index].price = data.newitem;
+    } else {
+        // Either the item is not found or the associated name doesn't match
+        console.log("Item not found or unauthorized to update.");
+        res.send(JSON.stringify("Item not found or unauthorized to update."));
+        return;
+    }
+    
+  }
   console.log("appdata array new: ", appdata);
   res.send(JSON.stringify(appdata));
 });
-
+  
 
 //Handle Bring
 app.post("/bring", express.json(), async (req, res) => {
