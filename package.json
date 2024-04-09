@@ -1,8 +1,8 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
-  "author": "",
+  "name": "CS 4241 a3",
+  "version": "1.0.0",
+  "description": "manage user inputs in an array to organize list of contributors and there contributions",
+  "author": "Nora Cleary",
   "scripts": {
     "start": "node server.improved.js"
   },
