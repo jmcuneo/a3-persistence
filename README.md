@@ -1,6 +1,6 @@
 ## What To Bring
 
-https://a3-nora-cleary.glitch.me
+https://a3-noracleary.glitch.me
 
 What To Bring is a tool for communicating and tracking the item each person is contributing. The application is a simple and organized, and can be used 
 for events like potluck parties, organizing an event, roommates moving in together, etc.
