@@ -6,12 +6,13 @@ const resetTextBoxes = function () {
   document.querySelector("#numItems").value = "";
   document.querySelector("#suggestItem").value = "";
   document.querySelector("#suggestQty").value = "";
+  document.querySelector("#newitem").value = "";
+  document.querySelector("#enterId").value = "";
 };
 // Adds row to HTML table creates an event listener for each button created - can get index from click
 const addToTable = function (entry) {
   const table = document.getElementById("table");
   const row = `<tr id="entryRow">
-                <td>${entry.tableId}</td>
                 <td>${entry.name}</td>
                 <td>${entry.item}</td>
                 <td>${entry.qty}</td>
@@ -97,6 +98,28 @@ const submit = async function (event) {
     body: JSON.stringify(newEntry),
   });
   const text = await response.json();
+  if (typeof text === "string") {
+    alert(text);
+  } else {
+    const appdata = text.appdata;
+    const suggestdata = text.suggestdata;
+    const justAdded = appdata[appdata.length - 1];
+    for (let i = 0; i < suggestdata.length; i++) {
+      if (
+        suggestdata[i].Sitem == justAdded.item &&
+        suggestdata[i].Sqty == justAdded.qty
+      ) {
+        bring(i);
+        remove(appdata.length);
+        console.log(
+          "item removed from bring and added to appdata: ",
+          suggestdata[i]
+        );
+      }
+    }
+    generateTable(appdata);
+    resetTextBoxes();
+  }
   const appdata = text.appdata;
   const suggestdata = text.suggestdata;
   const justAdded = appdata[appdata.length - 1];
@@ -178,6 +201,7 @@ const remove = async function (entryIndex) {
     generateTable(text);
   }
 };
+
 const suggest = async function (event) {
   event.preventDefault();
   const itemSuggest = document.querySelector("#suggestItem");
@@ -252,7 +276,7 @@ const edit = async function (event) {
     return;
   }
   const editObject = {
-    tableId: tableId.value,
+    ogItem: tableId.value,
     edit: editelement,
     newitem: newitem.value,
   };
@@ -261,9 +285,16 @@ const edit = async function (event) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(editObject),
   });
+  
   const text = await response.json();
-  generateTable(text);
-  resetTextBoxes();
+  console.log("edit: ", text);
+  if (typeof text === "string") {
+    alert(text);
+  } else {
+    generateTable(text);
+    resetTextBoxes();
+  }
+  
 };
 let toggleCount = 1;
 
