@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="w-1/2 bg-white p-8">
+    <h2 class="text-2xl mb-4">Register</h2>
+    <form action="/register" method="POST">
+        <div class="mb-4">
+            <label for="register-name" class="block text-gray-700">Name</label>
+            <input type="text" id="register-name" name="username" placeholder="Enter your name" class="form-input mt-1 block w-full rounded-md border-gray-300">
+        </div>
+        <div class="mb-4">
+            <label for="register-email" class="block text-gray-700">Email Address</label>
+            <input type="email" id="register-email" name="email" placeholder="Enter your email" class="form-input mt-1 block w-full rounded-md border-gray-300">
+        </div>
+        <div class="mb-4">
+            <label for="register-password" class="block text-gray-700">Password</label>
+            <input type="password" id="register-password" name="password" placeholder="Enter your password" class="form-input mt-1 block w-full rounded-md border-gray-300">
+        </div>
+        <button type="submit" class="w-full bg-green-500 text-white p-3 rounded-md">Register</button>
+        <a href="/showLogin" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-12">
+            Already Registered? Login
+        </a>
+    </form>
+</div>
+</body>
+</html>
