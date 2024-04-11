@@ -151,14 +151,15 @@ async function display(object){
     for(let i=0; i<object.length;i++){
         elements=`<td>${i}</td> <td>${object[i].recipe_name}</td> <td>${object[i].recipe_ingredients}</td>
         <td>${object[i].recipe_description}</td> <td >${object[i].recipe_taste}</td><td>${object[i].dietary_restriction}</td>
-         <td><button onclick="modify(this)" id="update" 
+         <td><button class="btn btn-blue" onclick="modify(this)" id="update" 
         ${object[i].recipe_taste ? `recipe_taste_attribute="${object[i].recipe_taste}"` : ''}
         ${object[i].recipe_name ? `recipe_name_attribute="${object[i].recipe_name}"` : ''}
         ${object[i].recipe_ingredients ? `recipe_ingredients_attribute="${object[i].recipe_ingredients}"` : ''}
         ${object[i].recipe_description ? `recipe_description_attribute="${object[i].recipe_description}"` : ''}
         ${object[i].dietary_restriction ? `dietary_restriction_attribute="${object[i].dietary_restriction}"` : ''}
         >Update</button></td>
-         <td><button del_attribute=${i} onclick="del(${i})" id="delete">Delete</button></td>`
+         <td><button del_attribute=${i} onclick="del(${i})" id="delete" class="btn btn-blue">
+         Delete</button></td>`
         let entries = `<tr>${elements}</tr>`
         table.innerHTML += entries;
     }
@@ -172,7 +173,7 @@ async function display(object){
 window.onload = async function() {
     const button = document.querySelector("#Submit");
     button.onclick = submit;
-    const response = await fetch("/GetRecipe", {
+    const response = await fetch("/GetRecipe?id=123", {
         method: "GET",
     });
     const text = await response.text();

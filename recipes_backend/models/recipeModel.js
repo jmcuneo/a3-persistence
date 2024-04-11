@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const recipeSchema = mongoose.Schema({
     user_id: {
-        // type: mongoose.Schema.Types.ObjectId,
+        //type: mongoose.Schema.Types.ObjectId,
         type: Number,
         required: true,
         default: 123,

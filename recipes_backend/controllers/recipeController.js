@@ -5,7 +5,7 @@ const path = require("path");
 //@desc Get all recipes
 //@ route GET /recipes
 //@access private
-const getRecipes = asyncHandler(async (req,res)=>{
+const getRecipes = asyncHandler(async (req)=>{
     const recipes = await Recipe.find();
     console.log(hello);
     //res.status(200).json(recipes);
@@ -17,14 +17,14 @@ const getRecipes = asyncHandler(async (req,res)=>{
 const createRecipe = asyncHandler(async (req)=>{
     console.log("Body")
     console.log(req.body)
-    const{recipe_name, recipe_ingredients, recipe_description} = req.body
+    const{recipe_name, recipe_ingredients, recipe_description, recipe_taste, dietary_restriction} = req.body
     if(!recipe_name || !recipe_ingredients || !recipe_description){
         //res.status(400);
-        //throw new Error("All fields are mandatory");
+        // throw new Error("All fields are mandatory");
     }
     const recipe = await Recipe.create({
-        recipe_name, recipe_ingredients, recipe_description,
-        //user_id: req.user.id,
+        recipe_name, recipe_ingredients, recipe_description, recipe_taste, dietary_restriction,
+        // user_id: req.user.id,
     });
     //res.status(200).json(recipe);
     console.log(recipe)
@@ -51,20 +51,20 @@ const getRecipe = asyncHandler(async (req)=>{
 //@desc Update a recipe
 //@ route PUT /recipes/:id
 //@access private
-const updateRecipe = asyncHandler(async (req,res)=>{
+const updateRecipe = asyncHandler(async (req)=>{
     // const recipe = await Recipe.findById(req.params.id);
     const recipe = await Recipe.findById(123);
     if(!recipe){
-        res.status(404);
-        throw new Error("Recipe Not Found");
+        //res.status(404);
+        //throw new Error("Recipe Not Found");
     }
-    if(recipe.user_id.toString()!==req.user.id){
-        res.status(403);
-        throw new Error("Forbidden");
-    }
+    // if(recipe.user_id.toString()!==req.user.id){
+    //     //res.status(403);
+    //     //throw new Error("Forbidden");
+    // }
     const updatedRecipe = await Recipe.findByIdAndUpdate(
-        req.params.id,
-        req.body,
+        //req.params.id,
+        //req.body,
         {new: true}
     );
     //res.status(200).json(updatedRecipe);
@@ -73,19 +73,19 @@ const updateRecipe = asyncHandler(async (req,res)=>{
 //@desc Delete a recipe
 //@ route DELETE /recipes/:id
 //@access private
-const deleteRecipe = asyncHandler(async (req,res)=>{
+const deleteRecipe = asyncHandler(async (req)=>{
     // const recipe = await Recipe.findById(req.params.id);
     const recipe = await Recipe.findById(123);
     if(!recipe){
-        res.status(404);
-        throw new Error("Recipe Not Found");
+        //res.status(404);
+        // throw new Error("Recipe Not Found");
     }
-    if(recipe.user_id.toString()!==req.user.id){
-        res.status(403);
-        throw new Error("Forbidden");
-    }
-    await Recipe.deleteOne({id: req.params.id});
-    //res.status(200).json(recipe);
+    // if(recipe.user_id.toString()!==req.user.id){
+    //     //res.status(403);
+    //     throw new Error("Forbidden");
+    // }
+    //await Recipe.deleteOne({id: req.params.id});
+    // //res.status(200).json(recipe);
 });
 
 module.exports = {getRecipes, createRecipe, getRecipe, updateRecipe, deleteRecipe};
