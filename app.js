@@ -1,8 +1,51 @@
+//import * as WebSocket from "ws";
+/*
+        let socketURL='ws://'+window.location.hostname + ":"+PORT+"/"
+        //console.log('ws://'+window.location.hostname + ":"+PORT+"/"+"token="+user);
+        socket= new WebSocket('ws://'+window.location.hostname + ":"+PORT+"/");//+"token="+user
+        //so with token, it ends up in app.get, else it ends up w/ ws
+        //i guess bc the websocket listens for "/"
+        socket.onopen = async() => {
+            let msgObj={
+                type:"Auth",
+                data:user
+            }
+            console.log("HELLO");
+            await socket.send(JSON.stringify(msgObj));
+            socket.onmessage= (event) => {
+                                // The 'data' property of the 'event' object contains the server's message
+                                let serverMessage = JSON.parse(event.data);
+
+                                if (serverMessage.type === 'authResponse') {
+                                    // Handle the server's response to the auth request
+                                    // For example, you might redirect to another page
+                                    window.location.href = serverMessage.redirectUrl;
+                                }
+                            };
+            const redirectUrl = response.url;
+            window.location.href = redirectUrl;
+        };
+*/
 const PORT=4000;
 let drawXSize=20;
 let drawYSize=20;
 let currentMaze=null;
 let isPlaying=false;
+const socket = new WebSocket('ws://'+window.location.hostname + ":"+PORT+"/");//conn fail
+socket.onmessage=(event)=>{//used to tell player game over
+    console.log('Received:', event.data);
+    if (event.data.toLowerCase()=="game over"){
+        //game over
+    }
+    else if (event.data.toLowerCase()=="escaped"){
+
+    }
+};
+socket.onclose=(event)=>{
+    //lost connection, attempt to reconnect.
+    //if connection failed
+}
+
 class genParams{
     xSize;
     ySize;
@@ -20,11 +63,26 @@ async function playMaze(){
     if (currentMaze!=null && !isPlaying){
         //block all other buttons until game is done
         isPlaying=true;
-        let canvas=document.getElementById("mazeCanvas");
-        let ctx = canvas.getContext("2d");
-        ctx.clear();
-        ctx.fillStyle="black";
-        ctx.fillRect(0,0,canvas.width,canvas.height);
+        var url="http://"+ window.location.hostname + ":"+PORT +'/playMaze';
+            //http://localhost:5173/
+        var jsonBody=JSON.stringify(currentMaze);
+
+        const response = await fetch(url, {
+            method:"POST",
+            body:jsonBody
+        })
+        let results = await response.text();
+        if (results==1){
+            let canvas=document.getElementById("mazeCanvas");
+            let ctx = canvas.getContext("2d");
+            ctx.clear();
+            ctx.fillStyle="black";
+            ctx.fillRect(0,0,canvas.width,canvas.height);
+        }
+        else{
+            isPlaying=false;
+        }
+
     }
     else{
         alert("NO MAZE AVAILABLE TO PLAY");
@@ -44,6 +102,14 @@ space bar: flash
 async function action(code){
     if (isPlaying){
         //send request to move to server
+        var url="http://"+ window.location.hostname + ":"+PORT +'/actionRequest';
+
+        const response = await fetch(url, {
+            method:"POST",
+            body:code
+        })
+        let results = await response.text();
+        let jsonResult=JSON.parse(results);
     }
 }
 
@@ -54,7 +120,6 @@ async function clearMaze(){
         ctx.clear();
         currentMaze=null;
     }
-
 }
 
 //const socket=new WebSocket("ws://"+ window.location.hostname + ":"+PORT)
@@ -79,7 +144,7 @@ async function makeMaze(){
 
 
 async function saveMaze(){
-    if (isPlaying){
+    if (!isPlaying){
         var url="http://"+ window.location.hostname + ":"+PORT +'/saveMaze';
         if (currentMaze!=null){
             console.log("ATTEMPTINMG TO SAVE");
@@ -112,27 +177,29 @@ async function getSavedMazes(){
         })
         let data= await response.text();
         let jsonResult=JSON.parse(data);
-        //get saved mazes
         //{ID:doc.MazeID;XSize:doc.Maze.xSize;YSize:doc.Maze.ySize}
         for (let m of jsonResult){
             let savedMaze=document.createElement("li");
             savedMaze.textContent="ID: " + m.ID + ". Size:" + m.XSize + " by " + m.YSize;
+            savedMaze.onclick=function(){
+                loadMaze(m.ID);
+            }
             listButton.append(savedMaze);
         }
     }
 }
 
 //the saved mazes should be separate from above
-async function loadMaze(){
-    if(isPlaying){
+async function loadMaze(id){
+    if(!isPlaying){
         var url="http://"+ window.location.hostname + ":"+PORT +'/loadMaze';
-        let id=0;
         const response = await fetch(url, {
             method:"POST",
             body:id
         })
         let data= await response.text();
         currentMaze=JSON.parse(data);
+        console.log(currentMaze);
         await mapDrawer(currentMaze);
     }
 }

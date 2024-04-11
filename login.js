@@ -1,5 +1,6 @@
 const PORT=4000;
 let sessionID=null;
+let socket=null;
 async function login(){
     var url="http://"+ window.location.hostname + ":"+PORT +'/login';
     let user=document.getElementById("username").value;
@@ -33,6 +34,7 @@ async function register(){
          Password:password
      }
      var loginString=JSON.stringify(obj);
+
      const response = await fetch(url, {
          method:"POST",
          body:loginString
