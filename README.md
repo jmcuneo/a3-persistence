@@ -1,6 +1,7 @@
 ## Name List
 
 https://a3.wpi.brandonlui.com
+This may take a while to load due to the free shared hosting service sleeping on idle. 
 
 - The goal of the application is to help track attendance at events. Instead of a paper sheet, you can now use this app to track recurring attendance with a counter of how many times that person has been there.
 - Challenges I faced were getting the list to show different data for different users and authentication.
@@ -10,6 +11,7 @@ https://a3.wpi.brandonlui.com
 - dotenv was used to import enviroment variables into files.
 - express-session was used for handling session management and storing session IDs on the client and server.
 - passport.js was used to implement GitHub OAuth
+- mongoose for MongoDB object modeling
 
 username: test
 password: hi
