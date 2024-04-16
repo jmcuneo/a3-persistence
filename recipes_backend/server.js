@@ -50,12 +50,13 @@ app.post("/CreateRecipes", async (req, res) =>{
 // res.status(200).json(recipe);
 // res.sendFile( __dirname + './static/main.html' )
 // });
-app.delete("/DeleteRecipes/:id",async (req, res) => {
-    const delRecipes = await deleteRecipe(req,res)
-    res.writeHead(200, {'Content-Type': 'application/json'})
-    res.write(JSON.stringify(delRecipes))
-    res.status(200)
-    res.end()
+app.delete("/DeleteRecipes",async (req, res) => {
+    console.log("Body:\n", req.body.id)
+    const delRecipes = await deleteRecipe(req.body.id)
+    //res.writeHead(200, {'Content-Type': 'application/json'})
+    res.json(delRecipes)
+    //res.status(200)
+    //res.end()
 });
 app.put("/UpdateRecipes",async (req, res) => updateRecipe(req,res))
 app.get("/GetRecipe", async (req,res)=> {
