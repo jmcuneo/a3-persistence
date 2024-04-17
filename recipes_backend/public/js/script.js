@@ -1,4 +1,3 @@
-
 /**
  * This function is called when the user clicks the submit button.
  * It will take the values from the form fields and send them to the server.
@@ -6,26 +5,22 @@
  * @param event The submit event.
  * @returns {Promise<void>}
  */
-const submit = async function(event) {
+const submit = async function (event) {
     // stop form submission from trying to load
     // a new .html page for displaying results...
     // this was the original browser behavior and still
     // remains to this day
     event.preventDefault();
     let emptyField = null;
-    if(!(document.querySelector("#SuperSpicy"))){
+    if (!(document.querySelector("#SuperSpicy"))) {
         emptyField = document.querySelector("#SuperSpicy");
-    }
-    else if(!(document.querySelector("#MediumSpicy"))){
+    } else if (!(document.querySelector("#MediumSpicy"))) {
         emptyField = document.querySelector("#MediumSpicy");
-    }
-    else if(!(document.querySelector("#Sour"))){
+    } else if (!(document.querySelector("#Sour"))) {
         emptyField = document.querySelector("#Sour");
-    }
-    else if(!(document.querySelector("#Sweet"))){
+    } else if (!(document.querySelector("#Sweet"))) {
         emptyField = document.querySelector("#Sweet");
-    }
-    else{
+    } else {
         emptyField = document.querySelector("#Salty");
     }
     const recipe_name = document.querySelector("#RecipeName"),
@@ -52,7 +47,7 @@ const submit = async function(event) {
         },
         body// Pass the body variable here
     });
-    if(response.status === 200){
+    if (response.status === 200) {
         const response1 = await fetch("/GetRecipe", {
             method: "GET",
         });
@@ -82,13 +77,13 @@ const submit = async function(event) {
  * @param uid Unique ID of the item to delete.
  * @returns {Promise<void>}
  */
-async function del(uid){
+async function del(uid) {
     console.log(uid)
-    const response = await fetch( "/DeleteRecipes", {
-        method:"DELETE",
-        body: JSON.stringify({id:uid}),
-        headers:{
-                "Content-type": "application/json"
+    const response = await fetch("/DeleteRecipes", {
+        method: "DELETE",
+        body: JSON.stringify({id: uid}),
+        headers: {
+            "Content-type": "application/json"
         }
     });
     const text = await response.json();
@@ -102,11 +97,15 @@ async function del(uid){
  * @returns {Promise<void>}
  */
 async function modify(uid) {
-    console.log("hello" + document.getElementById("recipe_taste_attribute"));
-    document.getElementById("recipe_taste").value = uid.getAttribute("recipe_taste_attribute");
-    document.getElementById("StartLocation").value = uid.getAttribute("start_attribute");
-    document.getElementById("Destination").value = uid.getAttribute("dest_attribute");
-    document.getElementById("Confirm").style.display="block";
+    console.log("hello" + document.getElementById("recipe_name_attribute"));
+    document.getElementById("RecipeName").value = uid.getAttribute("recipe_name_attribute");
+    document.getElementById("Ingredients").value = uid.getAttribute("recipe_ingredients_attribute");
+    document.getElementById("recipeDescription").value = uid.getAttribute("recipe_description_attribute");
+    const attribute = uid.getAttribute("recipe_taste_attribute");
+    console.log("Attribute: ", uid.getAttribute("recipe_taste_attribute"));
+    document.getElementById(attribute).value = uid.getAttribute("recipe_taste_attribute");
+    document.getElementById("allergen").value = uid.getAttribute("dietary_restriction_attribute");
+    document.getElementById("Confirm").style.display = "block";
 }
 
 /**
@@ -147,33 +146,37 @@ async function modify(uid) {
  * @param object The object to display in the table.
  * @returns {Promise<void>}
  */
-async function display(object){
-    console.log("updated here for display"+JSON.stringify(object));
+async function display(object) {
+    console.log("updated here for display" + JSON.stringify(object));
     let table = document.querySelector("#data_body");
-    let elements=""
-    table.innerHTML=" "
-    for(let i=0; i<object.length;i++){
-        elements=`<td>${i}</td> <td>${object[i].recipe_name}</td> <td>${object[i].recipe_ingredients}</td>
+    let elements = ""
+    table.innerHTML = " "
+    for (let i = 0; i < object.length; i++) {
+        elements = `<td>${i}</td> <td>${object[i].recipe_name}</td> <td>${object[i].recipe_ingredients}</td>
         <td>${object[i].recipe_description}</td> <td >${object[i].recipe_taste}</td><td>${object[i].dietary_restriction}</td>
-         <td><input type="button" class="" value="update" onclick="modify(this)" id="update" 
-        ${object[i].recipe_taste ? `recipe_taste_attribute="${object[i].recipe_taste}"` : ''}
+         <td><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          value="update" onclick="modify(this)" id="update"
         ${object[i].recipe_name ? `recipe_name_attribute="${object[i].recipe_name}"` : ''}
         ${object[i].recipe_ingredients ? `recipe_ingredients_attribute="${object[i].recipe_ingredients}"` : ''}
         ${object[i].recipe_description ? `recipe_description_attribute="${object[i].recipe_description}"` : ''}
+        ${object[i].recipe_taste ? `recipe_taste_attribute="${object[i].recipe_taste}"` : ''}
         ${object[i].dietary_restriction ? `dietary_restriction_attribute="${object[i].dietary_restriction}"` : ''}
-        ></input></td>
-         <td><input type="button" value="Delete" del_attribute=${i} onclick="del(123)" id="delete" class="btn btn-blue"></input></td>`
+        >Update</button></td>
+         <td><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          value="Delete" del_attribute=${i} onclick="del(${object[i].user_id})" id="delete">Delete</button></td>`
         let entries = `<tr>${elements}</tr>`
         table.innerHTML += entries;
     }
 }
+
+//<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
 
 /**
  * This function is called when the window loads.
  * It send a GET request to the server to get the data to display.
  * @returns {Promise<void>}
  */
-window.onload = async function() {
+window.onload = async function () {
     const button = document.querySelector("#Submit");
     button.onclick = submit;
     //`/GetRecipe?id=${req.params.id}`

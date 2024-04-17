@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const Recipe = require("../models/recipeModel");
 const status= require("express/lib/response");
 const path = require("path");
+const User = require("./userController")
 //@desc Get all recipes
 //@ route GET /recipes
 //@access private
@@ -18,12 +19,14 @@ const createRecipe = asyncHandler(async (req)=>{
     console.log("Body")
     console.log(req.body)
     const{recipe_name, recipe_ingredients, recipe_description, recipe_taste, dietary_restriction} = req.body
+    const user_id=Math.floor(Math.random() * 1000000001);
+    console.log("Current User Details: ",User.currentUser);
     if(!recipe_name || !recipe_ingredients || !recipe_description){
         //res.status(400);
         // throw new Error("All fields are mandatory");
     }
     const recipe = await Recipe.create({
-        recipe_name, recipe_ingredients, recipe_description, recipe_taste, dietary_restriction,
+        user_id, recipe_name, recipe_ingredients, recipe_description, recipe_taste, dietary_restriction,
         //user_id: req.user.id,
     });
     //res.status(200).json(recipe);

@@ -21,9 +21,11 @@ const recipeSchema = mongoose.Schema({
     },
     recipe_taste: {
         type: String,
+        required: [true, "Please add the recipe taste"],
     },
     dietary_restriction: {
         type: String,
+        required: [true, "Please add the dietary restriction"],
     },
 },
     {
