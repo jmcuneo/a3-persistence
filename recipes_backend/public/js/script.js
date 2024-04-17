@@ -152,7 +152,7 @@ async function display(object) {
     let elements = ""
     table.innerHTML = " "
     for (let i = 0; i < object.length; i++) {
-        elements = `<td>${i}</td> <td>${object[i].recipe_name}</td> <td>${object[i].recipe_ingredients}</td>
+        elements = `<td>${object[i].user_id}</td> <td>${object[i].recipe_name}</td> <td>${object[i].recipe_ingredients}</td>
         <td>${object[i].recipe_description}</td> <td >${object[i].recipe_taste}</td><td>${object[i].dietary_restriction}</td>
          <td><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           value="update" onclick="modify(this)" id="update"

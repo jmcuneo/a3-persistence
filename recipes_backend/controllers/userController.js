@@ -65,7 +65,9 @@ const loginUser = asyncHandler(async (req,res) => {
         //res.status(200).json({accessToken});
     }else{
         res.status(401)
-        throw new Error("Invalid Email or Password!")
+        const htmlFile = path.join(__dirname, '../public/html/error.html');
+        res.sendFile(htmlFile);
+        //return new Error("Invalid Email or Password!")
     }
     const htmlFile = path.join(__dirname, '../public/html/main.html');
     res.sendFile(htmlFile);
