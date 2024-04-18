@@ -28,20 +28,36 @@ I just added a display:none style tag to the tailwind css for hiding the "Confir
 which is made visible only when the user sends an update (PUT) request.
 
 List of NPM packages:
-- bcrypt: Library for hashing passwords securely before storing them in the database.  
-- express: Web application framework for Node.js, used for building the server-side of the application. 
-- express-api-response: A middleware for Express that helps with formatting API responses. 
-- express-async-handler: A middleware for Express that helps with handling asynchronous errors. 
-- express-respond: A middleware for Express that provides a consistent way to respond to API requests. 
-- express-session: A middleware for Express that provides session management functionality. 
-- jsonwebtoken: A library for generating and verifying JSON Web Tokens (JWT) for authentication and authorization. 
-- mongodb: The official MongoDB driver for Node.js, used for interacting with a MongoDB database. 
-- mongoose: An Object Document Mapping (ODM) library for MongoDB and Node.js, providing a higher-level abstraction for working with the database. 
-- tailwindcss: A utility-first CSS framework for rapidly building custom user interfaces. 
-- nodemon: A tool that automatically restarts the Node.js application when file changes are detected, useful for development.
+- **bcrypt**: Library for hashing passwords securely before storing them in the database.  
+- **express**: Web application framework for Node.js, used for building the server-side of the application. 
+- **express-api-response**: A middleware for Express that helps with formatting API responses. 
+- **express-async-handler**: A middleware for Express that helps with handling asynchronous errors. 
+- **express-respond**: A middleware for Express that provides a consistent way to respond to API requests. 
+- **express-session**: A middleware for Express that provides session management functionality. 
+- **jsonwebtoken**: A library for generating and verifying JSON Web Tokens (JWT) for authentication and authorization. 
+- **mongodb**: The official MongoDB driver for Node.js, used for interacting with a MongoDB database. 
+- **mongoose**: An Object Document Mapping (ODM) library for MongoDB and Node.js, providing a higher-level abstraction for working with the database. 
+- **tailwindcss**: A utility-first CSS framework for rapidly building custom user interfaces. 
+- **nodemon**: A tool that automatically restarts the Node.js application when file changes are detected, useful for development.
 
 
-Technical Achievements
-Tech Achievement 1: I used OAuth authentication via the GitHub strategy
-Design/Evaluation Achievements
-Design Achievement 1: I followed the following tips from the W3C Web Accessibility Initiative...
+## Technical Achievements:
+
+Tech Achievement 1: I created user registration and login. The passwords are encrypted with the help of bcrypt npm
+package. I tried to implement json web tokens, but I was not completely successful. Prof. Joshua Cuneo told me that 
+bcrypt is also a technical achievement.
+
+Tech Achievement 2: Hosted the application on Vercel rather than using glitch.
+Some pros of using vercel over glitch are as follows:
+- Vercel is faster than glitch in loading webpages
+- Vercel has a free tier
+- Vercel makes dyanmic changes on the deployed website based on the latest commits made on main branch  
+
+Some cons of using vercel over glitch are as follows:
+- Vercel is not as beginner-friendly as glitch
+- Vercel has a learning curve
+
+## Design/Evaluation Achievements
+Design Achievement 1:   
+
+Design Achievement 2:
