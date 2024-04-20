@@ -12,13 +12,13 @@ const submit = async function (event) {
     // remains to this day
     event.preventDefault();
     let emptyField = null;
-    if (document.querySelector("#SuperSpicy")) {
+    if (!(document.querySelector("#SuperSpicy"))) {
         emptyField = document.querySelector("#SuperSpicy");
-    } else if (document.querySelector("#MediumSpicy")){
+    } else if (!(document.querySelector("#MediumSpicy"))){
         emptyField = document.querySelector("#MediumSpicy");
-    } else if (document.querySelector("#Sour")) {
+    } else if (!(document.querySelector("#Sour"))) {
         emptyField = document.querySelector("#Sour");
-    } else if (document.querySelector("#Sweet")) {
+    } else if (!(document.querySelector("#Sweet"))) {
         emptyField = document.querySelector("#Sweet");
     } else {
         emptyField = document.querySelector("#Salty");
@@ -136,13 +136,13 @@ async function NewData(){
     //     body
     // });
     let emptyField = null;
-    if (document.querySelector("#SuperSpicy")) {
+    if (!(document.querySelector("#SuperSpicy"))) {
         emptyField = document.querySelector("#SuperSpicy");
-    } else if (document.querySelector("#MediumSpicy")){
+    } else if (!(document.querySelector("#MediumSpicy"))){
         emptyField = document.querySelector("#MediumSpicy");
-    } else if (document.querySelector("#Sour")) {
+    } else if (!(document.querySelector("#Sour"))) {
         emptyField = document.querySelector("#Sour");
-    } else if (document.querySelector("#Sweet")) {
+    } else if (!(document.querySelector("#Sweet"))) {
         emptyField = document.querySelector("#Sweet");
     } else {
         emptyField = document.querySelector("#Salty");
