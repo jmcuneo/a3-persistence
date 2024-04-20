@@ -18,7 +18,13 @@
 <!-- This is the header of the html page. It uses Google font: outfit-->
 <h1 class="outfit-header-font text-4xl font-bold text-center my-8">Recipe Sharing System</h1>
 <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-md mx-auto">
-    <div class="mb-4">
+    <div class="mb-4" style="display:none" id="showRecipeID">
+        <label class="block text-gray-700 font-bold mb-2" for="RecipeID">
+            Recipe ID:
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="RecipeID" type="text" placeholder="Recipe ID" name="recipe_id" readonly>
+    </div>
+        <div class="mb-4">
         <label class="block text-gray-700 font-bold mb-2" for="RecipeName">
             Recipe Name:
         </label>

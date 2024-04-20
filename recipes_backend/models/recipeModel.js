@@ -1,12 +1,20 @@
 const mongoose = require("mongoose");
 const recipeSchema = mongoose.Schema({
-    user_id: {
+    recipe_id: {
         //type: mongoose.Schema.Types.ObjectId,
         type: Number,
         required: true,
-        default: 123,
+        //default: 123,
         ref: "User",
     },
+    email: {
+        type: String,
+        required: [true, "Please add the user email"],
+    },
+    // user_id: {
+    //     type: Number,
+    //     required: [true, "Please add the user id"]
+    // },
     recipe_name: {
         type: String,
         required: [true, "Please add the recipe name"],

@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
+const Recipe=require("../models/recipeModel")
 const {hash} = require("bcrypt");
 const path = require("path");
 //@desc Register a user
@@ -9,6 +10,7 @@ const path = require("path");
 //@access public
 const registerUser = asyncHandler(async (req,res) => {
     const{username, email, password} = req.body;
+    //const user_id=Math.floor(Math.random() * 1000000001);
     if(!username || !email || !password){
         res.status(400);
         throw new Error("All fields are mandatory!")
@@ -23,6 +25,7 @@ const registerUser = asyncHandler(async (req,res) => {
     //console.log("Hashed Password: ", hashedPassword);
     const user = await User.create({
         username,
+        //user_id,
         email,
         password: hashedPassword,
     });
@@ -69,6 +72,11 @@ const loginUser = asyncHandler(async (req,res) => {
         res.sendFile(htmlFile);
         //return new Error("Invalid Email or Password!")
     }
+    req.session.user = {
+        username: user.username,
+        email: user.email,
+        //id: user.id,
+    };
     const htmlFile = path.join(__dirname, '../public/html/main.html');
     res.sendFile(htmlFile);
 });

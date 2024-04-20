@@ -8,8 +8,14 @@ const Recipe = require("./models/recipeModel");
 const jwt = require("./middleware/validateTokenHandler")
 const path = require('path');
 const {all} = require("express/lib/application");
+const session = require('express-session')
 connectDb();
 const app = express();
+app.use(session({
+    secret: 'your-secret-key', // used to sign the session ID cookie
+    resave: false, // don't save session if unmodified
+    saveUninitialized: false // don't create session until something is stored
+}));
 app.use(express.static('public'))
 const port = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: false }));
@@ -45,7 +51,7 @@ app.post("/CreateRecipes", async (req, res) =>{
 // }
 // const recipe = await Recipe.create({
 //     recipe_name, recipe_ingredients, recipe_description,
-//     // user_id: req.user.id,
+//     // recipe_id: req.user.id,
 // });
 // res.status(200).json(recipe);
 // res.sendFile( __dirname + './static/main.html' )
