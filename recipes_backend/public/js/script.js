@@ -11,14 +11,14 @@ const submit = async function (event) {
     // this was the original browser behavior and still
     // remains to this day
     event.preventDefault();
-    let emptyField = null;
-    if (!(document.querySelector("#SuperSpicy"))) {
+    let emptyField= null;
+    if (document.querySelector("#SuperSpicy").checked) {
         emptyField = document.querySelector("#SuperSpicy");
-    } else if (!(document.querySelector("#MediumSpicy"))){
+    } else if (document.querySelector("#MediumSpicy").checked) {
         emptyField = document.querySelector("#MediumSpicy");
-    } else if (!(document.querySelector("#Sour"))) {
+    } else if (document.querySelector("#Sour").checked) {
         emptyField = document.querySelector("#Sour");
-    } else if (!(document.querySelector("#Sweet"))) {
+    } else if (document.querySelector("#Sweet").checked) {
         emptyField = document.querySelector("#Sweet");
     } else {
         emptyField = document.querySelector("#Salty");
@@ -115,7 +115,7 @@ async function modify(uid) {
  * @returns {Promise<void>}
  * @constructor
  */
-async function NewData(){
+async function NewData() {
     // const recipe_name = document.querySelector( "#recipe_name" ),
     //     recipe_ingredients = document.querySelector( "#recipe_ingredients" ),
     //     recipe_description = document.querySelector( "#recipe_description" ),
@@ -135,14 +135,14 @@ async function NewData(){
     //     method: "PUT",
     //     body
     // });
-    let emptyField = null;
-    if (!(document.querySelector("#SuperSpicy"))) {
+    let emptyField= null;
+    if (document.querySelector("#SuperSpicy").checked) {
         emptyField = document.querySelector("#SuperSpicy");
-    } else if (!(document.querySelector("#MediumSpicy"))){
+    } else if (document.querySelector("#MediumSpicy").checked) {
         emptyField = document.querySelector("#MediumSpicy");
-    } else if (!(document.querySelector("#Sour"))) {
+    } else if (document.querySelector("#Sour").checked) {
         emptyField = document.querySelector("#Sour");
-    } else if (!(document.querySelector("#Sweet"))) {
+    } else if (document.querySelector("#Sweet").checked) {
         emptyField = document.querySelector("#Sweet");
     } else {
         emptyField = document.querySelector("#Salty");
@@ -193,9 +193,15 @@ async function NewData(){
         console.error("Error parsing JSON:", error);
         // Handle parsing error, e.g., display an error message to the user
     }
-    document.getElementById("Confirm").style.display="none";
+    document.getElementById("Confirm").style.display = "none";
     // display(JSON.parse(text));
     // console.log("updated here for NewData"+JSON.stringify(text))
+
+    const response2 = await fetch("/GetRecipe", {
+        method: "GET",
+    });
+    const text2 = await response2.text();
+    await display(JSON.parse(text2));
 }
 
 /**
@@ -208,8 +214,10 @@ async function display(object) {
     let table = document.querySelector("#data_body");
     let elements = ""
     table.innerHTML = " "
-    for (let i = 0; i < object.length; i++) {
-        elements = `<td>${object[i].recipe_id}</td> <td>${object[i].recipe_name}</td> <td>${object[i].recipe_ingredients}</td>
+    setTimeout(() => {
+        let table = document.querySelector("#data_body");
+        for (let i = 0; i < object.length; i++) {
+            elements = `<td>${object[i].recipe_id}</td> <td>${object[i].recipe_name}</td> <td>${object[i].recipe_ingredients}</td>
         <td>${object[i].recipe_description}</td> <td >${object[i].recipe_taste}</td><td>${object[i].dietary_restriction}</td>
          <td><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           value="update" onclick="modify(this)" id="update"
@@ -222,9 +230,11 @@ async function display(object) {
         >Update</button></td>
          <td><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           value="Delete" del_attribute=${i} onclick="del(${object[i].recipe_id})" id="delete">Delete</button></td>`
-        let entries = `<tr>${elements}</tr>`
-        table.innerHTML += entries;
-    }
+            let entries = `<tr>${elements}</tr>`
+            table.innerHTML += entries;
+        }
+    }, 10)
+
 }
 
 

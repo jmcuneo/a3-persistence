@@ -56,7 +56,7 @@ const getRecipe = asyncHandler(async (req)=>{
 //@desc Update a recipe
 //@ route PUT /recipes/:id
 //@access private
-const updateRecipe = asyncHandler(async (req)=>{
+const updateRecipe = asyncHandler(async (req, res)=>{
     // const recipe = await Recipe.findById(req.params.id);
     //const recipe = await Recipe.findById(123);
     console.log("Update Recipe Body: ", req.body.recipe_id);
@@ -74,7 +74,7 @@ const updateRecipe = asyncHandler(async (req)=>{
         },
         req.body
     );
-    //res.status(200).json(updatedRecipe);
+    res.status(200).json(updatedRecipe);
 });
 
 //@desc Delete a recipe
