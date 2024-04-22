@@ -56,7 +56,7 @@ passport.use(new GitHubStrategy({
 ));
 
 app.get('/auth/github/callback',
-    passport.authenticate('github', { session: false, failureRedirect: '/failedlogin' }),
+    passport.authenticate('github', { session: false, failureRedirect: '/' }),
     function (req, res) {
         // Successful authentication, redirect home.
         res.cookie('userID', githubID, { maxAge: cookieDuration, path: "/" });
