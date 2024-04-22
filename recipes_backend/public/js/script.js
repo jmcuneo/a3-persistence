@@ -227,6 +227,7 @@ async function display(object) {
     }
 }
 
+
 //<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
 
 /**
@@ -238,7 +239,7 @@ window.onload = async function () {
     const button = document.querySelector("#Submit");
     button.onclick = submit;
     //`/GetRecipe?id=${req.params.id}`
-    const response = await fetch("/GetRecipe?id=123", {
+    const response = await fetch("/GetRecipe", {
         method: "GET",
     });
     const text = await response.text();

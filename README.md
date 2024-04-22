@@ -3,7 +3,7 @@
 **CS 4241: WebWare (Assignment 3)**
 **Website: Recipe System**
 
-Vercel Link: https://a3-ronakwani.vercel.app/
+Vercel Link: https://a3-ronakwani.onrender.com/
 
 The website allows the users to create accounts and share their recipes with the world. I have created a registration and login system
 that authenticates the user using **bcrypt** npm package. If the user enters invalid credentials I redirect him to error.html, I also
