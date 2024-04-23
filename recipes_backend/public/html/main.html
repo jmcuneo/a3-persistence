@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Ronak_Wani_CS4241_Assignment_2</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- get rid of favicon error -->
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <!-- These links have been incoporated for the usage of google fonts, symbols, and icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&family=Outfit:wght@600&display=swap" rel="stylesheet">
+    <!-- This link has been incoporated for the usage of css -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<!-- This is the body of the html page. It uses Google font: libre-franklin-->
+<body class="libre-franklin-body-text bg-gray-100">
+<!-- This is the header of the html page. It uses Google font: outfit-->
+<h1 class="outfit-header-font text-4xl font-bold text-center my-8">Recipe Sharing System</h1>
+<form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-md mx-auto">
+    <div class="mb-4" style="display:none" id="showRecipeID">
+        <label class="block text-gray-700 font-bold mb-2" for="RecipeID">
+            Recipe ID:
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="RecipeID" type="text" placeholder="Recipe ID" name="recipe_id" readonly>
+    </div>
+        <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="RecipeName">
+            Recipe Name:
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="RecipeName" type="text" placeholder="Recipe Name" name="recipe_name" required>
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="Ingredients">
+            Ingredients:
+        </label>
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="Ingredients" type="text" placeholder="Ingredients" name="recipe_ingredients" required>
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="recipeDescription">
+            Recipe Description:
+        </label>
+        <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="recipeDescription" placeholder="Recipe Description" name="recipe_description" required></textarea>
+    </div>
+    <div class="mb-4">
+        <p class="text-gray-700 font-bold mb-2">Please select:</p>
+        <div class="flex items-center mb-2">
+            <input class="mr-2" type="radio" id="SuperSpicy" name="allergen" value="SuperSpicy">
+            <label class="text-gray-700" for="SuperSpicy">Super Spicy</label>
+        </div>
+        <div class="flex items-center mb-2">
+            <input class="mr-2" type="radio" id="MediumSpicy" name="allergen" value="MediumSpicy">
+            <label class="text-gray-700" for="MediumSpicy">Medium Spicy</label>
+        </div>
+        <div class="flex items-center mb-2">
+            <input class="mr-2" type="radio" id="Sour" name="allergen" value="Sour">
+            <label class="text-gray-700" for="Sour">Sour</label>
+        </div>
+        <div class="flex items-center mb-2">
+            <input class="mr-2" type="radio" id="Sweet" name="allergen" value="Sweet">
+            <label class="text-gray-700" for="Sweet">Sweet</label>
+        </div>
+        <div class="flex items-center mb-2">
+            <input class="mr-2" type="radio" id="Salty" name="allergen" value="Salty">
+            <label class="text-gray-700" for="Salty">Salty</label>
+        </div>
+    </div>
+    <div class="mb-4">
+        <p class="text-gray-700 font-bold mb-2">Dietary Restrictions:</p>
+        <div class="relative">
+            <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="AllergenFree" id="allergen">
+                <option value="Choose">Choose</option>
+                <option value="Vegan">Vegan</option>
+                <option value="Vegetarian">Vegetarian</option>
+                <option value="Non-vegetarian">Non-vegetarian</option>
+            </select>
+        </div>
+    </div>
+    <div class="flex items-center justify-between">
+        <button class="outfit-inside-buttons-font submit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="Submit" id="Submit">
+            Submit
+        </button>
+        <button class="outfit-inside-buttons-font bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="NewData()" type="button" id="Confirm" style="display:none">
+            Confirm
+        </button>
+    </div>
+</form>
+<!-- This is the table to display the data entered by the user to book a ticker -->
+<div id="booking_details" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-3xl mx-auto">
+    <table class="table-auto">
+        <thead>
+        <tr>
+            <th class="px-4 py-2 text-left">Unique ID</th>
+            <th class="px-4 py-2 text-left">Recipe Name</th>
+            <th class="px-4 py-2 text-left">Ingredients</th>
+            <th class="px-4 py-2 text-left">Recipe Description</th>
+            <th class="px-4 py-2 text-left">Taste</th>
+            <th class="px-4 py-2 text-left">Dietary Restrictions</th>
+        </tr>
+        </thead>
+        <tbody id="data_body"></tbody>
+    </table>
+</div>
+<!-- This is the footer of the html page. -->
+<footer class="bg-gray-800 text-white py-4 mt-8">
+    <p class="text-center">&copy; Ronak Wani. All rights reserved.</p>
+</footer>
+<!-- This is the script to include the main.js file. -->
+<script src="../js/script.js"></script>
+</body>
+</html>
