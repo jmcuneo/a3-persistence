@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>CS4241 Assignment 3</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="A simple to-do list with a responsive web server">
+    <script src="js/main.js"></script>
+    <!--<link rel="stylesheet" href="css/main.css"> -->
+    
+    <link rel="stylesheet" href="https://unpkg.com/chota@latest">
+  </head>
+  <body>
+    <h2>To-Do List Application</h2>
+    <form class="mainForm">
+      <div class="formFields">
+
+        <label for="yourname">Task:</label>
+        <input type="text" id="task" placeholder="Enter Task Here">
+        
+        <label for="priority">Priority:</label>
+        <select id="priority" name="priority">
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+        
+        <label for="addToTop">Add to top of list</label>
+        <input type="checkbox" id="addToTop" name="addToTop">
+
+      </div>
+      <button id="mainSubmit" class="button primary">Submit</button>
+    </form>
+    <div id="mainDiv">
+      <h3>To Do List</h3>
+      <ul id="list"></ul>
+    </div>
+  </body>
+</html>

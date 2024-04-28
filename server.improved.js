@@ -18,9 +18,9 @@ const server = http.createServer( function( request,response ) {
   }else if( request.method === "POST" ){
     handlePost( request, response ) 
   } else if( request.method === "DELETE" ) {
-    handleDelete( request, response );
+    handleDelete( request, response )
   } else if (request.method === "PUT") {
-    handlePut(request, response);
+    handlePut(request, response)
   }
 })
 
@@ -75,18 +75,18 @@ const handlePut = function(request, response) {
   });
 
   request.on("end", function() {
-    const { index, newText } = JSON.parse(dataString)
+    const { index, newText, newPriority } = JSON.parse(dataString)
 
     
     if (index >= 0 && index < appdata.length) {
       
       appdata[index].yourname = newText
       //also update priority if text if the first character is changed
-      appdata[index].priority = getPriorityText(newText.charAt(0))
+      appdata[index].priority = newPriority
     }
   
 
-    response.writeHead(200, "OK", { "Content-Type": "text/plain" })
+    response.writeHead(200, "OK", { "Content-Type": "application/json" })
     response.end(JSON.stringify(appdata))
   });
 };
@@ -111,27 +111,6 @@ const sendFile = function( response, filename ) {
 
      }
    })
-}
-
-//helper function to create a unique derived field for each input
-function getPriorityText(firstCharacter) {
-  switch (firstCharacter) {
-    case "0":
-    case "1":
-    case "2":
-    case "3":
-      return "Low priority"
-    case "4":
-    case "5":
-    case "6":
-      return "Medium priority"
-    case "7":
-    case "8":
-    case "9":
-      return "High priority"
-    default:
-      return "N/A"
-  }
 }
 
 server.listen( process.env.PORT || port )
