@@ -2,6 +2,8 @@
 
 TaskWave is simple to-do list application that allows users to create, edit, and delete tasks. Users can also mark tasks as complete or incomplete. Each user has their own account and can only see their own tasks. You can view it [here](https://taskwave.onrender.com/).
 
+**⚠️ Notice: Please be aware that the deployed version of this application on Render may take up to 50 seconds to load due to various factors such as server response times and resource allocation.**
+
 ## Technologies Used
 
 - **Bun**: A fast all-in-one JavaScript runtime used for server management.
