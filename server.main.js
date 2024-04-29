@@ -45,8 +45,8 @@ app.use(express.static("views"));
     //console.log('req made')
   }
 ); */
-app.get("/.well-known/acme-challenge/GG2inr3jNMjWHv14SYtmjFKvai2vV7hLYRlsBlMrzTg", (req, res) => {
-  res.send("GG2inr3jNMjWHv14SYtmjFKvai2vV7hLYRlsBlMrzTg.JnjgCrFUId2HcMMJIvR7NfXpoP-Ra5HmZZf2pQdmFFM").end();
+app.get("/.well-known/acme-challenge/9U-w4A3qkGMJV4RvyxHD_5DfmlqPs10gTplTTrY1_xo", (req, res) => {
+  res.send("9U-w4A3qkGMJV4RvyxHD_5DfmlqPs10gTplTTrY1_xo.JnjgCrFUId2HcMMJIvR7NfXpoP-Ra5HmZZf2pQdmFFM").end();
 })
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
