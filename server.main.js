@@ -2,13 +2,22 @@ const express = require("express");
 const app = express();
 const env = require("dotenv").config();
 const path = require("path");
+const fs = require("fs");
 
 const https = require('https'),
   http = require('http')
 
 
 var bodyParser = require("body-parser");
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/a3.bixler.me/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/a3.bixler.me/cert.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/a3.bixler.me/chain.pem', 'utf8');
 
+const credentials = {
+	key: privateKey,
+	cert: certificate,
+	ca: ca
+};
 
 var db = require("./database")
 var auth = require("./jwt")
@@ -149,4 +158,12 @@ app.post("/register/new-user", (req, res) => {
 ); */
 
 
-app.listen(80);
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
+httpServer.listen(80, () => {
+	console.log('HTTP Server running on port 80');
+});
+
+httpsServer.listen(443, () => {
+	console.log('HTTPS Server running on port 443');
+});
