@@ -80,7 +80,7 @@ window.onload = function() {
   deleteButton.onclick = () => submit(event, "/auth/user-data/delete-cat", "#catInfo")
                                 .then(() => submit(event, "/auth/user-data/fetch-cats", false))
                                   .then(result => makeTable(result))
-                                    .catch((error) => errorHandler(error));
+                                    .catch(error => errorHandler(error));
   /* const deleteButton = document.querySelector("#delete");
   deleteButton.onclick = () => submit(event, "/delete"); */
 }

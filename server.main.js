@@ -3,6 +3,9 @@ const app = express();
 const env = require("dotenv").config();
 const path = require("path");
 
+const https = require('https'),
+  http = require('http')
+
 
 var bodyParser = require("body-parser");
 
@@ -42,6 +45,9 @@ app.use(express.static("views"));
     //console.log('req made')
   }
 ); */
+app.get("/.well-known/acme-challenge/VdxuYAp3cXGEsU75OW2vvQQMCTOIBMmujifGoRTraQw", (req, res) => {
+  res.send("VdxuYAp3cXGEsU75OW2vvQQMCTOIBMmujifGoRTraQw.JnjgCrFUId2HcMMJIvR7NfXpoP-Ra5HmZZf2pQdmFFM").end();
+})
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
