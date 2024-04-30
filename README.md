@@ -4,7 +4,7 @@
 
 ## Catabase
 
-your glitch (or alternative server) link e.g. http://209.97.153.18:3001/login
+your glitch (or alternative server) link e.g. https://a3.bixler.me:444/login
 I called it catabase, its the database for cats! There is a test user 
 username: test
 password: test
