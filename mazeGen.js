@@ -31,12 +31,42 @@ Tile Tags: Can have multiple"
 "EDGE"
 "START"
 */
+class Tile{
+    type;
+    tags;
+    xPos;
+    yPos;
+    walls=[0,0,0,0];//0 is closed, 1 is open,NSWE
+    constructor(x,y,type, tag = [],walls=[0,0,0,0]) {
+        this.type = type;
+        this.xPos=x;
+        this.yPos=y;
+        this.tags = [...tag]; // create a new array for each instance
+        this.walls=[...walls]
+    }
+    copy(){
+        return new Tile(this.xPos,this.yPos,this.type,this.tags,this.walls);
+    }
+    matches(otherTile){
+        return (this.xPos==otherTile.xPos && this.yPos==otherTile.yPos);
+    }
+}
 
+
+class GameMap{
+    xSize;
+    ySize;
+    tiles;
+    constructor(x,y){
+        this.xSize=x;
+        this.ySize=y;
+    }
+}
 
 async function generate(params){
     let x=params.xSize
     let y=params.ySize;
-    var newMap=new classes.GameMap(x,y);
+    var newMap=new GameMap(x,y);
     let exitAmt=params.exitCount;
     let mazeType=1;
     newMap.tiles=empty2DArr(x,y);
@@ -374,7 +404,7 @@ function edgeTiles(gMap,x,y){
     //sets the borders of the map to be edges
 }
 function empty2DArr(x,y){//basic rectangular map
-    return Array.from({length: x}, (v, i) => Array.from({length: y}, (w,j) => new classes.Tile(i,j,1)));
+    return Array.from({length: x}, (v, i) => Array.from({length: y}, (w,j) => new Tile(i,j,1)));
 }
 
 module.exports={generate};

@@ -1,10 +1,10 @@
-## Maze Generator Beta 1.0
-
-Glitch:https://a3-trevorng.glitch.me
+## Maze Generator Beta 1.2
 
 ## Summary
 This application is a simple maze generator. Giuen a set of parameters, it creates a rectangular tile-based maze. While the maze isn't currently
-interactable, in the future I can use this maze to create an actual game where the user needs to navigate out of it.
+interactable.
+When the player presses play, they can enter a maze.
+Controls:
 
 ## Challenges
 -User-Data Association

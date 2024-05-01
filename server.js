@@ -1,22 +1,31 @@
 const PORT = 4000;
 const actionManager=require('./actionManager.js')
 const express = require('express');
-const classes=require('./mapClasses.js')
 const { MongoClient } = require('mongodb');
+const url = 'mongodb://localhost:27017';
+const client = new MongoClient(url, { family: 4 });
+const dbName = 'mazeMakerDB';
 const app = express();
 const http=require( "http" );
 const fs= require( "fs" );
 const mime = require( "mime" );
 const session = require('express-session');
 const expressWs = require('express-ws');
-const url = 'mongodb://localhost:27017';
+
 const dir="/";
-const client = new MongoClient(url, { family: 4 });
+
 
 global.serverShutdown=false;
 app.use(express.text());
+app.use(express.static('img'))
 expressWs(app);
+const EventEmitter = require('node:events');
 
+const serverEmitter = new EventEmitter();
+serverEmitter.on('gameEnd',(userID,msg)=>{
+    delete currentPlayers[userID];
+    socketMap.get(userID).send(msg);
+});
 app.use(session({
     secret: 'Oo6iCFWGj7Ip3GAjphCa2FFkm',
     resave: false,
@@ -67,7 +76,7 @@ app.post('/playMaze',async(req,res)=>{//rather than this, have it just pass back
         let user=req.session.user.username;
         let maze= JSON.parse(req.body);
         await actionManager.startGame(user,maze,currentPlayers);
-        res.send(1);
+        res.send(200);
     }
 });
 /*
@@ -90,15 +99,16 @@ this should determine if the player dies, and if so, send back a message
 app.post('/actionRequest',async(req,res)=>{
     let responseBody={
         accepted:0,
-        state:0,
         view:{},
+        flashes:0,
+        flashCharge:0,
     }
     if (req.session.user) {
         let user=req.session.user.username;
         if (user in currentPlayers){
             let player=currentPlayers[user];
+            console.log("RECEIVED ACT REQ " + req.body);
             await actionManager.playerAct(player,req,responseBody);
-
             //if valid, will pass back a json response body
 
         }
@@ -110,7 +120,7 @@ app.post('/actionRequest',async(req,res)=>{
 
 app.post('/loadMaze',async (req, res) => {
     if (req.session.user){
-        let result=await actionManager.makeSavedMaze(client,req.session.user.username,req.body);
+        let result=await actionManager.makeSavedMaze(req.session.user.username,req.body);
         res.send(result);
     }
     else{
@@ -123,7 +133,7 @@ app.post('/loadMaze',async (req, res) => {
 app.post('/login', async(req, res) => {
   // Replace this with the actual data you want to send.
   let userDetails=JSON.parse(req.body);
-  let result=await actionManager.findUser(client,userDetails);
+  let result=await actionManager.findUser(userDetails);
   if (result){
     req.session.user={
         username:userDetails.Username
@@ -136,10 +146,9 @@ app.post('/login', async(req, res) => {
 });
 app.post('/register', async(req, res) => {
     let userDetails=JSON.parse(req.body);
-    let result=await actionManager.addUser(client,userDetails)
+    let result=await actionManager.addUser(userDetails)
     switch(result){
         case 1:
-            currentUser=userDetails;
             res.send("Registration Successful! You can login now");
             break;
         case 0:
@@ -158,7 +167,7 @@ app.post('/userMazes',async(req,res) => {
         let nameObj={
             "Username":req.session.user.username
         }
-        let result= await actionManager.getMazes(client,nameObj);
+        let result= await actionManager.getMazes(nameObj);
         res.send(JSON.stringify(result));
     }
     else{
@@ -175,7 +184,7 @@ app.post('/saveMaze', async(req, res) => {
         }
         let receivedMaze=JSON.parse(req.body);
 
-        let result= await actionManager.addMaze(client,nameObj,receivedMaze);
+        let result= await actionManager.addMaze(nameObj,receivedMaze);
         if (result){
             res.send("Saved!");
         }

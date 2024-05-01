@@ -1,5 +1,8 @@
+const { MongoClient } = require('mongodb');
+const url = 'mongodb://localhost:27017';
+const client = new MongoClient(url, { family: 4 });
 const dbName = 'mazeMakerDB';
-async function findUser(client,userData) {
+async function findUser(userData) {
   // Use connect method to connect to the server
   await client.connect();
   const db = client.db(dbName);
@@ -14,14 +17,13 @@ async function findUser(client,userData) {
 }
 
 
-async function addUser(client,userData) {
+async function addUser(userData) {
   // Use connect method to connect to the server
   await client.connect();
   console.log('Connected successfully to server');
   const db = client.db(dbName);
   const userCollection=await db.collection( "MazeUsers");
     const result=await userCollection.countDocuments({"Username":userData.Username});
-    console.log(result);
     if (result>0){
         return -1;
     }
@@ -35,13 +37,12 @@ async function addUser(client,userData) {
 }
 
 
-async function addMaze(client,userData,maze){
+async function addMaze(userData,maze){
  await client.connect();
   console.log('Connected successfully to server');
   const db = client.db(dbName);
   const userCollection=await db.collection( "Mazes");
     const result=await userCollection.countDocuments(userData);
-    console.log(result);
     let mazeObj=null;
     if (result>0){//user has a maze here, add another one
         mazeObj={
@@ -66,7 +67,7 @@ async function addMaze(client,userData,maze){
 }
 
 
-async function getMazes(client,userData){
+async function getMazes(userData){
     await client.connect();
     const db = client.db(dbName);
     const userCollection=await db.collection( "Mazes");
@@ -81,7 +82,7 @@ async function getMazes(client,userData){
 
 
 
-async function getMazeMap(client,userData){
+async function getMazeMap(userData){
     await client.connect();
     const db = client.db(dbName);
     const userCollection=await db.collection( "Mazes");
@@ -93,12 +94,12 @@ async function getMazeMap(client,userData){
     return mazesToReturn;
 }
 
-async function makeSavedMaze(client,user,mazeID){
+async function makeSavedMaze(user,mazeID){
     let nameObj={
         "Username":user,
         "MazeID":Number(mazeID)
     }
-    let result= await getMazeMap(client,nameObj);
+    let result= await getMazeMap(nameObj);
     if (result.length==1){
         return result[0].Maze;
     }
