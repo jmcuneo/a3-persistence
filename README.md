@@ -5,22 +5,26 @@ This application is a simple maze generator. Giuen a set of parameters, it creat
 interactable.
 When the player presses play, they can enter a maze.
 Controls:
+WASD: Move
+Space: Flash. You recover flashes slowly as you play.
+NOTE: A player can only make an input action every 1.1 seconds.
+In the maze, there is something also walking around. Be careful, as too much activity while you are near it will anger it.
+You might be able to see it with your flashes.
 
 ## Challenges
--User-Data Association
-While I can associate a maze with its creator using mongodb, I
-didn't know how to preserve user credentials.
-I ended up looking at the middleware express-session to keep track of the user's session.
+-Code Refactoring (Cleaning up Code and Preventing Circular Dependency)
+I wanted to separate some of my code into separate files in order to make it cleaner. However, just moving my code into a separate file would cause circular dependency issues due to my imports.
+I ended up making a middle-man file called actionManager. The server receives requests from the client and then sends a message to the actionManager. The actionManager has access to various other files responsible for
+a multitude of things, and can perform these actions. While my code is a lot easier to navigate now, this did take an extremely long time to set up.
 
--Maze Generation
-While I followed the initial guide of using depth-first search, I
-wanted to allow more variety in my mazes' designs. For instance, one 
-of the current parameters is Amount of Exits. This creates a maze with multiple exits. Although, with its
-current design, mazes with multiple exits do end up having areas of open space in them.
+-Enemy Behavior
+I wanted to set up enemy behavior that was functional and a bit complex, but also allowed flexibility for future modifications.
+This took a rather long time as I had to account for multiple situations when designing it.
 
-## Authentication
-As mentioned previously, my authentication strategy used the express-session middleware. I felt it was easier to implement than other
-options (mainly since) doing it manually would be more limiting and difficult. Also, it is based around express, so it felt appropriate.
+-Playtesting
+Doing tests for this was difficult due to not having an interface to see how my program runs.
+So while I believe everything should be working, there may be rare bugs that I haven't noticed due to not being able to visualize things like enemy AI.
+
 
 ## CSS
 I decided to go with the NES.css. Since I'm generating a simple maze, I feel like a game-oriented style would be fitting. I didn't really make any modifications to it though.
@@ -28,6 +32,8 @@ I decided to go with the NES.css. Since I'm generating a simple maze, I feel lik
 ## Express Middleware Packages
 -Express-Session
 This hands over managing the user sessions to the package, making it easy to authenticate and keep track of users.
+-Express-WS
+Used to allow the server to send client messages without needing the client to send a message first.
 
 ## Technical Achievements
 - **Tech Achievement 1**:I used express-session alongside mongodb to manage users, their mazes, and keep track of user sessions.

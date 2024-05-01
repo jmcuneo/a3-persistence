@@ -144,6 +144,8 @@ async function playMaze(){
             let blob=await getImgSource.blob();
             let imgURL = URL.createObjectURL(blob);
             await loadImage(imgURL);
+            let instr=document.getElementById("Instructions");
+            instr.innerHTML="WASD to move.\tSpace to temporarily light up the screen.\nBe careful, and try not to get noticed."
         }
         else{
             isPlaying=false;
