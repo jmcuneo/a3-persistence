@@ -29,6 +29,10 @@
         <label for="shiftEnd" class="form-label">Shift End</label>
         <input type="datetime-local" class="form-control" id="shiftEnd" placeholder="00:00 AM" required>
       </div>
+      <div class="mb-3">
+        <label for="logBrief" class="form-label">Brief</label>
+        <input type="text" class="form-control" id="logBrief" placeholder="1">
+      </div>
       <button type="submit" class="btn btn-primary" id="logShift">Submit</button>
     </form>
   </div>
@@ -57,6 +61,7 @@
           <th scope="col">Shift Start</th>
           <th scope="col">Shift End</th>
           <th scope="col">Duration (Hours)</th>
+          <th scope="col">Brief Description</th>
         </tr>
       </thead>
       <tbody>
