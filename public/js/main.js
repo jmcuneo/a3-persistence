@@ -13,7 +13,7 @@ const logShift = async function (event) {
 		shiftStart = document.querySelector("#shiftStart"),
 		shiftEnd = document.querySelector("#shiftEnd"),
 		shiftBrief = document.querySelector("#logBrief")
-		json = { id: shiftID.value, start: shiftStart.value, end: shiftEnd.value, briefDesc: shiftBrief },
+		json = { id: shiftID.value, start: shiftStart.value, end: shiftEnd.value, briefDesc: shiftBrief.value },
 		body = JSON.stringify(json);
 
 	form.reset();
