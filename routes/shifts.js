@@ -15,12 +15,14 @@ router.post("/add", async (req, res) => {
 		const startDate = dayjs(req.body.start);
 		const endDate = dayjs(req.body.end);
 		const duration = endDate.diff(startDate, 'hour', true);
+		const briefDesc = req.body.briefDesc;
 		const doc = {
 			id: shiftID.toString(),
 			user: req.user.username,
 			start: startDate.toString(),
 			end: endDate.toString(),
-			duration: duration.toString()
+			duration: duration.toString(),
+			brief: briefDesc
 		};
 		await db.collection("shifts").insertOne(doc);
 	} else {
@@ -28,10 +30,12 @@ router.post("/add", async (req, res) => {
 		const old = { id: req.body.id }
 		const startDate = dayjs(req.body.start);
 		const endDate = dayjs(req.body.end);
-		const duration = endDate.diff(startDate, 'hour', true); 
+		const duration = endDate.diff(startDate, 'hour', true);
+		const briefDesc = req.body.briefDesc; 
 		const update = { $set: {start: startDate.toString(), 
 								end: endDate.toString(), 
-								duration: duration.toString()}
+								duration: duration.toString(),
+								brief: briefDesc}
 						};
 		await db.collection("shifts").updateOne(old, update)
 	}
